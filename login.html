@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masuk — Farmify</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background: var(--cream); }
+
+    .login-wrapper {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT PANEL */
+    .left-panel {
+      background: linear-gradient(155deg, var(--forest) 0%, #0D1F15 65%, #142D1E 100%);
+      padding: 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .left-panel::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(74,124,89,0.2) 0%, transparent 65%);
+      top: -150px; right: -150px;
+    }
+
+    .left-panel::after {
+      content: '';
+      position: absolute;
+      width: 350px; height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,151,42,0.1) 0%, transparent 70%);
+      bottom: 80px; left: -80px;
+    }
+
+    .panel-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 1;
+    }
+
+    .brand-icon-large {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--sage), var(--leaf));
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+
+    .brand-text .name {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+    }
+
+    .brand-text .tagline {
+      font-size: 11px;
+      color: var(--sage);
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .welcome-section { z-index: 1; }
+
+    .welcome-title {
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 700;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .welcome-title em {
+      color: var(--harvest);
+      font-style: italic;
+    }
+
+    .welcome-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      max-width: 380px;
+      margin-bottom: 40px;
+    }
+
+    /* Role Preview Cards */
+    .role-preview {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .role-preview-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 18px;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .role-preview-item:hover {
+      background: rgba(255,255,255,0.09);
+    }
+
+    .role-emoji {
+      font-size: 22px;
+      width: 42px; height: 42px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .role-preview-text strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 2px;
+    }
+
+    .role-preview-text span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .panel-foot {
+      z-index: 1;
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* RIGHT PANEL */
+    .right-panel {
+      background: var(--warm-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .login-header {
+      margin-bottom: 32px;
+    }
+
+    .login-header h2 {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 6px;
+    }
+
+    .login-header p {
+      color: var(--mid-gray);
+      font-size: 14px;
+    }
+
+    /* Demo Accounts Bar */
+    .demo-bar {
+      background: rgba(74,124,89,0.06);
+      border: 1px solid rgba(74,124,89,0.15);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 28px;
+    }
+
+    .demo-bar-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--moss);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .demo-accounts {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .demo-btn {
+      padding: 6px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--mint);
+      background: white;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--forest);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .demo-btn:hover {
+      background: var(--moss);
+      color: white;
+      border-color: var(--moss);
+    }
+
+    /* Form */
+    .remember-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .remember-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--mid-gray);
+      cursor: pointer;
+    }
+
+    .remember-check input { accent-color: var(--moss); }
+
+    .forgot-link {
+      font-size: 13px;
+      color: var(--moss);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .forgot-link:hover { color: var(--forest); }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--light-gray);
+      font-size: 14px;
+      color: var(--mid-gray);
+    }
+
+    /* Logged-in role indicator */
+    .detecting {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      background: rgba(74,124,89,0.07);
+      border: 1px solid rgba(74,124,89,0.2);
+      margin-top: -8px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: var(--moss);
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .login-wrapper { grid-template-columns: 1fr; }
+      .left-panel { display: none; }
+      .right-panel { padding: 36px 24px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<div class="bg-texture"></div>
+
+<div class="login-wrapper">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div class="panel-brand">
+      <div class="brand-icon-large">🌿</div>
+      <div class="brand-text">
+        <div class="name">Farmify</div>
+        <div class="tagline">Farm-to-Business Platform</div>
+      </div>
+    </div>
+
+    <div class="welcome-section">
+      <h1 class="welcome-title">
+        Selamat<br>Datang<br>
+        <em>Kembali</em>
+      </h1>
+      <p class="welcome-sub">
+        Bergabunglah dengan ribuan petani dan pembeli yang sudah merasakan manfaat perdagangan langsung yang adil dan transparan.
+      </p>
+
+      <div class="role-preview">
+        <div class="role-preview-item">
+          <div class="role-emoji">🌾</div>
+          <div class="role-preview-text">
+            <strong>Petani / Penjual</strong>
+            <span>Kelola stok, tampilkan komoditas, terima order langsung</span>
+          </div>
+        </div>
+        <div class="role-preview-item">
+          <div class="role-emoji">🏭</div>
+          <div class="role-preview-text">
+            <strong>Pembeli / B2B</strong>
+            <span>Temukan supplier, pre-order, lacak pengiriman</span>
+          </div>
+        </div>
+        <div class="role-preview-item">
+          <div class="role-emoji">⚙️</div>
+          <div class="role-preview-text">
+            <strong>Admin Platform</strong>
+            <span>Monitor transaksi, verifikasi pengguna, kelola platform</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-foot">© 2025 Farmify · Jawa Timur, Indonesia</div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+    <div class="login-box page-enter">
+
+      <div class="login-header">
+        <h2>Masuk ke Akun</h2>
+        <p>Masukkan email dan password untuk melanjutkan</p>
+      </div>
+
+      <!-- Demo Accounts -->
+      <div class="demo-bar">
+        <div class="demo-bar-title">🧪 Akun Demo — Klik untuk isi otomatis</div>
+        <div class="demo-accounts">
+          <button class="demo-btn" onclick="fillDemo('farmer')">🌾 Petani</button>
+          <button class="demo-btn" onclick="fillDemo('buyer')">🏭 Pembeli</button>
+          <button class="demo-btn" onclick="fillDemo('admin')">⚙️ Admin</button>
+        </div>
+      </div>
+
+      <div id="alertBox"></div>
+
+      <div class="detecting" id="roleDetect">
+        <span>🔍</span><span id="roleDetectText">Mendeteksi role...</span>
+      </div>
+
+      <form id="loginForm" novalidate>
+
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <div class="input-with-icon">
+            <span class="input-icon">✉️</span>
+            <input type="email" class="form-input" id="loginEmail" placeholder="email@contoh.com" required autocomplete="email" oninput="detectRole(this.value)" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔒</span>
+            <input type="password" class="form-input" id="loginPassword" placeholder="Masukkan password" required autocomplete="current-password" />
+            <button type="button" class="toggle-password" onclick="togglePwd()">👁</button>
+          </div>
+        </div>
+
+        <div class="remember-row">
+          <label class="remember-check">
+            <input type="checkbox" id="rememberMe" />
+            Ingat saya
+          </label>
+          <a href="#" class="forgot-link">Lupa password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full btn-lg" id="loginBtn">
+          Masuk ke Farmify
+        </button>
+
+      </form>
+
+      <div class="login-footer">
+        Belum punya akun? <a href="register.html" class="link">Daftar sekarang →</a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="js/db.js"></script>
+<script>
+  // Redirect if already logged in
+  const existingSession = FarmifyDB.getSession();
+  if (existingSession) {
+    window.location.href = getDashboardUrl(existingSession.role);
+  }
+
+  const demoAccounts = {
+    farmer: { email: 'sido@farmify.id',  password: 'Petani@123' },
+    buyer:  { email: 'ptjaya@farmify.id', password: 'Buyer@123' },
+    admin:  { email: 'admin@farmify.id', password: 'Admin@Farmify2024' }
+  };
+
+  function fillDemo(role) {
+    const acc = demoAccounts[role];
+    document.getElementById('loginEmail').value = acc.email;
+    document.getElementById('loginPassword').value = acc.password;
+    detectRole(acc.email);
+  }
+
+  function detectRole(email) {
+    const detect = document.getElementById('roleDetect');
+    const detectText = document.getElementById('roleDetectText');
+    const user = FarmifyDB.findByEmail(email);
+    if (user) {
+      const roleLabel = { farmer: '🌾 Petani/Penjual', buyer: '🏭 Pembeli/B2B', admin: '⚙️ Admin' };
+      detectText.textContent = `Akun terdeteksi: ${roleLabel[user.role] || user.role} — ${user.full_name}`;
+      detect.style.display = 'flex';
+    } else {
+      detect.style.display = 'none';
+    }
+  }
+
+  function togglePwd() {
+    const inp = document.getElementById('loginPassword');
+    const btn = inp.nextElementSibling;
+    if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+    else { inp.type = 'password'; btn.textContent = '👁'; }
+  }
+
+  function showAlert(type, msg) {
+    const box = document.getElementById('alertBox');
+    box.innerHTML = `<div class="alert alert-${type}"><span>${type === 'success' ? '✅' : '❌'}</span><span>${msg}</span></div>`;
+    setTimeout(() => { if (box.children.length) box.innerHTML = ''; }, 5000);
+  }
+
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    if (!email || !password) { showAlert('error', 'Email dan password wajib diisi.'); return; }
+
+    const btn = document.getElementById('loginBtn');
+    btn.innerHTML = '<span class="spinner"></span> Memeriksa...';
+    btn.disabled = true;
+
+    await new Promise(r => setTimeout(r, 800));
+
+    const result = FarmifyDB.authenticate(email, password);
+
+    if (result.success) {
+      FarmifyDB.setSession(result.user);
+      btn.innerHTML = '✅ Berhasil Masuk!';
+      showAlert('success', `Selamat datang, ${result.user.full_name}!`);
+      setTimeout(() => {
+        window.location.href = getDashboardUrl(result.user.role);
+      }, 1000);
+    } else {
+      showAlert('error', result.message);
+      btn.innerHTML = 'Masuk ke Farmify';
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
