@@ -216,23 +216,6 @@
     }
   </style>
 
-    <style>
-    @media (max-width: 1024px) {
-      .platform-grid { grid-template-columns: 1fr !important; }
-      #quickActions { grid-template-columns: repeat(2, 1fr) !important; }
-    }
-    @media (max-width: 768px) {
-      .admin-header-banner { flex-direction: column; align-items: flex-start; gap: 16px; }
-      .admin-header-banner > div:last-child { width: 100%; display: flex; gap: 8px; }
-      .admin-header-banner > div:last-child .btn { flex: 1; font-size: 12px !important; padding: 9px 12px !important; }
-      .user-actions { flex-wrap: wrap; gap: 6px; }
-      .search-filter-row select { width: 100% !important; }
-    }
-    @media (max-width: 480px) {
-      #quickActions { grid-template-columns: repeat(2, 1fr) !important; }
-    }
-    </style>
-
 </head>
 <body>
 <div class="app-layout">
@@ -305,7 +288,7 @@
         <div class="admin-title" id="adminGreeting">Admin Panel — Farmify Platform</div>
         <div class="admin-sub">Kelola pengguna, transaksi, dan kesehatan platform secara menyeluruh</div>
       </div>
-      <div style="display:flex;gap:10px;z-index:1;">
+      <div class="admin-btn-row" style="display:flex;gap:10px;z-index:1;">
         <button class="btn btn-outline-white" style="font-size:13px;">📊 Export Laporan</button>
         <button class="btn btn-harvest" style="font-size:13px;">+ Tambah Admin</button>
       </div>
@@ -340,7 +323,7 @@
     </div>
 
     <!-- QUICK ACTIONS -->
-    <div class="quick-actions page-enter" id="quickActions">
+    <div class="quick-actions-grid page-enter">
       <div class="quick-action" onclick="switchTab('verification')">
         <div class="qa-icon">✅</div>
         <div class="qa-label">Verifikasi User</div>
@@ -393,7 +376,7 @@
           <div class="table-title">Daftar Pengguna</div>
           <span class="badge badge-farmer" id="userCountBadge">Loading...</span>
         </div>
-        <table>
+        <div class="table-scroll"><div class="table-scroll"><table>
           <thead>
             <tr>
               <th>Pengguna</th>
@@ -407,7 +390,7 @@
           <tbody id="usersTableBody">
             <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">Memuat data...</td></tr>
           </tbody>
-        </table>
+        </table></div></div>
       </div>
     </div>
 
@@ -485,7 +468,7 @@
 
     <!-- ===== TAB: PLATFORM ===== -->
     <div class="tab-content" id="content-platform">
-      <div class="platform-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div class="platform-grid">
 
         <div class="metric-card">
           <div class="metric-title">Revenue Breakdown (Bulan Ini)</div>

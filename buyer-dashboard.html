@@ -233,23 +233,6 @@
     }
   </style>
 
-    <style>
-    @media (max-width: 1024px) {
-      .dashboard-grid { grid-template-columns: 1fr !important; }
-    }
-    @media (max-width: 768px) {
-      #buyerStats { grid-template-columns: repeat(3, 1fr) !important; }
-      .search-bar-hero input { min-width: 0; flex: 1 1 200px; }
-      .search-bar-hero .btn { flex: 1 1 auto; }
-      .preorder-banner { flex-direction: column; gap: 12px; }
-      .supplier-grid { grid-template-columns: 1fr !important; }
-    }
-    @media (max-width: 480px) {
-      #buyerStats { grid-template-columns: 1fr 1fr !important; }
-      #buyerStats .stat-card:last-child { grid-column: 1 / -1; }
-    }
-    </style>
-
 </head>
 <body>
 <div class="app-layout">
@@ -340,11 +323,11 @@
       <button class="btn btn-outline-white" style="flex-shrink:0;">Lihat Pre-Order →</button>
     </div>
 
-    <div class="dashboard-grid" style="display:grid;grid-template-columns:1fr 340px;gap:24px;">
+    <div class="dash-grid-main-md">
       <div>
 
         <!-- Stats -->
-        <div class="stats-grid page-enter" id="buyerStats" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
+        <div class="stats-grid page-enter" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
           <div class="stat-card">
             <div class="stat-icon gold">📦</div>
             <div class="stat-value">12</div>
@@ -364,7 +347,7 @@
 
         <!-- Supplier List -->
         <div class="page-enter">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <div class="section-header-row">
             <div class="section-title">Supplier Unggulan Jawa Timur</div>
             <a href="#" class="link text-sm">Lihat semua →</a>
           </div>
@@ -434,7 +417,7 @@
             <div class="table-title">Order Terbaru</div>
             <a href="#" class="link text-sm">Lihat semua</a>
           </div>
-          <table>
+          <div class="table-scroll"><table>
             <thead>
               <tr>
                 <th>Kode Order</th>
@@ -467,7 +450,7 @@
                 <td><span class="badge badge-success">Selesai</span></td>
               </tr>
             </tbody>
-          </table>
+          </table></div>
         </div>
 
       </div>
@@ -480,7 +463,7 @@
           <div class="wallet-amount">Rp 50.000.000</div>
           <div style="font-size:13px;color:rgba(255,255,255,0.5);">Saldo tersedia untuk transaksi</div>
           <div class="loyalty-badge">🏆 123 Loyalty Points</div>
-          <div style="display:flex;gap:8px;margin-top:16px;">
+          <div class="wallet-btn-row" style="display:flex;gap:8px;margin-top:16px;">
             <button class="btn btn-outline-white" style="flex:1;padding:10px;">Top Up</button>
             <button class="btn btn-harvest" style="flex:1;padding:10px;">Tarik Dana</button>
           </div>
