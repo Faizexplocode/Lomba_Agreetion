@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, " />
   <title>Masuk — Farmify</title>
   <link rel="stylesheet" href="style.css" />
   <style>
@@ -284,6 +284,15 @@
       .right-panel { padding: 36px 24px; align-items: flex-start; }
     }
   </style>
+
+    <style>
+    @media (max-width: 480px) {
+      .right-panel { padding: 28px 20px !important; }
+      .demo-accounts { gap: 6px !important; }
+      .demo-btn { font-size: 11px !important; padding: 5px 10px !important; }
+    }
+    </style>
+
 </head>
 <body>
 <div class="bg-texture"></div>
@@ -349,7 +358,7 @@
       <!-- Demo Accounts -->
       <div class="demo-bar">
         <div class="demo-bar-title">🧪 Akun Demo — Klik untuk isi otomatis</div>
-        <div class="demo-accounts">
+        <div class="demo-accounts" style="flex-wrap:wrap;">
           <button class="demo-btn" onclick="fillDemo('farmer')">🌾 Petani</button>
           <button class="demo-btn" onclick="fillDemo('buyer')">🏭 Pembeli</button>
           <button class="demo-btn" onclick="fillDemo('admin')">⚙️ Admin</button>

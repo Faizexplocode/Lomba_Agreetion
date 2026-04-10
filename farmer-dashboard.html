@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, " />
   <title>Dashboard Petani — Farmify</title>
   <link rel="stylesheet" href="style.css" />
   <style>
@@ -213,9 +213,30 @@
       margin-top: 3px;
     }
   </style>
+
+    <style>
+    @media (max-width: 1024px) {
+      .dashboard-grid { grid-template-columns: 1fr !important; }
+      .commodity-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+    @media (max-width: 480px) {
+      .commodity-grid { grid-template-columns: 1fr !important; }
+    }
+    </style>
+
 </head>
 <body>
 <div class="app-layout">
+<!-- MOBILE TOP BAR -->
+<div class="mobile-topbar">
+  <a href="#" class="mobile-brand">
+    <div class="mobile-brand-icon">🌿</div>
+    <span class="mobile-brand-name">Farmify</span>
+  </a>
+  <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
@@ -309,7 +330,7 @@
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 380px;gap:24px;">
+    <div style="display:grid;grid-template-columns: 1fr 380px; gap: 24px; display: grid;">
 
       <!-- LEFT COL -->
       <div>
@@ -572,5 +593,40 @@
     document.getElementById('progressFill').style.width = '65%';
   }, 500);
 </script>
+
+<script>
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+</script>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bottom-nav-item active">
+      <span class="bottom-nav-icon">🏠</span>
+      <span class="bottom-nav-label">Beranda</span>
+    </button>
+    <button class="bottom-nav-item">
+      <span class="bottom-nav-icon">📦</span>
+      <span class="bottom-nav-label">Komoditas</span>
+    </button>
+    <button class="bottom-nav-item">
+      <span class="bottom-nav-icon">📋</span>
+      <span class="bottom-nav-label">Order</span>
+    </button>
+    <button class="bottom-nav-item">
+      <span class="bottom-nav-icon">🚚</span>
+      <span class="bottom-nav-label">Logistik</span>
+    </button>
+    <button class="bottom-nav-item">
+      <span class="bottom-nav-icon">👤</span>
+      <span class="bottom-nav-label">Akun</span>
+    </button>
+  </div>
+</nav>
+
 </body>
 </html>

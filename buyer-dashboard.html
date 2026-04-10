@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, " />
   <title>Dashboard Pembeli — Farmify</title>
   <link rel="stylesheet" href="style.css" />
   <style>
@@ -232,9 +232,37 @@
       color: white;
     }
   </style>
+
+    <style>
+    @media (max-width: 1024px) {
+      .dashboard-grid { grid-template-columns: 1fr !important; }
+    }
+    @media (max-width: 768px) {
+      #buyerStats { grid-template-columns: repeat(3, 1fr) !important; }
+      .search-bar-hero input { min-width: 0; flex: 1 1 200px; }
+      .search-bar-hero .btn { flex: 1 1 auto; }
+      .preorder-banner { flex-direction: column; gap: 12px; }
+      .supplier-grid { grid-template-columns: 1fr !important; }
+    }
+    @media (max-width: 480px) {
+      #buyerStats { grid-template-columns: 1fr 1fr !important; }
+      #buyerStats .stat-card:last-child { grid-column: 1 / -1; }
+    }
+    </style>
+
 </head>
 <body>
 <div class="app-layout">
+<!-- MOBILE TOP BAR -->
+<div class="mobile-topbar">
+  <a href="#" class="mobile-brand">
+    <div class="mobile-brand-icon">🌿</div>
+    <span class="mobile-brand-name">Farmify</span>
+  </a>
+  <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
@@ -287,7 +315,7 @@
     <div class="search-hero page-enter">
       <div class="search-hero-title" id="buyerGreeting">Halo, PT Jaya! Cari bahan baku hari ini?</div>
       <div class="search-hero-sub">Terhubung langsung dengan petani terpercaya di seluruh Jawa Timur</div>
-      <div class="search-bar-hero">
+      <div class="search-bar-hero" style="flex-wrap:wrap;">
         <input type="text" placeholder="🔍  Cari komoditas, nama farm, lokasi..." />
         <button class="btn btn-harvest" style="padding:14px 28px;">Cari Sekarang</button>
       </div>
@@ -312,11 +340,11 @@
       <button class="btn btn-outline-white" style="flex-shrink:0;">Lihat Pre-Order →</button>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 340px;gap:24px;">
+    <div class="dashboard-grid" style="display:grid;grid-template-columns:1fr 340px;gap:24px;">
       <div>
 
         <!-- Stats -->
-        <div class="stats-grid page-enter" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
+        <div class="stats-grid page-enter" id="buyerStats" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
           <div class="stat-card">
             <div class="stat-icon gold">📦</div>
             <div class="stat-value">12</div>
@@ -566,5 +594,44 @@
   function openModal(id) { document.getElementById(id).style.display = 'flex'; }
   function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 </script>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bottom-nav-item active">
+      <span class="bottom-nav-icon">🏠</span>
+      <span class="bottom-nav-label">Beranda</span>
+    </button>
+    <button class="bottom-nav-item">
+      <span class="bottom-nav-icon">🔍</span>
+      <span class="bottom-nav-label">Cari</span>
+    </button>
+    <button class="bottom-nav-item">
+      <span class="bottom-nav-icon">🛒</span>
+      <span class="bottom-nav-label">Keranjang</span>
+    </button>
+    <button class="bottom-nav-item">
+      <span class="bottom-nav-icon">📦</span>
+      <span class="bottom-nav-label">Order</span>
+    </button>
+    <button class="bottom-nav-item">
+      <span class="bottom-nav-icon">👤</span>
+      <span class="bottom-nav-label">Akun</span>
+    </button>
+  </div>
+</nav>
+<script>
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+document.querySelectorAll('.bottom-nav-item').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+
 </body>
 </html>

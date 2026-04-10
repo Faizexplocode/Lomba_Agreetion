@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, " />
   <title>Farmify — Farm-to-Business Platform</title>
   <link rel="stylesheet" href="style.css" />
   <style>
@@ -68,6 +68,17 @@
       flex-wrap: wrap;
     }
   </style>
+
+    <style>
+    @media (max-width: 768px) {
+      .hero-title { font-size: clamp(32px, 8vw, 52px) !important; }
+      .hero-brand-name { font-size: clamp(28px, 7vw, 40px) !important; }
+      .hero-desc { font-size: 16px !important; }
+      .hero-cta .btn { flex: 1 1 200px; }
+      .hero { padding: 40px 20px; }
+    }
+    </style>
+
 </head>
 <body>
 <div class="bg-texture"></div>

@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, " />
   <title>Admin Panel — Farmify</title>
   <link rel="stylesheet" href="style.css" />
   <style>
@@ -215,9 +215,37 @@
       flex: 1;
     }
   </style>
+
+    <style>
+    @media (max-width: 1024px) {
+      .platform-grid { grid-template-columns: 1fr !important; }
+      #quickActions { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+    @media (max-width: 768px) {
+      .admin-header-banner { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .admin-header-banner > div:last-child { width: 100%; display: flex; gap: 8px; }
+      .admin-header-banner > div:last-child .btn { flex: 1; font-size: 12px !important; padding: 9px 12px !important; }
+      .user-actions { flex-wrap: wrap; gap: 6px; }
+      .search-filter-row select { width: 100% !important; }
+    }
+    @media (max-width: 480px) {
+      #quickActions { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+    </style>
+
 </head>
 <body>
 <div class="app-layout">
+<!-- MOBILE TOP BAR -->
+<div class="mobile-topbar">
+  <a href="#" class="mobile-brand">
+    <div class="mobile-brand-icon">🌿</div>
+    <span class="mobile-brand-name">Farmify</span>
+  </a>
+  <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
@@ -312,7 +340,7 @@
     </div>
 
     <!-- QUICK ACTIONS -->
-    <div class="quick-actions page-enter">
+    <div class="quick-actions page-enter" id="quickActions">
       <div class="quick-action" onclick="switchTab('verification')">
         <div class="qa-icon">✅</div>
         <div class="qa-label">Verifikasi User</div>
@@ -332,16 +360,16 @@
     </div>
 
     <!-- TABS -->
-    <div class="tab-bar page-enter">
-      <button class="tab-btn active" onclick="switchTab('users')" id="tab-users">👥 Semua Pengguna</button>
-      <button class="tab-btn" onclick="switchTab('verification')" id="tab-verification">✅ Perlu Verifikasi <span style="background:var(--terracotta);color:white;font-size:10px;padding:2px 8px;border-radius:100px;margin-left:4px;">5</span></button>
-      <button class="tab-btn" onclick="switchTab('transactions')" id="tab-transactions">📦 Transaksi</button>
-      <button class="tab-btn" onclick="switchTab('platform')" id="tab-platform">📊 Platform</button>
+    <div class="tab-bar page-enter" style="overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;">
+      <button class="tab-btn active" style="flex-shrink:0;" onclick="switchTab('users')" id="tab-users">👥 Semua Pengguna</button>
+      <button class="tab-btn" style="flex-shrink:0;" onclick="switchTab('verification')" id="tab-verification">✅ Perlu Verifikasi <span style="background:var(--terracotta);color:white;font-size:10px;padding:2px 8px;border-radius:100px;margin-left:4px;">5</span></button>
+      <button class="tab-btn" style="flex-shrink:0;" onclick="switchTab('transactions')" id="tab-transactions">📦 Transaksi</button>
+      <button class="tab-btn" style="flex-shrink:0;" onclick="switchTab('platform')" id="tab-platform">📊 Platform</button>
     </div>
 
     <!-- ===== TAB: SEMUA USER ===== -->
     <div class="tab-content active" id="content-users">
-      <div class="search-filter-row">
+      <div class="search-filter-row" style="flex-wrap:wrap;">
         <div class="input-with-icon" style="flex:1">
           <span class="input-icon">🔍</span>
           <input type="text" class="form-input" placeholder="Cari nama, email, atau ID pengguna..." oninput="filterUsers(this.value)" />
@@ -457,7 +485,7 @@
 
     <!-- ===== TAB: PLATFORM ===== -->
     <div class="tab-content" id="content-platform">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div class="platform-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
 
         <div class="metric-card">
           <div class="metric-title">Revenue Breakdown (Bulan Ini)</div>
@@ -725,5 +753,44 @@
   loadUsersTable(allUsers);
   loadPendingUsers();
 </script>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bottom-nav-item active">
+      <span class="bottom-nav-icon">🏠</span>
+      <span class="bottom-nav-label">Dashboard</span>
+    </button>
+    <button class="bottom-nav-item" onclick="switchTab('verification')">
+      <span class="bottom-nav-icon">✅</span>
+      <span class="bottom-nav-label">Verifikasi</span>
+    </button>
+    <button class="bottom-nav-item" onclick="switchTab('transactions')">
+      <span class="bottom-nav-icon">📦</span>
+      <span class="bottom-nav-label">Transaksi</span>
+    </button>
+    <button class="bottom-nav-item" onclick="switchTab('platform')">
+      <span class="bottom-nav-icon">📊</span>
+      <span class="bottom-nav-label">Platform</span>
+    </button>
+    <button class="bottom-nav-item">
+      <span class="bottom-nav-icon">👥</span>
+      <span class="bottom-nav-label">User</span>
+    </button>
+  </div>
+</nav>
+<script>
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+document.querySelectorAll('.bottom-nav-item').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+
 </body>
 </html>
