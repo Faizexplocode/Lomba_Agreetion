@@ -735,6 +735,27 @@
   allUsers = FarmifyDB.getUsers();
   loadUsersTable(allUsers);
   loadPendingUsers();
+
+  document.querySelector('.btn-outline-white').onclick = function() {
+  const transactions = FarmifyDB.getOrders(); // Mengambil data dari db.js
+  if (transactions.length === 0) {
+    alert("Belum ada data transaksi untuk diexport.");
+    return;
+  }
+
+  let csvContent = "data:text/csv;charset=utf-8,ID Order,Pembeli,Total,Status\n";
+  transactions.forEach(row => {
+    csvContent += `${row.order_code},${row.buyer_id},${row.total_price},${row.status}\n`;
+  });
+
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "Laporan_Farmify_Platform.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 </script>
 
 <!-- BOTTOM NAV -->
@@ -773,6 +794,17 @@ document.querySelectorAll('.bottom-nav-item').forEach(btn => {
     this.classList.add('active');
   });
 });
+
+function exportReport() {
+  const data = FarmifyDB.getOrders();
+  const csv = "Kode,Pembeli,Total\n" + data.map(o => `${o.order_code},${o.buyer_id},${o.total_price}`).join("\n");
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.setAttribute('href', url);
+  a.setAttribute('download', 'laporan-farmify.csv');
+  a.click();
+}
 </script>
 
 </body>

@@ -576,6 +576,28 @@
 
   function openModal(id) { document.getElementById(id).style.display = 'flex'; }
   function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+  const searchInput = document.querySelector('.search-bar-hero input');
+const searchBtn = document.querySelector('.search-bar-hero .btn-harvest');
+
+function performSearch() {
+  const query = searchInput.value.toLowerCase();
+  const suppliers = document.querySelectorAll('.supplier-card');
+  
+  suppliers.forEach(card => {
+    const name = card.querySelector('.supplier-name').textContent.toLowerCase();
+    const location = card.querySelector('.supplier-location').textContent.toLowerCase();
+    
+    if (name.includes(query) || location.includes(query)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+searchBtn.addEventListener('click', performSearch);
+searchInput.addEventListener('keyup', (e) => { if(e.key === 'Enter') performSearch(); });
 </script>
 
 <!-- BOTTOM NAV -->

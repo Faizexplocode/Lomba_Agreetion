@@ -589,6 +589,53 @@ function toggleSidebar() {
   document.querySelector('.sidebar').classList.toggle('open');
   document.getElementById('sidebarOverlay').classList.toggle('open');
 }
+
+function handleAddCommodity(e) {
+  e.preventDefault();
+  const data = {
+    farmer_id: session.id,
+    name: document.querySelector('#commodityName').value,
+    price: document.querySelector('#commodityPrice').value,
+    stock: document.querySelector('#commodityStock').value,
+    is_preorder: document.querySelector('#isPreOrder').checked
+  };
+  
+  FarmifyDB.addCommodity(data);
+  closeModal('addCommodityModal');
+  location.reload(); // Refresh untuk update UI
+}
+
+// Pasang listener pada button konfirmasi order di table
+document.querySelectorAll('.btn-primary').forEach(btn => {
+  btn.onclick = () => alert('Order berhasil dikonfirmasi!');
+});
+
+function handleAddCommodity(event) {
+  const modal = document.getElementById('addCommodityModal');
+  const inputs = modal.querySelectorAll('input, select');
+  
+  const newCommodity = {
+    farmer_id: session.id,
+    name: inputs[0].value,
+    category: inputs[1].value,
+    unit: inputs[2].value,
+    price: inputs[3].value,
+    stock: inputs[4].value,
+    is_preorder: document.getElementById('isPreOrder').checked
+  };
+
+  if(!newCommodity.name || !newCommodity.price) {
+    alert("Mohon isi nama dan harga komoditas!");
+    return;
+  }
+
+  FarmifyDB.addCommodity(newCommodity);
+  alert("✅ Komoditas berhasil ditambahkan ke pasar!");
+  closeModal('addCommodityModal');
+  location.reload(); // Refresh untuk melihat update
+
+  document.querySelector('#addCommodityModal .btn-primary').onclick = handleAddCommodity;
+}
 </script>
 
 

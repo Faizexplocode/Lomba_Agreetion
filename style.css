@@ -1140,3 +1140,75 @@ tbody tr:hover { background: rgba(245,240,232,0.5); }
   .admin-btn-row { width: 100%; }
   .admin-btn-row .btn { flex: 1; font-size: 12px !important; padding: 8px 10px !important; }
 }
+
+/* Update di bagian akhir style.css */
+
+@media (max-width: 768px) {
+  /* Memperbaiki jarak main content agar tidak tertutup mobile topbar */
+  .main-content {
+    padding: 10px;
+    padding-top: 70px;
+  }
+
+  /* Membuat stats card mengisi layar lebih efisien */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px;
+  }
+
+  /* Memastikan tabel bisa di-scroll secara horizontal */
+  .table-scroll {
+    overflow-x: auto;
+    display: block;
+  }
+
+  /* Tombol aksi di mobile dibuat memenuhi lebar layar jika diperlukan */
+  .page-action-row .btn {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  /* Penyesuaian Modal untuk Mobile (Bottom Sheet Style) */
+  .modal {
+    width: 100%;
+    margin: 0;
+    border-radius: 20px 20px 0 0;
+    position: fixed;
+    bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+  /* Memperbaiki jarak main content agar tidak tertutup mobile topbar */
+  .main-content {
+    padding: 10px;
+    padding-top: 70px;
+  }
+
+  /* Membuat stats card mengisi layar lebih efisien */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px;
+  }
+
+  /* Memastikan tabel bisa di-scroll secara horizontal */
+  .table-scroll {
+    overflow-x: auto;
+    display: block;
+  }
+
+  /* Tombol aksi di mobile dibuat memenuhi lebar layar jika diperlukan */
+  .page-action-row .btn {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  /* Penyesuaian Modal untuk Mobile (Bottom Sheet Style) */
+  .modal {
+    width: 100%;
+    margin: 0;
+    border-radius: 20px 20px 0 0;
+    position: fixed;
+    bottom: 0;
+  }
+ }
+}
