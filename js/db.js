@@ -141,25 +141,25 @@ const FarmifyDB = {
     return this.getUsers().find(u => u.email === email.toLowerCase());
   },
 
-  // 1. Pastikan createUser langsung memberikan status 'active'
-createUser(userData) {
-  const users = this.getUsers();
-  if (this.findByEmail(userData.email)) {
-    return { success: false, message: 'Email sudah terdaftar.' };
-  }
-  const newUser = {
-    id: `${userData.role}-${Date.now()}`,
-    ...userData,
-    email: userData.email.toLowerCase(),
-    password: btoa(userData.password), // Base64 simulation
-    status: 'active', // <--- Diubah dari 'pending' ke 'active'
-    email_verified: true,
-    created_at: new Date().toISOString()
-  };
-  users.push(newUser);
-  localStorage.setItem('farmify_users', JSON.stringify(users));
-  return { success: true, user: newUser };
-},
+  // ---- Create user with active status ----
+  createUser(userData) {
+    const users = this.getUsers();
+    if (this.findByEmail(userData.email)) {
+      return { success: false, message: 'Email sudah terdaftar.' };
+    }
+    const newUser = {
+      id: `${userData.role}-${Date.now()}`,
+      ...userData,
+      email: userData.email.toLowerCase(),
+      password: btoa(userData.password), // Base64 simulation
+      status: 'active',
+      email_verified: true,
+      created_at: new Date().toISOString()
+    };
+    users.push(newUser);
+    localStorage.setItem('farmify_users', JSON.stringify(users));
+    return { success: true, user: newUser };
+  },
 
   // ---- Authenticate user ----
   authenticate(email, password) {
