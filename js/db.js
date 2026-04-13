@@ -92,11 +92,25 @@ const FarmifyDB = {
     const user = this.findByEmail(email);
     if (!user) return { success: false, message: 'Email tidak ditemukan.' };
     if (user.password !== btoa(password)) return { success: false, message: 'Password salah.' };
+    
+    // 👇 --- BARIS AUTO-FIX UNTUK AKUN DEMO LAMA --- 👇
+    // Jika ini adalah akun demo, otomatis paksa menjadi terverifikasi dan aktif
+    const demoEmails = ['sido@farmify.id', 'ptjaya@farmify.id', 'admin@farmify.id'];
+    if (demoEmails.includes(user.email)) {
+        user.email_verified = true;
+        user.status = 'active';
+        this.updateUser(user.id, { email_verified: true, status: 'active' });
+    }
+    // 👆 ------------------------------------------- 👆
+
     if (!user.email_verified) return { success: false, message: 'Email belum diverifikasi.' };
     if (user.status === 'pending') return { success: false, message: 'Akun sedang diproses.' };
     if (user.status === 'suspended') return { success: false, message: 'Akun ditangguhkan. Hubungi admin.' };
+    
     return { success: true, user };
   },
+
+  // ---- OTP Management (Kedaluwarsa 2 Menit) ----
 
   // ---- OTP Management (Kedaluwarsa 2 Menit) ----
   generateOTP(email) {
