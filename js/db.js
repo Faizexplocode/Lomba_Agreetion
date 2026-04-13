@@ -1,81 +1,9 @@
 /**
  * =====================================================
  * FARMIFY - Database Configuration
- * Backend: Node.js + pg (node-postgres)
- * DB Tool: DBeaver / PostgreSQL
- * =====================================================
- *
- * CARA SETUP:
- * 1. Install dependencies:
- *    npm install pg bcryptjs jsonwebtoken dotenv express cors
- *
- * 2. Buat file .env di root project:
- *    DB_HOST=localhost
- *    DB_PORT=5432
- *    DB_NAME=farmify_db
- *    DB_USER=postgres
- *    DB_PASSWORD=your_password
- *    JWT_SECRET=farmify_secret_key_ganti_ini
- *    PORT=3000
- *
- * 3. Di DBeaver: Create new database "farmify_db"
- *    lalu jalankan file setup/schema.sql
- *
- * 4. Jalankan: node js/db.js (untuk test koneksi)
+ * Client-Side: LocalStorage simulation with EmailJS
  * =====================================================
  */
-
-// =====================================================
-// SQL SCHEMA - Jalankan di DBeaver
-// =====================================================
-
-/*
--- ============ SETUP FARMIFY DATABASE ============
-
-CREATE DATABASE farmify_db;
-\c farmify_db;
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
-CREATE TABLE users (
-  id            UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-  full_name     VARCHAR(255) NOT NULL,
-  email         VARCHAR(255) UNIQUE NOT NULL,
-  phone         VARCHAR(20),
-  password_hash TEXT NOT NULL,
-  role          VARCHAR(20) NOT NULL CHECK (role IN ('farmer', 'buyer', 'admin')),
-  status        VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'active', 'suspended')),
-  email_verified BOOLEAN DEFAULT FALSE,
-  profile_img   TEXT,
-  created_at    TIMESTAMPTZ DEFAULT NOW(),
-  updated_at    TIMESTAMPTZ DEFAULT NOW()
-);
-
-CREATE TABLE email_verifications (
-  id          UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-  email       VARCHAR(255) NOT NULL,
-  otp_code    VARCHAR(6) NOT NULL,
-  expires_at  TIMESTAMPTZ NOT NULL,
-  used        BOOLEAN DEFAULT FALSE,
-  created_at  TIMESTAMPTZ DEFAULT NOW()
-);
-
--- (skema lain tetap sama seperti sebelumnya...)
-
-INSERT INTO users (full_name, email, password_hash, role, status, email_verified)
-VALUES (
-  'Admin Farmify',
-  'admin@farmify.id',
-  '$2a$12$LVj7N1c.V9mT8gDuK3nXKOabT/xZ7p3VnRkwM.cJdZIRe4kQFgzKm',
-  'admin',
-  'active',
-  true
-);
-*/
-
-// =====================================================
-// CLIENT-SIDE: LocalStorage simulation
-// (untuk development tanpa server)
-// =====================================================
 
 const FarmifyDB = {
 
@@ -131,17 +59,15 @@ const FarmifyDB = {
     }
   },
 
-  // ---- Get all users ----
   getUsers() {
     return JSON.parse(localStorage.getItem('farmify_users') || '[]');
   },
 
-  // ---- Find user by email ----
   findByEmail(email) {
     return this.getUsers().find(u => u.email === email.toLowerCase());
   },
 
-  // ---- Create user with active status ----
+  // ---- Create user (Otomatis Active) ----
   createUser(userData) {
     const users = this.getUsers();
     if (this.findByEmail(userData.email)) {
@@ -152,7 +78,7 @@ const FarmifyDB = {
       ...userData,
       email: userData.email.toLowerCase(),
       password: btoa(userData.password), // Base64 simulation
-      status: 'active',
+      status: 'active', // Langsung active setelah OTP berhasil
       email_verified: true,
       created_at: new Date().toISOString()
     };
@@ -166,19 +92,21 @@ const FarmifyDB = {
     const user = this.findByEmail(email);
     if (!user) return { success: false, message: 'Email tidak ditemukan.' };
     if (user.password !== btoa(password)) return { success: false, message: 'Password salah.' };
-    if (!user.email_verified) return { success: false, message: 'Email belum diverifikasi. Cek inbox Anda.' };
+    if (!user.email_verified) return { success: false, message: 'Email belum diverifikasi.' };
     if (user.status === 'pending') return { success: false, message: 'Akun sedang diproses.' };
     if (user.status === 'suspended') return { success: false, message: 'Akun ditangguhkan. Hubungi admin.' };
     return { success: true, user };
   },
 
-  // ---- OTP Management ----
+  // ---- OTP Management (Kedaluwarsa 2 Menit) ----
   generateOTP(email) {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
-    const expires = new Date(Date.now() + 10 * 60 * 1000).toISOString(); // 10 menit
+    // Kedaluwarsa dalam 2 menit
+    const expires = new Date(Date.now() + 2 * 60 * 1000).toISOString(); 
+    
     const otps = JSON.parse(localStorage.getItem('farmify_otps') || '[]');
-    // Hapus OTP lama untuk email ini
     const filtered = otps.filter(o => o.email !== email.toLowerCase());
+    
     filtered.push({ email: email.toLowerCase(), code, expires, used: false });
     localStorage.setItem('farmify_otps', JSON.stringify(filtered));
     return code;
@@ -187,53 +115,35 @@ const FarmifyDB = {
   verifyOTP(email, code) {
     const otps = JSON.parse(localStorage.getItem('farmify_otps') || '[]');
     const otp = otps.find(o => o.email === email.toLowerCase() && !o.used);
+    
     if (!otp) return { success: false, message: 'Kode OTP tidak ditemukan. Minta ulang.' };
     if (new Date() > new Date(otp.expires)) return { success: false, message: 'Kode OTP sudah kedaluwarsa. Minta ulang.' };
     if (otp.code !== code) return { success: false, message: 'Kode OTP salah.' };
-    // Tandai sebagai terpakai
+    
     otp.used = true;
     localStorage.setItem('farmify_otps', JSON.stringify(otps));
     return { success: true };
   },
 
-  // ---- Send OTP via Gmail (using Anthropic API / Claude) ----
+  // ---- Send OTP via EmailJS ----
   async sendOTPEmail(email, name, otp) {
-    // Gunakan Anthropic API untuk generate konten email yang baik
-    // lalu "kirim" via Gmail MCP (jika tersedia di production)
-    // Di sini kita simulate dengan menampilkan OTP di console & alert
-    // Di production: integrasikan dengan Gmail API / Nodemailer / SendGrid
+    const serviceID = "service_m6luo94"; 
+    const templateID = "R02l2iDCN_jfiwNTP"; // Pastikan ini benar dari template EmailJS kamu
 
-    const emailContent = `
-Halo ${name}!
+    const templateParams = {
+      to_name: name,
+      to_email: email,
+      otp_code: otp
+    };
 
-Terima kasih telah mendaftar di Farmify — Platform Farm-to-Business.
-
-Kode Verifikasi Email Anda:
-
-  ┌─────────────────┐
-  │   ${otp}   │
-  └─────────────────┘
-
-Kode ini berlaku selama 10 menit.
-Jangan bagikan kode ini kepada siapapun.
-
-Jika Anda tidak mendaftar di Farmify, abaikan email ini.
-
-Salam,
-Tim Farmify
-farmify.id · Jawa Timur, Indonesia
-    `.trim();
-
-    // ⚠️ SIMULASI: Tampilkan OTP di console (untuk dev/demo)
-    console.log(`📧 [FARMIFY EMAIL SIMULATOR]`);
-    console.log(`To: ${email}`);
-    console.log(`Subject: Kode Verifikasi Farmify — ${otp}`);
-    console.log(emailContent);
-
-    // Di production dengan Gmail MCP / Nodemailer:
-    // await sendGmail({ to: email, subject: `Kode Verifikasi Farmify`, body: emailContent });
-
-    return { success: true, otp_for_demo: otp };
+    try {
+      const response = await emailjs.send(serviceID, templateID, templateParams);
+      console.log("✅ Email terkirim!", response.status, response.text);
+      return { success: true };
+    } catch (error) {
+      console.error("❌ Gagal mengirim email:", error);
+      return { success: false, message: "Gagal mengirim email verifikasi." };
+    }
   },
 
   // ---- Session management ----
@@ -262,7 +172,7 @@ farmify.id · Jawa Timur, Indonesia
     return !!this.getSession();
   },
 
-  // ---- Update user status (for admin) ----
+  // ---- Update user status & data ----
   updateUserStatus(userId, status) {
     const users = this.getUsers();
     const idx = users.findIndex(u => u.id === userId);
@@ -272,7 +182,6 @@ farmify.id · Jawa Timur, Indonesia
     return true;
   },
 
-  // ---- Update user data ----
   updateUser(userId, data) {
     const users = this.getUsers();
     const idx = users.findIndex(u => u.id === userId);
@@ -282,7 +191,6 @@ farmify.id · Jawa Timur, Indonesia
     return true;
   },
 
-  // ---- Get users by role ----
   getUsersByRole(role) {
     return this.getUsers().filter(u => u.role === role);
   },
