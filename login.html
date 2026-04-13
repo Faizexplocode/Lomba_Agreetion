@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, " />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Masuk — Farmify</title>
   <link rel="stylesheet" href="style.css" />
   <style>
@@ -84,10 +84,7 @@
       margin-bottom: 20px;
     }
 
-    .welcome-title em {
-      color: var(--harvest);
-      font-style: italic;
-    }
+    .welcome-title em { color: var(--harvest); font-style: italic; }
 
     .welcome-sub {
       font-size: 15px;
@@ -98,11 +95,7 @@
     }
 
     /* Role Preview Cards */
-    .role-preview {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .role-preview { display: flex; flex-direction: column; gap: 12px; }
 
     .role-preview-item {
       display: flex;
@@ -116,9 +109,7 @@
       cursor: default;
     }
 
-    .role-preview-item:hover {
-      background: rgba(255,255,255,0.09);
-    }
+    .role-preview-item:hover { background: rgba(255,255,255,0.09); }
 
     .role-emoji {
       font-size: 22px;
@@ -137,16 +128,8 @@
       margin-bottom: 2px;
     }
 
-    .role-preview-text span {
-      font-size: 12px;
-      color: rgba(255,255,255,0.45);
-    }
-
-    .panel-foot {
-      z-index: 1;
-      font-size: 11.5px;
-      color: rgba(255,255,255,0.2);
-    }
+    .role-preview-text span { font-size: 12px; color: rgba(255,255,255,0.45); }
+    .panel-foot { z-index: 1; font-size: 11.5px; color: rgba(255,255,255,0.2); }
 
     /* RIGHT PANEL */
     .right-panel {
@@ -157,15 +140,9 @@
       padding: 48px;
     }
 
-    .login-box {
-      width: 100%;
-      max-width: 440px;
-    }
+    .login-box { width: 100%; max-width: 440px; }
 
-    .login-header {
-      margin-bottom: 32px;
-    }
-
+    .login-header { margin-bottom: 32px; }
     .login-header h2 {
       font-family: var(--font-display);
       font-size: 30px;
@@ -173,11 +150,7 @@
       color: var(--forest);
       margin-bottom: 6px;
     }
-
-    .login-header p {
-      color: var(--mid-gray);
-      font-size: 14px;
-    }
+    .login-header p { color: var(--mid-gray); font-size: 14px; }
 
     /* Demo Accounts Bar */
     .demo-bar {
@@ -197,11 +170,7 @@
       margin-bottom: 10px;
     }
 
-    .demo-accounts {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+    .demo-accounts { display: flex; gap: 8px; flex-wrap: wrap; }
 
     .demo-btn {
       padding: 6px 12px;
@@ -216,9 +185,10 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      -webkit-tap-highlight-color: transparent; /* Mencegah blok biru di Android */
     }
 
-    .demo-btn:hover {
+    .demo-btn:hover, .demo-btn:active {
       background: var(--moss);
       color: white;
       border-color: var(--moss);
@@ -283,23 +253,19 @@
       .left-panel { display: none; }
       .right-panel { padding: 36px 24px; align-items: flex-start; }
     }
-  </style>
 
-    <style>
     @media (max-width: 480px) {
       .right-panel { padding: 28px 20px !important; }
       .demo-accounts { gap: 6px !important; }
-      .demo-btn { font-size: 11px !important; padding: 5px 10px !important; }
+      .demo-btn { font-size: 12px !important; padding: 8px 12px !important; }
     }
-    </style>
-
+  </style>
 </head>
 <body>
 <div class="bg-texture"></div>
 
 <div class="login-wrapper">
 
-  <!-- LEFT PANEL -->
   <div class="left-panel">
     <div class="panel-brand">
       <div class="brand-icon-large">🌿</div>
@@ -310,43 +276,26 @@
     </div>
 
     <div class="welcome-section">
-      <h1 class="welcome-title">
-        Selamat<br>Datang<br>
-        <em>Kembali</em>
-      </h1>
-      <p class="welcome-sub">
-        Bergabunglah dengan ribuan petani dan pembeli yang sudah merasakan manfaat perdagangan langsung yang adil dan transparan.
-      </p>
-
+      <h1 class="welcome-title">Selamat<br>Datang<br><em>Kembali</em></h1>
+      <p class="welcome-sub">Bergabunglah dengan ribuan petani dan pembeli yang sudah merasakan manfaat perdagangan langsung yang adil dan transparan.</p>
       <div class="role-preview">
         <div class="role-preview-item">
           <div class="role-emoji">🌾</div>
           <div class="role-preview-text">
-            <strong>Petani / Penjual</strong>
-            <span>Kelola stok, tampilkan komoditas, terima order langsung</span>
+            <strong>Petani / Penjual</strong><span>Kelola stok, tampilkan komoditas, terima order langsung</span>
           </div>
         </div>
         <div class="role-preview-item">
           <div class="role-emoji">🏭</div>
           <div class="role-preview-text">
-            <strong>Pembeli / B2B</strong>
-            <span>Temukan supplier, pre-order, lacak pengiriman</span>
-          </div>
-        </div>
-        <div class="role-preview-item">
-          <div class="role-emoji">⚙️</div>
-          <div class="role-preview-text">
-            <strong>Admin Platform</strong>
-            <span>Monitor transaksi, verifikasi pengguna, kelola platform</span>
+            <strong>Pembeli / B2B</strong><span>Temukan supplier, pre-order, lacak pengiriman</span>
           </div>
         </div>
       </div>
     </div>
-
     <div class="panel-foot">© 2025 Farmify · Jawa Timur, Indonesia</div>
   </div>
 
-  <!-- RIGHT PANEL -->
   <div class="right-panel">
     <div class="login-box page-enter">
 
@@ -355,13 +304,12 @@
         <p>Masukkan email dan password untuk melanjutkan</p>
       </div>
 
-      <!-- Demo Accounts -->
       <div class="demo-bar">
         <div class="demo-bar-title">🧪 Akun Demo — Klik untuk isi otomatis</div>
-        <div class="demo-accounts" style="flex-wrap:wrap;">
-          <button class="demo-btn" onclick="fillDemo('farmer')">🌾 Petani</button>
-          <button class="demo-btn" onclick="fillDemo('buyer')">🏭 Pembeli</button>
-          <button class="demo-btn" onclick="fillDemo('admin')">⚙️ Admin</button>
+        <div class="demo-accounts">
+          <button type="button" class="demo-btn" onclick="fillDemo('farmer')">🌾 Petani</button>
+          <button type="button" class="demo-btn" onclick="fillDemo('buyer')">🏭 Pembeli</button>
+          <button type="button" class="demo-btn" onclick="fillDemo('admin')">⚙️ Admin</button>
         </div>
       </div>
 
@@ -391,10 +339,7 @@
         </div>
 
         <div class="remember-row">
-          <label class="remember-check">
-            <input type="checkbox" id="rememberMe" />
-            Ingat saya
-          </label>
+          <label class="remember-check"><input type="checkbox" id="rememberMe" /> Ingat saya</label>
           <a href="#" class="forgot-link">Lupa password?</a>
         </div>
 
@@ -410,16 +355,12 @@
 
     </div>
   </div>
-
 </div>
 
 <script src="js/db.js"></script>
 <script>
-  // Redirect if already logged in
   const existingSession = FarmifyDB.getSession();
-  if (existingSession) {
-    window.location.href = getDashboardUrl(existingSession.role);
-  }
+  if (existingSession) { window.location.href = getDashboardUrl(existingSession.role); }
 
   const demoAccounts = {
     farmer: { email: 'sido@farmify.id',  password: 'Petani@123' },
@@ -427,11 +368,17 @@
     admin:  { email: 'admin@farmify.id', password: 'Admin@Farmify2024' }
   };
 
+  // PERBAIKAN: Fungsi scroll otomatis setelah klik akun demo
   function fillDemo(role) {
     const acc = demoAccounts[role];
     document.getElementById('loginEmail').value = acc.email;
     document.getElementById('loginPassword').value = acc.password;
     detectRole(acc.email);
+    
+    // Auto-scroll ke tombol Masuk agar di HP terlihat jelas
+    setTimeout(() => {
+      document.getElementById('loginBtn').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 150);
   }
 
   function detectRole(email) {
@@ -479,9 +426,7 @@
       FarmifyDB.setSession(result.user);
       btn.innerHTML = '✅ Berhasil Masuk!';
       showAlert('success', `Selamat datang, ${result.user.full_name}!`);
-      setTimeout(() => {
-        window.location.href = getDashboardUrl(result.user.role);
-      }, 1000);
+      setTimeout(() => { window.location.href = getDashboardUrl(result.user.role); }, 1000);
     } else {
       showAlert('error', result.message);
       btn.innerHTML = 'Masuk ke Farmify';
