@@ -128,7 +128,7 @@ const FarmifyDB = {
   // ---- Send OTP via EmailJS ----
   async sendOTPEmail(email, name, otp) {
     const serviceID = "service_m6luo94"; 
-    const templateID = "R02l2iDCN_jfiwNTP"; // Pastikan ini benar dari template EmailJS kamu
+    const templateID = "template_c0dmscx"; // Pastikan ini benar dari template EmailJS kamu
 
     const templateParams = {
       to_name: name,
