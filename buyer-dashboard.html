@@ -638,5 +638,39 @@ document.querySelectorAll('.bottom-nav-item').forEach(btn => {
 });
 </script>
 
+<div class="modal-overlay" id="settingsModal" style="display:none;" onclick="if(event.target===this)closeModal('settingsModal')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Pengaturan Profil</div>
+      <button class="modal-close" onclick="closeModal('settingsModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+        <div class="user-avatar-sm" id="profileAvatar" style="width:64px;height:64px;font-size:24px;border-radius:16px;"></div>
+        <div>
+          <div style="font-weight:700;font-size:18px;color:var(--forest);" id="profileName">Loading...</div>
+          <div style="font-size:13px;color:var(--mid-gray);" id="profileEmail">Loading...</div>
+          <span class="badge badge-success" style="margin-top:6px;" id="profileRole">Role</span>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Nama Lengkap</label>
+        <input type="text" class="form-input" id="editName" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nomor Telepon</label>
+        <input type="text" class="form-input" id="editPhone" />
+      </div>
+      <div class="form-group" id="extraProfileField">
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('settingsModal')">Batal</button>
+      <button class="btn btn-primary" onclick="saveProfile()">Simpan Perubahan</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
