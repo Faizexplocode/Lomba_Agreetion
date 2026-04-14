@@ -2,265 +2,146 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, " />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel — Farmify</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    /* ========== ADMIN HEADER ========== */
     .admin-header-banner {
       background: linear-gradient(135deg, var(--forest) 0%, #1A3D28 100%);
-      border-radius: var(--radius-xl);
-      padding: 28px 36px;
-      margin-bottom: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-      overflow: hidden;
+      border-radius: var(--radius-xl); padding: 24px 32px; margin-bottom: 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; overflow: hidden; flex-wrap: wrap; gap: 12px;
     }
+    .admin-header-banner::after { content: '⚙️'; position: absolute; right: 32px; top: 50%; transform: translateY(-50%); font-size: 72px; opacity: 0.07; }
+    .admin-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: white; margin-bottom: 4px; }
+    .admin-sub { font-size: 13px; color: rgba(255,255,255,0.5); }
 
-    .admin-header-banner::after {
-      content: '⚙️';
-      position: absolute;
-      right: 36px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 80px;
-      opacity: 0.08;
-    }
-
-    .admin-title {
-      font-family: var(--font-display);
-      font-size: 24px;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 4px;
-    }
-
-    .admin-sub {
-      font-size: 13px;
-      color: rgba(255,255,255,0.55);
-    }
-
-    /* Tab System */
-    .tab-bar {
-      display: flex;
-      gap: 4px;
-      background: white;
-      padding: 6px;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(74,124,89,0.08);
-      margin-bottom: 24px;
-    }
-
-    .tab-btn {
-      padding: 10px 22px;
-      border-radius: var(--radius-md);
-      border: none;
-      background: transparent;
-      font-family: var(--font-body);
-      font-size: 13.5px;
-      font-weight: 600;
-      color: var(--mid-gray);
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
+    /* ========== TABS ========== */
+    .tab-bar { display: flex; gap: 4px; background: white; padding: 6px; border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); border: 1px solid rgba(74,124,89,0.08); margin-bottom: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tab-btn { padding: 9px 18px; border-radius: var(--radius-md); border: none; background: transparent; font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--mid-gray); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0; }
     .tab-btn:hover { color: var(--forest); background: var(--cream); }
-
-    .tab-btn.active {
-      background: var(--moss);
-      color: white;
-      box-shadow: 0 2px 12px rgba(45,90,61,0.3);
-    }
-
+    .tab-btn.active { background: var(--moss); color: white; box-shadow: 0 2px 12px rgba(45,90,61,0.3); }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* User Verification Cards */
-    .pending-user-card {
-      background: white;
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      border: 1px solid rgba(74,124,89,0.08);
-      box-shadow: var(--shadow-soft);
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 12px;
-      transition: transform 0.2s;
-    }
-
-    .pending-user-card:hover { transform: translateX(4px); }
-
-    .user-ava {
-      width: 46px; height: 46px;
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-      font-weight: 700;
-      color: white;
-      flex-shrink: 0;
-    }
-
+    /* ========== USER CARDS ========== */
+    .pending-user-card { background: white; border-radius: var(--radius-lg); padding: 18px 20px; border: 1px solid rgba(74,124,89,0.08); box-shadow: var(--shadow-soft); display: flex; align-items: center; gap: 14px; margin-bottom: 10px; transition: transform 0.2s; flex-wrap: wrap; }
+    .pending-user-card:hover { transform: translateX(3px); }
+    .user-ava { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; color: white; flex-shrink: 0; }
     .user-ava.farmer { background: linear-gradient(135deg, var(--moss), var(--leaf)); }
     .user-ava.buyer  { background: linear-gradient(135deg, var(--earth), var(--harvest)); }
     .user-ava.admin  { background: linear-gradient(135deg, var(--forest), var(--moss)); }
-
-    .user-info { flex: 1; min-width: 0; }
-    .user-name { font-weight: 700; font-size: 15px; color: var(--forest); }
+    .user-info { flex: 1; min-width: 140px; }
+    .user-name { font-weight: 700; font-size: 14px; color: var(--forest); }
     .user-detail { font-size: 12px; color: var(--mid-gray); margin-top: 2px; }
+    .user-actions { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; }
 
-    .user-actions { display: flex; gap: 8px; flex-shrink: 0; }
-
-    /* Platform metrics */
-    .metric-card {
-      background: white;
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(74,124,89,0.08);
-    }
-
-    .metric-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--mid-gray);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 10px;
-    }
-
+    /* ========== METRICS ========== */
+    .metric-card { background: white; border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-soft); border: 1px solid rgba(74,124,89,0.08); }
+    .metric-title { font-size: 12px; font-weight: 600; color: var(--mid-gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
     .metric-list { list-style: none; }
-    .metric-list li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 9px 0;
-      border-bottom: 1px solid var(--light-gray);
-      font-size: 13px;
-    }
+    .metric-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--light-gray); font-size: 13px; }
     .metric-list li:last-child { border-bottom: none; }
     .metric-list .val { font-weight: 700; color: var(--forest); }
+    .rev-bar-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--mid-gray); margin-bottom: 6px; }
+    .rev-bar { height: 8px; background: var(--light-gray); border-radius: 4px; margin-bottom: 12px; overflow: hidden; }
+    .rev-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--moss), var(--leaf)); }
 
-    /* Revenue bar */
-    .rev-bar-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: var(--mid-gray);
-      margin-bottom: 6px;
-    }
+    /* ========== QUICK ACTIONS ========== */
+    .quick-actions-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+    @media (max-width: 600px) { .quick-actions-grid { grid-template-columns: repeat(2, 1fr); } }
+    .quick-action { background: white; border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-soft); border: 1px solid rgba(74,124,89,0.08); text-align: center; cursor: pointer; transition: all 0.2s; }
+    .quick-action:hover { transform: translateY(-3px); box-shadow: var(--shadow-med); }
+    .qa-icon { font-size: 22px; margin-bottom: 6px; }
+    .qa-label { font-size: 12px; font-weight: 600; color: var(--forest); }
 
-    .rev-bar {
-      height: 10px;
-      background: var(--light-gray);
-      border-radius: 5px;
-      margin-bottom: 12px;
-      overflow: hidden;
-    }
+    /* ========== ACTIVITY LOG ========== */
+    .activity-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--light-gray); }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+    .activity-dot.farmer { background: var(--moss); }
+    .activity-dot.buyer { background: var(--earth); }
+    .activity-dot.admin { background: var(--forest); }
+    .activity-text { font-size: 13px; color: var(--charcoal); line-height: 1.4; flex: 1; }
+    .activity-time { font-size: 11px; color: var(--mid-gray); white-space: nowrap; }
 
-    .rev-fill {
-      height: 100%;
-      border-radius: 5px;
-      background: linear-gradient(90deg, var(--moss), var(--leaf));
-    }
+    /* ========== USER DETAIL PANEL ========== */
+    .user-detail-panel { background: white; border-radius: var(--radius-lg); border: 1px solid rgba(74,124,89,0.08); box-shadow: var(--shadow-soft); overflow: hidden; }
+    .udp-header { background: linear-gradient(135deg, var(--forest), #0D2017); padding: 24px; color: white; display: flex; align-items: center; gap: 16px; }
+    .udp-avatar { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: white; flex-shrink: 0; }
+    .udp-body { padding: 24px; }
+    .udp-field { padding: 10px 0; border-bottom: 1px solid var(--light-gray); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .udp-field:last-child { border-bottom: none; }
+    .udp-label { font-size: 12px; font-weight: 600; color: var(--mid-gray); text-transform: uppercase; letter-spacing: 0.5px; }
+    .udp-value { font-size: 14px; color: var(--charcoal); font-weight: 500; text-align: right; }
 
-    /* Quick action buttons */
-    .quick-actions {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 24px;
-    }
+    /* ========== SPA VIEWS ========== */
+    .page-view { display: none; }
+    .page-view.active { display: block; }
 
-    .quick-action {
-      background: white;
-      border-radius: var(--radius-lg);
-      padding: 18px 16px;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(74,124,89,0.08);
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+    /* ========== PROFILE STYLES ========== */
+    .profile-hero { background: linear-gradient(135deg, var(--forest) 0%, #0D2017 100%); border-radius: var(--radius-xl); padding: 28px 32px; color: white; display: flex; align-items: center; gap: 22px; margin-bottom: 22px; position: relative; overflow: hidden; flex-wrap: wrap; }
+    .profile-hero::after { content: '⚙️'; position: absolute; bottom: -10px; right: 20px; font-size: 72px; opacity: 0.07; }
+    .profile-avatar-lg { width: 80px; height: 80px; border-radius: 20px; background: linear-gradient(135deg, var(--sage), var(--moss)); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: white; flex-shrink: 0; border: 3px solid rgba(255,255,255,0.15); position: relative; z-index: 1; }
+    .profile-hero-info { position: relative; z-index: 1; flex: 1; min-width: 180px; }
+    .profile-hero-name { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .profile-hero-email { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 10px; }
+    .profile-badge { padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.12); }
+    .profile-badge.gold { background: rgba(200,151,42,0.25); color: var(--harvest); border-color: rgba(200,151,42,0.3); }
+    .profile-card { background: white; border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-soft); border: 1px solid rgba(74,124,89,0.08); }
+    .profile-card-title { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--forest); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--light-gray); }
+    .profile-field { margin-bottom: 14px; }
+    .profile-field:last-child { margin-bottom: 0; }
+    .profile-field-label { font-size: 11px; font-weight: 600; color: var(--mid-gray); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+    .profile-field-value { font-size: 14px; color: var(--charcoal); font-weight: 500; }
+    .profile-field-input { width: 100%; padding: 9px 13px; border: 1.5px solid var(--light-gray); border-radius: var(--radius-md); font-size: 14px; font-family: var(--font-body); color: var(--charcoal); background: var(--warm-white); outline: none; transition: border-color 0.2s; }
+    .profile-field-input:focus { border-color: var(--leaf); background: white; }
+    .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+    @media (max-width: 640px) { .profile-grid { grid-template-columns: 1fr; } }
+    .profile-view-mode .edit-only { display: none; }
+    .profile-view-mode .view-only { display: block; }
+    .profile-edit-mode .edit-only { display: block; }
+    .profile-edit-mode .view-only { display: none; }
+    .btn-edit-profile { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer; background: rgba(74,124,89,0.1); color: var(--moss); border: 1.5px solid rgba(74,124,89,0.2); font-family: var(--font-body); transition: all 0.2s; }
+    .btn-save-profile { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer; background: var(--moss); color: white; border: none; font-family: var(--font-body); }
+    .btn-cancel-profile { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer; background: transparent; color: var(--mid-gray); border: 1.5px solid var(--light-gray); font-family: var(--font-body); }
+    .page-title { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--forest); }
+    .page-subtitle { font-size: 14px; color: var(--mid-gray); margin-top: 4px; }
+    .page-title-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; gap: 12px; flex-wrap: wrap; }
 
-    .quick-action:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-med);
-    }
-
-    .quick-action .qa-icon {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    .quick-action .qa-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--forest);
-    }
-
-    .search-filter-row {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 16px;
-      align-items: center;
-    }
-
-    .search-filter-row input {
-      flex: 1;
-    }
+    /* Search filter row */
+    .search-filter-row { display: flex; gap: 10px; margin-bottom: 14px; align-items: center; flex-wrap: wrap; }
+    .search-filter-row input { flex: 1; min-width: 180px; }
   </style>
-
 </head>
 <body>
 <div class="app-layout">
-<!-- MOBILE TOP BAR -->
-<div class="mobile-topbar">
-  <a href="#" class="mobile-brand">
-    <div class="mobile-brand-icon">🌿</div>
-    <span class="mobile-brand-name">Farmify</span>
-  </a>
-  <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
-</div>
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
+  <div class="mobile-topbar">
+    <a href="#" class="mobile-brand"><div class="mobile-brand-icon">🌿</div><span class="mobile-brand-name">Farmify</span></a>
+    <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <a href="#" class="sidebar-brand">
+    <a href="#" class="sidebar-brand" onclick="navigateTo('dashboard'); return false;">
       <div class="brand-icon">🌿</div>
-      <div>
-        <div class="brand-name">Farmify</div>
-        <div class="brand-role">Admin Panel</div>
-      </div>
+      <div><div class="brand-name">Farmify</div><div class="brand-role">Admin Panel</div></div>
     </a>
 
     <ul class="sidebar-nav">
-      <li><a href="#" class="active"><span class="nav-icon">🏠</span> Dashboard</a></li>
-      <li><a href="#"><span class="nav-icon">✅</span> Verifikasi User <span style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;">5</span></a></li>
-      <li><a href="#"><span class="nav-icon">👥</span> Manajemen User</a></li>
-      <li><a href="#"><span class="nav-icon">📦</span> Monitor Transaksi</a></li>
-      <li><a href="#"><span class="nav-icon">🌾</span> Komoditas Platform</a></li>
+      <li><a href="#" id="nav-dashboard" class="active" onclick="navigateTo('dashboard'); return false;"><span class="nav-icon">🏠</span> Dashboard</a></li>
+      <li><a href="#" onclick="navigateTo('dashboard'); switchTab('verification'); return false;"><span class="nav-icon">✅</span> Verifikasi User <span data-notif-badge style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;display:none;">0</span></a></li>
+      <li><a href="#" onclick="navigateTo('monitor'); return false;" id="nav-monitor"><span class="nav-icon">👥</span> Monitor Akun</a></li>
+      <li><a href="#" onclick="navigateTo('dashboard'); switchTab('transactions'); return false;"><span class="nav-icon">📦</span> Monitor Transaksi</a></li>
+      <li><a href="#" onclick="navigateTo('dashboard'); switchTab('platform'); return false;"><span class="nav-icon">📊</span> Analitik Platform</a></li>
 
-      <div style="padding:0 8px;margin-top:20px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">
-        Platform
-      </div>
-      <li><a href="#"><span class="nav-icon">📊</span> Analitik Platform</a></li>
-      <li><a href="#"><span class="nav-icon">💰</span> Laporan Keuangan</a></li>
-      <li><a href="#"><span class="nav-icon">🚚</span> Manajemen Logistik</a></li>
-      <li><a href="#"><span class="nav-icon">⭐</span> Review & Komplain</a></li>
-      <li><a href="#"><span class="nav-icon">📢</span> Pengumuman</a></li>
-
-      <div style="padding:0 8px;margin-top:20px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">
-        Sistem
-      </div>
-      <li><a href="#"><span class="nav-icon">🔧</span> Pengaturan Sistem</a></li>
-      <li><a href="#"><span class="nav-icon">📋</span> Log Aktivitas</a></li>
+      <div style="padding:0 8px;margin-top:20px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">Sistem</div>
+      <li><a href="#" onclick="navAlert('Laporan Keuangan'); return false;"><span class="nav-icon">💰</span> Laporan Keuangan</a></li>
+      <li><a href="#" onclick="navigateTo('activity'); return false;" id="nav-activity"><span class="nav-icon">📋</span> Log Aktivitas</a></li>
+      <li><a href="#" id="nav-profile" onclick="navigateTo('profile'); return false;"><span class="nav-icon">👤</span> Profil Admin</a></li>
     </ul>
 
     <div class="sidebar-footer">
@@ -279,340 +160,359 @@
     </div>
   </aside>
 
-  <!-- MAIN CONTENT -->
   <main class="main-content">
 
-    <!-- HEADER BANNER -->
-    <div class="admin-header-banner page-enter">
-      <div>
-        <div class="admin-title" id="adminGreeting">Admin Panel — Farmify Platform</div>
-        <div class="admin-sub">Kelola pengguna, transaksi, dan kesehatan platform secara menyeluruh</div>
-      </div>
-      <div class="admin-btn-row" style="display:flex;gap:10px;z-index:1;">
-        <button class="btn btn-outline-white" style="font-size:13px;">📊 Export Laporan</button>
-        <button class="btn btn-harvest" style="font-size:13px;">+ Tambah Admin</button>
-      </div>
-    </div>
+    <!-- ===== VIEW: DASHBOARD ===== -->
+    <div id="view-dashboard" class="page-view active">
 
-    <!-- STATS -->
-    <div class="stats-grid page-enter">
-      <div class="stat-card">
-        <div class="stat-icon green">👥</div>
-        <div class="stat-value" id="totalUsersVal">3</div>
-        <div class="stat-label">Total Pengguna</div>
-        <div class="stat-change up">↑ +2 minggu ini</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon gold">💸</div>
-        <div class="stat-value">Rp 142 Jt</div>
-        <div class="stat-label">Volume Transaksi</div>
-        <div class="stat-change up">↑ +18% bulan ini</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon earth">🌾</div>
-        <div class="stat-value">24</div>
-        <div class="stat-label">Petani Aktif</div>
-        <div class="stat-change up">↑ +4 baru</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon red">⚠️</div>
-        <div class="stat-value" id="pendingVal">5</div>
-        <div class="stat-label">Pending Verifikasi</div>
-        <div class="stat-change down">Perlu perhatian</div>
-      </div>
-    </div>
-
-    <!-- QUICK ACTIONS -->
-    <div class="quick-actions-grid page-enter">
-      <div class="quick-action" onclick="switchTab('verification')">
-        <div class="qa-icon">✅</div>
-        <div class="qa-label">Verifikasi User</div>
-      </div>
-      <div class="quick-action">
-        <div class="qa-icon">💰</div>
-        <div class="qa-label">Cairkan Dana</div>
-      </div>
-      <div class="quick-action">
-        <div class="qa-icon">📊</div>
-        <div class="qa-label">Lihat Laporan</div>
-      </div>
-      <div class="quick-action">
-        <div class="qa-icon">📢</div>
-        <div class="qa-label">Kirim Pengumuman</div>
-      </div>
-    </div>
-
-    <!-- TABS -->
-    <div class="tab-bar page-enter" style="overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;">
-      <button class="tab-btn active" style="flex-shrink:0;" onclick="switchTab('users')" id="tab-users">👥 Semua Pengguna</button>
-      <button class="tab-btn" style="flex-shrink:0;" onclick="switchTab('verification')" id="tab-verification">✅ Perlu Verifikasi <span style="background:var(--terracotta);color:white;font-size:10px;padding:2px 8px;border-radius:100px;margin-left:4px;">5</span></button>
-      <button class="tab-btn" style="flex-shrink:0;" onclick="switchTab('transactions')" id="tab-transactions">📦 Transaksi</button>
-      <button class="tab-btn" style="flex-shrink:0;" onclick="switchTab('platform')" id="tab-platform">📊 Platform</button>
-    </div>
-
-    <!-- ===== TAB: SEMUA USER ===== -->
-    <div class="tab-content active" id="content-users">
-      <div class="search-filter-row" style="flex-wrap:wrap;">
-        <div class="input-with-icon" style="flex:1">
-          <span class="input-icon">🔍</span>
-          <input type="text" class="form-input" placeholder="Cari nama, email, atau ID pengguna..." oninput="filterUsers(this.value)" />
+      <div class="admin-header-banner page-enter">
+        <div>
+          <div class="admin-title" id="adminGreeting">Admin Panel — Farmify</div>
+          <div class="admin-sub">Kelola pengguna, transaksi, dan kesehatan platform</div>
         </div>
-        <select class="form-select" style="width:160px;" onchange="filterByRole(this.value)">
-          <option value="">Semua Role</option>
-          <option value="farmer">🌾 Petani</option>
-          <option value="buyer">🏭 Pembeli</option>
-          <option value="admin">⚙️ Admin</option>
-        </select>
-        <select class="form-select" style="width:160px;">
-          <option>Semua Status</option>
-          <option>Active</option>
-          <option>Pending</option>
-          <option>Suspended</option>
-        </select>
+        <div style="display:flex;gap:10px;z-index:1;flex-wrap:wrap;">
+          <button class="btn btn-outline-white" style="font-size:13px;" onclick="exportReport()">📊 Export CSV</button>
+          <button class="btn btn-harvest" style="font-size:13px;" onclick="navAlert('Tambah Admin')">+ Tambah Admin</button>
+        </div>
       </div>
 
-      <div class="table-container">
+      <div class="stats-grid page-enter">
+        <div class="stat-card"><div class="stat-icon green">👥</div><div class="stat-value" id="totalUsersVal">—</div><div class="stat-label">Total Pengguna</div><div class="stat-change up">↑ +2 minggu ini</div></div>
+        <div class="stat-card"><div class="stat-icon gold">💸</div><div class="stat-value">Rp 142 Jt</div><div class="stat-label">Volume Transaksi</div><div class="stat-change up">↑ +18% bulan ini</div></div>
+        <div class="stat-card"><div class="stat-icon earth">🌾</div><div class="stat-value" id="farmerCount">—</div><div class="stat-label">Petani Aktif</div></div>
+        <div class="stat-card"><div class="stat-icon red">⚠️</div><div class="stat-value" id="pendingVal">—</div><div class="stat-label">Pending Verifikasi</div><div class="stat-change down">Perlu perhatian</div></div>
+      </div>
+
+      <div class="quick-actions-grid page-enter">
+        <div class="quick-action" onclick="switchTab('verification')"><div class="qa-icon">✅</div><div class="qa-label">Verifikasi User</div></div>
+        <div class="quick-action" onclick="navigateTo('monitor')"><div class="qa-icon">👁️</div><div class="qa-label">Monitor Akun</div></div>
+        <div class="quick-action" onclick="navigateTo('activity')"><div class="qa-icon">📋</div><div class="qa-label">Log Aktivitas</div></div>
+        <div class="quick-action" onclick="exportReport()"><div class="qa-icon">📊</div><div class="qa-label">Export Laporan</div></div>
+      </div>
+
+      <!-- TABS -->
+      <div class="tab-bar page-enter">
+        <button class="tab-btn active" onclick="switchTab('users')" id="tab-users">👥 Semua Pengguna</button>
+        <button class="tab-btn" onclick="switchTab('verification')" id="tab-verification">✅ Verifikasi <span id="pendingBadge" style="background:var(--terracotta);color:white;font-size:10px;padding:2px 8px;border-radius:100px;margin-left:4px;">0</span></button>
+        <button class="tab-btn" onclick="switchTab('transactions')" id="tab-transactions">📦 Transaksi</button>
+        <button class="tab-btn" onclick="switchTab('platform')" id="tab-platform">📊 Platform</button>
+      </div>
+
+      <!-- TAB: SEMUA USER -->
+      <div class="tab-content active" id="content-users">
+        <div class="search-filter-row">
+          <div class="input-with-icon" style="flex:1;">
+            <span class="input-icon">🔍</span>
+            <input type="text" class="form-input" placeholder="Cari nama, email..." oninput="filterUsers(this.value)" />
+          </div>
+          <select class="form-select" style="width:140px;" onchange="filterByRole(this.value)">
+            <option value="">Semua Role</option>
+            <option value="farmer">🌾 Petani</option>
+            <option value="buyer">🏭 Pembeli</option>
+            <option value="admin">⚙️ Admin</option>
+          </select>
+        </div>
+        <div class="table-container">
+          <div class="table-header"><div class="table-title">Daftar Pengguna</div><span class="badge badge-farmer" id="userCountBadge">—</span></div>
+          <div class="table-scroll"><table>
+            <thead><tr><th>Pengguna</th><th>Email</th><th>Role</th><th>Status</th><th>Terdaftar</th><th>Aksi</th></tr></thead>
+            <tbody id="usersTableBody"><tr><td colspan="6" style="text-align:center;padding:28px;color:var(--mid-gray);">Memuat...</td></tr></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- TAB: VERIFIKASI -->
+      <div class="tab-content" id="content-verification">
+        <div class="alert alert-info" style="margin-bottom:16px;"><span>📋</span> Pengguna baru perlu diverifikasi sebelum bisa menggunakan platform.</div>
+        <div id="pendingUsersList"><div style="text-align:center;padding:32px;color:var(--mid-gray);">Memuat...</div></div>
+      </div>
+
+      <!-- TAB: TRANSAKSI -->
+      <div class="tab-content" id="content-transactions">
+        <div class="table-container">
+          <div class="table-header"><div class="table-title">Monitor Transaksi</div><span class="badge badge-farmer" id="txCountBadge">—</span></div>
+          <div class="table-scroll"><table>
+            <thead><tr><th>Kode Order</th><th>Petani</th><th>Pembeli</th><th>Komoditas</th><th>Total</th><th>Platform Fee</th><th>Status</th></tr></thead>
+            <tbody id="transactionTableBody"><tr><td colspan="7" style="text-align:center;padding:28px;color:var(--mid-gray);">Memuat...</td></tr></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- TAB: PLATFORM -->
+      <div class="tab-content" id="content-platform">
+        <div class="platform-grid">
+          <div class="metric-card">
+            <div class="metric-title">Revenue Breakdown</div>
+            <div>
+              <div class="rev-bar-label"><span>Transaction Fee (7%)</span><span style="font-weight:700;color:var(--forest);">Rp 9.940.000</span></div>
+              <div class="rev-bar"><div class="rev-fill" style="width:75%"></div></div>
+              <div class="rev-bar-label"><span>Premium Subscription</span><span style="font-weight:700;color:var(--forest);">Rp 2.450.000</span></div>
+              <div class="rev-bar"><div class="rev-fill" style="width:25%;background:linear-gradient(90deg,var(--earth),var(--harvest));"></div></div>
+              <div class="rev-bar-label"><span>Advertisement Fee</span><span style="font-weight:700;color:var(--forest);">Rp 800.000</span></div>
+              <div class="rev-bar"><div class="rev-fill" style="width:10%;background:linear-gradient(90deg,#7ea,#4a7);"></div></div>
+            </div>
+            <div style="border-top:1px solid var(--light-gray);padding-top:12px;margin-top:4px;display:flex;justify-content:space-between;">
+              <span style="font-size:13px;color:var(--mid-gray);">Total Revenue</span>
+              <span style="font-weight:700;color:var(--forest);font-size:16px;">Rp 13.190.000</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Statistik Platform</div>
+            <ul class="metric-list">
+              <li><span>Total Petani</span><span class="val" id="statFarmer">—</span></li>
+              <li><span>Total Pembeli B2B</span><span class="val" id="statBuyer">—</span></li>
+              <li><span>Komoditas Aktif</span><span class="val" id="statCommodity">—</span></li>
+              <li><span>Order Total</span><span class="val" id="statOrder">—</span></li>
+            </ul>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Top Komoditas</div>
+            <ul class="metric-list" id="topCommodities">
+              <li><span>🌶️ Cabai Merah</span><span class="val">38 order</span></li>
+              <li><span>🧅 Bawang Merah</span><span class="val">27 order</span></li>
+              <li><span>🥬 Sayuran Hijau</span><span class="val">22 order</span></li>
+            </ul>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Distribusi Wilayah</div>
+            <ul class="metric-list">
+              <li><span>🏙️ Malang</span><span class="val">32%</span></li>
+              <li><span>🏙️ Surabaya</span><span class="val">24%</span></li>
+              <li><span>🏙️ Pasuruan</span><span class="val">18%</span></li>
+              <li><span>🏙️ Lumajang</span><span class="val">14%</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end view-dashboard -->
+
+
+    <!-- ===== VIEW: MONITOR AKUN ===== -->
+    <div id="view-monitor" class="page-view">
+      <div class="page-title-row page-enter">
+        <div>
+          <div class="page-title">Monitor Akun 👁️</div>
+          <div class="page-subtitle">Lihat detail dan aktivitas setiap akun di platform</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadMonitor('all')">Semua</button>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadMonitor('farmer')">🌾 Petani</button>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadMonitor('buyer')">🏭 Pembeli</button>
+        </div>
+      </div>
+
+      <div id="monitorGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+        <!-- filled by JS -->
+      </div>
+
+      <!-- User Detail Side Panel -->
+      <div id="userDetailPanel" style="display:none;margin-top:24px;">
+        <div class="page-title-row" style="margin-bottom:16px;">
+          <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--forest);" id="detailPanelTitle">Detail Akun</div>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="document.getElementById('userDetailPanel').style.display='none'">✕ Tutup</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" id="detailPanelContent"><!-- filled by JS --></div>
+      </div>
+    </div><!-- end view-monitor -->
+
+
+    <!-- ===== VIEW: LOG AKTIVITAS ===== -->
+    <div id="view-activity" class="page-view">
+      <div class="page-title-row page-enter">
+        <div>
+          <div class="page-title">Log Aktivitas 📋</div>
+          <div class="page-subtitle">Semua aktivitas pengguna secara real-time</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadActivity('all')">Semua</button>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadActivity('farmer')">🌾 Petani</button>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadActivity('buyer')">🏭 Pembeli</button>
+        </div>
+      </div>
+
+      <div class="table-container page-enter">
         <div class="table-header">
-          <div class="table-title">Daftar Pengguna</div>
-          <span class="badge badge-farmer" id="userCountBadge">Loading...</span>
+          <div class="table-title">Riwayat Aktivitas</div>
+          <span class="badge badge-farmer" id="activityCountBadge">—</span>
         </div>
-        <div class="table-scroll"><div class="table-scroll"><table>
-          <thead>
-            <tr>
-              <th>Pengguna</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Terdaftar</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="usersTableBody">
-            <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">Memuat data...</td></tr>
-          </tbody>
-        </table></div></div>
-      </div>
-    </div>
-
-    <!-- ===== TAB: VERIFIKASI ===== -->
-    <div class="tab-content" id="content-verification">
-      <div class="alert alert-info">
-        <span>📋</span>
-        <span>Pengguna yang baru mendaftar sebagai Petani atau Pembeli memerlukan verifikasi manual sebelum dapat menggunakan platform.</span>
-      </div>
-
-      <div id="pendingUsersList">
-        <!-- Populated by JS -->
-        <div style="text-align:center;padding:48px;color:var(--mid-gray);">
-          <div style="font-size:48px;margin-bottom:16px;">✅</div>
-          <div style="font-weight:600;font-size:16px;color:var(--forest);">Tidak ada pengguna menunggu verifikasi</div>
-          <div style="font-size:13px;margin-top:4px;">Semua pengguna telah diverifikasi</div>
+        <div id="activityLog" style="padding:0 4px;">
+          <div style="text-align:center;padding:32px;color:var(--mid-gray);">Memuat aktivitas...</div>
         </div>
       </div>
-    </div>
+    </div><!-- end view-activity -->
 
-    <!-- ===== TAB: TRANSAKSI ===== -->
-    <div class="tab-content" id="content-transactions">
-      <div class="table-container">
-        <div class="table-header">
-          <div class="table-title">Monitor Transaksi Platform</div>
-          <div style="display:flex;gap:8px;">
-            <span class="badge badge-success">12 Aktif</span>
-            <span class="badge badge-warning">3 Dispute</span>
+
+    <!-- ===== VIEW: PROFIL ADMIN ===== -->
+    <div id="view-profile" class="page-view">
+
+      <div class="page-title-row page-enter">
+        <div><div class="page-title">Profil Admin ⚙️</div><div class="page-subtitle">Informasi akun admin platform</div></div>
+        <div id="profileActions">
+          <button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profil</button>
+        </div>
+      </div>
+
+      <div class="profile-hero page-enter">
+        <div class="profile-avatar-lg" id="profileAvatarLg">AF</div>
+        <div class="profile-hero-info">
+          <div class="profile-hero-name" id="profileHeroName">Admin Farmify</div>
+          <div class="profile-hero-email" id="profileHeroEmail">admin@farmify.id</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <span class="profile-badge gold">⚙️ Super Admin</span>
+            <span class="profile-badge">✓ Terverifikasi</span>
           </div>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Kode Order</th>
-              <th>Petani</th>
-              <th>Pembeli</th>
-              <th>Nilai (Rp)</th>
-              <th>Fee 7%</th>
-              <th>Status</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span style="font-family:var(--font-mono);font-size:12px;color:var(--moss);">ORD-2025-001</span></td>
-              <td>Sido Makmur Farm</td>
-              <td>PT Jaya Foods</td>
-              <td>Rp 22.500.000</td>
-              <td style="color:var(--moss);font-weight:600;">Rp 1.575.000</td>
-              <td><span class="badge badge-warning">Escrow</span></td>
-              <td><button class="btn btn-primary" style="padding:5px 12px;font-size:11px;">Cairkan</button></td>
-            </tr>
-            <tr>
-              <td><span style="font-family:var(--font-mono);font-size:12px;color:var(--moss);">ORD-2025-002</span></td>
-              <td>Berkah Tani</td>
-              <td>Hotel Grand Mlg</td>
-              <td>Rp 7.600.000</td>
-              <td style="color:var(--moss);font-weight:600;">Rp 532.000</td>
-              <td><span class="badge badge-success">Selesai</span></td>
-              <td><button class="btn btn-secondary" style="padding:5px 12px;font-size:11px;">Detail</button></td>
-            </tr>
-            <tr>
-              <td><span style="font-family:var(--font-mono);font-size:12px;color:var(--moss);">ORD-2025-003</span></td>
-              <td>Kebun Pasuruan</td>
-              <td>Catering Berkah</td>
-              <td>Rp 4.500.000</td>
-              <td style="color:var(--moss);font-weight:600;">Rp 315.000</td>
-              <td><span class="badge badge-danger">Dispute</span></td>
-              <td><button class="btn btn-danger" style="padding:5px 12px;font-size:11px;">Resolve</button></td>
-            </tr>
-          </tbody>
-        </table>
       </div>
-    </div>
 
-    <!-- ===== TAB: PLATFORM ===== -->
-    <div class="tab-content" id="content-platform">
-      <div class="platform-grid">
-
-        <div class="metric-card">
-          <div class="metric-title">Revenue Breakdown (Bulan Ini)</div>
-          <div>
-            <div class="rev-bar-label"><span>Transaction Fee (7%)</span><span style="font-weight:700;color:var(--forest);">Rp 9.940.000</span></div>
-            <div class="rev-bar"><div class="rev-fill" style="width:75%"></div></div>
-
-            <div class="rev-bar-label"><span>Premium Subscription</span><span style="font-weight:700;color:var(--forest);">Rp 2.450.000</span></div>
-            <div class="rev-bar"><div class="rev-fill" style="width:25%;background:linear-gradient(90deg,var(--earth),var(--harvest));"></div></div>
-
-            <div class="rev-bar-label"><span>Advertisement Fee</span><span style="font-weight:700;color:var(--forest);">Rp 800.000</span></div>
-            <div class="rev-bar"><div class="rev-fill" style="width:10%;background:linear-gradient(90deg,#7ea,#4a7);"></div></div>
+      <div class="profile-grid page-enter">
+        <div class="profile-card profile-view-mode" id="cardPersonal">
+          <div class="profile-card-title">👤 Informasi Akun</div>
+          <div class="view-only">
+            <div class="profile-field"><div class="profile-field-label">Nama Lengkap</div><div class="profile-field-value" id="vFullName">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">Email</div><div class="profile-field-value" id="vEmail">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">Nomor Telepon</div><div class="profile-field-value" id="vPhone">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">Bergabung Sejak</div><div class="profile-field-value" id="vMemberSince">—</div></div>
           </div>
-          <div style="border-top:1px solid var(--light-gray);padding-top:14px;margin-top:4px;display:flex;justify-content:space-between;">
-            <span style="font-size:13px;color:var(--mid-gray);">Total Revenue</span>
-            <span style="font-weight:700;color:var(--forest);font-size:16px;">Rp 13.190.000</span>
+          <div class="edit-only">
+            <div class="profile-field"><div class="profile-field-label">Nama Lengkap</div><input type="text" class="profile-field-input" id="eFullName" /></div>
+            <div class="profile-field"><div class="profile-field-label">Email</div><input type="email" class="profile-field-input" id="eEmail" disabled style="opacity:0.5;" /></div>
+            <div class="profile-field"><div class="profile-field-label">Nomor Telepon</div><input type="tel" class="profile-field-input" id="ePhone" /></div>
           </div>
         </div>
-
-        <div class="metric-card">
-          <div class="metric-title">Statistik Platform</div>
-          <ul class="metric-list">
-            <li><span>Total Petani Terdaftar</span><span class="val">24</span></li>
-            <li><span>Total Pembeli B2B</span><span class="val">18</span></li>
-            <li><span>Komoditas Aktif</span><span class="val">87</span></li>
-            <li><span>Order Bulan Ini</span><span class="val">142</span></li>
-            <li><span>Pre-Order Aktif</span><span class="val">23</span></li>
-            <li><span>Volume Transaksi (Jt)</span><span class="val" style="color:var(--moss);">Rp 142 Jt</span></li>
-          </ul>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-title">Distribusi Wilayah</div>
-          <ul class="metric-list">
-            <li><span>🏙️ Malang</span><span class="val">32%</span></li>
-            <li><span>🏙️ Surabaya</span><span class="val">24%</span></li>
-            <li><span>🏙️ Pasuruan</span><span class="val">18%</span></li>
-            <li><span>🏙️ Lumajang</span><span class="val">14%</span></li>
-            <li><span>🏙️ Lainnya Jatim</span><span class="val">12%</span></li>
-          </ul>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-title">Top Komoditas Bulan Ini</div>
-          <ul class="metric-list">
-            <li><span>🌶️ Cabai Merah</span><span class="val">38 order</span></li>
-            <li><span>🧅 Bawang Merah</span><span class="val">27 order</span></li>
-            <li><span>🥬 Sayuran Hijau</span><span class="val">22 order</span></li>
-            <li><span>🥔 Kentang</span><span class="val">19 order</span></li>
-            <li><span>🍉 Semangka</span><span class="val">15 order</span></li>
-          </ul>
+        <div class="profile-card page-enter">
+          <div class="profile-card-title">📊 Statistik Platform</div>
+          <div class="profile-field"><div class="profile-field-label">Total Pengguna</div><div class="profile-field-value" id="adminStatUsers">—</div></div>
+          <div class="profile-field"><div class="profile-field-label">Petani Terdaftar</div><div class="profile-field-value" id="adminStatFarmers">—</div></div>
+          <div class="profile-field"><div class="profile-field-label">Pembeli Terdaftar</div><div class="profile-field-value" id="adminStatBuyers">—</div></div>
+          <div class="profile-field"><div class="profile-field-label">Total Transaksi</div><div class="profile-field-value" id="adminStatOrders">—</div></div>
         </div>
       </div>
-    </div>
+
+    </div><!-- end view-profile -->
 
   </main>
 </div>
 
 <!-- MODAL: User Detail -->
 <div class="modal-overlay" id="userDetailModal" style="display:none;" onclick="if(event.target===this)closeModal('userDetailModal')">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Detail Pengguna</div>
-      <button class="modal-close" onclick="closeModal('userDetailModal')">✕</button>
-    </div>
-    <div class="modal-body" id="userDetailContent">
-      <!-- Filled by JS -->
-    </div>
-    <div class="modal-footer" id="userDetailFooter">
-      <button class="btn btn-secondary" onclick="closeModal('userDetailModal')">Tutup</button>
-    </div>
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-header"><div class="modal-title">Detail Pengguna</div><button class="modal-close" onclick="closeModal('userDetailModal')">✕</button></div>
+    <div class="modal-body" id="userDetailContent"><!-- filled by JS --></div>
+    <div class="modal-footer" id="userDetailFooter"><button class="btn btn-secondary" onclick="closeModal('userDetailModal')">Tutup</button></div>
   </div>
 </div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bottom-nav-item active" id="bnav-dashboard" onclick="navigateTo('dashboard')">
+      <span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Dashboard</span>
+    </button>
+    <button class="bottom-nav-item" id="bnav-monitor" onclick="navigateTo('monitor')">
+      <span class="bottom-nav-icon">👁️</span><span class="bottom-nav-label">Monitor</span>
+    </button>
+    <button class="bottom-nav-item" id="bnav-activity" onclick="navigateTo('activity')">
+      <span class="bottom-nav-icon">📋</span><span class="bottom-nav-label">Aktivitas</span>
+    </button>
+    <button class="bottom-nav-item" onclick="switchTab('verification'); navigateTo('dashboard')">
+      <span class="bottom-nav-icon">✅</span><span class="bottom-nav-label">Verifikasi</span>
+    </button>
+    <button class="bottom-nav-item" id="bnav-profile" onclick="navigateTo('profile')">
+      <span class="bottom-nav-icon">👤</span><span class="bottom-nav-label">Profil</span>
+    </button>
+  </div>
+</nav>
 
 <script src="js/db.js"></script>
 <script>
   const session = requireAuth(['admin']);
+  let allUsers = [];
+  let currentView = 'dashboard';
+
   if (session) {
     document.getElementById('adminGreeting').textContent = `Admin Panel — ${session.full_name}`;
     document.getElementById('sidebarName').textContent = session.full_name;
-    document.getElementById('sidebarAvatar').textContent =
-      session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
+    document.getElementById('sidebarAvatar').textContent = session.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
   }
 
-  // ---- Tab switching ----
+  // ---- SPA NAVIGATION ----
+  function navigateTo(view) {
+    document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + view).classList.add('active');
+    currentView = view;
+    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + view);
+    if (navEl) navEl.classList.add('active');
+    document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
+    const bnavEl = document.getElementById('bnav-' + view);
+    if (bnavEl) bnavEl.classList.add('active');
+
+    if (view === 'dashboard') initDashboard();
+    if (view === 'monitor') loadMonitor('all');
+    if (view === 'activity') loadActivity('all');
+    if (view === 'profile') populateProfile();
+    if (window.innerWidth <= 768) toggleSidebar();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ---- TAB ----
   function switchTab(tab) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     document.getElementById(`tab-${tab}`).classList.add('active');
     document.getElementById(`content-${tab}`).classList.add('active');
+    if (tab === 'transactions') loadTransactions();
   }
 
-  // ---- Load Users Table ----
-  let allUsers = [];
+  // ---- DASHBOARD INIT ----
+  function initDashboard() {
+    allUsers = FarmifyDB.getUsers();
+    const pending = allUsers.filter(u => u.status === 'pending');
+    const farmers = allUsers.filter(u => u.role === 'farmer' && u.status === 'active');
+    document.getElementById('totalUsersVal').textContent = allUsers.length;
+    document.getElementById('farmerCount').textContent = farmers.length;
+    document.getElementById('pendingVal').textContent = pending.length;
+    document.getElementById('pendingBadge').textContent = pending.length;
 
+    // Platform stats
+    const commodities = FarmifyDB.getCommodities();
+    const orders = FarmifyDB.getOrders();
+    document.getElementById('statFarmer').textContent = farmers.length;
+    document.getElementById('statBuyer').textContent = allUsers.filter(u => u.role === 'buyer' && u.status === 'active').length;
+    document.getElementById('statCommodity').textContent = commodities.length;
+    document.getElementById('statOrder').textContent = orders.length;
+
+    loadUsersTable(allUsers);
+    loadPendingUsers();
+  }
+
+  // ---- USERS TABLE ----
   function loadUsersTable(users) {
-    const tbody = document.getElementById('usersTableBody');
     document.getElementById('userCountBadge').textContent = `${users.length} pengguna`;
-    document.getElementById('totalUsersVal').textContent = users.length;
-
-    if (!users.length) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">Tidak ada data pengguna</td></tr>';
-      return;
-    }
-
     const roleLabel = { farmer: '🌾 Petani', buyer: '🏭 Pembeli', admin: '⚙️ Admin' };
-    const statusBadge = {
-      active:    '<span class="badge badge-success">Active</span>',
-      pending:   '<span class="badge badge-warning">Pending</span>',
-      suspended: '<span class="badge badge-danger">Suspended</span>'
-    };
-
-    tbody.innerHTML = users.map(u => `
-      <tr>
-        <td>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0;">
-              ${u.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase()}
-            </div>
-            <span style="font-weight:600;font-size:14px;">${u.full_name}</span>
-          </div>
-        </td>
-        <td style="font-size:13px;color:var(--mid-gray);">${u.email}</td>
-        <td>${roleLabel[u.role] || u.role}</td>
-        <td>${statusBadge[u.status] || u.status}</td>
-        <td style="font-size:12px;color:var(--mid-gray);">${new Date(u.created_at).toLocaleDateString('id-ID')}</td>
-        <td>
-          <div style="display:flex;gap:6px;">
-            <button class="btn btn-secondary" style="padding:5px 12px;font-size:11px;" onclick="viewUser('${u.id}')">Detail</button>
-            ${u.status === 'active'
-              ? `<button class="btn btn-danger" style="padding:5px 12px;font-size:11px;" onclick="suspendUser('${u.id}')">Suspend</button>`
-              : `<button class="btn btn-primary" style="padding:5px 12px;font-size:11px;" onclick="activateUser('${u.id}')">Aktifkan</button>`
-            }
-          </div>
-        </td>
-      </tr>
-    `).join('');
+    const statusBadge = { active: '<span class="badge badge-success">Active</span>', pending: '<span class="badge badge-warning">Pending</span>', suspended: '<span class="badge badge-danger">Suspended</span>' };
+    document.getElementById('usersTableBody').innerHTML = !users.length
+      ? '<tr><td colspan="6" style="text-align:center;padding:28px;color:var(--mid-gray);">Tidak ada data</td></tr>'
+      : users.map(u => `
+        <tr>
+          <td><div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">${u.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}</div>
+            <span style="font-weight:600;font-size:13px;">${u.full_name}</span>
+          </div></td>
+          <td style="font-size:12px;color:var(--mid-gray);">${u.email}</td>
+          <td>${roleLabel[u.role]||u.role}</td>
+          <td>${statusBadge[u.status]||u.status}</td>
+          <td style="font-size:12px;color:var(--mid-gray);">${new Date(u.created_at).toLocaleDateString('id-ID')}</td>
+          <td><div style="display:flex;gap:6px;">
+            <button class="btn btn-secondary" style="padding:5px 11px;font-size:11px;" onclick="viewUser('${u.id}')">Detail</button>
+            ${u.status==='active' ? `<button class="btn btn-danger" style="padding:5px 11px;font-size:11px;" onclick="suspendUser('${u.id}')">Suspend</button>` : `<button class="btn btn-primary" style="padding:5px 11px;font-size:11px;" onclick="activateUser('${u.id}')">Aktifkan</button>`}
+          </div></td>
+        </tr>`).join('');
   }
 
   function filterUsers(q) {
-    const filtered = allUsers.filter(u =>
-      u.full_name.toLowerCase().includes(q.toLowerCase()) ||
-      u.email.toLowerCase().includes(q.toLowerCase())
-    );
+    const filtered = allUsers.filter(u => u.full_name.toLowerCase().includes(q.toLowerCase()) || u.email.toLowerCase().includes(q.toLowerCase()));
     loadUsersTable(filtered);
   }
 
@@ -620,226 +520,269 @@
     loadUsersTable(role ? allUsers.filter(u => u.role === role) : allUsers);
   }
 
-  // ---- Load Pending Users ----
+  // ---- PENDING USERS ----
   function loadPendingUsers() {
     const pending = allUsers.filter(u => u.status === 'pending');
-    document.getElementById('pendingVal').textContent = pending.length;
-
+    const roleLabel = { farmer:'🌾 Petani', buyer:'🏭 Pembeli', admin:'⚙️ Admin' };
     const container = document.getElementById('pendingUsersList');
     if (!pending.length) {
-      container.innerHTML = `
-        <div style="text-align:center;padding:48px;color:var(--mid-gray);">
-          <div style="font-size:48px;margin-bottom:16px;">✅</div>
-          <div style="font-weight:600;font-size:16px;color:var(--forest);">Tidak ada pengguna menunggu verifikasi</div>
-        </div>`;
+      container.innerHTML = `<div style="text-align:center;padding:48px;color:var(--mid-gray);"><div style="font-size:42px;margin-bottom:14px;">✅</div><div style="font-weight:600;font-size:15px;color:var(--forest);">Tidak ada pengguna menunggu verifikasi</div></div>`;
       return;
     }
-
-    const roleLabel = { farmer: '🌾 Petani', buyer: '🏭 Pembeli', admin: '⚙️ Admin' };
     container.innerHTML = pending.map(u => `
       <div class="pending-user-card" id="pending-${u.id}">
-        <div class="user-ava ${u.role}">
-          ${u.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase()}
-        </div>
+        <div class="user-ava ${u.role}">${u.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}</div>
         <div class="user-info">
           <div class="user-name">${u.full_name}</div>
           <div class="user-detail">${u.email} · ${roleLabel[u.role]} · Daftar ${new Date(u.created_at).toLocaleDateString('id-ID')}</div>
-          ${u.farm_name ? `<div class="user-detail" style="color:var(--moss);margin-top:2px;">🌾 ${u.farm_name} · ${u.city || 'Lokasi belum diisi'}</div>` : ''}
-          ${u.company_name ? `<div class="user-detail" style="color:var(--earth);margin-top:2px;">🏭 ${u.company_name}</div>` : ''}
+          ${u.farm_name?`<div class="user-detail" style="color:var(--moss);margin-top:2px;">🌾 ${u.farm_name} · ${u.city||'—'}</div>`:''}
+          ${u.company_name?`<div class="user-detail" style="color:var(--earth);margin-top:2px;">🏭 ${u.company_name}</div>`:''}
         </div>
         <div class="user-actions">
-          <button class="btn btn-secondary" style="padding:8px 16px;font-size:12px;" onclick="viewUser('${u.id}')">Detail</button>
-          <button class="btn btn-danger" style="padding:8px 16px;font-size:12px;" onclick="rejectUser('${u.id}')">Tolak</button>
-          <button class="btn btn-primary" style="padding:8px 16px;font-size:12px;" onclick="approveUser('${u.id}')">✓ Setujui</button>
+          <button class="btn btn-secondary" style="padding:7px 14px;font-size:12px;" onclick="viewUser('${u.id}')">Detail</button>
+          <button class="btn btn-danger" style="padding:7px 14px;font-size:12px;" onclick="rejectUser('${u.id}')">Tolak</button>
+          <button class="btn btn-primary" style="padding:7px 14px;font-size:12px;" onclick="approveUser('${u.id}')">✓ Setujui</button>
         </div>
-      </div>
-    `).join('');
+      </div>`).join('');
   }
 
+  // ---- TRANSACTIONS ----
+  function loadTransactions() {
+    const orders = FarmifyDB.getOrders();
+    document.getElementById('txCountBadge').textContent = `${orders.length} transaksi`;
+    const users = FarmifyDB.getUsers();
+    const statusBadge = { pending:'<span class="badge badge-warning">Pending</span>', confirmed:'<span class="badge badge-success">Konfirmasi</span>', completed:'<span class="badge badge-success">Selesai</span>', cancelled:'<span class="badge badge-danger">Batal</span>' };
+    document.getElementById('transactionTableBody').innerHTML = !orders.length
+      ? '<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--mid-gray);">Belum ada transaksi</td></tr>'
+      : orders.map(o => {
+          const farmer = users.find(u => u.id === o.farmer_id);
+          const buyer = users.find(u => u.id === o.buyer_id);
+          return `<tr>
+            <td><span style="font-family:var(--font-mono);font-size:12px;color:var(--moss);">${o.order_code}</span></td>
+            <td style="font-size:13px;">${farmer ? farmer.full_name : '—'}</td>
+            <td style="font-size:13px;">${buyer ? buyer.full_name : '—'}</td>
+            <td style="font-size:13px;">${o.commodity_name || '—'}</td>
+            <td style="font-weight:700;color:var(--forest);">${formatRp(o.total_price)}</td>
+            <td style="font-weight:600;color:var(--moss);">${formatRp(o.platform_fee || 0)}</td>
+            <td>${statusBadge[o.status]||`<span class="badge badge-warning">${o.status}</span>`}</td>
+          </tr>`;
+        }).join('');
+  }
+
+  // ---- USER ACTIONS ----
   function approveUser(id) {
-    if (!confirm('Setujui pengguna ini dan aktifkan akun?')) return;
+    if (!confirm('Setujui dan aktifkan akun ini?')) return;
     FarmifyDB.updateUserStatus(id, 'active');
+    FarmifyDB.addNotification(id, '✅ Akun Anda telah diverifikasi! Selamat bergabung di Farmify.', 'info');
     allUsers = FarmifyDB.getUsers();
-    loadUsersTable(allUsers);
-    loadPendingUsers();
-    alert('✅ Pengguna berhasil diaktifkan!');
+    loadUsersTable(allUsers); loadPendingUsers(); initDashboard();
+    showToast('✅ Pengguna berhasil diaktifkan!');
   }
 
   function rejectUser(id) {
-    if (!confirm('Tolak dan hapus pendaftaran pengguna ini?')) return;
+    if (!confirm('Tolak pendaftaran pengguna ini?')) return;
     FarmifyDB.updateUserStatus(id, 'suspended');
     allUsers = FarmifyDB.getUsers();
-    loadUsersTable(allUsers);
-    loadPendingUsers();
+    loadUsersTable(allUsers); loadPendingUsers(); initDashboard();
+    showToast('Pengguna ditolak.', 'error');
   }
 
   function activateUser(id) {
     FarmifyDB.updateUserStatus(id, 'active');
+    FarmifyDB.addNotification(id, '✅ Akun Anda telah diaktifkan kembali.', 'info');
     allUsers = FarmifyDB.getUsers();
-    loadUsersTable(allUsers);
-    loadPendingUsers();
+    loadUsersTable(allUsers); loadPendingUsers(); initDashboard();
+    showToast('✅ Akun diaktifkan!');
   }
 
   function suspendUser(id) {
-    if (confirm('Suspend akun pengguna ini?')) {
-      FarmifyDB.updateUserStatus(id, 'suspended');
-      allUsers = FarmifyDB.getUsers();
-      loadUsersTable(allUsers);
-    }
+    if (id === session.id) { showToast('Tidak bisa suspend akun sendiri!', 'error'); return; }
+    if (!confirm('Suspend akun pengguna ini?')) return;
+    FarmifyDB.updateUserStatus(id, 'suspended');
+    allUsers = FarmifyDB.getUsers();
+    loadUsersTable(allUsers); initDashboard();
+    showToast('Akun disuspend.', 'info');
   }
 
   function viewUser(id) {
     const user = allUsers.find(u => u.id === id);
     if (!user) return;
-    const roleLabel = { farmer: '🌾 Petani', buyer: '🏭 Pembeli', admin: '⚙️ Admin' };
+    const roleLabel = { farmer:'🌾 Petani', buyer:'🏭 Pembeli', admin:'⚙️ Admin' };
+    const activities = FarmifyDB.getUserActivity(id).slice(0, 5);
+    const commodities = user.role === 'farmer' ? FarmifyDB.getCommodities(id) : [];
+    const orders = FarmifyDB.getOrders(user.role === 'farmer' ? { farmer_id: id } : { buyer_id: id });
 
     document.getElementById('userDetailContent').innerHTML = `
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
-        <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:white;">
-          ${user.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase()}
-        </div>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
+        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:white;">${user.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}</div>
         <div>
-          <div style="font-weight:700;font-size:18px;color:var(--forest);">${user.full_name}</div>
-          <div style="font-size:13px;color:var(--mid-gray);">${user.email} · ${roleLabel[user.role]}</div>
+          <div style="font-weight:700;font-size:17px;color:var(--forest);">${user.full_name}</div>
+          <div style="font-size:12px;color:var(--mid-gray);">${user.email} · ${roleLabel[user.role]}</div>
         </div>
       </div>
-      <div class="grid-2" style="gap:12px;">
-        <div style="padding:14px;background:var(--cream);border-radius:var(--radius-md);">
-          <div style="font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Status</div>
-          <div style="font-weight:700;color:var(--forest);">${user.status}</div>
-        </div>
-        <div style="padding:14px;background:var(--cream);border-radius:var(--radius-md);">
-          <div style="font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Telepon</div>
-          <div style="font-weight:700;color:var(--forest);">${user.phone || '-'}</div>
-        </div>
-        ${user.farm_name ? `<div style="padding:14px;background:var(--cream);border-radius:var(--radius-md);grid-column:1/-1;"><div style="font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Nama Farm</div><div style="font-weight:700;color:var(--forest);">${user.farm_name} · ${user.city || ''}</div></div>` : ''}
-        ${user.company_name ? `<div style="padding:14px;background:var(--cream);border-radius:var(--radius-md);grid-column:1/-1;"><div style="font-size:11px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Perusahaan</div><div style="font-weight:700;color:var(--forest);">${user.company_name}</div></div>` : ''}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Status</div><div style="font-weight:700;color:var(--forest);">${user.status}</div></div>
+        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Telepon</div><div style="font-weight:700;color:var(--forest);">${user.phone||'—'}</div></div>
+        ${user.farm_name?`<div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);grid-column:1/-1;"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Farm</div><div style="font-weight:700;color:var(--forest);">${user.farm_name} · ${user.city||'—'} · ${user.farm_size||'?'} Ha</div></div>`:''}
+        ${user.company_name?`<div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);grid-column:1/-1;"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Perusahaan</div><div style="font-weight:700;color:var(--forest);">${user.company_name}</div></div>`:''}
+        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">${user.role==='farmer'?'Komoditas':'Order'}</div><div style="font-weight:700;color:var(--moss);">${user.role==='farmer'?commodities.length:orders.length} item</div></div>
+        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Terdaftar</div><div style="font-weight:700;color:var(--forest);">${new Date(user.created_at).toLocaleDateString('id-ID')}</div></div>
       </div>
+      ${activities.length ? `
+        <div style="font-weight:700;font-size:13px;color:var(--forest);margin-bottom:8px;">Aktivitas Terakhir</div>
+        ${activities.map(a=>`
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--light-gray);">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--moss);margin-top:5px;flex-shrink:0;"></div>
+            <div style="flex:1;font-size:12px;color:var(--charcoal);">${a.detail}</div>
+            <div style="font-size:11px;color:var(--mid-gray);white-space:nowrap;">${timeAgo(a.created_at)}</div>
+          </div>`).join('')}
+      ` : ''}
     `;
 
     document.getElementById('userDetailFooter').innerHTML = `
       <button class="btn btn-secondary" onclick="closeModal('userDetailModal')">Tutup</button>
-      ${user.status !== 'active'
-        ? `<button class="btn btn-primary" onclick="activateUser('${user.id}');closeModal('userDetailModal')">✓ Aktifkan</button>`
-        : `<button class="btn btn-danger" onclick="suspendUser('${user.id}');closeModal('userDetailModal')">Suspend</button>`
-      }
+      ${user.status!=='active' ? `<button class="btn btn-primary" onclick="activateUser('${user.id}');closeModal('userDetailModal')">✓ Aktifkan</button>` : user.id !== session.id ? `<button class="btn btn-danger" onclick="suspendUser('${user.id}');closeModal('userDetailModal')">Suspend</button>` : ''}
     `;
-
     openModal('userDetailModal');
   }
 
-  function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+  // ---- MONITOR VIEW ----
+  function loadMonitor(roleFilter) {
+    const users = roleFilter === 'all' ? FarmifyDB.getUsers() : FarmifyDB.getUsers().filter(u => u.role === roleFilter);
+    const grid = document.getElementById('monitorGrid');
+    const roleColor = { farmer:'linear-gradient(135deg,var(--moss),var(--leaf))', buyer:'linear-gradient(135deg,var(--earth),var(--harvest))', admin:'linear-gradient(135deg,var(--forest),var(--moss))' };
+    const roleIcon = { farmer:'🌾', buyer:'🏭', admin:'⚙️' };
+    const statusColor = { active:'var(--moss)', pending:'var(--earth)', suspended:'var(--terracotta)' };
 
-  // Init
-  allUsers = FarmifyDB.getUsers();
-  loadUsersTable(allUsers);
-  loadPendingUsers();
-
-  document.querySelector('.btn-outline-white').onclick = function() {
-  const transactions = FarmifyDB.getOrders(); // Mengambil data dari db.js
-  if (transactions.length === 0) {
-    alert("Belum ada data transaksi untuk diexport.");
-    return;
+    grid.innerHTML = users.map(u => {
+      const activities = FarmifyDB.getUserActivity(u.id);
+      const lastAct = activities[0];
+      const commodities = u.role === 'farmer' ? FarmifyDB.getCommodities(u.id) : [];
+      const orders = FarmifyDB.getOrders(u.role === 'farmer' ? { farmer_id: u.id } : u.role === 'buyer' ? { buyer_id: u.id } : null) || [];
+      return `
+        <div style="background:white;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);cursor:pointer;transition:transform 0.2s;" onclick="viewUser('${u.id}')" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
+          <div style="background:${roleColor[u.role]||'var(--moss)'};padding:16px 18px;display:flex;align-items:center;gap:12px;">
+            <div style="width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:white;">${u.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-weight:700;font-size:14px;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${u.full_name}</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.7);">${roleIcon[u.role]} ${u.role} · <span style="color:rgba(255,255,255,0.9);font-weight:600;">${u.status}</span></div>
+            </div>
+          </div>
+          <div style="padding:14px 18px;">
+            ${u.farm_name?`<div style="font-size:12px;color:var(--mid-gray);margin-bottom:8px;">🌿 ${u.farm_name}</div>`:''}
+            ${u.company_name?`<div style="font-size:12px;color:var(--mid-gray);margin-bottom:8px;">🏢 ${u.company_name}</div>`:''}
+            <div style="display:flex;gap:10px;margin-bottom:10px;">
+              ${u.role==='farmer'?`<div style="text-align:center;flex:1;padding:8px;background:rgba(74,124,89,0.06);border-radius:var(--radius-md);"><div style="font-weight:700;font-size:16px;color:var(--forest);">${commodities.length}</div><div style="font-size:10px;color:var(--mid-gray);">Komoditas</div></div>`:''}
+              <div style="text-align:center;flex:1;padding:8px;background:rgba(74,124,89,0.06);border-radius:var(--radius-md);"><div style="font-weight:700;font-size:16px;color:var(--forest);">${orders.length}</div><div style="font-size:10px;color:var(--mid-gray);">Order</div></div>
+              <div style="text-align:center;flex:1;padding:8px;background:rgba(74,124,89,0.06);border-radius:var(--radius-md);"><div style="font-weight:700;font-size:16px;color:var(--forest);">${activities.length}</div><div style="font-size:10px;color:var(--mid-gray);">Aktivitas</div></div>
+            </div>
+            <div style="font-size:11px;color:var(--mid-gray);">
+              ${lastAct ? `⏱ Terakhir aktif: <strong style="color:var(--charcoal);">${timeAgo(lastAct.created_at)}</strong>` : 'Belum ada aktivitas'}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('') || '<div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;">Tidak ada akun ditemukan</div>';
   }
 
-  let csvContent = "data:text/csv;charset=utf-8,ID Order,Pembeli,Total,Status\n";
-  transactions.forEach(row => {
-    csvContent += `${row.order_code},${row.buyer_id},${row.total_price},${row.status}\n`;
-  });
+  // ---- ACTIVITY LOG ----
+  function loadActivity(roleFilter) {
+    let activities = FarmifyDB.getActivity(roleFilter && roleFilter !== 'all' ? { role: roleFilter } : null);
+    document.getElementById('activityCountBadge').textContent = `${activities.length} entri`;
+    const actionIcon = { login:'🔐', logout:'🚪', register:'🆕', setup_complete:'✅', status_change:'🔄', commodity_added:'🌿', order_created:'📦', profile_updated:'✏️' };
+    const roleColor = { farmer:'var(--moss)', buyer:'var(--earth)', admin:'var(--forest)' };
 
-  const encodedUri = encodeURI(csvContent);
-  const link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", "Laporan_Farmify_Platform.csv");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
+    document.getElementById('activityLog').innerHTML = !activities.length
+      ? '<div style="text-align:center;padding:40px;color:var(--mid-gray);">Belum ada aktivitas</div>'
+      : activities.map(a => `
+        <div class="activity-item">
+          <div class="activity-dot ${a.role}"></div>
+          <div style="flex:1;">
+            <div style="font-size:13px;color:var(--charcoal);line-height:1.4;">
+              ${actionIcon[a.action]||'📌'} <strong style="color:${roleColor[a.role]||'var(--forest)'};">${a.user_name}</strong>
+              <span style="color:var(--mid-gray);font-size:11px;margin-left:4px;">(${a.role})</span>
+              — ${a.detail}
+            </div>
+          </div>
+          <div style="font-size:11px;color:var(--mid-gray);white-space:nowrap;padding-left:8px;">${timeAgo(a.created_at)}</div>
+        </div>`).join('');
+  }
+
+  // ---- PROFILE ----
+  function populateProfile() {
+    const fullUser = FarmifyDB.findById(session.id) || session;
+    const initials = session.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
+    document.getElementById('profileAvatarLg').textContent = initials;
+    document.getElementById('profileHeroName').textContent = session.full_name;
+    document.getElementById('profileHeroEmail').textContent = session.email;
+    document.getElementById('vFullName').textContent = session.full_name;
+    document.getElementById('vEmail').textContent = session.email;
+    document.getElementById('vPhone').textContent = fullUser.phone || '—';
+    if (fullUser.created_at) document.getElementById('vMemberSince').textContent = new Date(fullUser.created_at).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+    // Stats
+    const users = FarmifyDB.getUsers();
+    document.getElementById('adminStatUsers').textContent = users.length + ' pengguna';
+    document.getElementById('adminStatFarmers').textContent = users.filter(u=>u.role==='farmer').length + ' petani';
+    document.getElementById('adminStatBuyers').textContent = users.filter(u=>u.role==='buyer').length + ' pembeli';
+    document.getElementById('adminStatOrders').textContent = FarmifyDB.getOrders().length + ' order';
+    disableEditMode();
+  }
+
+  function enableEditMode() {
+    const fullUser = FarmifyDB.findById(session.id) || session;
+    document.getElementById('eFullName').value = session.full_name;
+    document.getElementById('eEmail').value = session.email;
+    document.getElementById('ePhone').value = fullUser.phone || '';
+    document.getElementById('cardPersonal').classList.replace('profile-view-mode','profile-edit-mode');
+    document.getElementById('profileActions').innerHTML = `
+      <button class="btn-cancel-profile" onclick="disableEditMode()" style="margin-right:8px;">Batal</button>
+      <button class="btn-save-profile" onclick="saveProfileInline()">💾 Simpan</button>
+    `;
+  }
+
+  function disableEditMode() {
+    document.getElementById('cardPersonal').classList.remove('profile-edit-mode');
+    document.getElementById('cardPersonal').classList.add('profile-view-mode');
+    document.getElementById('profileActions').innerHTML = `<button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profil</button>`;
+  }
+
+  function saveProfileInline() {
+    const newName = document.getElementById('eFullName').value.trim();
+    if (!newName) { showToast('Nama tidak boleh kosong!','error'); return; }
+    FarmifyDB.updateUser(session.id, { full_name: newName, phone: document.getElementById('ePhone').value.trim() });
+    FarmifyDB.addActivity(session.id, newName, 'admin', 'profile_updated', 'Memperbarui profil akun');
+    session.full_name = newName;
+    sessionStorage.setItem('farmify_session', JSON.stringify(session));
+    document.getElementById('sidebarName').textContent = newName;
+    document.getElementById('sidebarAvatar').textContent = newName.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
+    populateProfile();
+    showToast('✅ Profil berhasil disimpan!');
+  }
+
+  // ---- EXPORT ----
+  function exportReport() {
+    const orders = FarmifyDB.getOrders();
+    const users = FarmifyDB.getUsers();
+    if (!orders.length) { showToast('Belum ada data transaksi.', 'info'); return; }
+    let csv = 'Kode Order,Petani,Pembeli,Komoditas,Total,Fee,Status\n';
+    orders.forEach(o => {
+      const f = users.find(u=>u.id===o.farmer_id);
+      const b = users.find(u=>u.id===o.buyer_id);
+      csv += `${o.order_code},"${f?f.full_name:'—'}","${b?b.full_name:'—'}","${o.commodity_name||'—'}",${o.total_price},${o.platform_fee||0},${o.status}\n`;
+    });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = `farmify-laporan-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    showToast('✅ Laporan berhasil diexport!');
+  }
+
+  function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+  function navAlert(name) { alert(`Fitur "${name}" sedang dalam pengembangan.`); }
+
+  // Init
+  initDashboard();
 </script>
-
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-  <div class="bottom-nav-inner">
-    <button class="bottom-nav-item active">
-      <span class="bottom-nav-icon">🏠</span>
-      <span class="bottom-nav-label">Dashboard</span>
-    </button>
-    <button class="bottom-nav-item" onclick="switchTab('verification')">
-      <span class="bottom-nav-icon">✅</span>
-      <span class="bottom-nav-label">Verifikasi</span>
-    </button>
-    <button class="bottom-nav-item" onclick="switchTab('transactions')">
-      <span class="bottom-nav-icon">📦</span>
-      <span class="bottom-nav-label">Transaksi</span>
-    </button>
-    <button class="bottom-nav-item" onclick="switchTab('platform')">
-      <span class="bottom-nav-icon">📊</span>
-      <span class="bottom-nav-label">Platform</span>
-    </button>
-    <button class="bottom-nav-item">
-      <span class="bottom-nav-icon">👥</span>
-      <span class="bottom-nav-label">User</span>
-    </button>
-  </div>
-</nav>
-<script>
-function toggleSidebar() {
-  document.querySelector('.sidebar').classList.toggle('open');
-  document.getElementById('sidebarOverlay').classList.toggle('open');
-}
-document.querySelectorAll('.bottom-nav-item').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-  });
-});
-
-function exportReport() {
-  const data = FarmifyDB.getOrders();
-  const csv = "Kode,Pembeli,Total\n" + data.map(o => `${o.order_code},${o.buyer_id},${o.total_price}`).join("\n");
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.setAttribute('href', url);
-  a.setAttribute('download', 'laporan-farmify.csv');
-  a.click();
-}
-</script>
-
-<div class="modal-overlay" id="settingsModal" style="display:none;" onclick="if(event.target===this)closeModal('settingsModal')">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Pengaturan Profil</div>
-      <button class="modal-close" onclick="closeModal('settingsModal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
-        <div class="user-avatar-sm" id="profileAvatar" style="width:64px;height:64px;font-size:24px;border-radius:16px;"></div>
-        <div>
-          <div style="font-weight:700;font-size:18px;color:var(--forest);" id="profileName">Loading...</div>
-          <div style="font-size:13px;color:var(--mid-gray);" id="profileEmail">Loading...</div>
-          <span class="badge badge-success" style="margin-top:6px;" id="profileRole">Role</span>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <label class="form-label">Nama Lengkap</label>
-        <input type="text" class="form-input" id="editName" />
-      </div>
-      <div class="form-group">
-        <label class="form-label">Nomor Telepon</label>
-        <input type="text" class="form-input" id="editPhone" />
-      </div>
-      <div class="form-group" id="extraProfileField">
-        </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeModal('settingsModal')">Batal</button>
-      <button class="btn btn-primary" onclick="saveProfile()">Simpan Perubahan</button>
-    </div>
-  </div>
-</div>
 
 </body>
 </html>

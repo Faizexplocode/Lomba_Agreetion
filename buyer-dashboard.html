@@ -2,254 +2,142 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, " />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Pembeli — Farmify</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    /* ========== SEARCH HERO ========== */
     .search-hero {
       background: linear-gradient(135deg, var(--forest) 0%, #0D2017 100%);
       border-radius: var(--radius-xl);
-      padding: 36px 40px;
+      padding: 32px 36px;
       margin-bottom: 28px;
       position: relative;
       overflow: hidden;
     }
-
     .search-hero::before {
       content: '';
       position: absolute;
-      width: 400px; height: 400px;
+      width: 350px; height: 350px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(74,124,89,0.25) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(74,124,89,0.2) 0%, transparent 70%);
       top: -100px; right: -80px;
     }
-
-    .search-hero-title {
-      font-family: var(--font-display);
-      font-size: 26px;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 6px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .search-hero-sub {
-      font-size: 14px;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .search-bar-hero {
-      display: flex;
-      gap: 12px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .search-bar-hero input {
-      flex: 1;
-      padding: 14px 20px;
-      border-radius: var(--radius-md);
-      border: none;
-      font-family: var(--font-body);
-      font-size: 14px;
-      outline: none;
-      background: rgba(255,255,255,0.12);
-      color: white;
-    }
-
+    .search-hero-title { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: white; margin-bottom: 6px; position: relative; z-index: 1; }
+    .search-hero-sub { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 20px; position: relative; z-index: 1; }
+    .search-bar-hero { display: flex; gap: 10px; position: relative; z-index: 1; flex-wrap: wrap; }
+    .search-bar-hero input { flex: 1; min-width: 200px; padding: 12px 18px; border-radius: var(--radius-md); border: none; font-family: var(--font-body); font-size: 14px; outline: none; background: rgba(255,255,255,0.12); color: white; }
     .search-bar-hero input::placeholder { color: rgba(255,255,255,0.4); }
     .search-bar-hero input:focus { background: rgba(255,255,255,0.18); }
+    .filter-chips { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .chip { padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); background: transparent; }
+    .chip:hover, .chip.active { background: var(--moss); color: white; border-color: var(--moss); }
 
-    .filter-chips {
-      display: flex;
-      gap: 8px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
-    }
+    /* ========== SUPPLIER CARDS ========== */
+    .supplier-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
+    .supplier-card { background: white; border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-soft); border: 1px solid rgba(74,124,89,0.08); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+    .supplier-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-med); }
+    .supplier-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .supplier-avatar { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--mint), var(--sage)); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .supplier-name { font-weight: 700; font-size: 15px; color: var(--forest); }
+    .supplier-location { font-size: 12px; color: var(--mid-gray); }
+    .supplier-commodities { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .commodity-tag { padding: 4px 10px; background: rgba(74,124,89,0.08); border-radius: 100px; font-size: 11px; color: var(--moss); font-weight: 600; }
+    .supplier-footer { display: flex; align-items: center; justify-content: space-between; }
+    .supplier-rating { display: flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; color: var(--harvest); }
 
-    .chip {
-      padding: 7px 16px;
-      border-radius: 100px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: 1px solid rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.7);
-      background: transparent;
-    }
+    /* ========== WALLET ========== */
+    .wallet-card { background: linear-gradient(135deg, var(--moss) 0%, var(--forest) 100%); border-radius: var(--radius-lg); padding: 24px; color: white; }
+    .wallet-label { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+    .wallet-amount { font-family: var(--font-display); font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+    .loyalty-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: rgba(255,255,255,0.12); border-radius: 100px; font-size: 12px; font-weight: 600; margin-top: 12px; }
 
-    .chip:hover, .chip.active {
-      background: rgba(255,255,255,0.15);
+    /* ========== PRE-ORDER BANNER ========== */
+    .preorder-banner { background: linear-gradient(135deg, #2D5A3D 0%, #7FAF8A 100%); border-radius: var(--radius-lg); padding: 22px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; color: white; flex-wrap: wrap; }
+
+    /* ========== PAGE VIEW (SPA) ========== */
+    .page-view { display: none; }
+    .page-view.active { display: block; }
+
+    /* ========== PROFILE STYLES ========== */
+    .profile-hero {
+      background: linear-gradient(135deg, #1A4A6B 0%, #0D2A40 100%);
+      border-radius: var(--radius-xl);
+      padding: 32px 36px;
       color: white;
-      border-color: rgba(255,255,255,0.4);
-    }
-
-    .chip.active {
-      background: var(--moss);
-      border-color: var(--moss);
-    }
-
-    /* Supplier cards */
-    .supplier-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-    }
-
-    .supplier-card {
-      background: white;
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(74,124,89,0.08);
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-    }
-
-    .supplier-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-med);
-    }
-
-    .supplier-header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .supplier-avatar {
-      width: 48px; height: 48px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--mint), var(--sage));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px;
-      flex-shrink: 0;
-    }
-
-    .supplier-name {
-      font-weight: 700;
-      font-size: 15px;
-      color: var(--forest);
-    }
-
-    .supplier-location {
-      font-size: 12px;
-      color: var(--mid-gray);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .supplier-commodities {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 14px;
-    }
-
-    .commodity-tag {
-      padding: 4px 10px;
-      background: rgba(74,124,89,0.08);
-      border-radius: 100px;
-      font-size: 11px;
-      color: var(--moss);
-      font-weight: 600;
-    }
-
-    .supplier-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .supplier-rating {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--harvest);
-    }
-
-    .wallet-card {
-      background: linear-gradient(135deg, var(--moss) 0%, var(--forest) 100%);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      color: white;
-    }
-
-    .wallet-label {
-      font-size: 11px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 6px;
-    }
-
-    .wallet-amount {
-      font-family: var(--font-display);
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .loyalty-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      background: rgba(255,255,255,0.12);
-      border-radius: 100px;
-      font-size: 12px;
-      font-weight: 600;
-      margin-top: 12px;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--forest);
-    }
-
-    .preorder-banner {
-      background: linear-gradient(135deg, #2D5A3D 0%, #7FAF8A 100%);
-      border-radius: var(--radius-lg);
-      padding: 22px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+      gap: 24px;
       margin-bottom: 24px;
-      color: white;
+      position: relative;
+      overflow: hidden;
+      flex-wrap: wrap;
     }
-  </style>
+    .profile-hero::before {
+      content: '';
+      position: absolute; top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(200,151,42,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .profile-hero::after { content: '🏭'; position: absolute; bottom: -10px; right: 24px; font-size: 80px; opacity: 0.07; }
+    .profile-avatar-lg { width: 84px; height: 84px; border-radius: 22px; background: linear-gradient(135deg, var(--earth), var(--harvest)); display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 700; color: white; flex-shrink: 0; border: 3px solid rgba(255,255,255,0.15); position: relative; z-index: 1; }
+    .profile-hero-info { position: relative; z-index: 1; flex: 1; min-width: 200px; }
+    .profile-hero-name { font-family: var(--font-display); font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .profile-hero-email { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 10px; }
+    .profile-hero-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .profile-badge { padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.12); }
+    .profile-badge.gold { background: rgba(200,151,42,0.25); color: var(--harvest); border-color: rgba(200,151,42,0.3); }
 
+    .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    @media (max-width: 640px) { .profile-grid { grid-template-columns: 1fr; } }
+
+    .profile-card { background: white; border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-soft); border: 1px solid rgba(74,124,89,0.08); }
+    .profile-card-title { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--forest); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--light-gray); display: flex; align-items: center; gap: 8px; }
+    .profile-field { margin-bottom: 14px; }
+    .profile-field:last-child { margin-bottom: 0; }
+    .profile-field-label { font-size: 11px; font-weight: 600; color: var(--mid-gray); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+    .profile-field-value { font-size: 14px; color: var(--charcoal); font-weight: 500; }
+    .profile-field-input { width: 100%; padding: 9px 13px; border: 1.5px solid var(--light-gray); border-radius: var(--radius-md); font-size: 14px; font-family: var(--font-body); color: var(--charcoal); background: var(--warm-white); transition: border-color 0.2s; outline: none; }
+    .profile-field-input:focus { border-color: var(--leaf); background: white; }
+
+    .profile-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+    @media (max-width: 500px) { .profile-stats-row { grid-template-columns: repeat(2, 1fr); } }
+    .profile-stat { background: white; border-radius: var(--radius-lg); padding: 18px 16px; box-shadow: var(--shadow-soft); border: 1px solid rgba(74,124,89,0.08); text-align: center; }
+    .profile-stat-value { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--forest); }
+    .profile-stat-label { font-size: 11px; color: var(--mid-gray); margin-top: 4px; }
+
+    .btn-edit-profile { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer; background: rgba(74,124,89,0.1); color: var(--moss); border: 1.5px solid rgba(74,124,89,0.2); font-family: var(--font-body); transition: all 0.2s; }
+    .btn-edit-profile:hover { background: rgba(74,124,89,0.18); }
+    .btn-save-profile { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer; background: var(--moss); color: white; border: none; font-family: var(--font-body); transition: all 0.2s; }
+    .btn-save-profile:hover { background: var(--forest); }
+    .btn-cancel-profile { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer; background: transparent; color: var(--mid-gray); border: 1.5px solid var(--light-gray); font-family: var(--font-body); transition: all 0.2s; }
+
+    .profile-view-mode .edit-only { display: none; }
+    .profile-view-mode .view-only { display: block; }
+    .profile-edit-mode .edit-only { display: block; }
+    .profile-edit-mode .view-only { display: none; }
+
+    .page-title { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--forest); }
+    .page-subtitle { font-size: 14px; color: var(--mid-gray); margin-top: 4px; }
+    .page-title-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
+  </style>
 </head>
 <body>
 <div class="app-layout">
-<!-- MOBILE TOP BAR -->
-<div class="mobile-topbar">
-  <a href="#" class="mobile-brand">
-    <div class="mobile-brand-icon">🌿</div>
-    <span class="mobile-brand-name">Farmify</span>
-  </a>
-  <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
-</div>
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
+  <div class="mobile-topbar">
+    <a href="#" class="mobile-brand">
+      <div class="mobile-brand-icon">🌿</div>
+      <span class="mobile-brand-name">Farmify</span>
+    </a>
+    <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <a href="#" class="sidebar-brand">
+    <a href="#" class="sidebar-brand" onclick="navigateTo('dashboard'); return false;">
       <div class="brand-icon">🌿</div>
       <div>
         <div class="brand-name">Farmify</div>
@@ -258,21 +146,18 @@
     </a>
 
     <ul class="sidebar-nav">
-      <li><a href="#" class="active"><span class="nav-icon">🏠</span> Dashboard</a></li>
-      <li><a href="#"><span class="nav-icon">🔍</span> Cari Supplier</a></li>
-      <li><a href="#"><span class="nav-icon">🛒</span> Keranjang</a></li>
-      <li><a href="#"><span class="nav-icon">📋</span> Pre-Order Saya</a></li>
-      <li><a href="#"><span class="nav-icon">📦</span> Riwayat Order</a></li>
-      <li><a href="#"><span class="nav-icon">🚚</span> Track Pengiriman</a></li>
+      <li><a href="#" id="nav-dashboard" class="active" onclick="navigateTo('dashboard'); return false;"><span class="nav-icon">🏠</span> Dashboard</a></li>
+      <li><a href="#" onclick="navAlert('Cari Supplier'); return false;"><span class="nav-icon">🔍</span> Cari Supplier</a></li>
+      <li><a href="#" onclick="navAlert('Keranjang'); return false;"><span class="nav-icon">🛒</span> Keranjang</a></li>
+      <li><a href="#" onclick="navAlert('Pre-Order Saya'); return false;"><span class="nav-icon">📋</span> Pre-Order Saya</a></li>
+      <li><a href="#" onclick="navAlert('Riwayat Order'); return false;"><span class="nav-icon">📦</span> Riwayat Order</a></li>
+      <li><a href="#" onclick="navAlert('Track Pengiriman'); return false;"><span class="nav-icon">🚚</span> Track Pengiriman</a></li>
 
-      <div style="padding:0 8px;margin-top:20px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">
-        Akun
-      </div>
-      <li><a href="#"><span class="nav-icon">💰</span> Wallet & Pembayaran</a></li>
-      <li><a href="#"><span class="nav-icon">🏆</span> Loyalty Points</a></li>
-      <li><a href="#"><span class="nav-icon">🤖</span> AI Assistant</a></li>
-      <li><a href="#"><span class="nav-icon">🔔</span> Notifikasi <span style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;">2</span></a></li>
-      <li><a href="#"><span class="nav-icon">⚙️</span> Pengaturan</a></li>
+      <div style="padding:0 8px;margin-top:20px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">Akun</div>
+      <li><a href="#" id="nav-profile" onclick="navigateTo('profile'); return false;"><span class="nav-icon">👤</span> Profil Perusahaan</a></li>
+      <li><a href="#" onclick="navAlert('Wallet'); return false;"><span class="nav-icon">💰</span> Wallet & Pembayaran</a></li>
+      <li><a href="#" onclick="navAlert('Loyalty Points'); return false;"><span class="nav-icon">🏆</span> Loyalty Points</a></li>
+      <li><a href="#" onclick="navAlert('Notifikasi'); return false;"><span class="nav-icon">🔔</span> Notifikasi <span data-notif-badge style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;display:none;">0</span></a></li>
     </ul>
 
     <div class="sidebar-footer">
@@ -291,216 +176,238 @@
     </div>
   </aside>
 
-  <!-- MAIN CONTENT -->
   <main class="main-content">
 
-    <!-- SEARCH HERO -->
-    <div class="search-hero page-enter">
-      <div class="search-hero-title" id="buyerGreeting">Halo, PT Jaya! Cari bahan baku hari ini?</div>
-      <div class="search-hero-sub">Terhubung langsung dengan petani terpercaya di seluruh Jawa Timur</div>
-      <div class="search-bar-hero" style="flex-wrap:wrap;">
-        <input type="text" placeholder="🔍  Cari komoditas, nama farm, lokasi..." />
-        <button class="btn btn-harvest" style="padding:14px 28px;">Cari Sekarang</button>
-      </div>
-      <div class="filter-chips">
-        <button class="chip active">Semua</button>
-        <button class="chip">🥬 Sayuran</button>
-        <button class="chip">🍉 Buah</button>
-        <button class="chip">🌾 Padi / Biji</button>
-        <button class="chip">🧅 Rempah</button>
-        <button class="chip">🥔 Umbi</button>
-        <button class="chip">📍 Terdekat</button>
-      </div>
-    </div>
+    <!-- ===== VIEW: DASHBOARD ===== -->
+    <div id="view-dashboard" class="page-view active">
 
-    <!-- PRE-ORDER BANNER -->
-    <div class="preorder-banner page-enter">
-      <div>
-        <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.6);font-weight:600;margin-bottom:6px;">📋 PRE-ORDER SYSTEM</div>
-        <div style="font-family:var(--font-display);font-size:19px;font-weight:700;margin-bottom:4px;">Amankan Pasokan Sebelum Panen</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.75);">Pesan sekarang, bayar saat panen tiba. Stabil & terpercaya.</div>
-      </div>
-      <button class="btn btn-outline-white" style="flex-shrink:0;">Lihat Pre-Order →</button>
-    </div>
-
-    <div class="dash-grid-main-md">
-      <div>
-
-        <!-- Stats -->
-        <div class="stats-grid page-enter" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
-          <div class="stat-card">
-            <div class="stat-icon gold">📦</div>
-            <div class="stat-value">12</div>
-            <div class="stat-label">Total Order Aktif</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon green">🏭</div>
-            <div class="stat-value">8</div>
-            <div class="stat-label">Supplier Terhubung</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon earth">💸</div>
-            <div class="stat-value">Rp 142 Jt</div>
-            <div class="stat-label">Total Pembelian</div>
-          </div>
+      <div class="search-hero page-enter">
+        <div class="search-hero-title" id="buyerGreeting">Halo, PT Jaya! 🏭</div>
+        <div class="search-hero-sub">Terhubung langsung dengan petani terpercaya di seluruh Jawa Timur</div>
+        <div class="search-bar-hero">
+          <input type="text" id="searchInput" placeholder="🔍  Cari komoditas, nama farm, lokasi..." oninput="performSearch()" />
+          <button class="btn btn-harvest" style="padding:12px 24px;" onclick="performSearch()">Cari</button>
         </div>
+        <div class="filter-chips" id="filterChips">
+          <button class="chip active" onclick="filterCategory(this, '')">Semua</button>
+          <button class="chip" onclick="filterCategory(this, 'Sayuran')">🥬 Sayuran</button>
+          <button class="chip" onclick="filterCategory(this, 'Buah')">🍉 Buah</button>
+          <button class="chip" onclick="filterCategory(this, 'Padi')">🌾 Padi / Biji</button>
+          <button class="chip" onclick="filterCategory(this, 'Rempah')">🧅 Rempah</button>
+          <button class="chip" onclick="filterCategory(this, 'Umbi')">🥔 Umbi</button>
+        </div>
+      </div>
 
-        <!-- Supplier List -->
-        <div class="page-enter">
-          <div class="section-header-row">
-            <div class="section-title">Supplier Unggulan Jawa Timur</div>
-            <a href="#" class="link text-sm">Lihat semua →</a>
+      <div class="preorder-banner page-enter">
+        <div>
+          <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.6);font-weight:600;margin-bottom:6px;">📋 PRE-ORDER SYSTEM</div>
+          <div style="font-family:var(--font-display);font-size:18px;font-weight:700;margin-bottom:4px;">Amankan Pasokan Sebelum Panen</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.75);">Pesan sekarang, bayar saat panen tiba. Stabil & terpercaya.</div>
+        </div>
+        <button class="btn btn-outline-white" style="flex-shrink:0;">Lihat Pre-Order →</button>
+      </div>
+
+      <div class="dash-grid-main">
+        <div>
+          <!-- Stats -->
+          <div class="stats-grid page-enter" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
+            <div class="stat-card">
+              <div class="stat-icon gold">📦</div>
+              <div class="stat-value" id="activeOrderCount">—</div>
+              <div class="stat-label">Order Aktif</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon green">🌾</div>
+              <div class="stat-value" id="supplierCount">—</div>
+              <div class="stat-label">Petani Tersedia</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon earth">💸</div>
+              <div class="stat-value">Rp 142 Jt</div>
+              <div class="stat-label">Total Pembelian</div>
+            </div>
           </div>
-          <div class="supplier-grid">
-            <div class="supplier-card" onclick="openModal('supplierModal')">
-              <div class="supplier-header">
-                <div class="supplier-avatar">🌾</div>
-                <div>
-                  <div class="supplier-name">Sido Makmur Farm</div>
-                  <div class="supplier-location">📍 Malang, Jawa Timur</div>
-                </div>
-              </div>
-              <div class="supplier-commodities">
-                <span class="commodity-tag">🌶️ Cabai Merah</span>
-                <span class="commodity-tag">🧅 Bawang</span>
-                <span class="commodity-tag">🥬 Sayuran</span>
-              </div>
-              <div class="supplier-footer">
-                <div class="supplier-rating">⭐ 4.8 <span style="color:var(--mid-gray);font-weight:400;">(42 ulasan)</span></div>
-                <button class="btn btn-primary" style="padding:7px 16px;font-size:12px;">Pesan</button>
-              </div>
-            </div>
 
-            <div class="supplier-card">
-              <div class="supplier-header">
-                <div class="supplier-avatar" style="background:linear-gradient(135deg,#f5e6c8,#e8d4a0);">🥔</div>
-                <div>
-                  <div class="supplier-name">Berkah Tani Lumajang</div>
-                  <div class="supplier-location">📍 Lumajang, Jawa Timur</div>
-                </div>
-              </div>
-              <div class="supplier-commodities">
-                <span class="commodity-tag">🥔 Kentang</span>
-                <span class="commodity-tag">🧄 Bawang Putih</span>
-                <span class="commodity-tag">🌿 Jahe</span>
-              </div>
-              <div class="supplier-footer">
-                <div class="supplier-rating">⭐ 4.6 <span style="color:var(--mid-gray);font-weight:400;">(28 ulasan)</span></div>
-                <button class="btn btn-primary" style="padding:7px 16px;font-size:12px;">Pesan</button>
-              </div>
+          <!-- Supplier list dari data real -->
+          <div class="page-enter">
+            <div class="section-header-row" style="margin-bottom:16px;">
+              <div style="font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--forest);">Supplier Aktif di Platform</div>
+              <span id="supplierCountLabel" style="font-size:12px;color:var(--mid-gray);"></span>
             </div>
+            <div class="supplier-grid" id="supplierGrid">
+              <div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;">Memuat data supplier...</div>
+            </div>
+          </div>
 
-            <div class="supplier-card">
-              <div class="supplier-header">
-                <div class="supplier-avatar" style="background:linear-gradient(135deg,#d4ecda,#a8d4b4);">🍉</div>
-                <div>
-                  <div class="supplier-name">Kebun Buah Pasuruan</div>
-                  <div class="supplier-location">📍 Pasuruan, Jawa Timur</div>
-                </div>
-              </div>
-              <div class="supplier-commodities">
-                <span class="commodity-tag">🍉 Semangka</span>
-                <span class="commodity-tag">🍈 Melon</span>
-                <span class="commodity-tag">🫛 Kacang</span>
-              </div>
-              <div class="supplier-footer">
-                <div class="supplier-rating">⭐ 4.9 <span style="color:var(--mid-gray);font-weight:400;">(67 ulasan)</span></div>
-                <button class="btn btn-primary" style="padding:7px 16px;font-size:12px;">Pesan</button>
-              </div>
+          <!-- Komoditas Tersedia -->
+          <div class="table-container page-enter" style="margin-top:24px;">
+            <div class="table-header">
+              <div class="table-title">Komoditas Tersedia Sekarang</div>
+              <span class="badge badge-farmer" id="commodityCount">Memuat...</span>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr><th>Komoditas</th><th>Petani / Farm</th><th>Harga</th><th>Stok</th><th>Status</th><th>Aksi</th></tr>
+                </thead>
+                <tbody id="commodityTable">
+                  <tr><td colspan="6" style="text-align:center;padding:24px;color:var(--mid-gray);">Memuat...</td></tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
 
-        <!-- Recent Orders -->
-        <div class="table-container page-enter" style="margin-top:24px;">
-          <div class="table-header">
-            <div class="table-title">Order Terbaru</div>
-            <a href="#" class="link text-sm">Lihat semua</a>
+        <!-- RIGHT COL -->
+        <div>
+          <div class="wallet-card page-enter" style="margin-bottom:20px;">
+            <div class="wallet-label">Saldo Wallet</div>
+            <div class="wallet-amount">Rp 50.000.000</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.5);">Tersedia untuk transaksi</div>
+            <div class="loyalty-badge">🏆 123 Loyalty Points</div>
+            <div style="display:flex;gap:8px;margin-top:16px;">
+              <button class="btn btn-outline-white" style="flex:1;padding:10px;">Top Up</button>
+              <button class="btn btn-harvest" style="flex:1;padding:10px;">Tarik Dana</button>
+            </div>
           </div>
-          <div class="table-scroll"><table>
-            <thead>
-              <tr>
-                <th>Kode Order</th>
-                <th>Supplier</th>
-                <th>Komoditas</th>
-                <th>Total</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><span style="font-family:var(--font-mono);font-size:13px;color:var(--moss);">ORD-2025-015</span></td>
-                <td>Sido Makmur Farm</td>
-                <td>Cabai Merah · 500 kg</td>
-                <td>Rp 22.500.000</td>
-                <td><span class="badge badge-success">Dikirim</span></td>
-              </tr>
-              <tr>
-                <td><span style="font-family:var(--font-mono);font-size:13px;color:var(--moss);">ORD-2025-014</span></td>
-                <td>Berkah Tani</td>
-                <td>Kentang · 300 kg</td>
-                <td>Rp 4.500.000</td>
-                <td><span class="badge badge-warning">Diproses</span></td>
-              </tr>
-              <tr>
-                <td><span style="font-family:var(--font-mono);font-size:13px;color:var(--moss);">ORD-2025-013</span></td>
-                <td>Kebun Buah Pasuruan</td>
-                <td>Semangka · 1 ton</td>
-                <td>Rp 8.000.000</td>
-                <td><span class="badge badge-success">Selesai</span></td>
-              </tr>
-            </tbody>
-          </table></div>
-        </div>
 
+          <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);margin-bottom:20px;" class="page-enter">
+            <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--moss);font-weight:600;margin-bottom:8px;">⭐ PREMIUM BUYER</div>
+            <div style="font-weight:700;font-size:15px;color:var(--forest);margin-bottom:8px;">Akses Supplier Prioritas</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+              <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span style="color:var(--moss);">✓</span> Kontrak B2B jangka panjang</li>
+              <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span style="color:var(--moss);">✓</span> Priority access ke harvest terbaru</li>
+              <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span style="color:var(--moss);">✓</span> Dedicated account manager</li>
+            </ul>
+            <button class="btn btn-primary" style="width:100%;font-size:13px;">Upgrade — Rp 500.000/thn</button>
+          </div>
+
+          <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);" class="page-enter">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+              <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-size:18px;">🤖</div>
+              <div>
+                <div style="font-weight:700;font-size:14px;color:var(--forest);">AI Assistant</div>
+                <div style="font-size:11px;color:var(--moss);">● Online</div>
+              </div>
+            </div>
+            <div style="background:var(--cream);border-radius:var(--radius-md);padding:12px;font-size:13px;color:var(--charcoal);line-height:1.5;margin-bottom:14px;">
+              👋 Harga cabai merah minggu ini naik 8%. Saya rekomendasikan pre-order sekarang sebelum harga naik lagi.
+            </div>
+            <button class="btn btn-secondary" style="width:100%;font-size:13px;">Chat dengan AI Assistant →</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- end view-dashboard -->
+
+
+    <!-- ===== VIEW: PROFIL PERUSAHAAN ===== -->
+    <div id="view-profile" class="page-view">
+
+      <div class="page-title-row page-enter">
+        <div>
+          <div class="page-title">Profil Perusahaan 🏭</div>
+          <div class="page-subtitle">Kelola informasi perusahaan dan data akun Anda</div>
+        </div>
+        <div id="profileActions">
+          <button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profil</button>
+        </div>
       </div>
 
-      <!-- RIGHT COL -->
-      <div>
-        <!-- Wallet -->
-        <div class="wallet-card page-enter" style="margin-bottom:20px;">
-          <div class="wallet-label">Saldo Wallet</div>
-          <div class="wallet-amount">Rp 50.000.000</div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.5);">Saldo tersedia untuk transaksi</div>
-          <div class="loyalty-badge">🏆 123 Loyalty Points</div>
-          <div class="wallet-btn-row" style="display:flex;gap:8px;margin-top:16px;">
-            <button class="btn btn-outline-white" style="flex:1;padding:10px;">Top Up</button>
-            <button class="btn btn-harvest" style="flex:1;padding:10px;">Tarik Dana</button>
+      <!-- Hero -->
+      <div class="profile-hero page-enter">
+        <div class="profile-avatar-lg" id="profileAvatarLg">PJ</div>
+        <div class="profile-hero-info">
+          <div class="profile-hero-name" id="profileHeroName">PT Jaya Foods</div>
+          <div class="profile-hero-email" id="profileHeroEmail">ptjaya@farmify.id</div>
+          <div class="profile-hero-badges">
+            <span class="profile-badge gold">✓ Terverifikasi</span>
+            <span class="profile-badge">🏭 Pembeli B2B</span>
+            <span class="profile-badge" id="profileHeroCompany">PT Jaya Foods Indonesia</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="profile-stats-row page-enter">
+        <div class="profile-stat">
+          <div class="profile-stat-value">12</div>
+          <div class="profile-stat-label">Order Aktif</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value">8</div>
+          <div class="profile-stat-label">Supplier</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value">Rp 142 Jt</div>
+          <div class="profile-stat-label">Total Pembelian</div>
+        </div>
+      </div>
+
+      <div class="profile-grid page-enter">
+        <!-- Info Akun -->
+        <div class="profile-card profile-view-mode" id="cardPersonal">
+          <div class="profile-card-title">👤 Informasi Akun</div>
+          <div class="view-only">
+            <div class="profile-field"><div class="profile-field-label">Nama Lengkap / PIC</div><div class="profile-field-value" id="vFullName">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">Email</div><div class="profile-field-value" id="vEmail">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">Nomor Telepon</div><div class="profile-field-value" id="vPhone">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">Member Sejak</div><div class="profile-field-value" id="vMemberSince">—</div></div>
+          </div>
+          <div class="edit-only">
+            <div class="profile-field"><div class="profile-field-label">Nama PIC</div><input type="text" class="profile-field-input" id="eFullName" /></div>
+            <div class="profile-field"><div class="profile-field-label">Email</div><input type="email" class="profile-field-input" id="eEmail" disabled style="opacity:0.5;cursor:not-allowed;" /><div style="font-size:11px;color:var(--mid-gray);margin-top:4px;">Email tidak dapat diubah</div></div>
+            <div class="profile-field"><div class="profile-field-label">Nomor Telepon</div><input type="tel" class="profile-field-input" id="ePhone" /></div>
           </div>
         </div>
 
-        <!-- Premium -->
-        <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);margin-bottom:20px;" class="page-enter">
-          <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--moss);font-weight:600;margin-bottom:8px;">⭐ PREMIUM BUYER</div>
-          <div style="font-weight:700;font-size:15px;color:var(--forest);margin-bottom:8px;">Akses Supplier Prioritas</div>
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
-            <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span style="color:var(--moss);">✓</span> Kontrak B2B jangka panjang</li>
-            <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span style="color:var(--moss);">✓</span> Priority access ke harvest terbaru</li>
-            <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span style="color:var(--moss);">✓</span> Dedicated account manager</li>
-          </ul>
-          <button class="btn btn-primary" style="width:100%;font-size:13px;">
-            Upgrade — Rp 500.000/thn
-          </button>
+        <!-- Info Perusahaan -->
+        <div class="profile-card profile-view-mode" id="cardCompany">
+          <div class="profile-card-title">🏢 Informasi Perusahaan</div>
+          <div class="view-only">
+            <div class="profile-field"><div class="profile-field-label">Nama Perusahaan</div><div class="profile-field-value" id="vCompanyName">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">Jenis Bisnis</div><div class="profile-field-value" id="vBusinessType">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">Alamat</div><div class="profile-field-value" id="vAddress">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">NPWP</div><div class="profile-field-value" id="vNpwp">—</div></div>
+          </div>
+          <div class="edit-only">
+            <div class="profile-field"><div class="profile-field-label">Nama Perusahaan</div><input type="text" class="profile-field-input" id="eCompanyName" /></div>
+            <div class="profile-field">
+              <div class="profile-field-label">Jenis Bisnis</div>
+              <select class="profile-field-input" id="eBusinessType">
+                <option value="manufacturer">Manufaktur / Pabrik</option>
+                <option value="restaurant">Restoran / Hotel</option>
+                <option value="retailer">Retail / Distributor</option>
+                <option value="catering">Katering</option>
+                <option value="export">Eksportir</option>
+                <option value="other">Lainnya</option>
+              </select>
+            </div>
+            <div class="profile-field"><div class="profile-field-label">Alamat Perusahaan</div><input type="text" class="profile-field-input" id="eAddress" /></div>
+            <div class="profile-field"><div class="profile-field-label">NPWP</div><input type="text" class="profile-field-input" id="eNpwp" placeholder="XX.XXX.XXX.X-XXX.XXX" /></div>
+          </div>
         </div>
+      </div>
 
-        <!-- AI Assistant preview -->
-        <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);" class="page-enter">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-            <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-size:18px;">🤖</div>
+      <!-- Rekening -->
+      <div class="profile-card page-enter profile-view-mode" id="cardBank" style="margin-bottom:20px;">
+        <div class="profile-card-title">🏦 Rekening Pembayaran</div>
+        <div class="view-only">
+          <div style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--cream);border-radius:var(--radius-md);">
+            <div style="font-size:28px;">🏦</div>
             <div>
-              <div style="font-weight:700;font-size:14px;color:var(--forest);">AI Assistant</div>
-              <div style="font-size:11px;color:var(--moss);">● Online</div>
+              <div style="font-weight:700;font-size:15px;color:var(--forest);" id="vBankName">—</div>
+              <div style="font-size:13px;color:var(--mid-gray);" id="vBankAccount">—</div>
             </div>
+            <span style="margin-left:auto;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;background:rgba(74,124,89,0.1);color:var(--moss);">Terverifikasi</span>
           </div>
-          <div style="background:var(--cream);border-radius:var(--radius-md);padding:12px;font-size:13px;color:var(--charcoal);line-height:1.5;margin-bottom:14px;">
-            👋 Halo PT Jaya! Harga cabai merah minggu ini naik 8%. Saya rekomendasikan pre-order dari Sido Makmur Farm sebelum harga naik lagi.
-          </div>
-          <button class="btn btn-secondary" style="width:100%;font-size:13px;">
-            Chat dengan AI Assistant →
-          </button>
+        </div>
+        <div class="edit-only">
+          <div class="profile-field"><div class="profile-field-label">Nama Bank</div><select class="profile-field-input" id="eBankName"><option>BCA</option><option>BRI</option><option>Mandiri</option><option>BNI</option><option>BSI</option></select></div>
+          <div class="profile-field"><div class="profile-field-label">Nomor Rekening</div><input type="text" class="profile-field-input" id="eBankAccount" /></div>
         </div>
       </div>
-    </div>
+
+    </div><!-- end view-profile -->
 
   </main>
 </div>
@@ -509,56 +416,45 @@
 <div class="modal-overlay" id="supplierModal" style="display:none;" onclick="if(event.target===this)closeModal('supplierModal')">
   <div class="modal" style="max-width:560px;">
     <div class="modal-header">
-      <div class="modal-title">Sido Makmur Farm</div>
+      <div class="modal-title" id="modalSupplierTitle">Detail Supplier</div>
       <button class="modal-close" onclick="closeModal('supplierModal')">✕</button>
     </div>
-    <div class="modal-body">
-      <div style="display:flex;gap:16px;margin-bottom:20px;">
-        <div style="width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,var(--mint),var(--sage));display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;">🌾</div>
-        <div>
-          <div style="font-weight:700;font-size:17px;color:var(--forest);">Sido Makmur Farm</div>
-          <div style="font-size:13px;color:var(--mid-gray);">📍 Malang, Jawa Timur, Indonesia</div>
-          <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;">
-            <span class="badge badge-success">✓ Terverifikasi</span>
-            <span style="font-size:13px;color:var(--harvest);">⭐ 4.8 (42 ulasan)</span>
-          </div>
-        </div>
-      </div>
-      <p style="font-size:13px;color:var(--mid-gray);line-height:1.6;margin-bottom:16px;">
-        Farm keluarga yang berfokus pada sayuran dan rempah organik. Pengalaman 15+ tahun, menerapkan praktik pertanian berkelanjutan untuk memastikan kualitas konsisten.
-      </p>
-      <div class="grid-2" style="margin-bottom:16px;">
-        <div style="padding:14px;background:var(--cream);border-radius:var(--radius-md);">
-          <div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Luas Lahan</div>
-          <div style="font-weight:700;color:var(--forest);">2.5 Hektar</div>
-        </div>
-        <div style="padding:14px;background:var(--cream);border-radius:var(--radius-md);">
-          <div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Pengalaman</div>
-          <div style="font-weight:700;color:var(--forest);">15+ Tahun</div>
-        </div>
-      </div>
-      <div style="font-weight:700;font-size:13px;color:var(--forest);margin-bottom:10px;">Komoditas Tersedia</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:white;border-radius:var(--radius-md);border:1px solid var(--light-gray);">
-          <div style="display:flex;align-items:center;gap:10px;"><span>🌶️</span><span style="font-weight:600;font-size:14px;">Cabai Merah</span></div>
-          <div style="text-align:right;"><div style="font-weight:700;color:var(--moss);">Rp 45.000/kg</div><div style="font-size:11px;color:var(--mid-gray);">Stok: 1,2 ton</div></div>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:white;border-radius:var(--radius-md);border:1px solid var(--light-gray);">
-          <div style="display:flex;align-items:center;gap:10px;"><span>🧅</span><span style="font-weight:600;font-size:14px;">Bawang Merah</span></div>
-          <div style="text-align:right;"><div style="font-weight:700;color:var(--moss);">Rp 38.000/kg</div><div style="font-size:11px;color:var(--mid-gray);">Stok: 800 kg</div></div>
-        </div>
-      </div>
-    </div>
+    <div class="modal-body" id="modalSupplierBody"><!-- filled by JS --></div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('supplierModal')">Tutup</button>
-      <button class="btn btn-primary">🛒 Buat Order Sekarang</button>
+      <button class="btn btn-primary" onclick="createOrderFromModal()">🛒 Buat Order</button>
     </div>
   </div>
 </div>
 
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bottom-nav-item active" id="bnav-dashboard" onclick="navigateTo('dashboard')">
+      <span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Beranda</span>
+    </button>
+    <button class="bottom-nav-item" onclick="navAlert('Cari')">
+      <span class="bottom-nav-icon">🔍</span><span class="bottom-nav-label">Cari</span>
+    </button>
+    <button class="bottom-nav-item" onclick="navAlert('Keranjang')">
+      <span class="bottom-nav-icon">🛒</span><span class="bottom-nav-label">Keranjang</span>
+    </button>
+    <button class="bottom-nav-item" onclick="navAlert('Order')">
+      <span class="bottom-nav-icon">📦</span><span class="bottom-nav-label">Order</span>
+    </button>
+    <button class="bottom-nav-item" id="bnav-profile" onclick="navigateTo('profile')">
+      <span class="bottom-nav-icon">👤</span><span class="bottom-nav-label">Profil</span>
+    </button>
+  </div>
+</nav>
+
 <script src="js/db.js"></script>
 <script>
   const session = requireAuth(['buyer']);
+  let currentView = 'dashboard';
+  let currentFarmerModal = null;
+  let activeCategory = '';
+
   if (session) {
     const name = session.full_name.split(' ').slice(0,2).join(' ');
     document.getElementById('buyerGreeting').textContent = `Halo, ${name}! Cari bahan baku hari ini? 🏭`;
@@ -567,110 +463,258 @@
       session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
   }
 
-  document.querySelectorAll('.chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-    });
-  });
-
-  function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-  const searchInput = document.querySelector('.search-bar-hero input');
-const searchBtn = document.querySelector('.search-bar-hero .btn-harvest');
-
-function performSearch() {
-  const query = searchInput.value.toLowerCase();
-  const suppliers = document.querySelectorAll('.supplier-card');
-  
-  suppliers.forEach(card => {
-    const name = card.querySelector('.supplier-name').textContent.toLowerCase();
-    const location = card.querySelector('.supplier-location').textContent.toLowerCase();
-    
-    if (name.includes(query) || location.includes(query)) {
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
-
-searchBtn.addEventListener('click', performSearch);
-searchInput.addEventListener('keyup', (e) => { if(e.key === 'Enter') performSearch(); });
-</script>
-
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-  <div class="bottom-nav-inner">
-    <button class="bottom-nav-item active">
-      <span class="bottom-nav-icon">🏠</span>
-      <span class="bottom-nav-label">Beranda</span>
-    </button>
-    <button class="bottom-nav-item">
-      <span class="bottom-nav-icon">🔍</span>
-      <span class="bottom-nav-label">Cari</span>
-    </button>
-    <button class="bottom-nav-item">
-      <span class="bottom-nav-icon">🛒</span>
-      <span class="bottom-nav-label">Keranjang</span>
-    </button>
-    <button class="bottom-nav-item">
-      <span class="bottom-nav-icon">📦</span>
-      <span class="bottom-nav-label">Order</span>
-    </button>
-    <button class="bottom-nav-item">
-      <span class="bottom-nav-icon">👤</span>
-      <span class="bottom-nav-label">Akun</span>
-    </button>
-  </div>
-</nav>
-<script>
-function toggleSidebar() {
-  document.querySelector('.sidebar').classList.toggle('open');
-  document.getElementById('sidebarOverlay').classList.toggle('open');
-}
-document.querySelectorAll('.bottom-nav-item').forEach(btn => {
-  btn.addEventListener('click', function() {
+  // ---- SPA NAVIGATION ----
+  function navigateTo(view) {
+    document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + view).classList.add('active');
+    currentView = view;
+    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + view);
+    if (navEl) navEl.classList.add('active');
     document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-  });
-});
-</script>
+    const bnavEl = document.getElementById('bnav-' + view);
+    if (bnavEl) bnavEl.classList.add('active');
+    if (view === 'profile') populateProfile();
+    if (view === 'dashboard') loadDashboardData();
+    if (window.innerWidth <= 768) toggleSidebar();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-<div class="modal-overlay" id="settingsModal" style="display:none;" onclick="if(event.target===this)closeModal('settingsModal')">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Pengaturan Profil</div>
-      <button class="modal-close" onclick="closeModal('settingsModal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
-        <div class="user-avatar-sm" id="profileAvatar" style="width:64px;height:64px;font-size:24px;border-radius:16px;"></div>
+  // ---- LOAD DASHBOARD DATA (cross-connected with farmer) ----
+  function loadDashboardData() {
+    const farmers = FarmifyDB.getCommoditiesByFarmer();
+    const allCommodities = FarmifyDB.getAvailableCommodities();
+
+    document.getElementById('supplierCount').textContent = farmers.length;
+    document.getElementById('activeOrderCount').textContent = FarmifyDB.getOrders({ buyer_id: session.id }).length;
+
+    // Supplier grid
+    const grid = document.getElementById('supplierGrid');
+    document.getElementById('supplierCountLabel').textContent = `${farmers.length} petani aktif`;
+    if (!farmers.length) {
+      grid.innerHTML = `<div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;"><div style="font-size:36px;margin-bottom:12px;">🌱</div><div>Belum ada supplier terdaftar</div></div>`;
+    } else {
+      grid.innerHTML = farmers.map(f => `
+        <div class="supplier-card" onclick="openSupplierModal('${f.id}')">
+          <div class="supplier-header">
+            <div class="supplier-avatar">${f.items[0]?.emoji || '🌾'}</div>
+            <div>
+              <div class="supplier-name">${f.farm_name || f.full_name}</div>
+              <div class="supplier-location">📍 ${f.city || 'Jawa Timur'}</div>
+            </div>
+          </div>
+          <div class="supplier-commodities">
+            ${f.items.slice(0,3).map(c => `<span class="commodity-tag">${c.emoji || ''} ${c.name}</span>`).join('')}
+            ${f.items.length > 3 ? `<span class="commodity-tag">+${f.items.length-3} lagi</span>` : ''}
+          </div>
+          <div class="supplier-footer">
+            <div class="supplier-rating">⭐ 4.8 <span style="color:var(--mid-gray);font-weight:400;">(42 ulasan)</span></div>
+            <button class="btn btn-primary" style="padding:7px 16px;font-size:12px;" onclick="event.stopPropagation();openSupplierModal('${f.id}')">Pesan</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Commodity table
+    renderCommodityTable(allCommodities);
+  }
+
+  function renderCommodityTable(commodities) {
+    document.getElementById('commodityCount').textContent = `${commodities.length} komoditas`;
+    const tbody = document.getElementById('commodityTable');
+    if (!commodities.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--mid-gray);">Belum ada komoditas tersedia</td></tr>';
+      return;
+    }
+    tbody.innerHTML = commodities.map(c => `
+      <tr>
+        <td><span style="font-size:18px;">${c.emoji || '🌿'}</span> <strong>${c.name}</strong></td>
+        <td>
+          <div style="font-weight:600;font-size:13px;">${c.farm_name}</div>
+          <div style="font-size:11px;color:var(--mid-gray);">📍 ${c.farmer_city || '—'}</div>
+        </td>
+        <td style="font-weight:700;color:var(--moss);">${formatRp(c.price)}/${c.unit}</td>
+        <td>${c.is_preorder ? '<span style="color:var(--earth);font-weight:600;">Pre-Order</span>' : `${Number(c.stock).toLocaleString('id-ID')} ${c.unit}`}</td>
+        <td>${c.is_preorder ? '<span class="badge badge-warning">Pre-Order</span>' : '<span class="badge badge-success">Tersedia</span>'}</td>
+        <td><button class="btn btn-primary" style="padding:5px 14px;font-size:12px;" onclick="quickOrder('${c.id}')">+ Order</button></td>
+      </tr>
+    `).join('');
+  }
+
+  function performSearch() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    let commodities = FarmifyDB.getAvailableCommodities();
+    if (q) commodities = commodities.filter(c => c.name.toLowerCase().includes(q) || c.farm_name.toLowerCase().includes(q) || (c.farmer_city || '').toLowerCase().includes(q));
+    if (activeCategory) commodities = commodities.filter(c => (c.category || '').includes(activeCategory));
+    renderCommodityTable(commodities);
+    // Filter suppliers
+    const farmerIds = [...new Set(commodities.map(c => c.farmer_id))];
+    const allFarmers = FarmifyDB.getCommoditiesByFarmer();
+    const filtered = allFarmers.filter(f => !q || farmerIds.includes(f.id) || f.full_name.toLowerCase().includes(q));
+    document.getElementById('supplierGrid').innerHTML = filtered.length
+      ? filtered.map(f => `<div class="supplier-card" onclick="openSupplierModal('${f.id}')"><div class="supplier-header"><div class="supplier-avatar">${f.items[0]?.emoji||'🌾'}</div><div><div class="supplier-name">${f.farm_name||f.full_name}</div><div class="supplier-location">📍 ${f.city||'Jawa Timur'}</div></div></div><div class="supplier-commodities">${f.items.slice(0,3).map(c=>`<span class="commodity-tag">${c.emoji||''} ${c.name}</span>`).join('')}</div><div class="supplier-footer"><div class="supplier-rating">⭐ 4.8</div><button class="btn btn-primary" style="padding:7px 16px;font-size:12px;">Pesan</button></div></div>`).join('')
+      : `<div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;">Tidak ada hasil untuk "${q}"</div>`;
+  }
+
+  function filterCategory(el, cat) {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    activeCategory = cat;
+    performSearch();
+  }
+
+  function openSupplierModal(farmerId) {
+    const farmer = FarmifyDB.findById(farmerId);
+    if (!farmer) return;
+    const items = FarmifyDB.getCommodities(farmerId).filter(c => c.is_available);
+    currentFarmerModal = farmerId;
+    document.getElementById('modalSupplierTitle').textContent = farmer.farm_name || farmer.full_name;
+    document.getElementById('modalSupplierBody').innerHTML = `
+      <div style="display:flex;gap:14px;margin-bottom:16px;align-items:flex-start;">
+        <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--mint),var(--sage));display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;">🌾</div>
         <div>
-          <div style="font-weight:700;font-size:18px;color:var(--forest);" id="profileName">Loading...</div>
-          <div style="font-size:13px;color:var(--mid-gray);" id="profileEmail">Loading...</div>
-          <span class="badge badge-success" style="margin-top:6px;" id="profileRole">Role</span>
+          <div style="font-weight:700;font-size:17px;color:var(--forest);">${farmer.farm_name || farmer.full_name}</div>
+          <div style="font-size:13px;color:var(--mid-gray);">📍 ${farmer.city || '—'}, ${farmer.province?.replace('_',' ') || 'Jawa Timur'}</div>
+          <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;">
+            <span class="badge badge-success">✓ Terverifikasi</span>
+            <span style="font-size:13px;color:var(--harvest);">⭐ 4.8 (42 ulasan)</span>
+          </div>
         </div>
       </div>
-      
-      <div class="form-group">
-        <label class="form-label">Nama Lengkap</label>
-        <input type="text" class="form-input" id="editName" />
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Luas Lahan</div><div style="font-weight:700;color:var(--forest);">${farmer.farm_size || '—'} Ha</div></div>
+        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Pengalaman</div><div style="font-weight:700;color:var(--forest);">${farmer.exp_years || '—'} Tahun</div></div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Nomor Telepon</label>
-        <input type="text" class="form-input" id="editPhone" />
-      </div>
-      <div class="form-group" id="extraProfileField">
+      <div style="font-weight:700;font-size:13px;color:var(--forest);margin-bottom:10px;">Komoditas Tersedia (${items.length})</div>
+      ${items.length ? items.map(c => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:white;border-radius:var(--radius-md);border:1px solid var(--light-gray);margin-bottom:8px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-size:20px;">${c.emoji||'🌿'}</span>
+            <div>
+              <div style="font-weight:600;font-size:14px;">${c.name}</div>
+              <div style="font-size:11px;color:var(--mid-gray);">${c.category || ''}</div>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-weight:700;color:var(--moss);">${formatRp(c.price)}/${c.unit}</div>
+            <div style="font-size:11px;color:var(--mid-gray);">${c.is_preorder ? '📅 Pre-Order' : `Stok: ${Number(c.stock).toLocaleString('id-ID')} ${c.unit}`}</div>
+          </div>
         </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeModal('settingsModal')">Batal</button>
-      <button class="btn btn-primary" onclick="saveProfile()">Simpan Perubahan</button>
-    </div>
-  </div>
-</div>
+      `).join('') : '<div style="text-align:center;padding:20px;color:var(--mid-gray);">Belum ada komoditas</div>'}
+    `;
+    document.getElementById('supplierModal').style.display = 'flex';
+  }
 
+  function quickOrder(commodityId) {
+    const c = FarmifyDB.getCommodities().find(x => x.id === commodityId);
+    if (!c) return;
+    if (confirm(`Buat order untuk ${c.name} dari farm ini?\n\nHarga: ${formatRp(c.price)}/${c.unit}`)) {
+      const result = FarmifyDB.createOrder({
+        buyer_id: session.id, farmer_id: c.farmer_id,
+        commodity_id: commodityId, commodity_name: c.name,
+        quantity: 100, unit: c.unit,
+        total_price: c.price * 100
+      });
+      if (result.success) showToast(`✅ Order ${result.order.order_code} berhasil dibuat!`);
+    }
+  }
+
+  function createOrderFromModal() {
+    if (!currentFarmerModal) return;
+    const items = FarmifyDB.getCommodities(currentFarmerModal).filter(c => c.is_available);
+    if (!items.length) { showToast('Tidak ada komoditas tersedia', 'error'); return; }
+    const c = items[0];
+    const result = FarmifyDB.createOrder({
+      buyer_id: session.id, farmer_id: currentFarmerModal,
+      commodity_id: c.id, commodity_name: c.name,
+      quantity: 100, unit: c.unit, total_price: c.price * 100
+    });
+    if (result.success) {
+      closeModal('supplierModal');
+      showToast(`✅ Order ${result.order.order_code} berhasil dibuat!`);
+      loadDashboardData();
+    }
+  }
+
+  // ---- PROFILE ----
+  function populateProfile() {
+    const fullUser = FarmifyDB.findById(session.id) || session;
+    const initials = session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
+    document.getElementById('profileAvatarLg').textContent = initials;
+    document.getElementById('profileHeroName').textContent = session.full_name;
+    document.getElementById('profileHeroEmail').textContent = session.email;
+    document.getElementById('profileHeroCompany').textContent = fullUser.company_name || 'Perusahaan';
+    document.getElementById('vFullName').textContent = session.full_name;
+    document.getElementById('vEmail').textContent = session.email;
+    document.getElementById('vPhone').textContent = fullUser.phone || '—';
+    if (fullUser.created_at) {
+      document.getElementById('vMemberSince').textContent = new Date(fullUser.created_at).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+    }
+    const bizMap = { manufacturer:'Manufaktur / Pabrik', restaurant:'Restoran / Hotel', retailer:'Retail / Distributor', catering:'Katering', export:'Eksportir', other:'Lainnya' };
+    document.getElementById('vCompanyName').textContent = fullUser.company_name || '—';
+    document.getElementById('vBusinessType').textContent = bizMap[fullUser.business_type] || fullUser.business_type || '—';
+    document.getElementById('vAddress').textContent = fullUser.company_address || '—';
+    document.getElementById('vNpwp').textContent = fullUser.npwp || '—';
+    document.getElementById('vBankName').textContent = fullUser.bank_name || '—';
+    document.getElementById('vBankAccount').textContent = fullUser.bank_account ? '•••• •••• ' + String(fullUser.bank_account).slice(-4) : '—';
+    disableEditMode();
+  }
+
+  function enableEditMode() {
+    const fullUser = FarmifyDB.findById(session.id) || session;
+    document.getElementById('eFullName').value = session.full_name;
+    document.getElementById('eEmail').value = session.email;
+    document.getElementById('ePhone').value = fullUser.phone || '';
+    document.getElementById('eCompanyName').value = fullUser.company_name || '';
+    document.getElementById('eAddress').value = fullUser.company_address || '';
+    document.getElementById('eNpwp').value = fullUser.npwp || '';
+    document.getElementById('eBankAccount').value = fullUser.bank_account || '';
+    const biz = document.getElementById('eBusinessType');
+    for (let o of biz.options) { if (o.value === fullUser.business_type) { o.selected = true; break; } }
+    ['cardPersonal','cardCompany','cardBank'].forEach(id => {
+      document.getElementById(id).classList.replace('profile-view-mode','profile-edit-mode');
+    });
+    document.getElementById('profileActions').innerHTML = `
+      <button class="btn-cancel-profile" onclick="disableEditMode()" style="margin-right:8px;">Batal</button>
+      <button class="btn-save-profile" onclick="saveProfileInline()">💾 Simpan</button>
+    `;
+  }
+
+  function disableEditMode() {
+    ['cardPersonal','cardCompany','cardBank'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('profile-edit-mode');
+      el.classList.add('profile-view-mode');
+    });
+    document.getElementById('profileActions').innerHTML = `<button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profil</button>`;
+  }
+
+  function saveProfileInline() {
+    const newName = document.getElementById('eFullName').value.trim();
+    if (!newName) { showToast('Nama tidak boleh kosong!', 'error'); return; }
+    FarmifyDB.updateUser(session.id, {
+      full_name: newName,
+      phone: document.getElementById('ePhone').value.trim(),
+      company_name: document.getElementById('eCompanyName').value.trim(),
+      company_address: document.getElementById('eAddress').value.trim(),
+      npwp: document.getElementById('eNpwp').value.trim(),
+      business_type: document.getElementById('eBusinessType').value,
+      bank_name: document.getElementById('eBankName').value,
+      bank_account: document.getElementById('eBankAccount').value.trim()
+    });
+    session.full_name = newName;
+    sessionStorage.setItem('farmify_session', JSON.stringify(session));
+    document.getElementById('sidebarName').textContent = newName;
+    document.getElementById('sidebarAvatar').textContent = newName.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
+    populateProfile();
+    showToast('✅ Profil berhasil disimpan!');
+  }
+
+  function navAlert(name) { alert(`Fitur "${name}" sedang dalam pengembangan.`); }
+  function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+
+  // Init
+  loadDashboardData();
+</script>
 </body>
 </html>

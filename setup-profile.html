@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setup Profil — Farmify</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background: var(--warm-white); }
+
+    .setup-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px 80px;
+      background: linear-gradient(160deg, rgba(74,124,89,0.04) 0%, rgba(200,151,42,0.03) 100%);
+    }
+
+    .setup-container {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .setup-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .setup-brand-icon { font-size: 28px; }
+    .setup-brand-name { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--forest); }
+
+    .setup-progress {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .setup-step {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .step-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700;
+      background: var(--light-gray);
+      color: var(--mid-gray);
+      transition: all 0.3s;
+    }
+    .step-dot.active { background: var(--moss); color: white; }
+    .step-dot.done { background: var(--leaf); color: white; }
+    .step-label { font-size: 12px; font-weight: 600; color: var(--mid-gray); }
+    .step-label.active { color: var(--forest); }
+    .step-divider { flex: 1; height: 2px; background: var(--light-gray); border-radius: 1px; }
+    .step-divider.done { background: var(--leaf); }
+
+    .setup-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(74,124,89,0.08);
+    }
+
+    .setup-card-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 6px;
+    }
+
+    .setup-card-sub {
+      font-size: 14px;
+      color: var(--mid-gray);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .setup-step-content { display: none; }
+    .setup-step-content.active { display: block; }
+
+    .role-card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 400px) { .role-card-grid { grid-template-columns: 1fr; } }
+
+    .role-card {
+      border: 2px solid var(--light-gray);
+      border-radius: var(--radius-lg);
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .role-card:hover { border-color: var(--sage); background: rgba(74,124,89,0.03); }
+    .role-card.selected { border-color: var(--moss); background: rgba(74,124,89,0.06); }
+    .role-card-icon { font-size: 36px; margin-bottom: 10px; }
+    .role-card-title { font-weight: 700; font-size: 15px; color: var(--forest); margin-bottom: 4px; }
+    .role-card-desc { font-size: 12px; color: var(--mid-gray); line-height: 1.4; }
+
+    .success-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--moss), var(--leaf));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+      margin: 0 auto 20px;
+    }
+
+    .commodities-check {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .comm-check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1.5px solid var(--light-gray);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+    .comm-check-item input[type=checkbox] { accent-color: var(--moss); width: 15px; height: 15px; }
+    .comm-check-item:has(input:checked) { border-color: var(--moss); background: rgba(74,124,89,0.06); color: var(--forest); }
+
+    .setup-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+<div class="setup-wrapper">
+  <div class="setup-container">
+
+    <div class="setup-brand">
+      <div class="setup-brand-icon">🌿</div>
+      <div class="setup-brand-name">Farmify</div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="setup-progress" id="setupProgress">
+      <div class="setup-step">
+        <div class="step-dot active" id="dot1">1</div>
+        <div class="step-label active" id="lbl1">Identitas</div>
+      </div>
+      <div class="step-divider" id="div1"></div>
+      <div class="setup-step">
+        <div class="step-dot" id="dot2">2</div>
+        <div class="step-label" id="lbl2">Detail</div>
+      </div>
+      <div class="step-divider" id="div2"></div>
+      <div class="setup-step">
+        <div class="step-dot" id="dot3">3</div>
+        <div class="step-label" id="lbl3">Pembayaran</div>
+      </div>
+      <div class="step-divider" id="div3"></div>
+      <div class="setup-step">
+        <div class="step-dot" id="dot4">4</div>
+        <div class="step-label" id="lbl4">Selesai</div>
+      </div>
+    </div>
+
+    <div class="setup-card">
+
+      <!-- STEP 1: Identitas -->
+      <div class="setup-step-content active" id="step1">
+        <div class="setup-card-title">👋 Selamat datang di Farmify!</div>
+        <div class="setup-card-sub" id="step1Sub">Lengkapi profil Anda untuk mulai menggunakan platform</div>
+
+        <div class="form-group">
+          <label class="form-label">Nama Lengkap / Nama Bisnis *</label>
+          <input type="text" class="form-input" id="s1Name" placeholder="Masukkan nama lengkap" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nomor Telepon / WhatsApp *</label>
+          <input type="tel" class="form-input" id="s1Phone" placeholder="08xxxxxxxxxx" />
+        </div>
+
+        <!-- Farmer specific fields -->
+        <div id="farmerFields1" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">Nama Farm *</label>
+            <input type="text" class="form-input" id="s1FarmName" placeholder="Contoh: Sido Makmur Farm" />
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group">
+              <label class="form-label">Kota / Kabupaten *</label>
+              <input type="text" class="form-input" id="s1City" placeholder="Malang" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Provinsi</label>
+              <select class="form-select" id="s1Province">
+                <option value="jawa_timur">Jawa Timur</option>
+                <option value="jawa_tengah">Jawa Tengah</option>
+                <option value="jawa_barat">Jawa Barat</option>
+                <option value="bali">Bali</option>
+                <option value="sulawesi">Sulawesi</option>
+                <option value="sumatra">Sumatra</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buyer specific fields -->
+        <div id="buyerFields1" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">Nama Perusahaan *</label>
+            <input type="text" class="form-input" id="s1CompanyName" placeholder="PT / CV / UD ..." />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Jenis Bisnis *</label>
+            <select class="form-select" id="s1BusinessType">
+              <option value="manufacturer">Manufaktur / Pabrik Pengolahan</option>
+              <option value="restaurant">Restoran / Hotel / Katering</option>
+              <option value="retailer">Retail / Distributor / Grosir</option>
+              <option value="export">Eksportir</option>
+              <option value="other">Lainnya</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setup-nav">
+          <span style="font-size:13px;color:var(--mid-gray);">Langkah 1 dari 3</span>
+          <button class="btn btn-primary" onclick="nextStep(2)">Lanjut →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Detail -->
+      <div class="setup-step-content" id="step2">
+        <div class="setup-card-title" id="step2Title">🌿 Detail Farm</div>
+        <div class="setup-card-sub">Informasi ini membantu pembeli mengenal farm Anda lebih baik</div>
+
+        <!-- Farmer detail -->
+        <div id="farmerFields2">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group">
+              <label class="form-label">Luas Lahan (Hektar)</label>
+              <input type="number" class="form-input" id="s2FarmSize" placeholder="2.5" step="0.1" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pengalaman (Tahun)</label>
+              <input type="number" class="form-input" id="s2ExpYears" placeholder="5" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Komoditas yang Ditanam</label>
+            <div class="commodities-check">
+              <label class="comm-check-item"><input type="checkbox" value="vegetable" id="cVeg"> 🥬 Sayuran</label>
+              <label class="comm-check-item"><input type="checkbox" value="spice" id="cSpice"> 🌶️ Rempah</label>
+              <label class="comm-check-item"><input type="checkbox" value="fruit" id="cFruit"> 🍉 Buah-buahan</label>
+              <label class="comm-check-item"><input type="checkbox" value="rice" id="cRice"> 🌾 Padi / Biji</label>
+              <label class="comm-check-item"><input type="checkbox" value="tuber" id="cTuber"> 🥔 Umbi-umbian</label>
+              <label class="comm-check-item"><input type="checkbox" value="herbal" id="cHerbal"> 🌿 Herbal</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Deskripsi Singkat Farm</label>
+            <textarea class="form-input" id="s2FarmDesc" rows="3" placeholder="Ceritakan keunggulan farm Anda..." style="resize:vertical;"></textarea>
+          </div>
+        </div>
+
+        <!-- Buyer detail -->
+        <div id="buyerFields2" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">Alamat Lengkap Perusahaan</label>
+            <input type="text" class="form-input" id="s2Address" placeholder="Jl. Raya Industri No.1, Surabaya" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">NPWP Perusahaan</label>
+            <input type="text" class="form-input" id="s2Npwp" placeholder="XX.XXX.XXX.X-XXX.XXX" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Kebutuhan Utama (komoditas yang sering dibeli)</label>
+            <div class="commodities-check">
+              <label class="comm-check-item"><input type="checkbox" value="vegetable"> 🥬 Sayuran</label>
+              <label class="comm-check-item"><input type="checkbox" value="spice"> 🌶️ Rempah</label>
+              <label class="comm-check-item"><input type="checkbox" value="fruit"> 🍉 Buah-buahan</label>
+              <label class="comm-check-item"><input type="checkbox" value="rice"> 🌾 Padi / Biji</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="setup-nav">
+          <button class="btn btn-secondary" onclick="nextStep(1)">← Kembali</button>
+          <button class="btn btn-primary" onclick="nextStep(3)">Lanjut →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Pembayaran -->
+      <div class="setup-step-content" id="step3">
+        <div class="setup-card-title">🏦 Rekening Pembayaran</div>
+        <div class="setup-card-sub">Digunakan untuk menerima atau melakukan pembayaran transaksi di platform</div>
+
+        <div class="form-group">
+          <label class="form-label">Bank *</label>
+          <select class="form-select" id="s3Bank">
+            <option value="">-- Pilih Bank --</option>
+            <option value="BRI">Bank BRI</option>
+            <option value="BCA">Bank BCA</option>
+            <option value="Mandiri">Bank Mandiri</option>
+            <option value="BNI">Bank BNI</option>
+            <option value="BSI">Bank BSI</option>
+            <option value="BTPN">Bank BTPN</option>
+            <option value="CIMB">CIMB Niaga</option>
+            <option value="Permata">Bank Permata</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nomor Rekening *</label>
+          <input type="text" class="form-input" id="s3Account" placeholder="Nomor rekening tanpa spasi" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nama Pemilik Rekening *</label>
+          <input type="text" class="form-input" id="s3AccountName" placeholder="Sesuai buku tabungan" />
+        </div>
+
+        <div style="padding:14px 16px;background:rgba(74,124,89,0.06);border-radius:var(--radius-md);border:1px solid rgba(74,124,89,0.12);">
+          <div style="font-size:12px;color:var(--moss);font-weight:600;margin-bottom:4px;">🔒 Keamanan Data</div>
+          <div style="font-size:12px;color:var(--mid-gray);line-height:1.5;">Data rekening Anda dienkripsi dan hanya digunakan untuk keperluan transaksi di platform Farmify.</div>
+        </div>
+
+        <div class="setup-nav">
+          <button class="btn btn-secondary" onclick="nextStep(2)">← Kembali</button>
+          <button class="btn btn-primary" onclick="completeSetup()">Selesai & Kirim ✓</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Done -->
+      <div class="setup-step-content" id="step4">
+        <div style="text-align:center;padding:16px 0;">
+          <div class="success-icon">✅</div>
+          <div class="setup-card-title" style="text-align:center;">Profil Berhasil Dikirim!</div>
+          <div class="setup-card-sub" style="text-align:center;max-width:360px;margin:0 auto 24px;">
+            Profil Anda sedang direview oleh tim admin Farmify. Proses verifikasi biasanya membutuhkan 1×24 jam kerja.
+          </div>
+          <div style="background:var(--cream);border-radius:var(--radius-lg);padding:20px;margin-bottom:24px;text-align:left;">
+            <div style="font-weight:700;font-size:14px;color:var(--forest);margin-bottom:12px;">Langkah selanjutnya:</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--charcoal);">
+                <span style="color:var(--moss);font-weight:700;flex-shrink:0;">1.</span>
+                Admin akan memverifikasi data yang Anda daftarkan
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--charcoal);">
+                <span style="color:var(--moss);font-weight:700;flex-shrink:0;">2.</span>
+                Anda akan menerima notifikasi via email saat akun diaktifkan
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--charcoal);">
+                <span style="color:var(--moss);font-weight:700;flex-shrink:0;">3.</span>
+                Login kembali untuk mulai menggunakan platform
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" style="width:100%;padding:14px;" onclick="window.location.href='login.html'">Kembali ke Login</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/db.js"></script>
+<script>
+  // Get session — if already setup_complete, redirect to dashboard
+  const rawSession = FarmifyDB.getSession();
+  if (!rawSession) { window.location.href = 'login.html'; }
+  if (rawSession && rawSession.setup_complete) { window.location.href = getDashboardUrl(rawSession.role); }
+
+  let currentStep = 1;
+  const role = rawSession ? rawSession.role : (new URLSearchParams(window.location.search).get('role') || 'farmer');
+
+  // Show role-specific fields on load
+  window.addEventListener('DOMContentLoaded', () => {
+    if (role === 'farmer') {
+      document.getElementById('farmerFields1').style.display = 'block';
+      document.getElementById('step1Sub').textContent = 'Isi informasi dasar farm Anda untuk mulai berjualan';
+    } else if (role === 'buyer') {
+      document.getElementById('buyerFields1').style.display = 'block';
+      document.getElementById('step1Sub').textContent = 'Isi informasi perusahaan Anda untuk mulai berbelanja';
+    }
+
+    // Pre-fill name if available
+    if (rawSession) document.getElementById('s1Name').value = rawSession.full_name || '';
+  });
+
+  function nextStep(target) {
+    if (target > currentStep && !validateStep(currentStep)) return;
+
+    // Update dots
+    document.getElementById(`step${currentStep}`).classList.remove('active');
+    document.getElementById(`dot${currentStep}`).classList.remove('active');
+    document.getElementById(`dot${currentStep}`).classList.add('done');
+    document.getElementById(`dot${currentStep}`).textContent = '✓';
+
+    if (target === 2) {
+      // Show correct fields for step 2
+      if (role === 'farmer') {
+        document.getElementById('farmerFields2').style.display = 'block';
+        document.getElementById('buyerFields2').style.display = 'none';
+        document.getElementById('step2Title').textContent = '🌿 Detail Farm';
+      } else {
+        document.getElementById('farmerFields2').style.display = 'none';
+        document.getElementById('buyerFields2').style.display = 'block';
+        document.getElementById('step2Title').textContent = '🏢 Detail Perusahaan';
+      }
+      if (target < currentStep) {
+        // going back
+        document.getElementById(`dot${currentStep}`).classList.remove('done');
+        document.getElementById(`dot${currentStep}`).classList.add('active');
+        document.getElementById(`dot${currentStep}`).textContent = currentStep;
+      }
+    }
+
+    currentStep = target;
+    document.getElementById(`step${target}`).classList.add('active');
+    document.getElementById(`dot${target}`).classList.remove('done');
+    document.getElementById(`dot${target}`).classList.add('active');
+    document.getElementById(`dot${target}`).textContent = target;
+    if (target > 1) document.getElementById(`div${target-1}`).classList.add('done');
+
+    document.getElementById(`lbl${target}`).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function validateStep(step) {
+    if (step === 1) {
+      if (!document.getElementById('s1Name').value.trim()) { showToast('Mohon isi nama lengkap', 'error'); return false; }
+      if (!document.getElementById('s1Phone').value.trim()) { showToast('Mohon isi nomor telepon', 'error'); return false; }
+      if (role === 'farmer' && !document.getElementById('s1FarmName').value.trim()) { showToast('Mohon isi nama farm', 'error'); return false; }
+      if (role === 'buyer' && !document.getElementById('s1CompanyName').value.trim()) { showToast('Mohon isi nama perusahaan', 'error'); return false; }
+    }
+    if (step === 3) {
+      if (!document.getElementById('s3Bank').value) { showToast('Mohon pilih bank', 'error'); return false; }
+      if (!document.getElementById('s3Account').value.trim()) { showToast('Mohon isi nomor rekening', 'error'); return false; }
+    }
+    return true;
+  }
+
+  function completeSetup() {
+    if (!validateStep(3)) return;
+
+    const selectedCommodities = Array.from(document.querySelectorAll('#step2 input[type=checkbox]:checked')).map(c => c.value);
+
+    const data = {
+      full_name: document.getElementById('s1Name').value.trim(),
+      phone: document.getElementById('s1Phone').value.trim(),
+      bank_name: document.getElementById('s3Bank').value,
+      bank_account: document.getElementById('s3Account').value.trim(),
+      bank_account_name: document.getElementById('s3AccountName').value.trim(),
+    };
+
+    if (role === 'farmer') {
+      data.farm_name = document.getElementById('s1FarmName').value.trim();
+      data.city = document.getElementById('s1City').value.trim();
+      data.province = document.getElementById('s1Province').value;
+      data.farm_size = document.getElementById('s2FarmSize').value;
+      data.exp_years = document.getElementById('s2ExpYears').value;
+      data.farm_desc = document.getElementById('s2FarmDesc').value.trim();
+      data.commodities = selectedCommodities;
+    } else if (role === 'buyer') {
+      data.company_name = document.getElementById('s1CompanyName').value.trim();
+      data.business_type = document.getElementById('s1BusinessType').value;
+      data.company_address = document.getElementById('s2Address').value.trim();
+      data.npwp = document.getElementById('s2Npwp').value.trim();
+      data.needs = selectedCommodities;
+    }
+
+    FarmifyDB.completeSetup(rawSession.id, data);
+
+    // Update session name
+    rawSession.full_name = data.full_name;
+    rawSession.setup_complete = true;
+    sessionStorage.setItem('farmify_session', JSON.stringify(rawSession));
+
+    // Show success
+    nextStep(4);
+    document.getElementById('dot4').textContent = '✓';
+    document.getElementById('dot4').classList.add('done');
+  }
+</script>
+</body>
+</html>
