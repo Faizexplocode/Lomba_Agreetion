@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -133,15 +133,15 @@
 
     <ul class="sidebar-nav">
       <li><a href="#" id="nav-dashboard" class="active" onclick="navigateTo('dashboard'); return false;"><span class="nav-icon">🏠</span> Dashboard</a></li>
-      <li><a href="#" onclick="navigateTo('dashboard'); switchTab('verification'); return false;"><span class="nav-icon">✅</span> Verifikasi User <span data-notif-badge style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;display:none;">0</span></a></li>
-      <li><a href="#" onclick="navigateTo('monitor'); return false;" id="nav-monitor"><span class="nav-icon">👥</span> Monitor Akun</a></li>
-      <li><a href="#" onclick="navigateTo('dashboard'); switchTab('transactions'); return false;"><span class="nav-icon">📦</span> Monitor Transaksi</a></li>
-      <li><a href="#" onclick="navigateTo('dashboard'); switchTab('platform'); return false;"><span class="nav-icon">📊</span> Analitik Platform</a></li>
+      <li><a href="#" onclick="navigateTo('dashboard'); switchTab('verification'); return false;"><span class="nav-icon">✅</span> User Verification <span data-notif-badge style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;display:none;">0</span></a></li>
+      <li><a href="#" onclick="navigateTo('monitor'); return false;" id="nav-monitor"><span class="nav-icon">👥</span> Account Monitor</a></li>
+      <li><a href="#" onclick="navigateTo('dashboard'); switchTab('transactions'); return false;"><span class="nav-icon">📦</span> Transaction Monitor</a></li>
+      <li><a href="#" onclick="navigateTo('dashboard'); switchTab('platform'); return false;"><span class="nav-icon">📊</span> Platform Analytics</a></li>
 
-      <div style="padding:0 8px;margin-top:20px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">Sistem</div>
-      <li><a href="#" onclick="navAlert('Laporan Keuangan'); return false;"><span class="nav-icon">💰</span> Laporan Keuangan</a></li>
-      <li><a href="#" onclick="navigateTo('activity'); return false;" id="nav-activity"><span class="nav-icon">📋</span> Log Aktivitas</a></li>
-      <li><a href="#" id="nav-profile" onclick="navigateTo('profile'); return false;"><span class="nav-icon">👤</span> Profil Admin</a></li>
+      <div style="padding:0 8px;margin-top:20px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">System</div>
+      <li><a href="#" onclick="navAlert('Financial Reports'); return false;"><span class="nav-icon">💰</span> Financial Reports</a></li>
+      <li><a href="#" onclick="navigateTo('activity'); return false;" id="nav-activity"><span class="nav-icon">📋</span> Activity Log</a></li>
+      <li><a href="#" id="nav-profile" onclick="navigateTo('profile'); return false;"><span class="nav-icon">👤</span> Admin Profile</a></li>
     </ul>
 
     <div class="sidebar-footer">
@@ -155,7 +155,7 @@
       <button onclick="logout()" style="margin-top:8px;width:100%;padding:9px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;transition:all 0.2s;font-family:var(--font-body);"
         onmouseover="this.style.background='rgba(196,98,45,0.2)';this.style.color='#f5a98a';"
         onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.5)';">
-        ↩ Keluar
+        ↩ Sign Out
       </button>
     </div>
   </aside>
@@ -168,33 +168,33 @@
       <div class="admin-header-banner page-enter">
         <div>
           <div class="admin-title" id="adminGreeting">Admin Panel — Farmify</div>
-          <div class="admin-sub">Kelola pengguna, transaksi, dan kesehatan platform</div>
+          <div class="admin-sub">Manage users, transactions, and platform health</div>
         </div>
         <div style="display:flex;gap:10px;z-index:1;flex-wrap:wrap;">
           <button class="btn btn-outline-white" style="font-size:13px;" onclick="exportReport()">📊 Export CSV</button>
-          <button class="btn btn-harvest" style="font-size:13px;" onclick="navAlert('Tambah Admin')">+ Tambah Admin</button>
+          <button class="btn btn-harvest" style="font-size:13px;" onclick="navAlert('Add Admin')">+ Add Admin</button>
         </div>
       </div>
 
       <div class="stats-grid page-enter">
-        <div class="stat-card"><div class="stat-icon green">👥</div><div class="stat-value" id="totalUsersVal">—</div><div class="stat-label">Total Pengguna</div><div class="stat-change up">↑ +2 minggu ini</div></div>
-        <div class="stat-card"><div class="stat-icon gold">💸</div><div class="stat-value">Rp 142 Jt</div><div class="stat-label">Volume Transaksi</div><div class="stat-change up">↑ +18% bulan ini</div></div>
-        <div class="stat-card"><div class="stat-icon earth">🌾</div><div class="stat-value" id="farmerCount">—</div><div class="stat-label">Petani Aktif</div></div>
-        <div class="stat-card"><div class="stat-icon red">⚠️</div><div class="stat-value" id="pendingVal">—</div><div class="stat-label">Pending Verifikasi</div><div class="stat-change down">Perlu perhatian</div></div>
+        <div class="stat-card"><div class="stat-icon green">👥</div><div class="stat-value" id="totalUsersVal">—</div><div class="stat-label">Total Users</div><div class="stat-change up">↑ +2 this week</div></div>
+        <div class="stat-card"><div class="stat-icon gold">💸</div><div class="stat-value">IDR 142 Jt</div><div class="stat-label">Transaction Volume</div><div class="stat-change up">↑ +18% this month</div></div>
+        <div class="stat-card"><div class="stat-icon earth">🌾</div><div class="stat-value" id="farmerCount">—</div><div class="stat-label">Active Farmers</div></div>
+        <div class="stat-card"><div class="stat-icon red">⚠️</div><div class="stat-value" id="pendingVal">—</div><div class="stat-label">Pending Verification</div><div class="stat-change down">Needs attention</div></div>
       </div>
 
       <div class="quick-actions-grid page-enter">
-        <div class="quick-action" onclick="switchTab('verification')"><div class="qa-icon">✅</div><div class="qa-label">Verifikasi User</div></div>
-        <div class="quick-action" onclick="navigateTo('monitor')"><div class="qa-icon">👁️</div><div class="qa-label">Monitor Akun</div></div>
-        <div class="quick-action" onclick="navigateTo('activity')"><div class="qa-icon">📋</div><div class="qa-label">Log Aktivitas</div></div>
-        <div class="quick-action" onclick="exportReport()"><div class="qa-icon">📊</div><div class="qa-label">Export Laporan</div></div>
+        <div class="quick-action" onclick="switchTab('verification')"><div class="qa-icon">✅</div><div class="qa-label">User Verification</div></div>
+        <div class="quick-action" onclick="navigateTo('monitor')"><div class="qa-icon">👁️</div><div class="qa-label">Account Monitor</div></div>
+        <div class="quick-action" onclick="navigateTo('activity')"><div class="qa-icon">📋</div><div class="qa-label">Activity Log</div></div>
+        <div class="quick-action" onclick="exportReport()"><div class="qa-icon">📊</div><div class="qa-label">Export Report</div></div>
       </div>
 
       <!-- TABS -->
       <div class="tab-bar page-enter">
-        <button class="tab-btn active" onclick="switchTab('users')" id="tab-users">👥 Semua Pengguna</button>
-        <button class="tab-btn" onclick="switchTab('verification')" id="tab-verification">✅ Verifikasi <span id="pendingBadge" style="background:var(--terracotta);color:white;font-size:10px;padding:2px 8px;border-radius:100px;margin-left:4px;">0</span></button>
-        <button class="tab-btn" onclick="switchTab('transactions')" id="tab-transactions">📦 Transaksi</button>
+        <button class="tab-btn active" onclick="switchTab('users')" id="tab-users">👥 All Users</button>
+        <button class="tab-btn" onclick="switchTab('verification')" id="tab-verification">✅ Verification <span id="pendingBadge" style="background:var(--terracotta);color:white;font-size:10px;padding:2px 8px;border-radius:100px;margin-left:4px;">0</span></button>
+        <button class="tab-btn" onclick="switchTab('transactions')" id="tab-transactions">📦 Transactions</button>
         <button class="tab-btn" onclick="switchTab('platform')" id="tab-platform">📊 Platform</button>
       </div>
 
@@ -203,37 +203,37 @@
         <div class="search-filter-row">
           <div class="input-with-icon" style="flex:1;">
             <span class="input-icon">🔍</span>
-            <input type="text" class="form-input" placeholder="Cari nama, email..." oninput="filterUsers(this.value)" />
+            <input type="text" class="form-input" placeholder="Search name, email..." oninput="filterUsers(this.value)" />
           </div>
           <select class="form-select" style="width:140px;" onchange="filterByRole(this.value)">
-            <option value="">Semua Role</option>
-            <option value="farmer">🌾 Petani</option>
-            <option value="buyer">🏭 Pembeli</option>
+            <option value="">All Roles</option>
+            <option value="farmer">🌾 Farmer</option>
+            <option value="buyer">🏭 Buyer</option>
             <option value="admin">⚙️ Admin</option>
           </select>
         </div>
         <div class="table-container">
-          <div class="table-header"><div class="table-title">Daftar Pengguna</div><span class="badge badge-farmer" id="userCountBadge">—</span></div>
+          <div class="table-header"><div class="table-title">User List</div><span class="badge badge-farmer" id="userCountBadge">—</span></div>
           <div class="table-scroll"><table>
-            <thead><tr><th>Pengguna</th><th>Email</th><th>Role</th><th>Status</th><th>Terdaftar</th><th>Aksi</th></tr></thead>
-            <tbody id="usersTableBody"><tr><td colspan="6" style="text-align:center;padding:28px;color:var(--mid-gray);">Memuat...</td></tr></tbody>
+            <thead><tr><th>User</th><th>Email</th><th>Role</th><th>Status</th><th>Registered</th><th>Action</th></tr></thead>
+            <tbody id="usersTableBody"><tr><td colspan="6" style="text-align:center;padding:28px;color:var(--mid-gray);">Loading...</td></tr></tbody>
           </table></div>
         </div>
       </div>
 
       <!-- TAB: VERIFIKASI -->
       <div class="tab-content" id="content-verification">
-        <div class="alert alert-info" style="margin-bottom:16px;"><span>📋</span> Pengguna baru perlu diverifikasi sebelum bisa menggunakan platform.</div>
-        <div id="pendingUsersList"><div style="text-align:center;padding:32px;color:var(--mid-gray);">Memuat...</div></div>
+        <div class="alert alert-info" style="margin-bottom:16px;"><span>📋</span> User baru perlu diverifikasi sebelum bisa menggunakan platform.</div>
+        <div id="pendingUsersList"><div style="text-align:center;padding:32px;color:var(--mid-gray);">Loading...</div></div>
       </div>
 
       <!-- TAB: TRANSAKSI -->
       <div class="tab-content" id="content-transactions">
         <div class="table-container">
-          <div class="table-header"><div class="table-title">Monitor Transaksi</div><span class="badge badge-farmer" id="txCountBadge">—</span></div>
+          <div class="table-header"><div class="table-title">Transaction Monitor</div><span class="badge badge-farmer" id="txCountBadge">—</span></div>
           <div class="table-scroll"><table>
-            <thead><tr><th>Kode Order</th><th>Petani</th><th>Pembeli</th><th>Komoditas</th><th>Total</th><th>Platform Fee</th><th>Status</th></tr></thead>
-            <tbody id="transactionTableBody"><tr><td colspan="7" style="text-align:center;padding:28px;color:var(--mid-gray);">Memuat...</td></tr></tbody>
+            <thead><tr><th>Order Code</th><th>Farmer</th><th>Buyer</th><th>Commodity</th><th>Total</th><th>Platform Fee</th><th>Status</th></tr></thead>
+            <tbody id="transactionTableBody"><tr><td colspan="7" style="text-align:center;padding:28px;color:var(--mid-gray);">Loading...</td></tr></tbody>
           </table></div>
         </div>
       </div>
@@ -244,37 +244,37 @@
           <div class="metric-card">
             <div class="metric-title">Revenue Breakdown</div>
             <div>
-              <div class="rev-bar-label"><span>Transaction Fee (7%)</span><span style="font-weight:700;color:var(--forest);">Rp 9.940.000</span></div>
+              <div class="rev-bar-label"><span>Transaction Fee (7%)</span><span style="font-weight:700;color:var(--forest);">IDR 9.940.000</span></div>
               <div class="rev-bar"><div class="rev-fill" style="width:75%"></div></div>
-              <div class="rev-bar-label"><span>Premium Subscription</span><span style="font-weight:700;color:var(--forest);">Rp 2.450.000</span></div>
+              <div class="rev-bar-label"><span>Premium Subscription</span><span style="font-weight:700;color:var(--forest);">IDR 2.450.000</span></div>
               <div class="rev-bar"><div class="rev-fill" style="width:25%;background:linear-gradient(90deg,var(--earth),var(--harvest));"></div></div>
-              <div class="rev-bar-label"><span>Advertisement Fee</span><span style="font-weight:700;color:var(--forest);">Rp 800.000</span></div>
+              <div class="rev-bar-label"><span>Advertisement Fee</span><span style="font-weight:700;color:var(--forest);">IDR 800.000</span></div>
               <div class="rev-bar"><div class="rev-fill" style="width:10%;background:linear-gradient(90deg,#7ea,#4a7);"></div></div>
             </div>
             <div style="border-top:1px solid var(--light-gray);padding-top:12px;margin-top:4px;display:flex;justify-content:space-between;">
               <span style="font-size:13px;color:var(--mid-gray);">Total Revenue</span>
-              <span style="font-weight:700;color:var(--forest);font-size:16px;">Rp 13.190.000</span>
+              <span style="font-weight:700;color:var(--forest);font-size:16px;">IDR 13.190.000</span>
             </div>
           </div>
           <div class="metric-card">
-            <div class="metric-title">Statistik Platform</div>
+            <div class="metric-title">Platform Statistics</div>
             <ul class="metric-list">
-              <li><span>Total Petani</span><span class="val" id="statFarmer">—</span></li>
-              <li><span>Total Pembeli B2B</span><span class="val" id="statBuyer">—</span></li>
-              <li><span>Komoditas Aktif</span><span class="val" id="statCommodity">—</span></li>
-              <li><span>Order Total</span><span class="val" id="statOrder">—</span></li>
+              <li><span>Total Farmers</span><span class="val" id="statFarmer">—</span></li>
+              <li><span>Total Buyer B2B</span><span class="val" id="statBuyer">—</span></li>
+              <li><span>Commodity Aktif</span><span class="val" id="statCommodity">—</span></li>
+              <li><span>Total Orders</span><span class="val" id="statOrder">—</span></li>
             </ul>
           </div>
           <div class="metric-card">
-            <div class="metric-title">Top Komoditas</div>
+            <div class="metric-title">Top Commodity</div>
             <ul class="metric-list" id="topCommodities">
-              <li><span>🌶️ Cabai Merah</span><span class="val">38 order</span></li>
-              <li><span>🧅 Bawang Merah</span><span class="val">27 order</span></li>
-              <li><span>🥬 Sayuran Hijau</span><span class="val">22 order</span></li>
+              <li><span>🌶️ Red Chili</span><span class="val">38 order</span></li>
+              <li><span>🧅 Red Onion</span><span class="val">27 order</span></li>
+              <li><span>🥬 Vegetables Hijau</span><span class="val">22 order</span></li>
             </ul>
           </div>
           <div class="metric-card">
-            <div class="metric-title">Distribusi Wilayah</div>
+            <div class="metric-title">Regional Distribution</div>
             <ul class="metric-list">
               <li><span>🏙️ Malang</span><span class="val">32%</span></li>
               <li><span>🏙️ Surabaya</span><span class="val">24%</span></li>
@@ -292,13 +292,13 @@
     <div id="view-monitor" class="page-view">
       <div class="page-title-row page-enter">
         <div>
-          <div class="page-title">Monitor Akun 👁️</div>
-          <div class="page-subtitle">Lihat detail dan aktivitas setiap akun di platform</div>
+          <div class="page-title">Account Monitor 👁️</div>
+          <div class="page-subtitle">View details and activity of every account on the platform</div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadMonitor('all')">Semua</button>
-          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadMonitor('farmer')">🌾 Petani</button>
-          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadMonitor('buyer')">🏭 Pembeli</button>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadMonitor('all')">All</button>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadMonitor('farmer')">🌾 Farmer</button>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadMonitor('buyer')">🏭 Buyer</button>
         </div>
       </div>
 
@@ -306,34 +306,34 @@
         <!-- filled by JS -->
       </div>
 
-      <!-- User Detail Side Panel -->
-      <div id="userDetailPanel" style="display:none;margin-top:24px;">
+      <!-- User Details Side Panel -->
+      <div id="userDetailsPanel" style="display:none;margin-top:24px;">
         <div class="page-title-row" style="margin-bottom:16px;">
-          <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--forest);" id="detailPanelTitle">Detail Akun</div>
-          <button class="btn btn-secondary" style="font-size:13px;" onclick="document.getElementById('userDetailPanel').style.display='none'">✕ Tutup</button>
+          <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--forest);" id="detailPanelTitle">Details Account</div>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="document.getElementById('userDetailsPanel').style.display='none'">✕ Tutup</button>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" id="detailPanelContent"><!-- filled by JS --></div>
       </div>
     </div><!-- end view-monitor -->
 
 
-    <!-- ===== VIEW: LOG AKTIVITAS ===== -->
+    <!-- ===== VIEW: ACTIVITY LOG ===== -->
     <div id="view-activity" class="page-view">
       <div class="page-title-row page-enter">
         <div>
-          <div class="page-title">Log Aktivitas 📋</div>
-          <div class="page-subtitle">Semua aktivitas pengguna secara real-time</div>
+          <div class="page-title">Activity Log 📋</div>
+          <div class="page-subtitle">All aktivitas pengguna secara real-time</div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadActivity('all')">Semua</button>
-          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadActivity('farmer')">🌾 Petani</button>
-          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadActivity('buyer')">🏭 Pembeli</button>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadActivity('all')">All</button>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadActivity('farmer')">🌾 Farmer</button>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="loadActivity('buyer')">🏭 Buyer</button>
         </div>
       </div>
 
       <div class="table-container page-enter">
         <div class="table-header">
-          <div class="table-title">Riwayat Aktivitas</div>
+          <div class="table-title">Activity History</div>
           <span class="badge badge-farmer" id="activityCountBadge">—</span>
         </div>
         <div id="activityLog" style="padding:0 4px;">
@@ -347,9 +347,9 @@
     <div id="view-profile" class="page-view">
 
       <div class="page-title-row page-enter">
-        <div><div class="page-title">Profil Admin ⚙️</div><div class="page-subtitle">Informasi akun admin platform</div></div>
+        <div><div class="page-title">Admin Profile ⚙️</div><div class="page-subtitle">Informasi akun admin platform</div></div>
         <div id="profileActions">
-          <button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profil</button>
+          <button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profile</button>
         </div>
       </div>
 
@@ -367,7 +367,7 @@
 
       <div class="profile-grid page-enter">
         <div class="profile-card profile-view-mode" id="cardPersonal">
-          <div class="profile-card-title">👤 Informasi Akun</div>
+          <div class="profile-card-title">👤 Account Information</div>
           <div class="view-only">
             <div class="profile-field"><div class="profile-field-label">Nama Lengkap</div><div class="profile-field-value" id="vFullName">—</div></div>
             <div class="profile-field"><div class="profile-field-label">Email</div><div class="profile-field-value" id="vEmail">—</div></div>
@@ -381,11 +381,11 @@
           </div>
         </div>
         <div class="profile-card page-enter">
-          <div class="profile-card-title">📊 Statistik Platform</div>
-          <div class="profile-field"><div class="profile-field-label">Total Pengguna</div><div class="profile-field-value" id="adminStatUsers">—</div></div>
-          <div class="profile-field"><div class="profile-field-label">Petani Terdaftar</div><div class="profile-field-value" id="adminStatFarmers">—</div></div>
-          <div class="profile-field"><div class="profile-field-label">Pembeli Terdaftar</div><div class="profile-field-value" id="adminStatBuyers">—</div></div>
-          <div class="profile-field"><div class="profile-field-label">Total Transaksi</div><div class="profile-field-value" id="adminStatOrders">—</div></div>
+          <div class="profile-card-title">📊 Platform Statistics</div>
+          <div class="profile-field"><div class="profile-field-label">Total Users</div><div class="profile-field-value" id="adminStatUsers">—</div></div>
+          <div class="profile-field"><div class="profile-field-label">Farmer Registered</div><div class="profile-field-value" id="adminStatFarmers">—</div></div>
+          <div class="profile-field"><div class="profile-field-label">Buyer Registered</div><div class="profile-field-value" id="adminStatBuyers">—</div></div>
+          <div class="profile-field"><div class="profile-field-label">Total Transactions</div><div class="profile-field-value" id="adminStatOrders">—</div></div>
         </div>
       </div>
 
@@ -394,12 +394,12 @@
   </main>
 </div>
 
-<!-- MODAL: User Detail -->
-<div class="modal-overlay" id="userDetailModal" style="display:none;" onclick="if(event.target===this)closeModal('userDetailModal')">
+<!-- MODAL: User Details -->
+<div class="modal-overlay" id="userDetailsModal" style="display:none;" onclick="if(event.target===this)closeModal('userDetailsModal')">
   <div class="modal" style="max-width:520px;">
-    <div class="modal-header"><div class="modal-title">Detail Pengguna</div><button class="modal-close" onclick="closeModal('userDetailModal')">✕</button></div>
-    <div class="modal-body" id="userDetailContent"><!-- filled by JS --></div>
-    <div class="modal-footer" id="userDetailFooter"><button class="btn btn-secondary" onclick="closeModal('userDetailModal')">Tutup</button></div>
+    <div class="modal-header"><div class="modal-title">Details User</div><button class="modal-close" onclick="closeModal('userDetailsModal')">✕</button></div>
+    <div class="modal-body" id="userDetailsContent"><!-- filled by JS --></div>
+    <div class="modal-footer" id="userDetailsFooter"><button class="btn btn-secondary" onclick="closeModal('userDetailsModal')">Tutup</button></div>
   </div>
 </div>
 
@@ -416,7 +416,7 @@
       <span class="bottom-nav-icon">📋</span><span class="bottom-nav-label">Aktivitas</span>
     </button>
     <button class="bottom-nav-item" onclick="switchTab('verification'); navigateTo('dashboard')">
-      <span class="bottom-nav-icon">✅</span><span class="bottom-nav-label">Verifikasi</span>
+      <span class="bottom-nav-icon">✅</span><span class="bottom-nav-label">Verification</span>
     </button>
     <button class="bottom-nav-item" id="bnav-profile" onclick="navigateTo('profile')">
       <span class="bottom-nav-icon">👤</span><span class="bottom-nav-label">Profil</span>
@@ -490,7 +490,7 @@
   // ---- USERS TABLE ----
   function loadUsersTable(users) {
     document.getElementById('userCountBadge').textContent = `${users.length} pengguna`;
-    const roleLabel = { farmer: '🌾 Petani', buyer: '🏭 Pembeli', admin: '⚙️ Admin' };
+    const roleLabel = { farmer: '🌾 Farmer', buyer: '🏭 Buyer', admin: '⚙️ Admin' };
     const statusBadge = { active: '<span class="badge badge-success">Active</span>', pending: '<span class="badge badge-warning">Pending</span>', suspended: '<span class="badge badge-danger">Suspended</span>' };
     document.getElementById('usersTableBody').innerHTML = !users.length
       ? '<tr><td colspan="6" style="text-align:center;padding:28px;color:var(--mid-gray);">Tidak ada data</td></tr>'
@@ -505,7 +505,7 @@
           <td>${statusBadge[u.status]||u.status}</td>
           <td style="font-size:12px;color:var(--mid-gray);">${new Date(u.created_at).toLocaleDateString('id-ID')}</td>
           <td><div style="display:flex;gap:6px;">
-            <button class="btn btn-secondary" style="padding:5px 11px;font-size:11px;" onclick="viewUser('${u.id}')">Detail</button>
+            <button class="btn btn-secondary" style="padding:5px 11px;font-size:11px;" onclick="viewUser('${u.id}')">Details</button>
             ${u.status==='active' ? `<button class="btn btn-danger" style="padding:5px 11px;font-size:11px;" onclick="suspendUser('${u.id}')">Suspend</button>` : `<button class="btn btn-primary" style="padding:5px 11px;font-size:11px;" onclick="activateUser('${u.id}')">Aktifkan</button>`}
           </div></td>
         </tr>`).join('');
@@ -523,7 +523,7 @@
   // ---- PENDING USERS ----
   function loadPendingUsers() {
     const pending = allUsers.filter(u => u.status === 'pending');
-    const roleLabel = { farmer:'🌾 Petani', buyer:'🏭 Pembeli', admin:'⚙️ Admin' };
+    const roleLabel = { farmer:'🌾 Farmer', buyer:'🏭 Buyer', admin:'⚙️ Admin' };
     const container = document.getElementById('pendingUsersList');
     if (!pending.length) {
       container.innerHTML = `<div style="text-align:center;padding:48px;color:var(--mid-gray);"><div style="font-size:42px;margin-bottom:14px;">✅</div><div style="font-weight:600;font-size:15px;color:var(--forest);">Tidak ada pengguna menunggu verifikasi</div></div>`;
@@ -534,12 +534,12 @@
         <div class="user-ava ${u.role}">${u.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}</div>
         <div class="user-info">
           <div class="user-name">${u.full_name}</div>
-          <div class="user-detail">${u.email} · ${roleLabel[u.role]} · Daftar ${new Date(u.created_at).toLocaleDateString('id-ID')}</div>
+          <div class="user-detail">${u.email} · ${roleLabel[u.role]} · Joined ${new Date(u.created_at).toLocaleDateString('en-US')}</div>
           ${u.farm_name?`<div class="user-detail" style="color:var(--moss);margin-top:2px;">🌾 ${u.farm_name} · ${u.city||'—'}</div>`:''}
           ${u.company_name?`<div class="user-detail" style="color:var(--earth);margin-top:2px;">🏭 ${u.company_name}</div>`:''}
         </div>
         <div class="user-actions">
-          <button class="btn btn-secondary" style="padding:7px 14px;font-size:12px;" onclick="viewUser('${u.id}')">Detail</button>
+          <button class="btn btn-secondary" style="padding:7px 14px;font-size:12px;" onclick="viewUser('${u.id}')">Details</button>
           <button class="btn btn-danger" style="padding:7px 14px;font-size:12px;" onclick="rejectUser('${u.id}')">Tolak</button>
           <button class="btn btn-primary" style="padding:7px 14px;font-size:12px;" onclick="approveUser('${u.id}')">✓ Setujui</button>
         </div>
@@ -551,9 +551,9 @@
     const orders = FarmifyDB.getOrders();
     document.getElementById('txCountBadge').textContent = `${orders.length} transaksi`;
     const users = FarmifyDB.getUsers();
-    const statusBadge = { pending:'<span class="badge badge-warning">Pending</span>', confirmed:'<span class="badge badge-success">Konfirmasi</span>', completed:'<span class="badge badge-success">Selesai</span>', cancelled:'<span class="badge badge-danger">Batal</span>' };
+    const statusBadge = { pending:'<span class="badge badge-warning">Pending</span>', confirmed:'<span class="badge badge-success">Konfirmasi</span>', completed:'<span class="badge badge-success">Done</span>', cancelled:'<span class="badge badge-danger">Batal</span>' };
     document.getElementById('transactionTableBody').innerHTML = !orders.length
-      ? '<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--mid-gray);">Belum ada transaksi</td></tr>'
+      ? '<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--mid-gray);">No transactions yet</td></tr>'
       : orders.map(o => {
           const farmer = users.find(u => u.id === o.farmer_id);
           const buyer = users.find(u => u.id === o.buyer_id);
@@ -562,8 +562,8 @@
             <td style="font-size:13px;">${farmer ? farmer.full_name : '—'}</td>
             <td style="font-size:13px;">${buyer ? buyer.full_name : '—'}</td>
             <td style="font-size:13px;">${o.commodity_name || '—'}</td>
-            <td style="font-weight:700;color:var(--forest);">${formatRp(o.total_price)}</td>
-            <td style="font-weight:600;color:var(--moss);">${formatRp(o.platform_fee || 0)}</td>
+            <td style="font-weight:700;color:var(--forest);">${formatIDR(o.total_price)}</td>
+            <td style="font-weight:600;color:var(--moss);">${formatIDR(o.platform_fee || 0)}</td>
             <td>${statusBadge[o.status]||`<span class="badge badge-warning">${o.status}</span>`}</td>
           </tr>`;
         }).join('');
@@ -573,10 +573,10 @@
   function approveUser(id) {
     if (!confirm('Setujui dan aktifkan akun ini?')) return;
     FarmifyDB.updateUserStatus(id, 'active');
-    FarmifyDB.addNotification(id, '✅ Akun Anda telah diverifikasi! Selamat bergabung di Farmify.', 'info');
+    FarmifyDB.addNotification(id, '✅ Your account has been verified! Welcome to Farmify.', 'info');
     allUsers = FarmifyDB.getUsers();
     loadUsersTable(allUsers); loadPendingUsers(); initDashboard();
-    showToast('✅ Pengguna berhasil diaktifkan!');
+    showToast('✅ User berhasil diaktifkan!');
   }
 
   function rejectUser(id) {
@@ -584,15 +584,15 @@
     FarmifyDB.updateUserStatus(id, 'suspended');
     allUsers = FarmifyDB.getUsers();
     loadUsersTable(allUsers); loadPendingUsers(); initDashboard();
-    showToast('Pengguna ditolak.', 'error');
+    showToast('User ditolak.', 'error');
   }
 
   function activateUser(id) {
     FarmifyDB.updateUserStatus(id, 'active');
-    FarmifyDB.addNotification(id, '✅ Akun Anda telah diaktifkan kembali.', 'info');
+    FarmifyDB.addNotification(id, '✅ Account Anda telah diaktifkan kembali.', 'info');
     allUsers = FarmifyDB.getUsers();
     loadUsersTable(allUsers); loadPendingUsers(); initDashboard();
-    showToast('✅ Akun diaktifkan!');
+    showToast('✅ Account diaktifkan!');
   }
 
   function suspendUser(id) {
@@ -601,18 +601,18 @@
     FarmifyDB.updateUserStatus(id, 'suspended');
     allUsers = FarmifyDB.getUsers();
     loadUsersTable(allUsers); initDashboard();
-    showToast('Akun disuspend.', 'info');
+    showToast('Account disuspend.', 'info');
   }
 
   function viewUser(id) {
     const user = allUsers.find(u => u.id === id);
     if (!user) return;
-    const roleLabel = { farmer:'🌾 Petani', buyer:'🏭 Pembeli', admin:'⚙️ Admin' };
+    const roleLabel = { farmer:'🌾 Farmer', buyer:'🏭 Buyer', admin:'⚙️ Admin' };
     const activities = FarmifyDB.getUserActivity(id).slice(0, 5);
     const commodities = user.role === 'farmer' ? FarmifyDB.getCommodities(id) : [];
     const orders = FarmifyDB.getOrders(user.role === 'farmer' ? { farmer_id: id } : { buyer_id: id });
 
-    document.getElementById('userDetailContent').innerHTML = `
+    document.getElementById('userDetailsContent').innerHTML = `
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
         <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:white;">${user.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}</div>
         <div>
@@ -625,8 +625,8 @@
         <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Telepon</div><div style="font-weight:700;color:var(--forest);">${user.phone||'—'}</div></div>
         ${user.farm_name?`<div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);grid-column:1/-1;"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Farm</div><div style="font-weight:700;color:var(--forest);">${user.farm_name} · ${user.city||'—'} · ${user.farm_size||'?'} Ha</div></div>`:''}
         ${user.company_name?`<div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);grid-column:1/-1;"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Perusahaan</div><div style="font-weight:700;color:var(--forest);">${user.company_name}</div></div>`:''}
-        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">${user.role==='farmer'?'Komoditas':'Order'}</div><div style="font-weight:700;color:var(--moss);">${user.role==='farmer'?commodities.length:orders.length} item</div></div>
-        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Terdaftar</div><div style="font-weight:700;color:var(--forest);">${new Date(user.created_at).toLocaleDateString('id-ID')}</div></div>
+        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">${user.role==='farmer'?'Commodity':'Order'}</div><div style="font-weight:700;color:var(--moss);">${user.role==='farmer'?commodities.length:orders.length} item</div></div>
+        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Registered</div><div style="font-weight:700;color:var(--forest);">${new Date(user.created_at).toLocaleDateString('id-ID')}</div></div>
       </div>
       ${activities.length ? `
         <div style="font-weight:700;font-size:13px;color:var(--forest);margin-bottom:8px;">Aktivitas Terakhir</div>
@@ -639,11 +639,11 @@
       ` : ''}
     `;
 
-    document.getElementById('userDetailFooter').innerHTML = `
-      <button class="btn btn-secondary" onclick="closeModal('userDetailModal')">Tutup</button>
-      ${user.status!=='active' ? `<button class="btn btn-primary" onclick="activateUser('${user.id}');closeModal('userDetailModal')">✓ Aktifkan</button>` : user.id !== session.id ? `<button class="btn btn-danger" onclick="suspendUser('${user.id}');closeModal('userDetailModal')">Suspend</button>` : ''}
+    document.getElementById('userDetailsFooter').innerHTML = `
+      <button class="btn btn-secondary" onclick="closeModal('userDetailsModal')">Tutup</button>
+      ${user.status!=='active' ? `<button class="btn btn-primary" onclick="activateUser('${user.id}');closeModal('userDetailsModal')">✓ Aktifkan</button>` : user.id !== session.id ? `<button class="btn btn-danger" onclick="suspendUser('${user.id}');closeModal('userDetailsModal')">Suspend</button>` : ''}
     `;
-    openModal('userDetailModal');
+    openModal('userDetailsModal');
   }
 
   // ---- MONITOR VIEW ----
@@ -672,7 +672,7 @@
             ${u.farm_name?`<div style="font-size:12px;color:var(--mid-gray);margin-bottom:8px;">🌿 ${u.farm_name}</div>`:''}
             ${u.company_name?`<div style="font-size:12px;color:var(--mid-gray);margin-bottom:8px;">🏢 ${u.company_name}</div>`:''}
             <div style="display:flex;gap:10px;margin-bottom:10px;">
-              ${u.role==='farmer'?`<div style="text-align:center;flex:1;padding:8px;background:rgba(74,124,89,0.06);border-radius:var(--radius-md);"><div style="font-weight:700;font-size:16px;color:var(--forest);">${commodities.length}</div><div style="font-size:10px;color:var(--mid-gray);">Komoditas</div></div>`:''}
+              ${u.role==='farmer'?`<div style="text-align:center;flex:1;padding:8px;background:rgba(74,124,89,0.06);border-radius:var(--radius-md);"><div style="font-weight:700;font-size:16px;color:var(--forest);">${commodities.length}</div><div style="font-size:10px;color:var(--mid-gray);">Commodity</div></div>`:''}
               <div style="text-align:center;flex:1;padding:8px;background:rgba(74,124,89,0.06);border-radius:var(--radius-md);"><div style="font-weight:700;font-size:16px;color:var(--forest);">${orders.length}</div><div style="font-size:10px;color:var(--mid-gray);">Order</div></div>
               <div style="text-align:center;flex:1;padding:8px;background:rgba(74,124,89,0.06);border-radius:var(--radius-md);"><div style="font-weight:700;font-size:16px;color:var(--forest);">${activities.length}</div><div style="font-size:10px;color:var(--mid-gray);">Aktivitas</div></div>
             </div>
@@ -722,8 +722,8 @@
     // Stats
     const users = FarmifyDB.getUsers();
     document.getElementById('adminStatUsers').textContent = users.length + ' pengguna';
-    document.getElementById('adminStatFarmers').textContent = users.filter(u=>u.role==='farmer').length + ' petani';
-    document.getElementById('adminStatBuyers').textContent = users.filter(u=>u.role==='buyer').length + ' pembeli';
+    document.getElementById('adminStatFarmers').textContent = users.filter(u=>u.role==='farmer').length + ' farmer';
+    document.getElementById('adminStatBuyers').textContent = users.filter(u=>u.role==='buyer').length + ' buyer';
     document.getElementById('adminStatOrders').textContent = FarmifyDB.getOrders().length + ' order';
     disableEditMode();
   }
@@ -736,14 +736,14 @@
     document.getElementById('cardPersonal').classList.replace('profile-view-mode','profile-edit-mode');
     document.getElementById('profileActions').innerHTML = `
       <button class="btn-cancel-profile" onclick="disableEditMode()" style="margin-right:8px;">Batal</button>
-      <button class="btn-save-profile" onclick="saveProfileInline()">💾 Simpan</button>
+      <button class="btn-save-profile" onclick="saveProfileInline()">💾 Save</button>
     `;
   }
 
   function disableEditMode() {
     document.getElementById('cardPersonal').classList.remove('profile-edit-mode');
     document.getElementById('cardPersonal').classList.add('profile-view-mode');
-    document.getElementById('profileActions').innerHTML = `<button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profil</button>`;
+    document.getElementById('profileActions').innerHTML = `<button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profile</button>`;
   }
 
   function saveProfileInline() {
@@ -756,15 +756,15 @@
     document.getElementById('sidebarName').textContent = newName;
     document.getElementById('sidebarAvatar').textContent = newName.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
     populateProfile();
-    showToast('✅ Profil berhasil disimpan!');
+    showToast('✅ Profile saved successfully!');
   }
 
   // ---- EXPORT ----
   function exportReport() {
     const orders = FarmifyDB.getOrders();
     const users = FarmifyDB.getUsers();
-    if (!orders.length) { showToast('Belum ada data transaksi.', 'info'); return; }
-    let csv = 'Kode Order,Petani,Pembeli,Komoditas,Total,Fee,Status\n';
+    if (!orders.length) { showToast('No data yet transaksi.', 'info'); return; }
+    let csv = 'Order Code,Farmer,Buyer,Commodity,Total,Fee,Status\n';
     orders.forEach(o => {
       const f = users.find(u=>u.id===o.farmer_id);
       const b = users.find(u=>u.id===o.buyer_id);

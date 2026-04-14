@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Masuk — Farmify</title>
+  <title>Sign In — Farmify</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     body { background: var(--cream); }
@@ -276,39 +276,39 @@
     </div>
 
     <div class="welcome-section">
-      <h1 class="welcome-title">Selamat<br>Datang<br><em>Kembali</em></h1>
-      <p class="welcome-sub">Bergabunglah dengan ribuan petani dan pembeli yang sudah merasakan manfaat perdagangan langsung yang adil dan transparan.</p>
+      <h1 class="welcome-title">Welcome<br>Back<br><em>Again</em></h1>
+      <p class="welcome-sub">Join thousands of farmers and buyers already benefiting from fair and transparent direct trade.</p>
       <div class="role-preview">
         <div class="role-preview-item">
           <div class="role-emoji">🌾</div>
           <div class="role-preview-text">
-            <strong>Petani / Penjual</strong><span>Kelola stok, tampilkan komoditas, terima order langsung</span>
+            <strong>Farmer / Seller</strong><span>Manage stock, list commodities, receive orders directly</span>
           </div>
         </div>
         <div class="role-preview-item">
           <div class="role-emoji">🏭</div>
           <div class="role-preview-text">
-            <strong>Pembeli / B2B</strong><span>Temukan supplier, pre-order, lacak pengiriman</span>
+            <strong>Buyer / B2B</strong><span>Find suppliers, pre-order, track deliveries</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="panel-foot">© 2025 Farmify · Jawa Timur, Indonesia</div>
+    <div class="panel-foot">© 2025 Farmify · East Java, Indonesia</div>
   </div>
 
   <div class="right-panel">
     <div class="login-box page-enter">
 
       <div class="login-header">
-        <h2>Masuk ke Akun</h2>
-        <p>Masukkan email dan password untuk melanjutkan</p>
+        <h2>Sign In to Your Account</h2>
+        <p>Enter your email and password to continue</p>
       </div>
 
       <div class="demo-bar">
-        <div class="demo-bar-title">🧪 Akun Demo — Klik untuk isi otomatis</div>
+        <div class="demo-bar-title">🧪 Demo Accounts — Click to auto-fill</div>
         <div class="demo-accounts">
-          <button type="button" class="demo-btn" onclick="fillDemo('farmer')">🌾 Petani</button>
-          <button type="button" class="demo-btn" onclick="fillDemo('buyer')">🏭 Pembeli</button>
+          <button type="button" class="demo-btn" onclick="fillDemo('farmer')">🌾 Farmer</button>
+          <button type="button" class="demo-btn" onclick="fillDemo('buyer')">🏭 Buyer</button>
           <button type="button" class="demo-btn" onclick="fillDemo('admin')">⚙️ Admin</button>
         </div>
       </div>
@@ -316,7 +316,7 @@
       <div id="alertBox"></div>
 
       <div class="detecting" id="roleDetect">
-        <span>🔍</span><span id="roleDetectText">Mendeteksi role...</span>
+        <span>🔍</span><span id="roleDetectText">Detecting role...</span>
       </div>
 
       <form id="loginForm" novalidate>
@@ -325,7 +325,7 @@
           <label class="form-label">Email</label>
           <div class="input-with-icon">
             <span class="input-icon">✉️</span>
-            <input type="email" class="form-input" id="loginEmail" placeholder="email@contoh.com" required autocomplete="email" oninput="detectRole(this.value)" />
+            <input type="email" class="form-input" id="loginEmail" placeholder="email@example.com" required autocomplete="email" oninput="detectRole(this.value)" />
           </div>
         </div>
 
@@ -333,24 +333,24 @@
           <label class="form-label">Password</label>
           <div class="input-with-icon">
             <span class="input-icon">🔒</span>
-            <input type="password" class="form-input" id="loginPassword" placeholder="Masukkan password" required autocomplete="current-password" />
+            <input type="password" class="form-input" id="loginPassword" placeholder="Enter password" required autocomplete="current-password" />
             <button type="button" class="toggle-password" onclick="togglePwd()">👁</button>
           </div>
         </div>
 
         <div class="remember-row">
-          <label class="remember-check"><input type="checkbox" id="rememberMe" /> Ingat saya</label>
-          <a href="#" class="forgot-link">Lupa password?</a>
+          <label class="remember-check"><input type="checkbox" id="rememberMe" /> Remember me</label>
+          <a href="#" class="forgot-link">Forgot password?</a>
         </div>
 
         <button type="submit" class="btn btn-primary btn-full btn-lg" id="loginBtn">
-          Masuk ke Farmify
+          Sign In to Farmify
         </button>
 
       </form>
 
       <div class="login-footer">
-        Belum punya akun? <a href="register.html" class="link">Daftar sekarang →</a>
+        Don't have an account? <a href="register.html" class="link">Register now →</a>
       </div>
 
     </div>
@@ -363,7 +363,7 @@
   if (existingSession) { window.location.href = getDashboardUrl(existingSession.role); }
 
   const demoAccounts = {
-    farmer: { email: 'sido@farmify.id',  password: 'Petani@123' },
+    farmer: { email: 'sido@farmify.id',  password: 'Farmer@123' },
     buyer:  { email: 'ptjaya@farmify.id', password: 'Buyer@123' },
     admin:  { email: 'admin@farmify.id', password: 'Admin@Farmify2024' }
   };
@@ -375,7 +375,7 @@
     document.getElementById('loginPassword').value = acc.password;
     detectRole(acc.email);
     
-    // Auto-scroll ke tombol Masuk agar di HP terlihat jelas
+    // Auto-scroll to sign-in button for better mobile visibility
     setTimeout(() => {
       document.getElementById('loginBtn').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 150);
@@ -386,8 +386,8 @@
     const detectText = document.getElementById('roleDetectText');
     const user = FarmifyDB.findByEmail(email);
     if (user) {
-      const roleLabel = { farmer: '🌾 Petani/Penjual', buyer: '🏭 Pembeli/B2B', admin: '⚙️ Admin' };
-      detectText.textContent = `Akun terdeteksi: ${roleLabel[user.role] || user.role} — ${user.full_name}`;
+      const roleLabel = { farmer: '🌾 Farmer/Penjual', buyer: '🏭 Buyer/B2B', admin: '⚙️ Admin' };
+      detectText.textContent = `Account detected: ${roleLabel[user.role] || user.role} — ${user.full_name}`;
       detect.style.display = 'flex';
     } else {
       detect.style.display = 'none';
@@ -412,10 +412,10 @@
     const email = document.getElementById('loginEmail').value.trim();
     const password = document.getElementById('loginPassword').value;
 
-    if (!email || !password) { showAlert('error', 'Email dan password wajib diisi.'); return; }
+    if (!email || !password) { showAlert('error', 'Email and password are required.'); return; }
 
     const btn = document.getElementById('loginBtn');
-    btn.innerHTML = '<span class="spinner"></span> Memeriksa...';
+    btn.innerHTML = '<span class="spinner"></span> Checking...';
     btn.disabled = true;
 
     await new Promise(r => setTimeout(r, 800));
@@ -424,12 +424,12 @@
 
     if (result.success) {
       FarmifyDB.setSession(result.user);
-      btn.innerHTML = '✅ Berhasil Masuk!';
-      showAlert('success', `Selamat datang, ${result.user.full_name}!`);
+      btn.innerHTML = '✅ Signed In!';
+      showAlert('success', `Welcome, ${result.user.full_name}!`);
       setTimeout(() => { window.location.href = getDashboardUrl(result.user.role); }, 1000);
     } else {
       showAlert('error', result.message);
-      btn.innerHTML = 'Masuk ke Farmify';
+      btn.innerHTML = 'Sign In to Farmify';
       btn.disabled = false;
     }
   });

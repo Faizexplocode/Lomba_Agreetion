@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Petani — Farmify</title>
+  <title>Farmer Dashboard — Farmify</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     /* ============ COMMODITY STYLES ============ */
@@ -279,14 +279,14 @@
       <div class="brand-icon">🌿</div>
       <div>
         <div class="brand-name">Farmify</div>
-        <div class="brand-role">Petani / Seller</div>
+        <div class="brand-role">Farmer / Seller</div>
       </div>
     </a>
 
     <ul class="sidebar-nav">
       <li><a href="#" id="nav-dashboard" class="active" onclick="navigateTo('dashboard'); return false;"><span class="nav-icon">🏠</span> Dashboard</a></li>
       <li><a href="#" onclick="navAlert('Market Place'); return false;"><span class="nav-icon">🛒</span> Market Place</a></li>
-      <li><a href="#" onclick="navAlert('Komoditas Saya'); return false;"><span class="nav-icon">📦</span> Komoditas Saya</a></li>
+      <li><a href="#" onclick="navAlert('Commodity Saya'); return false;"><span class="nav-icon">📦</span> Commodity Saya</a></li>
       <li><a href="#" onclick="navAlert('Pre-Order'); return false;"><span class="nav-icon">📋</span> Pre-Order</a></li>
       <li><a href="#" onclick="navAlert('Logistik'); return false;"><span class="nav-icon">🚚</span> Logistik</a></li>
 
@@ -299,11 +299,11 @@
       <li><a href="#" onclick="navAlert('Ulasan & Rating'); return false;"><span class="nav-icon">⭐</span> Ulasan & Rating</a></li>
 
       <div class="sidebar-section-label" style="padding: 0 8px; margin-top: 20px; font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.3); letter-spacing: 1.5px; text-transform: uppercase;">
-        Akun
+        Account
       </div>
-      <li><a href="#" id="nav-profile" onclick="navigateTo('profile'); return false;"><span class="nav-icon">👤</span> Profil Farm</a></li>
-      <li><a href="#" onclick="navAlert('Notifikasi'); return false;"><span class="nav-icon">🔔</span> Notifikasi <span style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;">3</span></a></li>
-      <li><a href="#" onclick="navAlert('Pengaturan'); return false;"><span class="nav-icon">⚙️</span> Pengaturan</a></li>
+      <li><a href="#" id="nav-profile" onclick="navigateTo('profile'); return false;"><span class="nav-icon">👤</span> Farm Profile</a></li>
+      <li><a href="#" onclick="navAlert('Notifications'); return false;"><span class="nav-icon">🔔</span> Notifications <span style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;">3</span></a></li>
+      <li><a href="#" onclick="navAlert('Settings'); return false;"><span class="nav-icon">⚙️</span> Settings</a></li>
     </ul>
 
     <div class="sidebar-footer">
@@ -311,13 +311,13 @@
         <div class="user-avatar-sm" id="sidebarAvatar">SM</div>
         <div style="min-width:0">
           <div class="user-meta-name" id="sidebarName">Sido Makmur</div>
-          <div class="user-meta-role">🌾 Petani Terverifikasi</div>
+          <div class="user-meta-role">🌾 Farmer Terverifikasi</div>
         </div>
       </div>
       <button onclick="logout()" style="margin-top:8px;width:100%;padding:9px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;transition:all 0.2s;font-family:var(--font-body);"
         onmouseover="this.style.background='rgba(196,98,45,0.2)';this.style.color='#f5a98a';"
         onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.5)';">
-        ↩ Keluar
+        ↩ Sign Out
       </button>
     </div>
   </aside>
@@ -330,11 +330,11 @@
 
       <div class="page-title-row page-enter">
         <div>
-          <div class="page-title" id="greetingTitle">Selamat Pagi, Pak Sido! 🌱</div>
+          <div class="page-title" id="greetingTitle">Good Morning, Mr. Sido! 🌱</div>
           <div class="page-subtitle">Berikut ringkasan aktivitas farm Anda hari ini</div>
         </div>
         <div class="page-action-row">
-          <button class="btn btn-secondary" onclick="openModal('addCommodityModal')">+ Tambah Komoditas</button>
+          <button class="btn btn-secondary" onclick="openModal('addCommodityModal')">+ Add Commodity</button>
           <button class="btn btn-primary">📊 Lihat Analitik</button>
         </div>
       </div>
@@ -343,7 +343,7 @@
       <div class="stats-grid page-enter">
         <div class="stat-card">
           <div class="stat-icon green">💰</div>
-          <div class="stat-value">Rp 15,1 Jt</div>
+          <div class="stat-value">IDR 15,1 Jt</div>
           <div class="stat-label">Saldo Rekening</div>
           <div class="stat-change up">↑ +12% bulan ini</div>
         </div>
@@ -356,7 +356,7 @@
         <div class="stat-card">
           <div class="stat-icon earth">🌾</div>
           <div class="stat-value">5</div>
-          <div class="stat-label">Komoditas Terdaftar</div>
+          <div class="stat-label">Commodity Registered</div>
           <div class="stat-change up">2 siap dijual</div>
         </div>
         <div class="stat-card">
@@ -370,10 +370,10 @@
       <div class="dash-grid-main">
         <!-- LEFT COL -->
         <div>
-          <!-- Komoditas -->
+          <!-- Commodity -->
           <div class="table-container page-enter" style="padding: 24px; margin-bottom: 24px;">
             <div class="section-header-row">
-              <div class="section-title">Komoditas Saya</div>
+              <div class="section-title">Commodity Saya</div>
               <a href="#" class="link text-sm">Lihat semua →</a>
             </div>
             <div class="commodity-grid">
@@ -381,30 +381,30 @@
                 <div class="commodity-img">🌶️<span class="commodity-status status-ready">Siap Jual</span></div>
                 <div class="commodity-info">
                   <div class="commodity-name">Cabai Merah</div>
-                  <div class="commodity-price">Rp 45.000 / kg</div>
-                  <div class="commodity-stock">📦 Stok: 1,2 ton</div>
+                  <div class="commodity-price">IDR 45.000 / kg</div>
+                  <div class="commodity-stock">📦 Stock: 1,2 ton</div>
                 </div>
               </div>
               <div class="commodity-card">
                 <div class="commodity-img" style="background:linear-gradient(135deg,#fdf5e4,#f5e6c8);">🧅<span class="commodity-status status-ready">Siap Jual</span></div>
                 <div class="commodity-info">
                   <div class="commodity-name">Bawang Merah</div>
-                  <div class="commodity-price">Rp 38.000 / kg</div>
-                  <div class="commodity-stock">📦 Stok: 800 kg</div>
+                  <div class="commodity-price">IDR 38.000 / kg</div>
+                  <div class="commodity-stock">📦 Stock: 800 kg</div>
                 </div>
               </div>
               <div class="commodity-card">
                 <div class="commodity-img" style="background:linear-gradient(135deg,#f0f8f0,#d4ecda);">🥬<span class="commodity-status status-preorder">Pre-Order</span></div>
                 <div class="commodity-info">
                   <div class="commodity-name">Bayam Organik</div>
-                  <div class="commodity-price">Rp 12.000 / kg</div>
+                  <div class="commodity-price">IDR 12.000 / kg</div>
                   <div class="commodity-stock">🗓 Panen: Juni 2025</div>
                 </div>
               </div>
               <div class="commodity-card" style="border: 2px dashed var(--mint); background: rgba(184,212,191,0.1); display:flex; align-items:center; justify-content:center; min-height: 160px; cursor:pointer;" onclick="openModal('addCommodityModal')">
                 <div style="text-align:center; color:var(--sage);">
                   <div style="font-size:28px;margin-bottom:8px;">+</div>
-                  <div style="font-size:13px;font-weight:600;">Tambah Komoditas</div>
+                  <div style="font-size:13px;font-weight:600;">Add Commodity</div>
                 </div>
               </div>
             </div>
@@ -413,33 +413,33 @@
           <!-- Orders -->
           <div class="table-container page-enter">
             <div class="table-header">
-              <div class="table-title">Order Masuk Terbaru</div>
+              <div class="table-title">Latest Incoming Orders</div>
               <span class="badge badge-farmer">8 aktif</span>
             </div>
             <div class="table-scroll"><table>
               <thead>
                 <tr>
-                  <th>Kode Order</th><th>Pembeli</th><th>Komoditas</th>
-                  <th>Total</th><th>Status</th><th>Aksi</th>
+                  <th>Order Code</th><th>Buyer</th><th>Commodity</th>
+                  <th>Total</th><th>Status</th><th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><span style="font-family:var(--font-mono);font-size:13px;color:var(--moss);">ORD-2025-001</span></td>
-                  <td>PT Jaya Foods</td><td>Cabai Merah · 500 kg</td><td>Rp 22.500.000</td>
-                  <td><span class="badge badge-warning">Menunggu</span></td>
+                  <td>PT Jaya Foods</td><td>Cabai Merah · 500 kg</td><td>IDR 22.500.000</td>
+                  <td><span class="badge badge-warning">Pending</span></td>
                   <td><button class="btn btn-primary" style="padding:6px 14px;font-size:12px;">Konfirmasi</button></td>
                 </tr>
                 <tr>
                   <td><span style="font-family:var(--font-mono);font-size:13px;color:var(--moss);">ORD-2025-002</span></td>
-                  <td>Hotel Grand Malang</td><td>Bawang Merah · 200 kg</td><td>Rp 7.600.000</td>
-                  <td><span class="badge badge-success">Diproses</span></td>
-                  <td><button class="btn btn-secondary" style="padding:6px 14px;font-size:12px;">Detail</button></td>
+                  <td>Hotel Grand Malang</td><td>Bawang Merah · 200 kg</td><td>IDR 7.600.000</td>
+                  <td><span class="badge badge-success">Processing</span></td>
+                  <td><button class="btn btn-secondary" style="padding:6px 14px;font-size:12px;">Details</button></td>
                 </tr>
                 <tr>
                   <td><span style="font-family:var(--font-mono);font-size:13px;color:var(--moss);">ORD-2025-003</span></td>
-                  <td>Catering Berkah</td><td>Cabai Merah · 100 kg</td><td>Rp 4.500.000</td>
-                  <td><span class="badge badge-success">Dikirim</span></td>
+                  <td>Catering Berkah</td><td>Cabai Merah · 100 kg</td><td>IDR 4.500.000</td>
+                  <td><span class="badge badge-success">Shipped</span></td>
                   <td><button class="btn btn-secondary" style="padding:6px 14px;font-size:12px;">Track</button></td>
                 </tr>
               </tbody>
@@ -471,10 +471,10 @@
             </div>
           </div>
 
-          <!-- Notifikasi -->
+          <!-- Notifications -->
           <div style="background:white;border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);margin-bottom:20px;" class="page-enter">
             <div class="section-header-row">
-              <div class="section-title">🔔 Notifikasi</div>
+              <div class="section-title">🔔 Notifications</div>
               <span style="font-size:11px;color:var(--mid-gray);cursor:pointer;">Tandai semua dibaca</span>
             </div>
             <div class="notification-item">
@@ -487,14 +487,14 @@
             <div class="notification-item">
               <div class="notif-dot new"></div>
               <div>
-                <div class="notif-text"><strong>Pembayaran diterima</strong> ORD-2025-001 — Rp 22.500.000 masuk ke escrow</div>
+                <div class="notif-text"><strong>Payment diterima</strong> ORD-2025-001 — IDR 22.500.000 masuk ke escrow</div>
                 <div class="notif-time">1 jam yang lalu</div>
               </div>
             </div>
             <div class="notification-item">
               <div class="notif-dot new"></div>
               <div>
-                <div class="notif-text">AI Konsultan: <em>"Harga cabai merah minggu ini naik 15%. Waktu yang baik untuk jual!"</em></div>
+                <div class="notif-text">AI Konsultan: <em>"Price cabai merah minggu ini naik 15%. Waktu yang baik untuk jual!"</em></div>
                 <div class="notif-time">3 jam yang lalu</div>
               </div>
             </div>
@@ -513,10 +513,10 @@
             <div style="font-family:var(--font-display);font-size:17px;font-weight:700;margin-bottom:8px;">Tingkatkan Visibilitas Farm Anda</div>
             <ul style="list-style:none;margin-bottom:16px;display:flex;flex-direction:column;gap:6px;">
               <li style="font-size:12.5px;color:rgba(255,255,255,0.7);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--harvest);">✓</span> Produk tampil di urutan teratas</li>
-              <li style="font-size:12.5px;color:rgba(255,255,255,0.7);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--harvest);">✓</span> Analitik pasar & segmentasi pembeli</li>
+              <li style="font-size:12.5px;color:rgba(255,255,255,0.7);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--harvest);">✓</span> Analitik pasar & segmentasi buyer</li>
               <li style="font-size:12.5px;color:rgba(255,255,255,0.7);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--harvest);">✓</span> Konsultasi AI business advisor</li>
             </ul>
-            <button class="btn btn-harvest" style="width:100%;font-size:13px;padding:11px;">Mulai dari Rp 25.000/bln →</button>
+            <button class="btn btn-harvest" style="width:100%;font-size:13px;padding:11px;">Mulai dari IDR 25.000/bln →</button>
           </div>
         </div>
       </div>
@@ -529,11 +529,11 @@
       <!-- Page Header -->
       <div class="page-title-row page-enter">
         <div>
-          <div class="page-title">Profil Farm 🌾</div>
-          <div class="page-subtitle">Kelola informasi farm dan data akun Anda</div>
+          <div class="page-title">Farm Profile 🌾</div>
+          <div class="page-subtitle">Manage your farm information and account data</div>
         </div>
         <div class="page-action-row" id="profileActions">
-          <button class="edit-toggle-btn btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profil</button>
+          <button class="edit-toggle-btn btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profile</button>
         </div>
       </div>
 
@@ -541,13 +541,13 @@
       <div class="profile-hero page-enter" id="profileHero">
         <div class="profile-avatar-lg" id="profileAvatarLg">SM</div>
         <div class="profile-hero-info">
-          <div class="profile-hero-name" id="profileHeroName">Pak Sido Makmur</div>
+          <div class="profile-hero-name" id="profileHeroName">Mr. Sido Makmur</div>
           <div class="profile-hero-email" id="profileHeroEmail">sido@farmify.id</div>
           <div class="profile-hero-badges">
             <span class="profile-badge gold">✓ Terverifikasi</span>
-            <span class="profile-badge">🌾 Petani</span>
+            <span class="profile-badge">🌾 Farmer</span>
             <span class="profile-badge" id="profileHeroFarm">Sido Makmur Farm</span>
-            <span class="profile-badge">📍 Malang, Jawa Timur</span>
+            <span class="profile-badge">📍 Malang, East Java</span>
           </div>
         </div>
       </div>
@@ -556,7 +556,7 @@
       <div class="profile-stats-row page-enter">
         <div class="profile-stat">
           <div class="profile-stat-value">5</div>
-          <div class="profile-stat-label">Komoditas</div>
+          <div class="profile-stat-label">Commodity</div>
         </div>
         <div class="profile-stat">
           <div class="profile-stat-value">42</div>
@@ -572,7 +572,7 @@
         </div>
       </div>
 
-      <!-- Detail Cards -->
+      <!-- Details Cards -->
       <div class="profile-grid page-enter" id="profileCardArea">
 
         <!-- Info Pribadi -->
@@ -583,7 +583,7 @@
           <div class="view-only">
             <div class="profile-field">
               <div class="profile-field-label">Nama Lengkap</div>
-              <div class="profile-field-value" id="vFullName">Pak Sido Makmur</div>
+              <div class="profile-field-value" id="vFullName">Mr. Sido Makmur</div>
             </div>
             <div class="profile-field">
               <div class="profile-field-label">Email</div>
@@ -612,7 +612,7 @@
             </div>
             <div class="profile-field">
               <div class="profile-field-label">Nomor Telepon</div>
-              <input type="tel" class="profile-field-input" id="ePhone" placeholder="08xxxxxxxxxx" />
+              <input type="tel" class="profile-field-input" id="ePhone" placeholder="Phone number" />
             </div>
           </div>
         </div>
@@ -629,7 +629,7 @@
             </div>
             <div class="profile-field">
               <div class="profile-field-label">Lokasi</div>
-              <div class="profile-field-value" id="vCity">Malang, Jawa Timur</div>
+              <div class="profile-field-value" id="vCity">Malang, East Java</div>
             </div>
             <div class="profile-field">
               <div class="profile-field-label">Luas Lahan</div>
@@ -652,7 +652,7 @@
               <input type="text" class="profile-field-input" id="eCity" placeholder="Kota/Kabupaten" />
             </div>
             <div class="profile-field">
-              <div class="profile-field-label">Luas Lahan (Ha)</div>
+              <div class="profile-field-label">Land Area (Ha)</div>
               <input type="number" class="profile-field-input" id="eFarmSize" placeholder="2.5" step="0.1" />
             </div>
             <div class="profile-field">
@@ -663,13 +663,13 @@
         </div>
       </div>
 
-      <!-- Komoditas Utama -->
+      <!-- Commodity Utama -->
       <div class="profile-card page-enter" style="margin-bottom:20px;">
-        <div class="profile-card-title">🛒 Komoditas yang Dijual</div>
+        <div class="profile-card-title">🛒 Commodity yang Dijual</div>
         <div id="commodityTags">
           <span class="commodity-tag">🌶️ Cabai</span>
           <span class="commodity-tag">🧅 Bawang</span>
-          <span class="commodity-tag">🥬 Sayuran</span>
+          <span class="commodity-tag">🥬 Vegetables</span>
           <span class="commodity-tag">🌿 Rempah</span>
         </div>
       </div>
@@ -688,7 +688,7 @@
         <div class="cert-item">
           <span class="cert-icon">⭐</span>
           <div>
-            <div class="cert-name">Petani Mitra Terpercaya</div>
+            <div class="cert-name">Trusted Partner Farmer</div>
             <div class="cert-issuer">Farmify Platform · 2024</div>
           </div>
           <span class="cert-badge">Aktif</span>
@@ -696,7 +696,7 @@
         <div class="cert-item">
           <span class="cert-icon">🏆</span>
           <div>
-            <div class="cert-name">Penghargaan Petani Terbaik Jawa Timur</div>
+            <div class="cert-name">Best Farmer Award East Java</div>
             <div class="cert-issuer">Dinas Pertanian Jatim · 2022</div>
           </div>
           <span class="cert-badge" style="background:rgba(200,151,42,0.1);color:var(--earth);">Koleksi</span>
@@ -705,7 +705,7 @@
 
       <!-- Rekening Bank -->
       <div class="profile-card page-enter profile-view-mode" id="cardBank">
-        <div class="profile-card-title">🏦 Rekening Pembayaran</div>
+        <div class="profile-card-title">🏦 Rekening Payment</div>
 
         <!-- VIEW MODE -->
         <div class="view-only">
@@ -722,14 +722,14 @@
         <!-- EDIT MODE -->
         <div class="edit-only">
           <div class="profile-field">
-            <div class="profile-field-label">Nama Bank</div>
+            <div class="profile-field-label">Bank Name</div>
             <select class="profile-field-input" id="eBankName">
               <option>BRI</option><option>BCA</option><option>Mandiri</option>
               <option>BNI</option><option>BSI</option><option>BTPN</option>
             </select>
           </div>
           <div class="profile-field">
-            <div class="profile-field-label">Nomor Rekening</div>
+            <div class="profile-field-label">Account Number</div>
             <input type="text" class="profile-field-input" id="eBankAccount" placeholder="Nomor rekening" />
           </div>
         </div>
@@ -740,25 +740,25 @@
   </main>
 </div>
 
-<!-- MODAL: Tambah Komoditas -->
+<!-- MODAL: Add Commodity -->
 <div class="modal-overlay" id="addCommodityModal" style="display:none;" onclick="if(event.target===this)closeModal('addCommodityModal')">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title">Tambah Komoditas Baru</div>
+      <div class="modal-title">Add New Commodity</div>
       <button class="modal-close" onclick="closeModal('addCommodityModal')">✕</button>
     </div>
     <div class="modal-body">
       <div class="form-group">
-        <label class="form-label">Nama Komoditas *</label>
-        <input type="text" class="form-input" id="commodityName" placeholder="Contoh: Cabai Merah Grade A" />
+        <label class="form-label">Nama Commodity *</label>
+        <input type="text" class="form-input" id="commodityName" placeholder="e.g. Cabai Merah Grade A" />
       </div>
       <div class="grid-2">
         <div class="form-group">
           <label class="form-label">Kategori *</label>
           <select class="form-select">
-            <option>Sayuran</option><option>Buah</option>
+            <option>Vegetables</option><option>Buah</option>
             <option>Padi / Biji</option><option>Rempah</option>
-            <option>Umbi</option><option>Herbal</option>
+            <option>Umbi</option><option>Herbs</option>
           </select>
         </div>
         <div class="form-group">
@@ -771,11 +771,11 @@
       </div>
       <div class="grid-2">
         <div class="form-group">
-          <label class="form-label">Harga / Satuan (Rp) *</label>
+          <label class="form-label">Price / Unit (IDR) *</label>
           <input type="number" class="form-input" id="commodityPrice" placeholder="45000" />
         </div>
         <div class="form-group">
-          <label class="form-label">Stok Tersedia *</label>
+          <label class="form-label">Available Stock *</label>
           <input type="number" class="form-input" id="commodityStock" placeholder="1200" />
         </div>
       </div>
@@ -786,13 +786,13 @@
       <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(245,240,232,0.8);border-radius:var(--radius-md);">
         <input type="checkbox" id="isPreOrder" style="accent-color:var(--moss);width:16px;height:16px;" />
         <label for="isPreOrder" style="font-size:13px;cursor:pointer;color:var(--charcoal);">
-          <strong>Aktifkan Pre-Order</strong> — pembeli bisa pesan sebelum panen
+          <strong>Aktifkan Pre-Order</strong> — buyer bisa pesan sebelum panen
         </label>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="closeModal('addCommodityModal')">Batal</button>
-      <button class="btn btn-primary" onclick="handleAddCommodity()">Tambahkan Komoditas</button>
+      <button class="btn btn-primary" onclick="handleAddCommodity()">Add Commodity</button>
     </div>
   </div>
 </div>
@@ -804,9 +804,9 @@
       <span class="bottom-nav-icon">🏠</span>
       <span class="bottom-nav-label">Beranda</span>
     </button>
-    <button class="bottom-nav-item" onclick="navAlert('Komoditas')">
+    <button class="bottom-nav-item" onclick="navAlert('Commodity')">
       <span class="bottom-nav-icon">📦</span>
-      <span class="bottom-nav-label">Komoditas</span>
+      <span class="bottom-nav-label">Commodity</span>
     </button>
     <button class="bottom-nav-item" onclick="navAlert('Order')">
       <span class="bottom-nav-icon">📋</span>
@@ -834,7 +834,7 @@
     const name = session.full_name.split(' ')[0];
     const hour = new Date().getHours();
     const greet = hour < 12 ? 'Pagi' : hour < 17 ? 'Siang' : 'Malam';
-    document.getElementById('greetingTitle').textContent = `Selamat ${greet}, ${name}! 🌱`;
+    document.getElementById('greetingTitle').textContent = `Good ${greet}, ${name}! 🌱`;
     document.getElementById('sidebarName').textContent = session.full_name;
     document.getElementById('sidebarAvatar').textContent =
       session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
@@ -905,7 +905,7 @@
       : '—';
 
     // Commodities
-    const commMap = { vegetable: '🥬 Sayuran', spice: '🌶️ Rempah', fruit: '🍅 Buah', rice: '🌾 Padi', tuber: '🥔 Umbi', herbal: '🌿 Herbal' };
+    const commMap = { vegetable: '🥬 Vegetables', spice: '🌶️ Spices', fruit: '🍅 Buah', rice: '🌾 Padi', tuber: '🥔 Umbi', herbal: '🌿 Herbs' };
     if (fullUser.commodities && fullUser.commodities.length) {
       document.getElementById('commodityTags').innerHTML = fullUser.commodities
         .map(c => `<span class="commodity-tag">${commMap[c] || c}</span>`).join('');
@@ -943,7 +943,7 @@
     // Swap action buttons
     document.getElementById('profileActions').innerHTML = `
       <button class="edit-toggle-btn btn-cancel-profile" onclick="disableEditMode()">Batal</button>
-      <button class="edit-toggle-btn btn-save-profile" onclick="saveProfileInline()">💾 Simpan</button>
+      <button class="edit-toggle-btn btn-save-profile" onclick="saveProfileInline()">💾 Save</button>
     `;
     isEditMode = true;
   }
@@ -955,7 +955,7 @@
       el.classList.add('profile-view-mode');
     });
     document.getElementById('profileActions').innerHTML = `
-      <button class="edit-toggle-btn btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profil</button>
+      <button class="edit-toggle-btn btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profile</button>
     `;
     isEditMode = false;
   }
@@ -992,7 +992,7 @@
       newName.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
 
     // Toast-style feedback
-    showToast('✅ Profil berhasil disimpan!');
+    showToast('✅ Profile saved successfully!');
   }
 
   // ---- TOAST ----
@@ -1031,7 +1031,7 @@
       alert('Mohon isi nama dan harga komoditas!'); return;
     }
     FarmifyDB.addCommodity(newCommodity);
-    showToast('✅ Komoditas berhasil ditambahkan!');
+    showToast('✅ Commodity berhasil ditambahkan!');
     closeModal('addCommodityModal');
   }
 

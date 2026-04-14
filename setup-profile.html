@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Setup Profil — Farmify</title>
+  <title>Setup Profilee — Farmify</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     body { background: var(--warm-white); }
@@ -159,58 +159,58 @@
     <div class="setup-progress" id="setupProgress">
       <div class="setup-step">
         <div class="step-dot active" id="dot1">1</div>
-        <div class="step-label active" id="lbl1">Identitas</div>
+        <div class="step-label active" id="lbl1">Identity</div>
       </div>
       <div class="step-divider" id="div1"></div>
       <div class="setup-step">
         <div class="step-dot" id="dot2">2</div>
-        <div class="step-label" id="lbl2">Detail</div>
+        <div class="step-label" id="lbl2">Details</div>
       </div>
       <div class="step-divider" id="div2"></div>
       <div class="setup-step">
         <div class="step-dot" id="dot3">3</div>
-        <div class="step-label" id="lbl3">Pembayaran</div>
+        <div class="step-label" id="lbl3">Payment</div>
       </div>
       <div class="step-divider" id="div3"></div>
       <div class="setup-step">
         <div class="step-dot" id="dot4">4</div>
-        <div class="step-label" id="lbl4">Selesai</div>
+        <div class="step-label" id="lbl4">Done</div>
       </div>
     </div>
 
     <div class="setup-card">
 
-      <!-- STEP 1: Identitas -->
+      <!-- STEP 1: Identity -->
       <div class="setup-step-content active" id="step1">
-        <div class="setup-card-title">👋 Selamat datang di Farmify!</div>
-        <div class="setup-card-sub" id="step1Sub">Lengkapi profil Anda untuk mulai menggunakan platform</div>
+        <div class="setup-card-title">👋 Welcome to Farmify!</div>
+        <div class="setup-card-sub" id="step1Sub">Complete your profile to start using the platform</div>
 
         <div class="form-group">
-          <label class="form-label">Nama Lengkap / Nama Bisnis *</label>
-          <input type="text" class="form-input" id="s1Name" placeholder="Masukkan nama lengkap" />
+          <label class="form-label">Full Name / Business Name *</label>
+          <input type="text" class="form-input" id="s1Name" placeholder="Enter full name" />
         </div>
         <div class="form-group">
-          <label class="form-label">Nomor Telepon / WhatsApp *</label>
-          <input type="tel" class="form-input" id="s1Phone" placeholder="08xxxxxxxxxx" />
+          <label class="form-label">Phone / WhatsApp Number *</label>
+          <input type="tel" class="form-input" id="s1Phone" placeholder="Phone number" />
         </div>
 
         <!-- Farmer specific fields -->
         <div id="farmerFields1" style="display:none;">
           <div class="form-group">
-            <label class="form-label">Nama Farm *</label>
-            <input type="text" class="form-input" id="s1FarmName" placeholder="Contoh: Sido Makmur Farm" />
+            <label class="form-label">Farm Name *</label>
+            <input type="text" class="form-input" id="s1FarmName" placeholder="e.g. Sido Makmur Farm" />
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div class="form-group">
-              <label class="form-label">Kota / Kabupaten *</label>
+              <label class="form-label">City / Regency *</label>
               <input type="text" class="form-input" id="s1City" placeholder="Malang" />
             </div>
             <div class="form-group">
               <label class="form-label">Provinsi</label>
               <select class="form-select" id="s1Province">
-                <option value="jawa_timur">Jawa Timur</option>
-                <option value="jawa_tengah">Jawa Tengah</option>
-                <option value="jawa_barat">Jawa Barat</option>
+                <option value="jawa_timur">East Java</option>
+                <option value="jawa_tengah">Central Java</option>
+                <option value="jawa_barat">West Java</option>
                 <option value="bali">Bali</option>
                 <option value="sulawesi">Sulawesi</option>
                 <option value="sumatra">Sumatra</option>
@@ -222,97 +222,97 @@
         <!-- Buyer specific fields -->
         <div id="buyerFields1" style="display:none;">
           <div class="form-group">
-            <label class="form-label">Nama Perusahaan *</label>
-            <input type="text" class="form-input" id="s1CompanyName" placeholder="PT / CV / UD ..." />
+            <label class="form-label">Company Name *</label>
+            <input type="text" class="form-input" id="s1CompanyName" placeholder="Ltd / Corp / Co. ..." />
           </div>
           <div class="form-group">
-            <label class="form-label">Jenis Bisnis *</label>
+            <label class="form-label">Business Type *</label>
             <select class="form-select" id="s1BusinessType">
-              <option value="manufacturer">Manufaktur / Pabrik Pengolahan</option>
-              <option value="restaurant">Restoran / Hotel / Katering</option>
-              <option value="retailer">Retail / Distributor / Grosir</option>
-              <option value="export">Eksportir</option>
-              <option value="other">Lainnya</option>
+              <option value="manufacturer">Manufacturing / Processing Plant</option>
+              <option value="restaurant">Restoran / Hotel / Catering</option>
+              <option value="retailer">Retail / Distributor / Wholesale</option>
+              <option value="export">Exporter</option>
+              <option value="other">Other</option>
             </select>
           </div>
         </div>
 
         <div class="setup-nav">
-          <span style="font-size:13px;color:var(--mid-gray);">Langkah 1 dari 3</span>
-          <button class="btn btn-primary" onclick="nextStep(2)">Lanjut →</button>
+          <span style="font-size:13px;color:var(--mid-gray);">Step 1 of 3</span>
+          <button class="btn btn-primary" onclick="nextStep(2)">Next →</button>
         </div>
       </div>
 
-      <!-- STEP 2: Detail -->
+      <!-- STEP 2: Details -->
       <div class="setup-step-content" id="step2">
-        <div class="setup-card-title" id="step2Title">🌿 Detail Farm</div>
-        <div class="setup-card-sub">Informasi ini membantu pembeli mengenal farm Anda lebih baik</div>
+        <div class="setup-card-title" id="step2Title">🌿 Details Farm</div>
+        <div class="setup-card-sub">This information helps buyers learn more about your farm</div>
 
         <!-- Farmer detail -->
         <div id="farmerFields2">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div class="form-group">
-              <label class="form-label">Luas Lahan (Hektar)</label>
+              <label class="form-label">Land Area (Hectares)</label>
               <input type="number" class="form-input" id="s2FarmSize" placeholder="2.5" step="0.1" />
             </div>
             <div class="form-group">
-              <label class="form-label">Pengalaman (Tahun)</label>
+              <label class="form-label">Experience (Years)</label>
               <input type="number" class="form-input" id="s2ExpYears" placeholder="5" />
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Komoditas yang Ditanam</label>
+            <label class="form-label">Crops Grown</label>
             <div class="commodities-check">
-              <label class="comm-check-item"><input type="checkbox" value="vegetable" id="cVeg"> 🥬 Sayuran</label>
-              <label class="comm-check-item"><input type="checkbox" value="spice" id="cSpice"> 🌶️ Rempah</label>
-              <label class="comm-check-item"><input type="checkbox" value="fruit" id="cFruit"> 🍉 Buah-buahan</label>
-              <label class="comm-check-item"><input type="checkbox" value="rice" id="cRice"> 🌾 Padi / Biji</label>
-              <label class="comm-check-item"><input type="checkbox" value="tuber" id="cTuber"> 🥔 Umbi-umbian</label>
-              <label class="comm-check-item"><input type="checkbox" value="herbal" id="cHerbal"> 🌿 Herbal</label>
+              <label class="comm-check-item"><input type="checkbox" value="vegetable" id="cVeg"> 🥬 Vegetables</label>
+              <label class="comm-check-item"><input type="checkbox" value="spice" id="cSpice"> 🌶️ Spices</label>
+              <label class="comm-check-item"><input type="checkbox" value="fruit" id="cFruit"> 🍉 Fruits</label>
+              <label class="comm-check-item"><input type="checkbox" value="rice" id="cRice"> 🌾 Rice / Grains</label>
+              <label class="comm-check-item"><input type="checkbox" value="tuber" id="cTuber"> 🥔 Tubers</label>
+              <label class="comm-check-item"><input type="checkbox" value="herbal" id="cHerbs"> 🌿 Herbs</label>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Deskripsi Singkat Farm</label>
-            <textarea class="form-input" id="s2FarmDesc" rows="3" placeholder="Ceritakan keunggulan farm Anda..." style="resize:vertical;"></textarea>
+            <label class="form-label">Brief Farm Description</label>
+            <textarea class="form-input" id="s2FarmDesc" rows="3" placeholder="Tell us about what makes your farm special..." style="resize:vertical;"></textarea>
           </div>
         </div>
 
         <!-- Buyer detail -->
         <div id="buyerFields2" style="display:none;">
           <div class="form-group">
-            <label class="form-label">Alamat Lengkap Perusahaan</label>
-            <input type="text" class="form-input" id="s2Address" placeholder="Jl. Raya Industri No.1, Surabaya" />
+            <label class="form-label">Full Company Address</label>
+            <input type="text" class="form-input" id="s2Address" placeholder="1 Industrial Rd, Surabaya" />
           </div>
           <div class="form-group">
-            <label class="form-label">NPWP Perusahaan</label>
+            <label class="form-label">Company Tax ID (NPWP)</label>
             <input type="text" class="form-input" id="s2Npwp" placeholder="XX.XXX.XXX.X-XXX.XXX" />
           </div>
           <div class="form-group">
-            <label class="form-label">Kebutuhan Utama (komoditas yang sering dibeli)</label>
+            <label class="form-label">Main Needs (frequently purchased commodities)</label>
             <div class="commodities-check">
-              <label class="comm-check-item"><input type="checkbox" value="vegetable"> 🥬 Sayuran</label>
-              <label class="comm-check-item"><input type="checkbox" value="spice"> 🌶️ Rempah</label>
-              <label class="comm-check-item"><input type="checkbox" value="fruit"> 🍉 Buah-buahan</label>
-              <label class="comm-check-item"><input type="checkbox" value="rice"> 🌾 Padi / Biji</label>
+              <label class="comm-check-item"><input type="checkbox" value="vegetable"> 🥬 Vegetables</label>
+              <label class="comm-check-item"><input type="checkbox" value="spice"> 🌶️ Spices</label>
+              <label class="comm-check-item"><input type="checkbox" value="fruit"> 🍉 Fruits</label>
+              <label class="comm-check-item"><input type="checkbox" value="rice"> 🌾 Rice / Grains</label>
             </div>
           </div>
         </div>
 
         <div class="setup-nav">
-          <button class="btn btn-secondary" onclick="nextStep(1)">← Kembali</button>
-          <button class="btn btn-primary" onclick="nextStep(3)">Lanjut →</button>
+          <button class="btn btn-secondary" onclick="nextStep(1)">← Back</button>
+          <button class="btn btn-primary" onclick="nextStep(3)">Next →</button>
         </div>
       </div>
 
-      <!-- STEP 3: Pembayaran -->
+      <!-- STEP 3: Payment -->
       <div class="setup-step-content" id="step3">
-        <div class="setup-card-title">🏦 Rekening Pembayaran</div>
-        <div class="setup-card-sub">Digunakan untuk menerima atau melakukan pembayaran transaksi di platform</div>
+        <div class="setup-card-title">🏦 Rekening Payment</div>
+        <div class="setup-card-sub">Used to receive or make payments for transactions on the platform</div>
 
         <div class="form-group">
           <label class="form-label">Bank *</label>
           <select class="form-select" id="s3Bank">
-            <option value="">-- Pilih Bank --</option>
+            <option value="">-- Select Bank --</option>
             <option value="BRI">Bank BRI</option>
             <option value="BCA">Bank BCA</option>
             <option value="Mandiri">Bank Mandiri</option>
@@ -324,22 +324,22 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Nomor Rekening *</label>
-          <input type="text" class="form-input" id="s3Account" placeholder="Nomor rekening tanpa spasi" />
+          <label class="form-label">Account Number *</label>
+          <input type="text" class="form-input" id="s3Account" placeholder="Account number without spaces" />
         </div>
         <div class="form-group">
-          <label class="form-label">Nama Pemilik Rekening *</label>
-          <input type="text" class="form-input" id="s3AccountName" placeholder="Sesuai buku tabungan" />
+          <label class="form-label">Account Holder Name *</label>
+          <input type="text" class="form-input" id="s3AccountName" placeholder="As per passbook" />
         </div>
 
         <div style="padding:14px 16px;background:rgba(74,124,89,0.06);border-radius:var(--radius-md);border:1px solid rgba(74,124,89,0.12);">
-          <div style="font-size:12px;color:var(--moss);font-weight:600;margin-bottom:4px;">🔒 Keamanan Data</div>
-          <div style="font-size:12px;color:var(--mid-gray);line-height:1.5;">Data rekening Anda dienkripsi dan hanya digunakan untuk keperluan transaksi di platform Farmify.</div>
+          <div style="font-size:12px;color:var(--moss);font-weight:600;margin-bottom:4px;">🔒 Data Security</div>
+          <div style="font-size:12px;color:var(--mid-gray);line-height:1.5;">Your account data is encrypted and only used for transaction purposes on the Farmify platform.</div>
         </div>
 
         <div class="setup-nav">
-          <button class="btn btn-secondary" onclick="nextStep(2)">← Kembali</button>
-          <button class="btn btn-primary" onclick="completeSetup()">Selesai & Kirim ✓</button>
+          <button class="btn btn-secondary" onclick="nextStep(2)">← Back</button>
+          <button class="btn btn-primary" onclick="completeSetup()">Done & Submit ✓</button>
         </div>
       </div>
 
@@ -347,28 +347,28 @@
       <div class="setup-step-content" id="step4">
         <div style="text-align:center;padding:16px 0;">
           <div class="success-icon">✅</div>
-          <div class="setup-card-title" style="text-align:center;">Profil Berhasil Dikirim!</div>
+          <div class="setup-card-title" style="text-align:center;">Profile Submitted Successfully!</div>
           <div class="setup-card-sub" style="text-align:center;max-width:360px;margin:0 auto 24px;">
-            Profil Anda sedang direview oleh tim admin Farmify. Proses verifikasi biasanya membutuhkan 1×24 jam kerja.
+            Your profile is being reviewed by the Farmify admin team. Verification usually takes up to 1 business day.
           </div>
           <div style="background:var(--cream);border-radius:var(--radius-lg);padding:20px;margin-bottom:24px;text-align:left;">
-            <div style="font-weight:700;font-size:14px;color:var(--forest);margin-bottom:12px;">Langkah selanjutnya:</div>
+            <div style="font-weight:700;font-size:14px;color:var(--forest);margin-bottom:12px;">Next steps:</div>
             <div style="display:flex;flex-direction:column;gap:10px;">
               <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--charcoal);">
                 <span style="color:var(--moss);font-weight:700;flex-shrink:0;">1.</span>
-                Admin akan memverifikasi data yang Anda daftarkan
+                Admin will verify the information you submitted
               </div>
               <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--charcoal);">
                 <span style="color:var(--moss);font-weight:700;flex-shrink:0;">2.</span>
-                Anda akan menerima notifikasi via email saat akun diaktifkan
+                You will receive an email notification when your account is activated
               </div>
               <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--charcoal);">
                 <span style="color:var(--moss);font-weight:700;flex-shrink:0;">3.</span>
-                Login kembali untuk mulai menggunakan platform
+                Sign in again to start using the platform
               </div>
             </div>
           </div>
-          <button class="btn btn-primary" style="width:100%;padding:14px;" onclick="window.location.href='login.html'">Kembali ke Login</button>
+          <button class="btn btn-primary" style="width:100%;padding:14px;" onclick="window.location.href='login.html'">Back to Sign In</button>
         </div>
       </div>
 
@@ -390,10 +390,10 @@
   window.addEventListener('DOMContentLoaded', () => {
     if (role === 'farmer') {
       document.getElementById('farmerFields1').style.display = 'block';
-      document.getElementById('step1Sub').textContent = 'Isi informasi dasar farm Anda untuk mulai berjualan';
+      document.getElementById('step1Sub').textContent = 'Fill in your basic farm info to start selling';
     } else if (role === 'buyer') {
       document.getElementById('buyerFields1').style.display = 'block';
-      document.getElementById('step1Sub').textContent = 'Isi informasi perusahaan Anda untuk mulai berbelanja';
+      document.getElementById('step1Sub').textContent = 'Fill in your company info to start purchasing';
     }
 
     // Pre-fill name if available
@@ -414,11 +414,11 @@
       if (role === 'farmer') {
         document.getElementById('farmerFields2').style.display = 'block';
         document.getElementById('buyerFields2').style.display = 'none';
-        document.getElementById('step2Title').textContent = '🌿 Detail Farm';
+        document.getElementById('step2Title').textContent = '🌿 Details Farm';
       } else {
         document.getElementById('farmerFields2').style.display = 'none';
         document.getElementById('buyerFields2').style.display = 'block';
-        document.getElementById('step2Title').textContent = '🏢 Detail Perusahaan';
+        document.getElementById('step2Title').textContent = '🏢 Details Perusahaan';
       }
       if (target < currentStep) {
         // going back
@@ -441,14 +441,14 @@
 
   function validateStep(step) {
     if (step === 1) {
-      if (!document.getElementById('s1Name').value.trim()) { showToast('Mohon isi nama lengkap', 'error'); return false; }
-      if (!document.getElementById('s1Phone').value.trim()) { showToast('Mohon isi nomor telepon', 'error'); return false; }
-      if (role === 'farmer' && !document.getElementById('s1FarmName').value.trim()) { showToast('Mohon isi nama farm', 'error'); return false; }
-      if (role === 'buyer' && !document.getElementById('s1CompanyName').value.trim()) { showToast('Mohon isi nama perusahaan', 'error'); return false; }
+      if (!document.getElementById('s1Name').value.trim()) { showToast('Please enter your full name', 'error'); return false; }
+      if (!document.getElementById('s1Phone').value.trim()) { showToast('Please enter your phone number', 'error'); return false; }
+      if (role === 'farmer' && !document.getElementById('s1FarmName').value.trim()) { showToast('Please enter your farm name', 'error'); return false; }
+      if (role === 'buyer' && !document.getElementById('s1CompanyName').value.trim()) { showToast('Please enter your company name', 'error'); return false; }
     }
     if (step === 3) {
-      if (!document.getElementById('s3Bank').value) { showToast('Mohon pilih bank', 'error'); return false; }
-      if (!document.getElementById('s3Account').value.trim()) { showToast('Mohon isi nomor rekening', 'error'); return false; }
+      if (!document.getElementById('s3Bank').value) { showToast('Please select a bank', 'error'); return false; }
+      if (!document.getElementById('s3Account').value.trim()) { showToast('Please enter your account number', 'error'); return false; }
     }
     return true;
   }

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daftar Akun — Farmify</title>
+  <title>Create Account — Farmify</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
@@ -465,23 +465,19 @@
       </div>
       <div class="panel-content">
         <h1 class="panel-tagline">Direct Market,<br><span>Better Income</span><br>for Farmers.</h1>
-        <p class="panel-desc">Platform Farm-to-Business yang menghubungkan petani lokal langsung dengan pembeli industri
-          — tanpa perantara, harga transparan.</p>
+        <p class="panel-desc">Farm-to-Business platform connecting local farmers directly with industry buyers — no middlemen, transparent pricing.</p>
         <ul class="panel-features">
           <li>
             <div class="feature-dot"></div>
-            <div class="feature-text"><strong>Untuk Petani / Kelompok Tani</strong><span>Jual langsung ke industri,
-                harga lebih adil</span></div>
+            <div class="feature-text"><strong>For Farmers / Farmer Groups</strong><span>Sell directly to industry, fairer prices</span></div>
           </li>
           <li>
             <div class="feature-dot"></div>
-            <div class="feature-text"><strong>Untuk Pembeli / Industri F&B</strong><span>Sumber bahan baku stabil dengan
-                Pre-Order System</span></div>
+            <div class="feature-text"><strong>For Buyers / F&B Industry</strong><span>Stable raw material supply with Pre-Order System</span></div>
           </li>
           <li>
             <div class="feature-dot"></div>
-            <div class="feature-text"><strong>Verifikasi Email Instan</strong><span>Akun langsung aktif — tanpa menunggu
-                admin</span></div>
+            <div class="feature-text"><strong>Instant Email Verification</strong><span>Account instantly active — no waiting for admin</span></div>
           </li>
         </ul>
       </div>
@@ -491,13 +487,13 @@
     <!-- RIGHT PANEL -->
     <div class="right-panel">
       <div class="form-header page-enter">
-        <h2 id="pageTitle">Buat Akun Baru</h2>
-        <p id="pageSubtitle">Pilih tipe akun sesuai kebutuhanmu</p>
+        <h2 id="pageTitle">Create New Account</h2>
+        <p id="pageSubtitle">Choose the account type that suits you</p>
       </div>
       <div class="step-indicator page-enter">
         <div class="step-dot active" id="step1dot"></div>
         <div class="step-dot" id="step2dot"></div>
-        <div style="font-size:12px;color:var(--mid-gray);" id="stepLabel">Langkah 1: Isi Data</div>
+        <div style="font-size:12px;color:var(--mid-gray);" id="stepLabel">Step 1: Fill in Detailss</div>
       </div>
       <div id="alertBox"></div>
 
@@ -507,39 +503,39 @@
           <div class="role-cards" id="roleCards">
             <div class="role-card active" data-role="farmer" onclick="selectRole('farmer')">
               <div class="role-check"></div><span class="role-icon">🌾</span>
-              <div class="role-title">Petani / Penjual</div>
-              <div class="role-desc">Individual atau Kelompok Tani</div>
+              <div class="role-title">Farmer / Seller</div>
+              <div class="role-desc">Individual or Farmer Cooperative</div>
             </div>
             <div class="role-card" data-role="buyer" onclick="selectRole('buyer')">
               <div class="role-check"></div><span class="role-icon">🏭</span>
-              <div class="role-title">Pembeli / B2B</div>
-              <div class="role-desc">Restoran, Industri F&B, HoReCa</div>
+              <div class="role-title">Buyer / B2B</div>
+              <div class="role-desc">Restaurant, F&B Industry, HoReCa</div>
             </div>
             <div class="role-card" data-role="admin" onclick="selectRole('admin')">
               <div class="role-check"></div><span class="role-icon">⚙️</span>
               <div class="role-title">Admin</div>
-              <div class="role-desc">Pengelola platform Farmify</div>
+              <div class="role-desc">Farmify platform manager</div>
             </div>
           </div>
 
-          <div class="section-divider"><span>Informasi Akun</span></div>
+          <div class="section-divider"><span>Account Information</span></div>
           <div class="form-group">
-            <label class="form-label">Nama Lengkap *</label>
+            <label class="form-label">Full Name *</label>
             <div class="input-with-icon"><span class="input-icon">👤</span>
-              <input type="text" class="form-input" id="fullName" placeholder="Nama lengkap sesuai KTP" required />
+              <input type="text" class="form-input" id="fullName" placeholder="Full name as on ID card" required />
             </div>
           </div>
           <div class="grid-2">
             <div class="form-group">
               <label class="form-label">Email *</label>
               <div class="input-with-icon"><span class="input-icon">✉️</span>
-                <input type="email" class="form-input" id="email" placeholder="email@contoh.com" required />
+                <input type="email" class="form-input" id="email" placeholder="email@example.com" required />
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label">No. Telepon *</label>
+              <label class="form-label">Phone Number *</label>
               <div class="input-with-icon"><span class="input-icon">📱</span>
-                <input type="tel" class="form-input" id="phone" placeholder="08xxxxxxxxxx" required />
+                <input type="tel" class="form-input" id="phone" placeholder="Phone number" required />
               </div>
             </div>
           </div>
@@ -547,7 +543,7 @@
             <div class="form-group">
               <label class="form-label">Password *</label>
               <div class="input-with-icon"><span class="input-icon">🔒</span>
-                <input type="password" class="form-input" id="password" placeholder="Min. 8 karakter" required
+                <input type="password" class="form-input" id="password" placeholder="Min. 8 characters" required
                   oninput="checkStrength(this.value)" />
                 <button type="button" class="toggle-password" onclick="togglePwd('password',this)">👁</button>
               </div>
@@ -555,13 +551,13 @@
                 <div class="strength-bar">
                   <div class="strength-fill" id="strengthFill"></div>
                 </div>
-                <span class="strength-label" id="strengthLabel">Masukkan password</span>
+                <span class="strength-label" id="strengthLabel">Enter password</span>
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label">Konfirmasi Password *</label>
+              <label class="form-label">Confirm Password *</label>
               <div class="input-with-icon"><span class="input-icon">🔒</span>
-                <input type="password" class="form-input" id="confirmPwd" placeholder="Ulangi password" required />
+                <input type="password" class="form-input" id="confirmPwd" placeholder="Repeat password" required />
                 <button type="button" class="toggle-password" onclick="togglePwd('confirmPwd',this)">👁</button>
               </div>
             </div>
@@ -569,134 +565,133 @@
 
           <!-- FARMER FIELDS -->
           <div class="role-fields visible" id="fields-farmer">
-            <div class="section-divider"><span>Data Usaha Tani</span></div>
+            <div class="section-divider"><span>Farm Business Detailss</span></div>
             <div class="grid-2">
-              <div class="form-group"><label class="form-label">Nama Lahan / Farm *</label><input type="text"
-                  class="form-input" id="farmName" placeholder="Contoh: Sido Makmur Farm" /></div>
-              <div class="form-group"><label class="form-label">Nama Kelompok Tani</label><input type="text"
-                  class="form-input" id="gapoktanName" placeholder="Jika tergabung dalam Gapoktan" /></div>
+              <div class="form-group"><label class="form-label">Farm Name *</label><input type="text"
+                  class="form-input" id="farmName" placeholder="e.g. Sido Makmur Farm" /></div>
+              <div class="form-group"><label class="form-label">Farmer Group Name</label><input type="text"
+                  class="form-input" id="gapoktanName" placeholder="If part of a farmer cooperative" /></div>
             </div>
             <div class="grid-2">
-              <div class="form-group"><label class="form-label">Provinsi *</label>
+              <div class="form-group"><label class="form-label">Province *</label>
                 <select class="form-select" id="farmProvince">
-                  <option value="">Pilih Provinsi</option>
-                  <option value="jawa_timur" selected>Jawa Timur</option>
-                  <option value="jawa_tengah">Jawa Tengah</option>
-                  <option value="jawa_barat">Jawa Barat</option>
-                  <option value="sulawesi_selatan">Sulawesi Selatan</option>
-                  <option value="sumatera_utara">Sumatera Utara</option>
-                  <option value="lainnya">Lainnya</option>
+                  <option value="">Select Province</option>
+                  <option value="jawa_timur" selected>East Java</option>
+                  <option value="jawa_tengah">Central Java</option>
+                  <option value="jawa_barat">West Java</option>
+                  <option value="sulawesi_selatan">South Sulawesi</option>
+                  <option value="sumatera_utara">North Sumatra</option>
+                  <option value="lainnya">Other</option>
                 </select>
               </div>
-              <div class="form-group"><label class="form-label">Kabupaten / Kota *</label><input type="text"
-                  class="form-input" id="farmCity" placeholder="Contoh: Malang" /></div>
+              <div class="form-group"><label class="form-label">Regency / City *</label><input type="text"
+                  class="form-input" id="farmCity" placeholder="e.g. Malang" /></div>
             </div>
             <div class="grid-2">
-              <div class="form-group"><label class="form-label">Luas Lahan (Ha)</label><input type="number"
+              <div class="form-group"><label class="form-label">Land Area (Ha)</label><input type="number"
                   class="form-input" id="farmSize" placeholder="2.5" step="0.1" min="0" /></div>
-              <div class="form-group"><label class="form-label">Pengalaman (Tahun)</label><input type="number"
+              <div class="form-group"><label class="form-label">Experience (Years)</label><input type="number"
                   class="form-input" id="farmExp" placeholder="15" min="0" /></div>
             </div>
             <div class="form-group">
-              <label class="form-label">Komoditas Utama *</label>
+              <label class="form-label">Main Commodities *</label>
               <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;">
                 <label
                   style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;padding:8px 14px;background:white;border:1.5px solid var(--mint);border-radius:100px;transition:all 0.2s;"><input
-                    type="checkbox" value="vegetable" name="commodity" style="accent-color:var(--moss)"> Sayuran</label>
+                    type="checkbox" value="vegetable" name="commodity" style="accent-color:var(--moss)"> Vegetables</label>
                 <label
                   style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;padding:8px 14px;background:white;border:1.5px solid var(--mint);border-radius:100px;transition:all 0.2s;"><input
-                    type="checkbox" value="fruit" name="commodity" style="accent-color:var(--moss)"> Buah-buahan</label>
+                    type="checkbox" value="fruit" name="commodity" style="accent-color:var(--moss)"> Fruits</label>
                 <label
                   style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;padding:8px 14px;background:white;border:1.5px solid var(--mint);border-radius:100px;transition:all 0.2s;"><input
-                    type="checkbox" value="grain" name="commodity" style="accent-color:var(--moss)"> Padi /
-                  Biji-bijian</label>
+                    type="checkbox" value="grain" name="commodity" style="accent-color:var(--moss)"> Rice /
+                  Grains</label>
                 <label
                   style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;padding:8px 14px;background:white;border:1.5px solid var(--mint);border-radius:100px;transition:all 0.2s;"><input
                     type="checkbox" value="spice" name="commodity" style="accent-color:var(--moss)">
-                  Rempah-rempah</label>
+                  Spices</label>
                 <label
                   style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;padding:8px 14px;background:white;border:1.5px solid var(--mint);border-radius:100px;transition:all 0.2s;"><input
-                    type="checkbox" value="tuber" name="commodity" style="accent-color:var(--moss)"> Umbi-umbian</label>
+                    type="checkbox" value="tuber" name="commodity" style="accent-color:var(--moss)"> Tubers</label>
                 <label
                   style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;padding:8px 14px;background:white;border:1.5px solid var(--mint);border-radius:100px;transition:all 0.2s;"><input
-                    type="checkbox" value="herb" name="commodity" style="accent-color:var(--moss)"> Herbal</label>
+                    type="checkbox" value="herb" name="commodity" style="accent-color:var(--moss)"> Herbs</label>
               </div>
             </div>
             <div class="grid-2">
-              <div class="form-group"><label class="form-label">NIK (KTP) *</label><input type="text" class="form-input"
-                  id="nik" placeholder="16 digit NIK" maxlength="16" /></div>
-              <div class="form-group"><label class="form-label">Nama Bank</label>
+              <div class="form-group"><label class="form-label">National ID (NIK) *</label><input type="text" class="form-input"
+                  id="nik" placeholder="16-digit NIK" maxlength="16" /></div>
+              <div class="form-group"><label class="form-label">Bank Name</label>
                 <select class="form-select" id="bankName">
-                  <option value="">Pilih Bank</option>
+                  <option value="">Select Bank</option>
                   <option>BRI</option>
                   <option>BNI</option>
                   <option>BCA</option>
                   <option>Mandiri</option>
                   <option>BSI</option>
                   <option>BTN</option>
-                  <option>Lainnya</option>
+                  <option>Other</option>
                 </select>
               </div>
             </div>
-            <div class="form-group"><label class="form-label">Nomor Rekening</label><input type="text"
-                class="form-input" id="bankAccount" placeholder="Nomor rekening untuk pencairan dana" /><span
-                class="form-hint">Dana dicairkan ke rekening ini setelah barang diterima pembeli</span></div>
+            <div class="form-group"><label class="form-label">Account Number</label><input type="text"
+                class="form-input" id="bankAccount" placeholder="Account number for fund disbursement" /><span
+                class="form-hint">Funds will be disbursed to this account after the buyer receives the goods</span></div>
           </div>
 
           <!-- BUYER FIELDS -->
           <div class="role-fields" id="fields-buyer">
-            <div class="section-divider"><span>Data Perusahaan</span></div>
-            <div class="form-group"><label class="form-label">Nama Perusahaan *</label><input type="text"
-                class="form-input" id="companyName" placeholder="Contoh: PT Jaya Foods Indonesia" /></div>
+            <div class="section-divider"><span>Company Detailss</span></div>
+            <div class="form-group"><label class="form-label">Company Name *</label><input type="text"
+                class="form-input" id="companyName" placeholder="e.g. PT Jaya Foods Indonesia" /></div>
             <div class="grid-2">
-              <div class="form-group"><label class="form-label">Jenis Usaha *</label>
+              <div class="form-group"><label class="form-label">Business Type *</label>
                 <select class="form-select" id="businessType">
-                  <option value="">Pilih Jenis Usaha</option>
-                  <option value="restaurant">Restoran / Rumah Makan</option>
+                  <option value="">Select Business Type</option>
+                  <option value="restaurant">Restaurant / Eatery</option>
                   <option value="hotel">Hotel (HoReCa)</option>
-                  <option value="catering">Katering</option>
-                  <option value="manufacturer">Pabrik / Industri F&B</option>
+                  <option value="catering">Catering</option>
+                  <option value="manufacturer">Factory / F&B Industry</option>
                   <option value="distributor">Distributor</option>
-                  <option value="supermarket">Supermarket / Ritel</option>
-                  <option value="other">Lainnya</option>
+                  <option value="supermarket">Supermarket / Retail</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
               <div class="form-group"><label class="form-label">NPWP *</label><input type="text" class="form-input"
                   id="npwp" placeholder="XX.XXX.XXX.X-XXX.XXX" /></div>
             </div>
             <div class="grid-2">
-              <div class="form-group"><label class="form-label">Nomor SIUP / NIB</label><input type="text"
-                  class="form-input" id="siup" placeholder="Nomor izin usaha" /></div>
-              <div class="form-group"><label class="form-label">Provinsi *</label>
+              <div class="form-group"><label class="form-label">Business License No.</label><input type="text"
+                  class="form-input" id="siup" placeholder="Business license number" /></div>
+              <div class="form-group"><label class="form-label">Province *</label>
                 <select class="form-select" id="buyerProvince">
-                  <option value="">Pilih Provinsi</option>
-                  <option value="jawa_timur">Jawa Timur</option>
-                  <option value="jawa_tengah">Jawa Tengah</option>
-                  <option value="jawa_barat">Jawa Barat</option>
+                  <option value="">Select Province</option>
+                  <option value="jawa_timur">East Java</option>
+                  <option value="jawa_tengah">Central Java</option>
+                  <option value="jawa_barat">West Java</option>
                   <option value="dki_jakarta">DKI Jakarta</option>
-                  <option value="lainnya">Lainnya</option>
+                  <option value="lainnya">Other</option>
                 </select>
               </div>
             </div>
-            <div class="form-group"><label class="form-label">Alamat Lengkap Perusahaan *</label><textarea
-                class="form-textarea" id="buyerAddress" placeholder="Jalan, No., Kota, Kode Pos" rows="3"></textarea>
+            <div class="form-group"><label class="form-label">Full Company Address *</label><textarea
+                class="form-textarea" id="buyerAddress" placeholder="Street, No., City, Postal Code" rows="3"></textarea>
             </div>
           </div>
 
           <!-- ADMIN FIELDS -->
           <div class="role-fields" id="fields-admin">
-            <div class="section-divider"><span>Verifikasi Admin</span></div>
+            <div class="section-divider"><span>Admin Verification</span></div>
             <div class="form-group">
-              <label class="form-label">Kode Akses Admin *</label>
+              <label class="form-label">Admin Access Code *</label>
               <div class="input-with-icon"><span class="input-icon">🔑</span>
-                <input type="password" class="form-input" id="adminCode" placeholder="Masukkan kode akses admin" />
+                <input type="password" class="form-input" id="adminCode" placeholder="Enter admin access code" />
               </div>
-              <span class="form-hint">Kode diberikan oleh manajemen Farmify. Default demo:
-                <strong>FARMIFY2025</strong></span>
+              <span class="form-hint">Code provided by Farmify management. Demo default: <strong>FARMIFY2025</strong></span>
             </div>
-            <div class="form-group"><label class="form-label">Jabatan / Divisi *</label>
+            <div class="form-group"><label class="form-label">Position / Division *</label>
               <select class="form-select" id="adminDivision">
-                <option value="">Pilih Divisi</option>
+                <option value="">Select Division</option>
                 <option value="platform">Platform & IT</option>
                 <option value="operations">Operations & Transaction</option>
                 <option value="quality">Quality Control & CS</option>
@@ -704,17 +699,16 @@
                 <option value="management">Management</option>
               </select>
             </div>
-            <div class="alert alert-info" style="margin-bottom:0;"><span>🛡️</span><span>Akun admin memiliki akses penuh
-                ke platform.</span></div>
+            <div class="alert alert-info" style="margin-bottom:0;"><span>🛡️</span><span>Admin accounts have full platform access.</span></div>
           </div>
 
           <div class="terms-row mt-3">
             <input type="checkbox" id="agreeTerms" />
-            <label for="agreeTerms">Saya menyetujui <a href="#" class="link">Syarat & Ketentuan</a> serta <a href="#"
-                class="link">Kebijakan Privasi</a> Farmify.</label>
+            <label for="agreeTerms">I agree to the <a href="#" class="link">Terms & Conditions</a> and <a href="#"
+                class="link">Privacy Policy</a> Farmify.</label>
           </div>
-          <button type="submit" class="btn btn-primary btn-full btn-lg" id="submitBtn">Kirim Kode Verifikasi →</button>
-          <div class="login-redirect">Sudah punya akun? <a href="login.html" class="link">Masuk sekarang →</a></div>
+          <button type="submit" class="btn btn-primary btn-full btn-lg" id="submitBtn">Send Verification Code →</button>
+          <div class="login-redirect">Already have an account? <a href="login.html" class="link">Sign in now →</a></div>
         </form>
       </div>
 
@@ -722,9 +716,9 @@
       <div id="otpScreen">
         <div class="otp-container">
           <span class="otp-icon">📧</span>
-          <div class="otp-title">Verifikasi Email</div>
-          <p class="otp-desc">Kode 6 digit telah dikirim ke<br><span class="otp-email-hl"
-              id="otpEmailDisplay">—</span><br><small style="color:var(--mid-gray);">Cek folder Inbox atau Spam.</small>
+          <div class="otp-title">Email Verification</div>
+          <p class="otp-desc">A 6-digit code has been sent to<br><span class="otp-email-hl"
+              id="otpEmailDisplay">—</span><br><small style="color:var(--mid-gray);">Check your Inbox or Spam folder.</small>
           </p>
           <div class="otp-input-row" id="otpInputRow">
             <input class="otp-digit" maxlength="1" inputmode="numeric" id="otp0" oninput="otpInput(0)"
@@ -740,17 +734,17 @@
             <input class="otp-digit" maxlength="1" inputmode="numeric" id="otp5" oninput="otpInput(5)"
               onkeydown="otpKey(event,5)" />
           </div>
-          <div class="otp-timer" id="otpTimerDisplay">Kode berlaku selama <strong id="otpCountdown">10:00</strong></div>
+          <div class="otp-timer" id="otpTimerDisplay">Code valid for <strong id="otpCountdown">10:00</strong></div>
           <div style="margin-bottom:20px;">
             <button
               style="background:none;border:none;color:var(--moss);font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline;"
-              id="resendBtn" onclick="resendOTP()" disabled>Kirim ulang kode</button>
+              id="resendBtn" onclick="resendOTP()" disabled>Resend code</button>
           </div>
-          <button class="btn btn-primary btn-full btn-lg" id="verifyBtn" onclick="verifyAndCreate()">Verifikasi &
-            Aktifkan Akun</button>
+          <button class="btn btn-primary btn-full btn-lg" id="verifyBtn" onclick="verifyAndCreate()">Verify &
+            Activate Account</button>
           <button type="button"
             style="background:none;border:none;color:var(--mid-gray);font-size:13px;cursor:pointer;margin-top:16px;text-decoration:underline;display:block;margin-left:auto;margin-right:auto;"
-            onclick="backToForm()">← Kembali ke form</button>
+            onclick="backToForm()">← Back to form</button>
         </div>
       </div>
 
@@ -788,11 +782,11 @@
       if (/[0-9]/.test(val)) score++;
       if (/[^A-Za-z0-9]/.test(val)) score++;
       const levels = [
-        { pct: '0%', color: 'var(--light-gray)', text: 'Masukkan password' },
-        { pct: '25%', color: 'var(--terracotta)', text: '⚠️ Lemah' },
-        { pct: '50%', color: 'var(--harvest)', text: '👍 Cukup' },
-        { pct: '75%', color: '#7EAB4E', text: '✅ Kuat' },
-        { pct: '100%', color: 'var(--moss)', text: '🔐 Sangat Kuat' },
+        { pct: '0%', color: 'var(--light-gray)', text: 'Enter password' },
+        { pct: '25%', color: 'var(--terracotta)', text: '⚠️ Weak' },
+        { pct: '50%', color: 'var(--harvest)', text: '👍 Fair' },
+        { pct: '75%', color: '#7EAB4E', text: '✅ Strong' },
+        { pct: '100%', color: 'var(--moss)', text: '🔐 Very Strong' },
       ];
       const lvl = levels[score];
       fill.style.width = lvl.pct; fill.style.background = lvl.color;
@@ -818,25 +812,25 @@
       const name = document.getElementById('fullName').value.trim(), email = document.getElementById('email').value.trim(),
         phone = document.getElementById('phone').value.trim(), pwd = document.getElementById('password').value,
         conf = document.getElementById('confirmPwd').value, terms = document.getElementById('agreeTerms').checked;
-      if (!name) return 'Nama lengkap wajib diisi.';
-      if (!email || !/\S+@\S+\.\S+/.test(email)) return 'Email tidak valid.';
-      if (!phone || phone.length < 10) return 'Nomor telepon tidak valid.';
-      if (pwd.length < 8) return 'Password minimal 8 karakter.';
-      if (pwd !== conf) return 'Konfirmasi password tidak cocok.';
-      if (!terms) return 'Anda harus menyetujui syarat & ketentuan.';
+      if (!name) return 'Full name is required.';
+      if (!email || !/\S+@\S+\.\S+/.test(email)) return 'Invalid email address.';
+      if (!phone || phone.length < 10) return 'Invalid phone number.';
+      if (pwd.length < 8) return 'Password must be at least 8 characters.';
+      if (pwd !== conf) return 'Passwords do not match.';
+      if (!terms) return 'You must agree to the terms & conditions.';
       if (selectedRole === 'farmer') {
-        if (!document.getElementById('farmName').value.trim()) return 'Nama lahan wajib diisi.';
-        if (!document.getElementById('farmCity').value.trim()) return 'Kota wajib diisi.';
-        if (document.getElementById('nik').value.trim().length !== 16) return 'NIK harus 16 digit.';
+        if (!document.getElementById('farmName').value.trim()) return 'Farm name is required.';
+        if (!document.getElementById('farmCity').value.trim()) return 'City is required.';
+        if (document.getElementById('nik').value.trim().length !== 16) return 'NIK must be 16 digits.';
       }
       if (selectedRole === 'buyer') {
-        if (!document.getElementById('companyName').value.trim()) return 'Nama perusahaan wajib diisi.';
-        if (!document.getElementById('businessType').value) return 'Jenis usaha wajib dipilih.';
-        if (!document.getElementById('npwp').value.trim()) return 'NPWP wajib diisi.';
+        if (!document.getElementById('companyName').value.trim()) return 'Company name is required.';
+        if (!document.getElementById('businessType').value) return 'Business type is required.';
+        if (!document.getElementById('npwp').value.trim()) return 'Tax ID (NPWP) is required.';
       }
       if (selectedRole === 'admin') {
-        if (document.getElementById('adminCode').value !== 'FARMIFY2025') return 'Kode akses admin tidak valid.';
-        if (!document.getElementById('adminDivision').value) return 'Divisi wajib dipilih.';
+        if (document.getElementById('adminCode').value !== 'FARMIFY2025') return 'Invalid admin access code.';
+        if (!document.getElementById('adminDivision').value) return 'Division is required.';
       }
       return null;
     }
@@ -846,10 +840,10 @@
       const err = validateForm();
       if (err) { showAlert('error', err); return; }
       const email = document.getElementById('email').value.trim().toLowerCase();
-      if (FarmifyDB.findByEmail(email)) { showAlert('error', 'Email sudah terdaftar. Silakan login.'); return; }
+      if (FarmifyDB.findByEmail(email)) { showAlert('error', 'Email already registered. Please sign in.'); return; }
 
       const btn = document.getElementById('submitBtn');
-      btn.innerHTML = '<span class="spinner"></span> Mengirim kode...';
+      btn.innerHTML = '<span class="spinner"></span> Sending code...';
       btn.disabled = true;
       await new Promise(r => setTimeout(r, 700));
 
@@ -896,7 +890,7 @@
       document.getElementById('otpEmailDisplay').textContent = email;
       document.getElementById('step1dot').classList.remove('active');
       document.getElementById('step2dot').classList.add('active');
-      document.getElementById('stepLabel').textContent = 'Langkah 2: Verifikasi Email';
+      document.getElementById('stepLabel').textContent = 'Step 2: Verify Email';
       document.getElementById('pageTitle').textContent = 'Cek Emailmu';
       document.getElementById('pageSubtitle').textContent = 'Masukkan kode 6 digit yang dikirim';
       setTimeout(() => document.getElementById('otp0').focus(), 300);
@@ -908,9 +902,9 @@
       document.getElementById('otpScreen').style.display = 'none';
       document.getElementById('step1dot').classList.add('active');
       document.getElementById('step2dot').classList.remove('active');
-      document.getElementById('stepLabel').textContent = 'Langkah 1: Isi Data';
-      document.getElementById('pageTitle').textContent = 'Buat Akun Baru';
-      document.getElementById('pageSubtitle').textContent = 'Pilih tipe akun sesuai kebutuhanmu';
+      document.getElementById('stepLabel').textContent = 'Step 1: Fill in Detailss';
+      document.getElementById('pageTitle').textContent = 'Create New Account';
+      document.getElementById('pageSubtitle').textContent = 'Choose the account type that suits you';
       clearInterval(otpTimerInterval);
       document.getElementById('alertBox').innerHTML = '';
     }
@@ -947,28 +941,28 @@
 
     async function verifyAndCreate() {
       const code = getOTPValue();
-      if (code.length !== 6) { showAlert('error', 'Masukkan 6 digit kode OTP.'); return; }
-      if (!pendingUserData) { showAlert('error', 'Data tidak ditemukan. Ulangi registrasi.'); return; }
+      if (code.length !== 6) { showAlert('error', 'Please enter the 6-digit OTP code.'); return; }
+      if (!pendingUserData) { showAlert('error', 'Data not found. Please register again.'); return; }
       const btn = document.getElementById('verifyBtn');
-      btn.innerHTML = '<span class="spinner"></span> Memverifikasi...'; btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Verifying...'; btn.disabled = true;
       await new Promise(r => setTimeout(r, 600));
       const result = FarmifyDB.verifyOTP(pendingUserData.email, code);
       if (!result.success) {
         showAlert('error', result.message);
         const row = document.getElementById('otpInputRow');
         row.style.animation = 'none'; row.offsetHeight; row.style.animation = 'shake 0.4s ease';
-        btn.innerHTML = 'Verifikasi & Aktifkan Akun'; btn.disabled = false;
+        btn.innerHTML = 'Verify & Activate Account'; btn.disabled = false;
         return;
       }
       const createResult = FarmifyDB.createUser(pendingUserData);
       if (createResult.success) {
         clearInterval(otpTimerInterval);
-        showAlert('success', '✅ Email terverifikasi! Akun berhasil dibuat dan langsung aktif.');
-        btn.innerHTML = '🎉 Akun Aktif!';
+        showAlert('success', '✅ Email terverifikasi! Account berhasil dibuat dan langsung aktif.');
+        btn.innerHTML = '🎉 Account Aktif!';
         setTimeout(() => { window.location.href = 'login.html'; }, 1800);
       } else {
         showAlert('error', createResult.message);
-        btn.innerHTML = 'Verifikasi & Aktifkan Akun'; btn.disabled = false;
+        btn.innerHTML = 'Verify & Activate Account'; btn.disabled = false;
       }
     }
 
@@ -982,7 +976,7 @@
       for (let i = 0; i < 6; i++) { document.getElementById(`otp${i}`).value = ''; document.getElementById(`otp${i}`).classList.remove('filled'); }
       document.getElementById('otp0').focus();
       startOTPTimer();
-      showAlert('success', 'Kode baru telah dikirim!');
+      showAlert('success', 'New code has been sent!');
     }
 
     function startOTPTimer() {
@@ -997,10 +991,10 @@
 
         if (rem <= 0) {
           clearInterval(otpTimerInterval);
-          document.getElementById('otpTimerDisplay').innerHTML = '<span style="color:var(--terracotta);">⚠️ Kode kedaluwarsa. Minta ulang.</span>';
+          document.getElementById('otpTimerDisplay').innerHTML = '<span style="color:var(--terracotta);">⚠️ Code expired. Please request again.</span>';
           // Tombol resend baru aktif setelah 2 menit habis
           document.getElementById('resendBtn').disabled = false;
-          document.getElementById('resendBtn').textContent = 'Kirim ulang kode';
+          document.getElementById('resendBtn').textContent = 'Resend code';
         }
       }, 500);
     }
