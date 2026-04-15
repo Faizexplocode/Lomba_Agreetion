@@ -1,14 +1,27 @@
 /**
  * =====================================================
  * FARMIFY — Database Configuration & Global UI Logic
- * v2.0 — Cross-dashboard connectivity + Activity Log
+ * v2.1 — Cross-dashboard connectivity + Activity Log
  * Client-Side: LocalStorage simulation
  * =====================================================
  */
 
+const FARMIFY_DB_VERSION = '2.1'; // Bump this to force a localStorage reset on all clients
+
 const FarmifyDB = {
   // ---- CORE DATABASE INIT ----
   init() {
+    // Version check — if stored version differs, wipe and reseed fresh demo data
+    if (localStorage.getItem('farmify_db_version') !== FARMIFY_DB_VERSION) {
+      localStorage.removeItem('farmify_users');
+      localStorage.removeItem('farmify_commodities');
+      localStorage.removeItem('farmify_activity');
+      localStorage.removeItem('farmify_orders');
+      localStorage.removeItem('farmify_otps');
+      localStorage.removeItem('farmify_notifs');
+      localStorage.setItem('farmify_db_version', FARMIFY_DB_VERSION);
+    }
+
     if (!localStorage.getItem('farmify_users')) {
       const demoUsers = [
         {
@@ -21,7 +34,7 @@ const FarmifyDB = {
           id: 'farmer-001', full_name: 'Pak Sido Makmur', email: 'sido@farmify.id',
           phone: '08111234567', password: btoa('Petani@123'), role: 'farmer',
           status: 'active', email_verified: true, setup_complete: true,
-          farm_name: 'Sido Makmur Farm', city: 'Malang', province: 'jawa_timur',
+          farm_name: 'Sido Makmur Farm', city: 'Malang', province: 'East Java',
           farm_size: '2.5', exp_years: '15', commodities: ['vegetable', 'spice'],
           bank_name: 'BRI', bank_account: '1234567890',
           created_at: new Date().toISOString()
@@ -31,7 +44,7 @@ const FarmifyDB = {
           phone: '0215559876', password: btoa('Buyer@123'), role: 'buyer',
           status: 'active', email_verified: true, setup_complete: true,
           company_name: 'PT Jaya Foods Indonesia', business_type: 'manufacturer',
-          company_address: 'Surabaya, Jawa Timur', npwp: '01.234.567.8-000.000',
+          company_address: 'Surabaya, East Java', npwp: '01.234.567.8-000.000',
           bank_name: 'BCA', bank_account: '0987654321',
           created_at: new Date().toISOString()
         }
@@ -42,9 +55,9 @@ const FarmifyDB = {
     // Seed demo commodities if none
     if (!localStorage.getItem('farmify_commodities')) {
       const demoCommodities = [
-        { id: 'com-001', farmer_id: 'farmer-001', name: 'Cabai Merah', category: 'Sayuran', unit: 'kg', price: 45000, stock: 1200, is_preorder: false, is_available: true, emoji: '🌶️', created_at: new Date().toISOString() },
-        { id: 'com-002', farmer_id: 'farmer-001', name: 'Bawang Merah', category: 'Rempah', unit: 'kg', price: 38000, stock: 800, is_preorder: false, is_available: true, emoji: '🧅', created_at: new Date().toISOString() },
-        { id: 'com-003', farmer_id: 'farmer-001', name: 'Bayam Organik', category: 'Sayuran', unit: 'kg', price: 12000, stock: 0, is_preorder: true, harvest_date: '2025-06-01', is_available: true, emoji: '🥬', created_at: new Date().toISOString() }
+        { id: 'com-001', farmer_id: 'farmer-001', name: 'Red Chili', category: 'Vegetables', unit: 'kg', price: 45000, stock: 1200, is_preorder: false, is_available: true, emoji: '🌶️', created_at: new Date().toISOString() },
+        { id: 'com-002', farmer_id: 'farmer-001', name: 'Red Onion', category: 'Spices', unit: 'kg', price: 38000, stock: 800, is_preorder: false, is_available: true, emoji: '🧅', created_at: new Date().toISOString() },
+        { id: 'com-003', farmer_id: 'farmer-001', name: 'Organic Spinach', category: 'Vegetables', unit: 'kg', price: 12000, stock: 0, is_preorder: true, harvest_date: '2025-06-01', is_available: true, emoji: '🥬', created_at: new Date().toISOString() }
       ];
       localStorage.setItem('farmify_commodities', JSON.stringify(demoCommodities));
     }
@@ -52,9 +65,9 @@ const FarmifyDB = {
     // Seed activity log if none
     if (!localStorage.getItem('farmify_activity')) {
       const demoActivity = [
-        { id: 'act-001', user_id: 'farmer-001', user_name: 'Pak Sido Makmur', role: 'farmer', action: 'login', detail: 'Login berhasil', created_at: new Date(Date.now() - 5*60000).toISOString() },
-        { id: 'act-002', user_id: 'buyer-001', user_name: 'PT Jaya Foods', role: 'buyer', action: 'order_created', detail: 'Membuat order ORD-2025-001 — Cabai Merah 500 kg', created_at: new Date(Date.now() - 30*60000).toISOString() },
-        { id: 'act-003', user_id: 'farmer-001', user_name: 'Pak Sido Makmur', role: 'farmer', action: 'commodity_added', detail: 'Menambahkan komoditas: Bayam Organik', created_at: new Date(Date.now() - 2*3600000).toISOString() },
+        { id: 'act-001', user_id: 'farmer-001', user_name: 'Pak Sido Makmur', role: 'farmer', action: 'login', detail: 'Login successful', created_at: new Date(Date.now() - 5*60000).toISOString() },
+        { id: 'act-002', user_id: 'buyer-001', user_name: 'PT Jaya Foods', role: 'buyer', action: 'order_created', detail: 'Created order ORD-2025-001 — Red Chili 500 kg', created_at: new Date(Date.now() - 30*60000).toISOString() },
+        { id: 'act-003', user_id: 'farmer-001', user_name: 'Pak Sido Makmur', role: 'farmer', action: 'commodity_added', detail: 'Added commodity: Organic Spinach', created_at: new Date(Date.now() - 2*3600000).toISOString() },
       ];
       localStorage.setItem('farmify_activity', JSON.stringify(demoActivity));
     }
@@ -67,7 +80,7 @@ const FarmifyDB = {
 
   createUser(userData) {
     const users = this.getUsers();
-    if (this.findByEmail(userData.email)) return { success: false, message: 'Email sudah terdaftar.' };
+    if (this.findByEmail(userData.email)) return { success: false, message: 'Email is already registered.' };
     const newUser = {
       id: `${userData.role}-${Date.now()}`,
       ...userData,
@@ -80,14 +93,14 @@ const FarmifyDB = {
     };
     users.push(newUser);
     localStorage.setItem('farmify_users', JSON.stringify(users));
-    this.addActivity(newUser.id, newUser.full_name, newUser.role, 'register', `Akun baru terdaftar sebagai ${newUser.role}`);
+    this.addActivity(newUser.id, newUser.full_name, newUser.role, 'register', `New account registered as ${newUser.role}`);
     return { success: true, user: newUser };
   },
 
   authenticate(email, password) {
     const user = this.findByEmail(email);
-    if (!user) return { success: false, message: 'Email tidak ditemukan.' };
-    if (user.password !== btoa(password)) return { success: false, message: 'Password salah.' };
+    if (!user) return { success: false, message: 'Email not found.' };
+    if (user.password !== btoa(password)) return { success: false, message: 'Incorrect password.' };
 
     const demoEmails = ['sido@farmify.id', 'ptjaya@farmify.id', 'admin@farmify.id'];
     if (demoEmails.includes(user.email)) {
@@ -95,11 +108,11 @@ const FarmifyDB = {
       this.updateUser(user.id, { email_verified: true, status: 'active', setup_complete: true });
     }
 
-    if (!user.email_verified) return { success: false, message: 'Email belum diverifikasi.' };
-    if (user.status === 'pending') return { success: false, message: 'Akun sedang diproses admin.' };
-    if (user.status === 'suspended') return { success: false, message: 'Akun ditangguhkan. Hubungi admin.' };
+    if (!user.email_verified) return { success: false, message: 'Email not yet verified.' };
+    if (user.status === 'pending') return { success: false, message: 'Account is pending admin approval.' };
+    if (user.status === 'suspended') return { success: false, message: 'Account suspended. Please contact admin.' };
 
-    this.addActivity(user.id, user.full_name, user.role, 'login', 'Login berhasil');
+    this.addActivity(user.id, user.full_name, user.role, 'login', 'Login successful');
     return { success: true, user };
   },
 
@@ -116,7 +129,7 @@ const FarmifyDB = {
     const result = this.updateUser(userId, { status });
     if (result) {
       const user = this.findById(userId);
-      if (user) this.addActivity(userId, user.full_name, user.role, 'status_change', `Status akun diubah menjadi: ${status}`);
+      if (user) this.addActivity(userId, user.full_name, user.role, 'status_change', `Account status changed to: ${status}`);
     }
     return result;
   },
@@ -127,7 +140,7 @@ const FarmifyDB = {
     const result = this.updateUser(userId, { ...data, setup_complete: true, status: 'pending' });
     if (result) {
       const user = this.findById(userId);
-      if (user) this.addActivity(userId, user.full_name, user.role, 'setup_complete', 'Setup profil awal selesai, menunggu verifikasi admin');
+      if (user) this.addActivity(userId, user.full_name, user.role, 'setup_complete', 'Initial profile setup complete, awaiting admin verification');
     }
     return result;
   },
@@ -160,9 +173,9 @@ const FarmifyDB = {
   verifyOTP(email, code) {
     const otps = JSON.parse(localStorage.getItem('farmify_otps') || '[]');
     const otp = otps.find(o => o.email === email.toLowerCase() && !o.used);
-    if (!otp) return { success: false, message: 'Kode OTP tidak ditemukan.' };
-    if (new Date() > new Date(otp.expires)) return { success: false, message: 'Kode OTP sudah kedaluwarsa.' };
-    if (otp.code !== code) return { success: false, message: 'Kode OTP salah.' };
+    if (!otp) return { success: false, message: 'OTP code not found.' };
+    if (new Date() > new Date(otp.expires)) return { success: false, message: 'OTP code has expired.' };
+    if (otp.code !== code) return { success: false, message: 'Incorrect OTP code.' };
     otp.used = true;
     localStorage.setItem('farmify_otps', JSON.stringify(otps));
     return { success: true };
@@ -210,7 +223,7 @@ const FarmifyDB = {
     commodities.push(newCom);
     localStorage.setItem('farmify_commodities', JSON.stringify(commodities));
     const user = this.findById(data.farmer_id);
-    if (user) this.addActivity(data.farmer_id, user.full_name, 'farmer', 'commodity_added', `Menambahkan komoditas: ${data.name}`);
+    if (user) this.addActivity(data.farmer_id, user.full_name, 'farmer', 'commodity_added', `Added commodity: ${data.name}`);
     return { success: true, commodity: newCom };
   },
 
@@ -254,9 +267,9 @@ const FarmifyDB = {
 
     const buyer = this.findById(data.buyer_id);
     const farmer = this.findById(data.farmer_id);
-    if (buyer) this.addActivity(data.buyer_id, buyer.full_name, 'buyer', 'order_created', `Membuat order ${code} kepada ${farmer ? farmer.full_name : 'Petani'}`);
-    if (farmer) this.addNotification(data.farmer_id, `🎉 Order baru dari ${buyer ? buyer.full_name : 'Pembeli'} — ${code}`, 'info');
-    this.addNotification('admin-001', `Transaksi baru: ${code} senilai ${formatRp(data.total_price)}`, 'info');
+    if (buyer) this.addActivity(data.buyer_id, buyer.full_name, 'buyer', 'order_created', `Created order ${code} from ${farmer ? farmer.full_name : 'Farmer'}`);
+    if (farmer) this.addNotification(data.farmer_id, `🎉 New order from ${buyer ? buyer.full_name : 'Buyer'} — ${code}`, 'info');
+    this.addNotification('admin-001', `New transaction: ${code} worth ${formatIDR(data.total_price)}`, 'info');
 
     return { success: true, order: newOrder };
   },
@@ -321,6 +334,17 @@ const FarmifyDB = {
 
   getUserActivity(userId) {
     return this.getActivity({ user_id: userId });
+  },
+
+  // ---- EMAIL (OTP via EmailJS) ----
+  async sendOTPEmail(email, name, code) {
+    try {
+      await emailjs.send('service_farmify', 'template_otp', {
+        to_email: email, to_name: name, otp_code: code
+      });
+    } catch (e) {
+      console.warn('EmailJS not configured — OTP shown in console:', code);
+    }
   }
 };
 
@@ -351,25 +375,29 @@ function getDashboardUrl(role) {
 
 function logout() {
   const session = FarmifyDB.getSession();
-  if (session) FarmifyDB.addActivity(session.id, session.full_name, session.role, 'logout', 'Logout dari sistem');
+  if (session) FarmifyDB.addActivity(session.id, session.full_name, session.role, 'logout', 'Logged out');
   FarmifyDB.clearSession();
   window.location.href = 'login.html';
 }
 
+// formatIDR is the primary function; formatRp kept as alias for backward compatibility
+function formatIDR(num) {
+  return 'IDR ' + Number(num).toLocaleString('en-US');
+}
 function formatRp(num) {
-  return 'Rp ' + Number(num).toLocaleString('id-ID');
+  return formatIDR(num);
 }
 
 function timeAgo(dateStr) {
   const diff = Date.now() - new Date(dateStr).getTime();
   const mins = Math.floor(diff / 60000);
-  if (mins < 1) return 'Baru saja';
-  if (mins < 60) return `${mins} menit lalu`;
+  if (mins < 1) return 'Just now';
+  if (mins < 60) return `${mins} minute${mins > 1 ? 's' : ''} ago`;
   const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs} jam lalu`;
+  if (hrs < 24) return `${hrs} hour${hrs > 1 ? 's' : ''} ago`;
   const days = Math.floor(hrs / 24);
-  if (days < 7) return `${days} hari lalu`;
-  return new Date(dateStr).toLocaleDateString('id-ID', { day:'numeric', month:'short' });
+  if (days < 7) return `${days} day${days > 1 ? 's' : ''} ago`;
+  return new Date(dateStr).toLocaleDateString('en-US', { day:'numeric', month:'short' });
 }
 
 function closeModal(id) {
@@ -410,13 +438,12 @@ function showToast(msg, type = 'success') {
 }
 
 // ---- Shared Profile Components ----
-// Reusable profile section HTML builder
 function buildProfileSection(session, fullUser) {
   const initials = session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
-  const roleMap = { farmer: '🌾 Petani', buyer: '🏭 Pembeli', admin: '⚙️ Admin' };
+  const roleMap = { farmer: '🌾 Farmer', buyer: '🏭 Buyer', admin: '⚙️ Admin' };
   const badgeMap = {
-    farmer: `<span class="profile-badge">🌿 ${fullUser.farm_name || 'Farm Saya'}</span><span class="profile-badge">📍 ${fullUser.city || 'Lokasi'}</span>`,
-    buyer:  `<span class="profile-badge">🏭 ${fullUser.company_name || 'Perusahaan'}</span><span class="profile-badge">📍 ${fullUser.company_address || 'Lokasi'}</span>`,
+    farmer: `<span class="profile-badge">🌿 ${fullUser.farm_name || 'My Farm'}</span><span class="profile-badge">📍 ${fullUser.city || 'Location'}</span>`,
+    buyer:  `<span class="profile-badge">🏭 ${fullUser.company_name || 'Company'}</span><span class="profile-badge">📍 ${fullUser.company_address || 'Location'}</span>`,
     admin:  `<span class="profile-badge">⚙️ Super Admin</span>`
   };
   return { initials, roleLabel: roleMap[session.role] || session.role, badges: badgeMap[session.role] || '' };
