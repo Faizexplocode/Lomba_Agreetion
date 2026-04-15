@@ -448,23 +448,27 @@
   </div>
 </nav>
 
-<script src="js/db.js"></script>
+<script type="module" src="js/db.js"></script>
 <script>
-  const session = requireAuth(['buyer']);
+  let session = null;
   let currentView = 'dashboard';
   let currentFarmerModal = null;
   let activeCategory = '';
 
-  if (session) {
-    const name = session.full_name.split(' ').slice(0,2).join(' ');
-    document.getElementById('buyerGreeting').textContent = `Halo, ${name}! Cari bahan baku hari ini? 🏭`;
-    document.getElementById('sidebarName').textContent = session.full_name;
-    document.getElementById('sidebarAvatar').textContent =
-      session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
-  }
+  (async () => {
+    session = await requireAuth(['buyer']);
+    if (session) {
+      const name = session.full_name.split(' ').slice(0,2).join(' ');
+      document.getElementById('buyerGreeting').textContent = `Halo, ${name}! Cari bahan baku hari ini? 🏭`;
+      document.getElementById('sidebarName').textContent = session.full_name;
+      document.getElementById('sidebarAvatar').textContent =
+        session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
+      await loadDashboardData();
+    }
+  })();
 
   // ---- SPA NAVIGATION ----
-  function navigateTo(view) {
+  async function navigateTo(view) {
     document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + view).classList.add('active');
     currentView = view;
@@ -474,19 +478,19 @@
     document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
     const bnavEl = document.getElementById('bnav-' + view);
     if (bnavEl) bnavEl.classList.add('active');
-    if (view === 'profile') populateProfile();
-    if (view === 'dashboard') loadDashboardData();
+    if (view === 'profile') await populateProfile();
+    if (view === 'dashboard') await loadDashboardData();
     if (window.innerWidth <= 768) toggleSidebar();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // ---- LOAD DASHBOARD DATA (cross-connected with farmer) ----
-  function loadDashboardData() {
-    const farmers = FarmifyDB.getCommoditiesByFarmer();
-    const allCommodities = FarmifyDB.getAvailableCommodities();
+  async function loadDashboardData() {
+    const farmers = await FarmifyDB.getCommoditiesByFarmer();
+    const allCommodities = await FarmifyDB.getAvailableCommodities();
 
     document.getElementById('supplierCount').textContent = farmers.length;
-    document.getElementById('activeOrderCount').textContent = FarmifyDB.getOrders({ buyer_id: session.id }).length;
+    document.getElementById('activeOrderCount').textContent = (await FarmifyDB.getOrders({ buyer_id: session.id })).length;
 
     // Suppliers grid
     const grid = document.getElementById('supplierGrid');
@@ -541,15 +545,14 @@
     `).join('');
   }
 
-  function performSearch() {
+  async function performSearch() {
     const q = document.getElementById('searchInput').value.toLowerCase();
-    let commodities = FarmifyDB.getAvailableCommodities();
+    let commodities = await FarmifyDB.getAvailableCommodities();
     if (q) commodities = commodities.filter(c => c.name.toLowerCase().includes(q) || c.farm_name.toLowerCase().includes(q) || (c.farmer_city || '').toLowerCase().includes(q));
     if (activeCategory) commodities = commodities.filter(c => (c.category || '').includes(activeCategory));
     renderCommodityTable(commodities);
-    // Filter suppliers
     const farmerIds = [...new Set(commodities.map(c => c.farmer_id))];
-    const allFarmers = FarmifyDB.getCommoditiesByFarmer();
+    const allFarmers = await FarmifyDB.getCommoditiesByFarmer();
     const filtered = allFarmers.filter(f => !q || farmerIds.includes(f.id) || f.full_name.toLowerCase().includes(q));
     document.getElementById('supplierGrid').innerHTML = filtered.length
       ? filtered.map(f => `<div class="supplier-card" onclick="openSuppliersModal('${f.id}')"><div class="supplier-header"><div class="supplier-avatar">${f.items[0]?.emoji||'🌾'}</div><div><div class="supplier-name">${f.farm_name||f.full_name}</div><div class="supplier-location">📍 ${f.city||'East Java'}</div></div></div><div class="supplier-commodities">${f.items.slice(0,3).map(c=>`<span class="commodity-tag">${c.emoji||''} ${c.name}</span>`).join('')}</div><div class="supplier-footer"><div class="supplier-rating">⭐ 4.8</div><button class="btn btn-primary" style="padding:7px 16px;font-size:12px;">Pesan</button></div></div>`).join('')
@@ -563,10 +566,10 @@
     performSearch();
   }
 
-  function openSuppliersModal(farmerId) {
-    const farmer = FarmifyDB.findById(farmerId);
+  async function openSuppliersModal(farmerId) {
+    const farmer = await FarmifyDB.findById(farmerId);
     if (!farmer) return;
-    const items = FarmifyDB.getCommodities(farmerId).filter(c => c.is_available);
+    const items = (await FarmifyDB.getCommodities(farmerId)).filter(c => c.is_available);
     currentFarmerModal = farmerId;
     document.getElementById('modalSuppliersTitle').textContent = farmer.farm_name || farmer.full_name;
     document.getElementById('modalSuppliersBody').innerHTML = `
@@ -605,11 +608,11 @@
     document.getElementById('supplierModal').style.display = 'flex';
   }
 
-  function quickOrder(commodityId) {
-    const c = FarmifyDB.getCommodities().find(x => x.id === commodityId);
+  async function quickOrder(commodityId) {
+    const c = (await FarmifyDB.getCommodities()).find(x => x.id === commodityId);
     if (!c) return;
     if (confirm(`Buat order untuk ${c.name} dari farm ini?\n\nPrice: ${formatIDR(c.price)}/${c.unit}`)) {
-      const result = FarmifyDB.createOrder({
+      const result = await FarmifyDB.createOrder({
         buyer_id: session.id, farmer_id: c.farmer_id,
         commodity_id: commodityId, commodity_name: c.name,
         quantity: 100, unit: c.unit,
@@ -619,12 +622,12 @@
     }
   }
 
-  function createOrderFromModal() {
+  async function createOrderFromModal() {
     if (!currentFarmerModal) return;
-    const items = FarmifyDB.getCommodities(currentFarmerModal).filter(c => c.is_available);
+    const items = (await FarmifyDB.getCommodities(currentFarmerModal)).filter(c => c.is_available);
     if (!items.length) { showToast('Tidak ada komoditas tersedia', 'error'); return; }
     const c = items[0];
-    const result = FarmifyDB.createOrder({
+    const result = await FarmifyDB.createOrder({
       buyer_id: session.id, farmer_id: currentFarmerModal,
       commodity_id: c.id, commodity_name: c.name,
       quantity: 100, unit: c.unit, total_price: c.price * 100
@@ -632,13 +635,13 @@
     if (result.success) {
       closeModal('supplierModal');
       showToast(`✅ Order ${result.order.order_code} berhasil dibuat!`);
-      loadDashboardData();
+      await loadDashboardData();
     }
   }
 
   // ---- PROFILE ----
-  function populateProfile() {
-    const fullUser = FarmifyDB.findById(session.id) || session;
+  async function populateProfile() {
+    const fullUser = (await FarmifyDB.findById(session.id)) || session;
     const initials = session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
     document.getElementById('profileAvatarLg').textContent = initials;
     document.getElementById('profileHeroName').textContent = session.full_name;
@@ -660,8 +663,8 @@
     disableEditMode();
   }
 
-  function enableEditMode() {
-    const fullUser = FarmifyDB.findById(session.id) || session;
+  async function enableEditMode() {
+    const fullUser = (await FarmifyDB.findById(session.id)) || session;
     document.getElementById('eFullName').value = session.full_name;
     document.getElementById('eEmail').value = session.email;
     document.getElementById('ePhone').value = fullUser.phone || '';
@@ -689,10 +692,10 @@
     document.getElementById('profileActions').innerHTML = `<button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profile</button>`;
   }
 
-  function saveProfileInline() {
+  async function saveProfileInline() {
     const newName = document.getElementById('eFullName').value.trim();
     if (!newName) { showToast('Nama tidak boleh kosong!', 'error'); return; }
-    FarmifyDB.updateUser(session.id, {
+    await FarmifyDB.updateUser(session.id, {
       full_name: newName,
       phone: document.getElementById('ePhone').value.trim(),
       company_name: document.getElementById('eCompanyName').value.trim(),
@@ -706,15 +709,13 @@
     sessionStorage.setItem('farmify_session', JSON.stringify(session));
     document.getElementById('sidebarName').textContent = newName;
     document.getElementById('sidebarAvatar').textContent = newName.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
-    populateProfile();
+    await populateProfile();
     showToast('✅ Profile saved successfully!');
   }
 
   function navAlert(name) { alert(`Fitur "${name}" sedang dalam pengembangan.`); }
   function openModal(id) { document.getElementById(id).style.display = 'flex'; }
 
-  // Init
-  loadDashboardData();
 </script>
 </body>
 </html>

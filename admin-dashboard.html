@@ -424,20 +424,24 @@
   </div>
 </nav>
 
-<script src="js/db.js"></script>
+<script type="module" src="js/db.js"></script>
 <script>
-  const session = requireAuth(['admin']);
+  let session = null;
   let allUsers = [];
   let currentView = 'dashboard';
 
-  if (session) {
-    document.getElementById('adminGreeting').textContent = `Admin Panel — ${session.full_name}`;
-    document.getElementById('sidebarName').textContent = session.full_name;
-    document.getElementById('sidebarAvatar').textContent = session.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
-  }
+  (async () => {
+    session = await requireAuth(['admin']);
+    if (session) {
+      document.getElementById('adminGreeting').textContent = `Admin Panel — ${session.full_name}`;
+      document.getElementById('sidebarName').textContent = session.full_name;
+      document.getElementById('sidebarAvatar').textContent = session.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
+      await initDashboard();
+    }
+  })();
 
   // ---- SPA NAVIGATION ----
-  function navigateTo(view) {
+  async function navigateTo(view) {
     document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + view).classList.add('active');
     currentView = view;
@@ -448,26 +452,26 @@
     const bnavEl = document.getElementById('bnav-' + view);
     if (bnavEl) bnavEl.classList.add('active');
 
-    if (view === 'dashboard') initDashboard();
-    if (view === 'monitor') loadMonitor('all');
-    if (view === 'activity') loadActivity('all');
-    if (view === 'profile') populateProfile();
+    if (view === 'dashboard') await initDashboard();
+    if (view === 'monitor') await loadMonitor('all');
+    if (view === 'activity') await loadActivity('all');
+    if (view === 'profile') await populateProfile();
     if (window.innerWidth <= 768) toggleSidebar();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // ---- TAB ----
-  function switchTab(tab) {
+  async function switchTab(tab) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     document.getElementById(`tab-${tab}`).classList.add('active');
     document.getElementById(`content-${tab}`).classList.add('active');
-    if (tab === 'transactions') loadTransactions();
+    if (tab === 'transactions') await loadTransactions();
   }
 
   // ---- DASHBOARD INIT ----
-  function initDashboard() {
-    allUsers = FarmifyDB.getUsers();
+  async function initDashboard() {
+    allUsers = await FarmifyDB.getUsers();
     const pending = allUsers.filter(u => u.status === 'pending');
     const farmers = allUsers.filter(u => u.role === 'farmer' && u.status === 'active');
     document.getElementById('totalUsersVal').textContent = allUsers.length;
@@ -475,9 +479,8 @@
     document.getElementById('pendingVal').textContent = pending.length;
     document.getElementById('pendingBadge').textContent = pending.length;
 
-    // Platform stats
-    const commodities = FarmifyDB.getCommodities();
-    const orders = FarmifyDB.getOrders();
+    const commodities = await FarmifyDB.getCommodities();
+    const orders = await FarmifyDB.getOrders();
     document.getElementById('statFarmer').textContent = farmers.length;
     document.getElementById('statBuyer').textContent = allUsers.filter(u => u.role === 'buyer' && u.status === 'active').length;
     document.getElementById('statCommodity').textContent = commodities.length;
@@ -547,10 +550,10 @@
   }
 
   // ---- TRANSACTIONS ----
-  function loadTransactions() {
-    const orders = FarmifyDB.getOrders();
+  async function loadTransactions() {
+    const orders = await FarmifyDB.getOrders();
     document.getElementById('txCountBadge').textContent = `${orders.length} transaksi`;
-    const users = FarmifyDB.getUsers();
+    const users = await FarmifyDB.getUsers();
     const statusBadge = { pending:'<span class="badge badge-warning">Pending</span>', confirmed:'<span class="badge badge-success">Konfirmasi</span>', completed:'<span class="badge badge-success">Done</span>', cancelled:'<span class="badge badge-danger">Batal</span>' };
     document.getElementById('transactionTableBody').innerHTML = !orders.length
       ? '<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--mid-gray);">No transactions yet</td></tr>'
@@ -570,47 +573,47 @@
   }
 
   // ---- USER ACTIONS ----
-  function approveUser(id) {
+  async function approveUser(id) {
     if (!confirm('Setujui dan aktifkan akun ini?')) return;
-    FarmifyDB.updateUserStatus(id, 'active');
-    FarmifyDB.addNotification(id, '✅ Your account has been verified! Welcome to Farmify.', 'info');
-    allUsers = FarmifyDB.getUsers();
-    loadUsersTable(allUsers); loadPendingUsers(); initDashboard();
+    await FarmifyDB.updateUserStatus(id, 'active');
+    await FarmifyDB.addNotification(id, '✅ Your account has been verified! Welcome to Farmify.', 'info');
+    allUsers = await FarmifyDB.getUsers();
+    loadUsersTable(allUsers); loadPendingUsers(); await initDashboard();
     showToast('✅ User berhasil diaktifkan!');
   }
 
-  function rejectUser(id) {
+  async function rejectUser(id) {
     if (!confirm('Tolak pendaftaran pengguna ini?')) return;
-    FarmifyDB.updateUserStatus(id, 'suspended');
-    allUsers = FarmifyDB.getUsers();
-    loadUsersTable(allUsers); loadPendingUsers(); initDashboard();
+    await FarmifyDB.updateUserStatus(id, 'suspended');
+    allUsers = await FarmifyDB.getUsers();
+    loadUsersTable(allUsers); loadPendingUsers(); await initDashboard();
     showToast('User ditolak.', 'error');
   }
 
-  function activateUser(id) {
-    FarmifyDB.updateUserStatus(id, 'active');
-    FarmifyDB.addNotification(id, '✅ Account Anda telah diaktifkan kembali.', 'info');
-    allUsers = FarmifyDB.getUsers();
-    loadUsersTable(allUsers); loadPendingUsers(); initDashboard();
+  async function activateUser(id) {
+    await FarmifyDB.updateUserStatus(id, 'active');
+    await FarmifyDB.addNotification(id, '✅ Account Anda telah diaktifkan kembali.', 'info');
+    allUsers = await FarmifyDB.getUsers();
+    loadUsersTable(allUsers); loadPendingUsers(); await initDashboard();
     showToast('✅ Account diaktifkan!');
   }
 
-  function suspendUser(id) {
+  async function suspendUser(id) {
     if (id === session.id) { showToast('Tidak bisa suspend akun sendiri!', 'error'); return; }
     if (!confirm('Suspend akun pengguna ini?')) return;
-    FarmifyDB.updateUserStatus(id, 'suspended');
-    allUsers = FarmifyDB.getUsers();
-    loadUsersTable(allUsers); initDashboard();
+    await FarmifyDB.updateUserStatus(id, 'suspended');
+    allUsers = await FarmifyDB.getUsers();
+    loadUsersTable(allUsers); await initDashboard();
     showToast('Account disuspend.', 'info');
   }
 
-  function viewUser(id) {
+  async function viewUser(id) {
     const user = allUsers.find(u => u.id === id);
     if (!user) return;
     const roleLabel = { farmer:'🌾 Farmer', buyer:'🏭 Buyer', admin:'⚙️ Admin' };
-    const activities = FarmifyDB.getUserActivity(id).slice(0, 5);
-    const commodities = user.role === 'farmer' ? FarmifyDB.getCommodities(id) : [];
-    const orders = FarmifyDB.getOrders(user.role === 'farmer' ? { farmer_id: id } : { buyer_id: id });
+    const activities = (await FarmifyDB.getUserActivity(id)).slice(0, 5);
+    const commodities = user.role === 'farmer' ? await FarmifyDB.getCommodities(id) : [];
+    const orders = await FarmifyDB.getOrders(user.role === 'farmer' ? { farmer_id: id } : { buyer_id: id });
 
     document.getElementById('userDetailsContent').innerHTML = `
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
@@ -647,19 +650,21 @@
   }
 
   // ---- MONITOR VIEW ----
-  function loadMonitor(roleFilter) {
-    const users = roleFilter === 'all' ? FarmifyDB.getUsers() : FarmifyDB.getUsers().filter(u => u.role === roleFilter);
+  async function loadMonitor(roleFilter) {
+    const allMonitorUsers = await FarmifyDB.getUsers();
+    const users = roleFilter === 'all' ? allMonitorUsers : allMonitorUsers.filter(u => u.role === roleFilter);
     const grid = document.getElementById('monitorGrid');
     const roleColor = { farmer:'linear-gradient(135deg,var(--moss),var(--leaf))', buyer:'linear-gradient(135deg,var(--earth),var(--harvest))', admin:'linear-gradient(135deg,var(--forest),var(--moss))' };
     const roleIcon = { farmer:'🌾', buyer:'🏭', admin:'⚙️' };
     const statusColor = { active:'var(--moss)', pending:'var(--earth)', suspended:'var(--terracotta)' };
 
-    grid.innerHTML = users.map(u => {
-      const activities = FarmifyDB.getUserActivity(u.id);
+    let cards = '';
+    for (const u of users) {
+      const activities = await FarmifyDB.getUserActivity(u.id);
       const lastAct = activities[0];
-      const commodities = u.role === 'farmer' ? FarmifyDB.getCommodities(u.id) : [];
-      const orders = FarmifyDB.getOrders(u.role === 'farmer' ? { farmer_id: u.id } : u.role === 'buyer' ? { buyer_id: u.id } : null) || [];
-      return `
+      const commodities = u.role === 'farmer' ? await FarmifyDB.getCommodities(u.id) : [];
+      const orders = (await FarmifyDB.getOrders(u.role === 'farmer' ? { farmer_id: u.id } : u.role === 'buyer' ? { buyer_id: u.id } : null)) || [];
+      cards += `
         <div style="background:white;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);cursor:pointer;transition:transform 0.2s;" onclick="viewUser('${u.id}')" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
           <div style="background:${roleColor[u.role]||'var(--moss)'};padding:16px 18px;display:flex;align-items:center;gap:12px;">
             <div style="width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:white;">${u.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}</div>
@@ -682,12 +687,13 @@
           </div>
         </div>
       `;
-    }).join('') || '<div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;">Tidak ada akun ditemukan</div>';
+    }
+    grid.innerHTML = cards || '<div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;">Tidak ada akun ditemukan</div>';
   }
 
   // ---- ACTIVITY LOG ----
-  function loadActivity(roleFilter) {
-    let activities = FarmifyDB.getActivity(roleFilter && roleFilter !== 'all' ? { role: roleFilter } : null);
+  async function loadActivity(roleFilter) {
+    let activities = await FarmifyDB.getActivity(roleFilter && roleFilter !== 'all' ? { role: roleFilter } : null);
     document.getElementById('activityCountBadge').textContent = `${activities.length} entri`;
     const actionIcon = { login:'🔐', logout:'🚪', register:'🆕', setup_complete:'✅', status_change:'🔄', commodity_added:'🌿', order_created:'📦', profile_updated:'✏️' };
     const roleColor = { farmer:'var(--moss)', buyer:'var(--earth)', admin:'var(--forest)' };
@@ -709,8 +715,8 @@
   }
 
   // ---- PROFILE ----
-  function populateProfile() {
-    const fullUser = FarmifyDB.findById(session.id) || session;
+  async function populateProfile() {
+    const fullUser = (await FarmifyDB.findById(session.id)) || session;
     const initials = session.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
     document.getElementById('profileAvatarLg').textContent = initials;
     document.getElementById('profileHeroName').textContent = session.full_name;
@@ -719,17 +725,16 @@
     document.getElementById('vEmail').textContent = session.email;
     document.getElementById('vPhone').textContent = fullUser.phone || '—';
     if (fullUser.created_at) document.getElementById('vMemberSince').textContent = new Date(fullUser.created_at).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
-    // Stats
-    const users = FarmifyDB.getUsers();
+    const users = await FarmifyDB.getUsers();
     document.getElementById('adminStatUsers').textContent = users.length + ' pengguna';
     document.getElementById('adminStatFarmers').textContent = users.filter(u=>u.role==='farmer').length + ' farmer';
     document.getElementById('adminStatBuyers').textContent = users.filter(u=>u.role==='buyer').length + ' buyer';
-    document.getElementById('adminStatOrders').textContent = FarmifyDB.getOrders().length + ' order';
+    document.getElementById('adminStatOrders').textContent = (await FarmifyDB.getOrders()).length + ' order';
     disableEditMode();
   }
 
-  function enableEditMode() {
-    const fullUser = FarmifyDB.findById(session.id) || session;
+  async function enableEditMode() {
+    const fullUser = (await FarmifyDB.findById(session.id)) || session;
     document.getElementById('eFullName').value = session.full_name;
     document.getElementById('eEmail').value = session.email;
     document.getElementById('ePhone').value = fullUser.phone || '';
@@ -746,23 +751,23 @@
     document.getElementById('profileActions').innerHTML = `<button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profile</button>`;
   }
 
-  function saveProfileInline() {
+  async function saveProfileInline() {
     const newName = document.getElementById('eFullName').value.trim();
     if (!newName) { showToast('Nama tidak boleh kosong!','error'); return; }
-    FarmifyDB.updateUser(session.id, { full_name: newName, phone: document.getElementById('ePhone').value.trim() });
-    FarmifyDB.addActivity(session.id, newName, 'admin', 'profile_updated', 'Memperbarui profil akun');
+    await FarmifyDB.updateUser(session.id, { full_name: newName, phone: document.getElementById('ePhone').value.trim() });
+    await FarmifyDB.addActivity(session.id, newName, 'admin', 'profile_updated', 'Memperbarui profil akun');
     session.full_name = newName;
     sessionStorage.setItem('farmify_session', JSON.stringify(session));
     document.getElementById('sidebarName').textContent = newName;
     document.getElementById('sidebarAvatar').textContent = newName.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
-    populateProfile();
+    await populateProfile();
     showToast('✅ Profile saved successfully!');
   }
 
   // ---- EXPORT ----
-  function exportReport() {
-    const orders = FarmifyDB.getOrders();
-    const users = FarmifyDB.getUsers();
+  async function exportReport() {
+    const orders = await FarmifyDB.getOrders();
+    const users = await FarmifyDB.getUsers();
     if (!orders.length) { showToast('No data yet transaksi.', 'info'); return; }
     let csv = 'Order Code,Farmer,Buyer,Commodity,Total,Fee,Status\n';
     orders.forEach(o => {

@@ -823,60 +823,55 @@
   </div>
 </nav>
 
-<script src="js/db.js"></script>
+<script type="module" src="js/db.js"></script>
 <script>
   // ---- AUTH ----
-  const session = requireAuth(['farmer']);
+  let session = null;
   let currentView = 'dashboard';
   let isEditMode = false;
 
-  if (session) {
-    const name = session.full_name.split(' ')[0];
-    const hour = new Date().getHours();
-    const greet = hour < 12 ? 'Pagi' : hour < 17 ? 'Siang' : 'Malam';
-    document.getElementById('greetingTitle').textContent = `Good ${greet}, ${name}! 🌱`;
-    document.getElementById('sidebarName').textContent = session.full_name;
-    document.getElementById('sidebarAvatar').textContent =
-      session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
-  }
+  (async () => {
+    session = await requireAuth(['farmer']);
+    if (session) {
+      const name = session.full_name.split(' ')[0];
+      const hour = new Date().getHours();
+      const greet = hour < 12 ? 'Pagi' : hour < 17 ? 'Siang' : 'Malam';
+      document.getElementById('greetingTitle').textContent = `Good ${greet}, ${name}! 🌱`;
+      document.getElementById('sidebarName').textContent = session.full_name;
+      document.getElementById('sidebarAvatar').textContent =
+        session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
+    }
+  })();
 
   // ---- SPA NAVIGATION ----
-  function navigateTo(view) {
-    // Hide all views
+  async function navigateTo(view) {
     document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
-    // Show target
     document.getElementById('view-' + view).classList.add('active');
     currentView = view;
 
-    // Sidebar active state
     document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
     const navEl = document.getElementById('nav-' + view);
     if (navEl) navEl.classList.add('active');
 
-    // Bottom nav active state
     document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
     const bnavEl = document.getElementById('bnav-' + view);
     if (bnavEl) bnavEl.classList.add('active');
 
-    // If navigating to profile, populate data
-    if (view === 'profile') populateProfile();
+    if (view === 'profile') await populateProfile();
 
-    // Close mobile sidebar
     if (window.innerWidth <= 768) toggleSidebar();
 
-    // Animate progress bar on dashboard
     if (view === 'dashboard') {
       setTimeout(() => { document.getElementById('progressFill').style.width = '65%'; }, 400);
     }
 
-    // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // ---- PROFILE POPULATE ----
-  function populateProfile() {
+  async function populateProfile() {
     if (!session) return;
-    const fullUser = FarmifyDB.getUsers().find(u => u.id === session.id) || session;
+    const fullUser = (await FarmifyDB.getUsers()).find(u => u.id === session.id) || session;
 
     const initials = session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
     document.getElementById('profileAvatarLg').textContent = initials;
@@ -915,9 +910,9 @@
   }
 
   // ---- EDIT MODE ----
-  function enableEditMode() {
+  async function enableEditMode() {
     if (!session) return;
-    const fullUser = FarmifyDB.getUsers().find(u => u.id === session.id) || session;
+    const fullUser = (await FarmifyDB.getUsers()).find(u => u.id === session.id) || session;
 
     // Fill edit inputs
     document.getElementById('eFullName').value = session.full_name;
@@ -960,7 +955,7 @@
     isEditMode = false;
   }
 
-  function saveProfileInline() {
+  async function saveProfileInline() {
     const newName  = document.getElementById('eFullName').value.trim();
     const newPhone = document.getElementById('ePhone').value.trim();
     const newFarm  = document.getElementById('eFarmName').value.trim();
@@ -972,26 +967,22 @@
 
     if (!newName) { alert('Nama lengkap tidak boleh kosong!'); return; }
 
-    FarmifyDB.updateUser(session.id, {
+    await FarmifyDB.updateUser(session.id, {
       full_name: newName, phone: newPhone,
       farm_name: newFarm, city: newCity,
       farm_size: newSize, exp_years: newExp,
       bank_name: newBank, bank_account: newAcct
     });
 
-    // Update session name
     session.full_name = newName;
     sessionStorage.setItem('farmify_session', JSON.stringify(session));
 
-    // Re-populate view
-    populateProfile();
+    await populateProfile();
 
-    // Also update sidebar
     document.getElementById('sidebarName').textContent = newName;
     document.getElementById('sidebarAvatar').textContent =
       newName.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
 
-    // Toast-style feedback
     showToast('✅ Profile saved successfully!');
   }
 
@@ -1015,7 +1006,7 @@
   function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
   // ---- ADD COMMODITY ----
-  function handleAddCommodity() {
+  async function handleAddCommodity() {
     const modal = document.getElementById('addCommodityModal');
     const inputs = modal.querySelectorAll('input, select');
     const newCommodity = {
@@ -1030,7 +1021,7 @@
     if (!newCommodity.name || !newCommodity.price) {
       alert('Mohon isi nama dan harga komoditas!'); return;
     }
-    FarmifyDB.addCommodity(newCommodity);
+    await FarmifyDB.addCommodity(newCommodity);
     showToast('✅ Commodity berhasil ditambahkan!');
     closeModal('addCommodityModal');
   }

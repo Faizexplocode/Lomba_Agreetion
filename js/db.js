@@ -1,89 +1,146 @@
 /**
  * =====================================================
- * FARMIFY — Database Configuration & Global UI Logic
- * v2.1 — Cross-dashboard connectivity + Activity Log
- * Client-Side: LocalStorage simulation
+ * FARMIFY — Firebase Firestore Database Layer
+ * v3.0 — Replaces localStorage with Firebase Firestore
+ * Realtime multi-user support for Admin, Farmer, Buyer
+ * =====================================================
+ *
+ * SETUP INSTRUCTIONS:
+ * 1. Buka https://console.firebase.google.com
+ * 2. Buat project baru → "Farmify"
+ * 3. Klik "Add App" → pilih Web (</>)
+ * 4. Copy firebaseConfig dan paste di bawah (ganti bagian FIREBASE CONFIG)
+ * 5. Di Firebase Console → Build → Firestore Database → Create database
+ *    Pilih "Start in test mode" untuk development
+ * 6. Di Firebase Console → Build → Authentication → Get started
+ *    Enable "Email/Password" provider
+ * 7. Selesai! Semua data sekarang tersimpan di cloud Firebase
+ *
+ * COLLECTIONS di Firestore:
+ *  - users        → data semua user (farmer, buyer, admin)
+ *  - commodities  → data komoditas dari farmer
+ *  - orders       → data transaksi/pesanan
+ *  - activity     → log aktivitas untuk admin monitoring
+ *  - notifications→ notifikasi per user
+ *  - otps         → kode OTP verifikasi email
  * =====================================================
  */
 
-const FARMIFY_DB_VERSION = '2.1'; // Bump this to force a localStorage reset on all clients
+// =====================================================
+// 🔥 FIREBASE CONFIG — GANTI DENGAN MILIK KAMU
+// =====================================================
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
 
+// =====================================================
+// FIREBASE INIT
+// =====================================================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore, collection, doc, getDoc, getDocs,
+  setDoc, addDoc, updateDoc, deleteDoc, query,
+  where, orderBy, limit, onSnapshot, serverTimestamp, writeBatch
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  getAuth, createUserWithEmailAndPassword,
+  signInWithEmailAndPassword, signOut, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const _app  = initializeApp(firebaseConfig);
+const _db   = getFirestore(_app);
+const _auth = getAuth(_app);
+
+// =====================================================
+// FARMIFY DB — PUBLIC API (sama persis seperti versi lama)
+// Semua fungsi async sekarang, gunakan await saat memanggil
+// =====================================================
 const FarmifyDB = {
-  // ---- CORE DATABASE INIT ----
-  init() {
-    // Version check — if stored version differs, wipe and reseed fresh demo data
-    if (localStorage.getItem('farmify_db_version') !== FARMIFY_DB_VERSION) {
-      localStorage.removeItem('farmify_users');
-      localStorage.removeItem('farmify_commodities');
-      localStorage.removeItem('farmify_activity');
-      localStorage.removeItem('farmify_orders');
-      localStorage.removeItem('farmify_otps');
-      localStorage.removeItem('farmify_notifs');
-      localStorage.setItem('farmify_db_version', FARMIFY_DB_VERSION);
+
+  // ---- SEED DEMO DATA (jalankan sekali saat init) ----
+  async seedDemoDataIfEmpty() {
+    const snap = await getDocs(query(collection(_db, 'users'), limit(1)));
+    if (!snap.empty) return; // Sudah ada data, skip
+
+    const batch = writeBatch(_db);
+
+    const demoUsers = [
+      {
+        id: 'admin-001', full_name: 'Admin Farmify', email: 'admin@farmify.id',
+        phone: '08123456789', password: btoa('Admin@Farmify2024'), role: 'admin',
+        status: 'active', email_verified: true, setup_complete: true,
+        created_at: new Date().toISOString()
+      },
+      {
+        id: 'farmer-001', full_name: 'Pak Sido Makmur', email: 'sido@farmify.id',
+        phone: '08111234567', password: btoa('Petani@123'), role: 'farmer',
+        status: 'active', email_verified: true, setup_complete: true,
+        farm_name: 'Sido Makmur Farm', city: 'Malang', province: 'East Java',
+        farm_size: '2.5', exp_years: '15', commodities: ['vegetable', 'spice'],
+        bank_name: 'BRI', bank_account: '1234567890',
+        created_at: new Date().toISOString()
+      },
+      {
+        id: 'buyer-001', full_name: 'PT Jaya Foods', email: 'ptjaya@farmify.id',
+        phone: '0215559876', password: btoa('Buyer@123'), role: 'buyer',
+        status: 'active', email_verified: true, setup_complete: true,
+        company_name: 'PT Jaya Foods Indonesia', business_type: 'manufacturer',
+        company_address: 'Surabaya, East Java', npwp: '01.234.567.8-000.000',
+        bank_name: 'BCA', bank_account: '0987654321',
+        created_at: new Date().toISOString()
+      }
+    ];
+
+    for (const u of demoUsers) {
+      batch.set(doc(_db, 'users', u.id), u);
     }
 
-    if (!localStorage.getItem('farmify_users')) {
-      const demoUsers = [
-        {
-          id: 'admin-001', full_name: 'Admin Farmify', email: 'admin@farmify.id',
-          phone: '08123456789', password: btoa('Admin@Farmify2024'), role: 'admin',
-          status: 'active', email_verified: true, setup_complete: true,
-          created_at: new Date().toISOString()
-        },
-        {
-          id: 'farmer-001', full_name: 'Pak Sido Makmur', email: 'sido@farmify.id',
-          phone: '08111234567', password: btoa('Petani@123'), role: 'farmer',
-          status: 'active', email_verified: true, setup_complete: true,
-          farm_name: 'Sido Makmur Farm', city: 'Malang', province: 'East Java',
-          farm_size: '2.5', exp_years: '15', commodities: ['vegetable', 'spice'],
-          bank_name: 'BRI', bank_account: '1234567890',
-          created_at: new Date().toISOString()
-        },
-        {
-          id: 'buyer-001', full_name: 'PT Jaya Foods', email: 'ptjaya@farmify.id',
-          phone: '0215559876', password: btoa('Buyer@123'), role: 'buyer',
-          status: 'active', email_verified: true, setup_complete: true,
-          company_name: 'PT Jaya Foods Indonesia', business_type: 'manufacturer',
-          company_address: 'Surabaya, East Java', npwp: '01.234.567.8-000.000',
-          bank_name: 'BCA', bank_account: '0987654321',
-          created_at: new Date().toISOString()
-        }
-      ];
-      localStorage.setItem('farmify_users', JSON.stringify(demoUsers));
+    const demoCommodities = [
+      { id: 'com-001', farmer_id: 'farmer-001', name: 'Red Chili', category: 'Vegetables', unit: 'kg', price: 45000, stock: 1200, is_preorder: false, is_available: true, emoji: '🌶️', created_at: new Date().toISOString() },
+      { id: 'com-002', farmer_id: 'farmer-001', name: 'Red Onion', category: 'Spices', unit: 'kg', price: 38000, stock: 800, is_preorder: false, is_available: true, emoji: '🧅', created_at: new Date().toISOString() },
+      { id: 'com-003', farmer_id: 'farmer-001', name: 'Organic Spinach', category: 'Vegetables', unit: 'kg', price: 12000, stock: 0, is_preorder: true, harvest_date: '2025-06-01', is_available: true, emoji: '🥬', created_at: new Date().toISOString() }
+    ];
+
+    for (const c of demoCommodities) {
+      batch.set(doc(_db, 'commodities', c.id), c);
     }
 
-    // Seed demo commodities if none
-    if (!localStorage.getItem('farmify_commodities')) {
-      const demoCommodities = [
-        { id: 'com-001', farmer_id: 'farmer-001', name: 'Red Chili', category: 'Vegetables', unit: 'kg', price: 45000, stock: 1200, is_preorder: false, is_available: true, emoji: '🌶️', created_at: new Date().toISOString() },
-        { id: 'com-002', farmer_id: 'farmer-001', name: 'Red Onion', category: 'Spices', unit: 'kg', price: 38000, stock: 800, is_preorder: false, is_available: true, emoji: '🧅', created_at: new Date().toISOString() },
-        { id: 'com-003', farmer_id: 'farmer-001', name: 'Organic Spinach', category: 'Vegetables', unit: 'kg', price: 12000, stock: 0, is_preorder: true, harvest_date: '2025-06-01', is_available: true, emoji: '🥬', created_at: new Date().toISOString() }
-      ];
-      localStorage.setItem('farmify_commodities', JSON.stringify(demoCommodities));
-    }
-
-    // Seed activity log if none
-    if (!localStorage.getItem('farmify_activity')) {
-      const demoActivity = [
-        { id: 'act-001', user_id: 'farmer-001', user_name: 'Pak Sido Makmur', role: 'farmer', action: 'login', detail: 'Login successful', created_at: new Date(Date.now() - 5*60000).toISOString() },
-        { id: 'act-002', user_id: 'buyer-001', user_name: 'PT Jaya Foods', role: 'buyer', action: 'order_created', detail: 'Created order ORD-2025-001 — Red Chili 500 kg', created_at: new Date(Date.now() - 30*60000).toISOString() },
-        { id: 'act-003', user_id: 'farmer-001', user_name: 'Pak Sido Makmur', role: 'farmer', action: 'commodity_added', detail: 'Added commodity: Organic Spinach', created_at: new Date(Date.now() - 2*3600000).toISOString() },
-      ];
-      localStorage.setItem('farmify_activity', JSON.stringify(demoActivity));
-    }
+    await batch.commit();
+    console.log('[Farmify] ✅ Demo data seeded to Firestore.');
   },
 
   // ---- USER CRUD ----
-  getUsers()          { return JSON.parse(localStorage.getItem('farmify_users') || '[]'); },
-  findByEmail(email)  { return this.getUsers().find(u => u.email === email.toLowerCase()); },
-  findById(id)        { return this.getUsers().find(u => u.id === id); },
+  async getUsers() {
+    const snap = await getDocs(collection(_db, 'users'));
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  },
 
-  createUser(userData) {
-    const users = this.getUsers();
-    if (this.findByEmail(userData.email)) return { success: false, message: 'Email is already registered.' };
+  async findByEmail(email) {
+    const q = query(collection(_db, 'users'), where('email', '==', email.toLowerCase()));
+    const snap = await getDocs(q);
+    if (snap.empty) return null;
+    return { id: snap.docs[0].id, ...snap.docs[0].data() };
+  },
+
+  async findById(id) {
+    const snap = await getDoc(doc(_db, 'users', id));
+    if (!snap.exists()) return null;
+    return { id: snap.id, ...snap.data() };
+  },
+
+  async createUser(userData) {
+    const existing = await this.findByEmail(userData.email);
+    if (existing) return { success: false, message: 'Email already registered.' };
+
+    const id = `${userData.role}-${Date.now()}`;
     const newUser = {
-      id: `${userData.role}-${Date.now()}`,
       ...userData,
+      id,
       email: userData.email.toLowerCase(),
       password: btoa(userData.password),
       status: 'pending',
@@ -91,61 +148,58 @@ const FarmifyDB = {
       setup_complete: false,
       created_at: new Date().toISOString()
     };
-    users.push(newUser);
-    localStorage.setItem('farmify_users', JSON.stringify(users));
-    this.addActivity(newUser.id, newUser.full_name, newUser.role, 'register', `New account registered as ${newUser.role}`);
+
+    await setDoc(doc(_db, 'users', id), newUser);
+    await this.addActivity(id, newUser.full_name, newUser.role, 'register', `New account registered as ${newUser.role}`);
     return { success: true, user: newUser };
   },
 
-  authenticate(email, password) {
-    const user = this.findByEmail(email);
+  async authenticate(email, password) {
+    const user = await this.findByEmail(email);
     if (!user) return { success: false, message: 'Email not found.' };
     if (user.password !== btoa(password)) return { success: false, message: 'Incorrect password.' };
 
+    // Demo accounts always active
     const demoEmails = ['sido@farmify.id', 'ptjaya@farmify.id', 'admin@farmify.id'];
     if (demoEmails.includes(user.email)) {
+      await this.updateUser(user.id, { email_verified: true, status: 'active', setup_complete: true });
       user.email_verified = true; user.status = 'active'; user.setup_complete = true;
-      this.updateUser(user.id, { email_verified: true, status: 'active', setup_complete: true });
     }
 
-    if (!user.email_verified) return { success: false, message: 'Email not yet verified.' };
-    if (user.status === 'pending') return { success: false, message: 'Account is pending admin approval.' };
+    if (!user.email_verified)   return { success: false, message: 'Email not yet verified.' };
+    if (user.status === 'pending')   return { success: false, message: 'Account is pending admin approval.' };
     if (user.status === 'suspended') return { success: false, message: 'Account suspended. Please contact admin.' };
 
-    this.addActivity(user.id, user.full_name, user.role, 'login', 'Login successful');
+    await this.addActivity(user.id, user.full_name, user.role, 'login', 'Login successful');
     return { success: true, user };
   },
 
-  updateUser(userId, data) {
-    const users = this.getUsers();
-    const idx = users.findIndex(u => u.id === userId);
-    if (idx === -1) return false;
-    users[idx] = { ...users[idx], ...data, updated_at: new Date().toISOString() };
-    localStorage.setItem('farmify_users', JSON.stringify(users));
+  async updateUser(userId, data) {
+    await updateDoc(doc(_db, 'users', userId), { ...data, updated_at: new Date().toISOString() });
     return true;
   },
 
-  updateUserStatus(userId, status) {
-    const result = this.updateUser(userId, { status });
-    if (result) {
-      const user = this.findById(userId);
-      if (user) this.addActivity(userId, user.full_name, user.role, 'status_change', `Account status changed to: ${status}`);
-    }
-    return result;
+  async updateUserStatus(userId, status) {
+    await this.updateUser(userId, { status });
+    const user = await this.findById(userId);
+    if (user) await this.addActivity(userId, user.full_name, user.role, 'status_change', `Account status changed to: ${status}`);
+    return true;
   },
 
-  getUsersByRole(role) { return this.getUsers().filter(u => u.role === role); },
-
-  completeSetup(userId, data) {
-    const result = this.updateUser(userId, { ...data, setup_complete: true, status: 'pending' });
-    if (result) {
-      const user = this.findById(userId);
-      if (user) this.addActivity(userId, user.full_name, user.role, 'setup_complete', 'Initial profile setup complete, awaiting admin verification');
-    }
-    return result;
+  async getUsersByRole(role) {
+    const q = query(collection(_db, 'users'), where('role', '==', role));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   },
 
-  // ---- SESSION ----
+  async completeSetup(userId, data) {
+    await this.updateUser(userId, { ...data, setup_complete: true, status: 'pending' });
+    const user = await this.findById(userId);
+    if (user) await this.addActivity(userId, user.full_name, user.role, 'setup_complete', 'Initial profile setup complete, awaiting admin verification');
+    return true;
+  },
+
+  // ---- SESSION (tetap pakai sessionStorage — per tab browser) ----
   setSession(user) {
     const session = {
       id: user.id, full_name: user.full_name, email: user.email,
@@ -155,225 +209,262 @@ const FarmifyDB = {
     sessionStorage.setItem('farmify_session', JSON.stringify(session));
     return session;
   },
-  getSession()    { return JSON.parse(sessionStorage.getItem('farmify_session') || 'null'); },
-  clearSession()  { sessionStorage.removeItem('farmify_session'); },
-  isLoggedIn()    { return !!this.getSession(); },
+  getSession()   { return JSON.parse(sessionStorage.getItem('farmify_session') || 'null'); },
+  clearSession() { sessionStorage.removeItem('farmify_session'); },
+  isLoggedIn()   { return !!this.getSession(); },
 
   // ---- OTP ----
-  generateOTP(email) {
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
+  async generateOTP(email) {
+    const code    = Math.floor(100000 + Math.random() * 900000).toString();
     const expires = new Date(Date.now() + 2 * 60 * 1000).toISOString();
-    const otps = JSON.parse(localStorage.getItem('farmify_otps') || '[]');
-    const filtered = otps.filter(o => o.email !== email.toLowerCase());
-    filtered.push({ email: email.toLowerCase(), code, expires, used: false });
-    localStorage.setItem('farmify_otps', JSON.stringify(filtered));
+    const id      = email.toLowerCase().replace(/[@.]/g, '_');
+    await setDoc(doc(_db, 'otps', id), { email: email.toLowerCase(), code, expires, used: false });
     return code;
   },
 
-  verifyOTP(email, code) {
-    const otps = JSON.parse(localStorage.getItem('farmify_otps') || '[]');
-    const otp = otps.find(o => o.email === email.toLowerCase() && !o.used);
-    if (!otp) return { success: false, message: 'OTP code not found.' };
+  async verifyOTP(email, code) {
+    const id   = email.toLowerCase().replace(/[@.]/g, '_');
+    const snap = await getDoc(doc(_db, 'otps', id));
+    if (!snap.exists()) return { success: false, message: 'OTP code not found.' };
+    const otp = snap.data();
+    if (otp.used)                        return { success: false, message: 'OTP already used.' };
     if (new Date() > new Date(otp.expires)) return { success: false, message: 'OTP code has expired.' };
-    if (otp.code !== code) return { success: false, message: 'Incorrect OTP code.' };
-    otp.used = true;
-    localStorage.setItem('farmify_otps', JSON.stringify(otps));
+    if (otp.code !== code)               return { success: false, message: 'Incorrect OTP code.' };
+    await updateDoc(doc(_db, 'otps', id), { used: true });
     return { success: true };
   },
 
-  // ---- COMMODITIES (Cross-dashboard) ----
-  getCommodities(farmerId) {
-    const all = JSON.parse(localStorage.getItem('farmify_commodities') || '[]');
-    if (farmerId) return all.filter(c => c.farmer_id === farmerId);
-    return all;
+  // ---- COMMODITIES ----
+  async getCommodities(farmerId) {
+    let q;
+    if (farmerId) {
+      q = query(collection(_db, 'commodities'), where('farmer_id', '==', farmerId));
+    } else {
+      q = collection(_db, 'commodities');
+    }
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   },
 
-  getAvailableCommodities() {
-    // All commodities with farmer info — used by buyer dashboard
-    const commodities = this.getCommodities();
-    const users = this.getUsers();
-    return commodities
-      .filter(c => c.is_available)
-      .map(c => {
-        const farmer = users.find(u => u.id === c.farmer_id);
-        return { ...c, farmer_name: farmer ? farmer.full_name : 'Unknown', farm_name: farmer ? (farmer.farm_name || farmer.full_name) : 'Unknown', farmer_city: farmer ? farmer.city : '', farmer_rating: 4.8 };
-      });
+  async getAvailableCommodities() {
+    const q    = query(collection(_db, 'commodities'), where('is_available', '==', true));
+    const snap = await getDocs(q);
+    const commodities = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    const farmerIds = [...new Set(commodities.map(c => c.farmer_id))];
+    const farmerMap = {};
+    for (const fid of farmerIds) {
+      const f = await this.findById(fid);
+      if (f) farmerMap[fid] = f;
+    }
+
+    return commodities.map(c => {
+      const farmer = farmerMap[c.farmer_id];
+      return {
+        ...c,
+        farmer_name: farmer ? farmer.full_name : 'Unknown',
+        farm_name:   farmer ? (farmer.farm_name || farmer.full_name) : 'Unknown',
+        farmer_city: farmer ? farmer.city : '',
+        farmer_rating: 4.8
+      };
+    });
   },
 
-  getCommoditiesByFarmer() {
-    // Group commodities by farmer — used by buyer's supplier list
-    const commodities = this.getCommodities();
-    const users = this.getUsers();
-    const farmers = users.filter(u => u.role === 'farmer' && u.status === 'active');
-    return farmers.map(f => ({
-      ...f,
-      items: commodities.filter(c => c.farmer_id === f.id && c.is_available)
-    })).filter(f => f.items.length > 0);
+  async getCommoditiesByFarmer() {
+    const farmers    = await this.getUsersByRole('farmer');
+    const activeFarmers = farmers.filter(f => f.status === 'active');
+    const result = [];
+
+    for (const f of activeFarmers) {
+      const items = await this.getCommodities(f.id);
+      const available = items.filter(c => c.is_available);
+      if (available.length > 0) result.push({ ...f, items: available });
+    }
+    return result;
   },
 
-  addCommodity(data) {
-    const commodities = this.getCommodities();
+  async addCommodity(data) {
+    const id  = `com-${Date.now()}`;
     const newCom = {
-      id: `com-${Date.now()}`,
-      ...data,
+      ...data, id,
       is_available: true,
       emoji: data.emoji || '🌿',
       created_at: new Date().toISOString()
     };
-    commodities.push(newCom);
-    localStorage.setItem('farmify_commodities', JSON.stringify(commodities));
-    const user = this.findById(data.farmer_id);
-    if (user) this.addActivity(data.farmer_id, user.full_name, 'farmer', 'commodity_added', `Added commodity: ${data.name}`);
+    await setDoc(doc(_db, 'commodities', id), newCom);
+    const user = await this.findById(data.farmer_id);
+    if (user) await this.addActivity(data.farmer_id, user.full_name, 'farmer', 'commodity_added', `Added commodity: ${data.name}`);
     return { success: true, commodity: newCom };
   },
 
-  updateCommodity(id, data) {
-    const commodities = this.getCommodities();
-    const idx = commodities.findIndex(c => c.id === id);
-    if (idx === -1) return false;
-    commodities[idx] = { ...commodities[idx], ...data, updated_at: new Date().toISOString() };
-    localStorage.setItem('farmify_commodities', JSON.stringify(commodities));
+  async updateCommodity(id, data) {
+    await updateDoc(doc(_db, 'commodities', id), { ...data, updated_at: new Date().toISOString() });
     return true;
   },
 
-  deleteCommodity(id) {
-    const commodities = this.getCommodities().filter(c => c.id !== id);
-    localStorage.setItem('farmify_commodities', JSON.stringify(commodities));
+  async deleteCommodity(id) {
+    await deleteDoc(doc(_db, 'commodities', id));
     return true;
   },
 
-  // ---- ORDERS (Cross-dashboard) ----
-  getOrders(filter) {
-    const all = JSON.parse(localStorage.getItem('farmify_orders') || '[]');
-    if (!filter) return all;
-    return all.filter(o => {
-      if (filter.farmer_id && o.farmer_id !== filter.farmer_id) return false;
-      if (filter.buyer_id && o.buyer_id !== filter.buyer_id) return false;
-      if (filter.status && o.status !== filter.status) return false;
-      return true;
-    });
+  // ---- ORDERS ----
+  async getOrders(filter) {
+    let q = collection(_db, 'orders');
+
+    if (filter?.farmer_id) {
+      q = query(q, where('farmer_id', '==', filter.farmer_id));
+    } else if (filter?.buyer_id) {
+      q = query(q, where('buyer_id', '==', filter.buyer_id));
+    } else if (filter?.status) {
+      q = query(q, where('status', '==', filter.status));
+    }
+
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   },
 
-  createOrder(data) {
-    const orders = this.getOrders();
-    const code = `ORD-${new Date().getFullYear()}-${String(orders.length + 1).padStart(3, '0')}`;
+  async createOrder(data) {
+    const allOrders = await this.getOrders();
+    const code = `ORD-${new Date().getFullYear()}-${String(allOrders.length + 1).padStart(3, '0')}`;
+    const id   = `order-${Date.now()}`;
+
     const newOrder = {
-      id: `order-${Date.now()}`, order_code: code, ...data,
-      platform_fee: data.total_price * 0.07, status: 'pending',
-      payment_status: 'unpaid', created_at: new Date().toISOString()
+      ...data, id, order_code: code,
+      platform_fee: data.total_price * 0.07,
+      status: 'pending', payment_status: 'unpaid',
+      created_at: new Date().toISOString()
     };
-    orders.push(newOrder);
-    localStorage.setItem('farmify_orders', JSON.stringify(orders));
 
-    const buyer = this.findById(data.buyer_id);
-    const farmer = this.findById(data.farmer_id);
-    if (buyer) this.addActivity(data.buyer_id, buyer.full_name, 'buyer', 'order_created', `Created order ${code} from ${farmer ? farmer.full_name : 'Farmer'}`);
-    if (farmer) this.addNotification(data.farmer_id, `🎉 New order from ${buyer ? buyer.full_name : 'Buyer'} — ${code}`, 'info');
-    this.addNotification('admin-001', `New transaction: ${code} worth ${formatIDR(data.total_price)}`, 'info');
+    await setDoc(doc(_db, 'orders', id), newOrder);
+
+    const buyer  = await this.findById(data.buyer_id);
+    const farmer = await this.findById(data.farmer_id);
+
+    if (buyer)  await this.addActivity(data.buyer_id, buyer.full_name, 'buyer', 'order_created', `Created order ${code} from ${farmer ? farmer.full_name : 'Farmer'}`);
+    if (farmer) await this.addNotification(data.farmer_id, `🎉 New order from ${buyer ? buyer.full_name : 'Buyer'} — ${code}`, 'info');
+    await this.addNotification('admin-001', `New transaction: ${code} worth ${formatIDR(data.total_price)}`, 'info');
 
     return { success: true, order: newOrder };
   },
 
-  updateOrderStatus(orderId, status) {
-    const orders = this.getOrders();
-    const idx = orders.findIndex(o => o.id === orderId);
-    if (idx === -1) return false;
-    orders[idx].status = status;
-    orders[idx].updated_at = new Date().toISOString();
-    localStorage.setItem('farmify_orders', JSON.stringify(orders));
+  async updateOrderStatus(orderId, status) {
+    await updateDoc(doc(_db, 'orders', orderId), { status, updated_at: new Date().toISOString() });
     return true;
   },
 
   // ---- NOTIFICATIONS ----
-  getNotifications(userId) {
-    const all = JSON.parse(localStorage.getItem('farmify_notifs') || '[]');
-    return all.filter(n => n.user_id === userId).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-  },
-  addNotification(userId, text, type = 'info') {
-    const notifs = JSON.parse(localStorage.getItem('farmify_notifs') || '[]');
-    notifs.push({ id: `notif-${Date.now()}-${Math.random()}`, user_id: userId, text, type, read: false, created_at: new Date().toISOString() });
-    localStorage.setItem('farmify_notifs', JSON.stringify(notifs));
-  },
-  markNotifRead(notifId) {
-    const notifs = JSON.parse(localStorage.getItem('farmify_notifs') || '[]');
-    const idx = notifs.findIndex(n => n.id === notifId);
-    if (idx >= 0) notifs[idx].read = true;
-    localStorage.setItem('farmify_notifs', JSON.stringify(notifs));
-  },
-  markAllNotifsRead(userId) {
-    const notifs = JSON.parse(localStorage.getItem('farmify_notifs') || '[]');
-    notifs.forEach(n => { if (n.user_id === userId) n.read = true; });
-    localStorage.setItem('farmify_notifs', JSON.stringify(notifs));
+  async getNotifications(userId) {
+    const q    = query(collection(_db, 'notifications'), where('user_id', '==', userId), orderBy('created_at', 'desc'));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   },
 
-  // ---- ACTIVITY LOG (Admin monitoring) ----
-  getActivity(filter) {
-    const all = JSON.parse(localStorage.getItem('farmify_activity') || '[]');
-    if (!filter) return all.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
-    return all
-      .filter(a => {
-        if (filter.user_id && a.user_id !== filter.user_id) return false;
-        if (filter.role && a.role !== filter.role) return false;
-        if (filter.action && a.action !== filter.action) return false;
-        return true;
-      })
-      .sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
-  },
-
-  addActivity(userId, userName, role, action, detail) {
-    const log = JSON.parse(localStorage.getItem('farmify_activity') || '[]');
-    log.push({
-      id: `act-${Date.now()}-${Math.random().toString(36).slice(2,6)}`,
-      user_id: userId, user_name: userName, role, action, detail,
+  async addNotification(userId, text, type = 'info') {
+    const id = `notif-${Date.now()}-${Math.random().toString(36).slice(2,6)}`;
+    await setDoc(doc(_db, 'notifications', id), {
+      id, user_id: userId, text, type, read: false,
       created_at: new Date().toISOString()
     });
-    // Keep last 200 entries
-    if (log.length > 200) log.splice(0, log.length - 200);
-    localStorage.setItem('farmify_activity', JSON.stringify(log));
   },
 
-  getUserActivity(userId) {
+  async markNotifRead(notifId) {
+    await updateDoc(doc(_db, 'notifications', notifId), { read: true });
+  },
+
+  async markAllNotifsRead(userId) {
+    const notifs = await this.getNotifications(userId);
+    const batch  = writeBatch(_db);
+    for (const n of notifs) {
+      if (!n.read) batch.update(doc(_db, 'notifications', n.id), { read: true });
+    }
+    await batch.commit();
+  },
+
+  // ---- REALTIME LISTENER — dipanggil dari dashboard ----
+  // Contoh: FarmifyDB.listenCommodities('farmer-001', (data) => renderCards(data))
+  listenCommodities(farmerId, callback) {
+    const q = farmerId
+      ? query(collection(_db, 'commodities'), where('farmer_id', '==', farmerId))
+      : collection(_db, 'commodities');
+    return onSnapshot(q, snap => {
+      callback(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    });
+  },
+
+  listenOrders(filter, callback) {
+    let q = collection(_db, 'orders');
+    if (filter?.farmer_id) q = query(q, where('farmer_id', '==', filter.farmer_id));
+    if (filter?.buyer_id)  q = query(q, where('buyer_id',  '==', filter.buyer_id));
+    return onSnapshot(q, snap => {
+      callback(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    });
+  },
+
+  listenNotifications(userId, callback) {
+    const q = query(collection(_db, 'notifications'), where('user_id', '==', userId), orderBy('created_at', 'desc'));
+    return onSnapshot(q, snap => {
+      callback(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    });
+  },
+
+  listenUsers(callback) {
+    return onSnapshot(collection(_db, 'users'), snap => {
+      callback(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    });
+  },
+
+  // ---- ACTIVITY LOG ----
+  async getActivity(filter) {
+    let q = query(collection(_db, 'activity'), orderBy('created_at', 'desc'), limit(200));
+    const snap = await getDocs(q);
+    let all = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (filter?.user_id) all = all.filter(a => a.user_id === filter.user_id);
+    if (filter?.role)    all = all.filter(a => a.role === filter.role);
+    if (filter?.action)  all = all.filter(a => a.action === filter.action);
+    return all;
+  },
+
+  async addActivity(userId, userName, role, action, detail) {
+    const id = `act-${Date.now()}-${Math.random().toString(36).slice(2,6)}`;
+    await setDoc(doc(_db, 'activity', id), {
+      id, user_id: userId, user_name: userName, role, action, detail,
+      created_at: new Date().toISOString()
+    });
+  },
+
+  async getUserActivity(userId) {
     return this.getActivity({ user_id: userId });
   },
 
-  /// ---- EMAIL (OTP via EmailJS) ----
-  async sendOTPEmail(email, name, otp) {
-    const serviceID = "service_m6luo94"; 
-    const templateID = "template_c0dmscx"; 
-
-    const templateParams = {
-      to_name: name,
-      to_email: email,
-      otp_code: otp
-    };
-
+  // ---- EMAIL OTP via EmailJS ----
+  async sendOTPEmail(email, name, code) {
     try {
-      const response = await emailjs.send(serviceID, templateID, templateParams);
-      console.log("✅ Email terkirim!", response.status, response.text);
-      return { success: true };
-    } catch (error) {
-      console.error("❌ Gagal mengirim email:", error);
-      return { success: false, message: "Failed to send verification email." };
+      await emailjs.send('service_farmify', 'template_otp', {
+        to_email: email, to_name: name, otp_code: code
+      });
+    } catch (e) {
+      console.warn('[Farmify] EmailJS not configured — OTP:', code);
     }
   }
 };
 
-FarmifyDB.init();
+// =====================================================
+// AUTO-INIT: seed demo data jika Firestore masih kosong
+// =====================================================
+FarmifyDB.seedDemoDataIfEmpty().catch(console.error);
 
 // =====================================================
-// GLOBAL HELPERS
+// GLOBAL HELPERS (sama seperti versi lama)
 // =====================================================
 
-function requireAuth(allowedRoles) {
+async function requireAuth(allowedRoles) {
   const session = FarmifyDB.getSession();
   if (!session) { window.location.href = 'login.html'; return null; }
   if (allowedRoles && !allowedRoles.includes(session.role)) {
     window.location.href = getDashboardUrl(session.role); return null;
   }
-  // Check if setup is required (redirect to setup page if not complete)
   if (!session.setup_complete && window.location.pathname.indexOf('setup') === -1) {
-    window.location.href = `setup-profile.html?role=${session.role}`;
-    return null;
+    window.location.href = `setup-profile.html?role=${session.role}`; return null;
   }
   return session;
 }
@@ -383,20 +474,15 @@ function getDashboardUrl(role) {
   return map[role] || 'login.html';
 }
 
-function logout() {
+async function logout() {
   const session = FarmifyDB.getSession();
-  if (session) FarmifyDB.addActivity(session.id, session.full_name, session.role, 'logout', 'Logged out');
+  if (session) await FarmifyDB.addActivity(session.id, session.full_name, session.role, 'logout', 'Logged out');
   FarmifyDB.clearSession();
   window.location.href = 'login.html';
 }
 
-// formatIDR is the primary function; formatRp kept as alias for backward compatibility
-function formatIDR(num) {
-  return 'IDR ' + Number(num).toLocaleString('en-US');
-}
-function formatRp(num) {
-  return formatIDR(num);
-}
+function formatIDR(num) { return 'IDR ' + Number(num).toLocaleString('en-US'); }
+function formatRp(num)  { return formatIDR(num); }
 
 function timeAgo(dateStr) {
   const diff = Date.now() - new Date(dateStr).getTime();
@@ -410,11 +496,7 @@ function timeAgo(dateStr) {
   return new Date(dateStr).toLocaleDateString('en-US', { day:'numeric', month:'short' });
 }
 
-function closeModal(id) {
-  const el = document.getElementById(id);
-  if (el) el.style.display = 'none';
-}
-
+function closeModal(id)  { const el = document.getElementById(id); if (el) el.style.display = 'none'; }
 function toggleSidebar() {
   const sidebar = document.querySelector('.sidebar');
   const overlay = document.getElementById('sidebarOverlay');
@@ -424,7 +506,7 @@ function toggleSidebar() {
 
 function showToast(msg, type = 'success') {
   const colors = { success: 'var(--forest)', error: 'var(--terracotta)', info: 'var(--moss)' };
-  const toast = document.createElement('div');
+  const toast  = document.createElement('div');
   toast.textContent = msg;
   Object.assign(toast.style, {
     position: 'fixed', bottom: '90px', left: '50%',
@@ -437,40 +519,24 @@ function showToast(msg, type = 'success') {
     transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.3s'
   });
   document.body.appendChild(toast);
-  requestAnimationFrame(() => {
-    toast.style.transform = 'translateX(-50%) translateY(0)';
-  });
+  requestAnimationFrame(() => { toast.style.transform = 'translateX(-50%) translateY(0)'; });
   setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateX(-50%) translateY(10px)';
+    toast.style.opacity = '0'; toast.style.transform = 'translateX(-50%) translateY(10px)';
     setTimeout(() => toast.remove(), 300);
   }, 3000);
 }
 
-// ---- Shared Profile Components ----
-function buildProfileSection(session, fullUser) {
-  const initials = session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
-  const roleMap = { farmer: '🌾 Farmer', buyer: '🏭 Buyer', admin: '⚙️ Admin' };
-  const badgeMap = {
-    farmer: `<span class="profile-badge">🌿 ${fullUser.farm_name || 'My Farm'}</span><span class="profile-badge">📍 ${fullUser.city || 'Location'}</span>`,
-    buyer:  `<span class="profile-badge">🏭 ${fullUser.company_name || 'Company'}</span><span class="profile-badge">📍 ${fullUser.company_address || 'Location'}</span>`,
-    admin:  `<span class="profile-badge">⚙️ Super Admin</span>`
-  };
-  return { initials, roleLabel: roleMap[session.role] || session.role, badges: badgeMap[session.role] || '' };
-}
-
-// ---- Notifications ----
-function renderNotifications() {
+async function renderNotifications() {
   const user = FarmifyDB.getSession();
   if (!user) return;
-  const notifs = FarmifyDB.getNotifications(user.id);
+  const notifs     = await FarmifyDB.getNotifications(user.id);
   const unreadCount = notifs.filter(n => !n.read).length;
   document.querySelectorAll('[data-notif-badge]').forEach(b => {
-    b.textContent = unreadCount;
+    b.textContent  = unreadCount;
     b.style.display = unreadCount > 0 ? 'inline-block' : 'none';
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  if (FarmifyDB.isLoggedIn()) renderNotifications();
+document.addEventListener('DOMContentLoaded', async () => {
+  if (FarmifyDB.isLoggedIn()) await renderNotifications();
 });

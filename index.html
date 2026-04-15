@@ -103,11 +103,12 @@
   </div>
 </div>
 
-<script src="js/db.js"></script>
+<script type="module" src="js/db.js"></script>
 <script>
-  // Redirect if already logged in
-  const session = FarmifyDB.getSession();
-  if (session) window.location.href = getDashboardUrl(session.role);
+  (async () => {
+    const session = FarmifyDB.getSession();
+    if (session) window.location.href = getDashboardUrl(session.role);
+  })();
 </script>
 </body>
 </html>

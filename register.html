@@ -751,7 +751,7 @@
     </div>
   </div>
 
-  <script src="js/db.js"></script>
+  <script type="module" src="js/db.js"></script>
   <script>
     let selectedRole = 'farmer';
     let pendingUserData = null;
@@ -840,7 +840,7 @@
       const err = validateForm();
       if (err) { showAlert('error', err); return; }
       const email = document.getElementById('email').value.trim().toLowerCase();
-      if (FarmifyDB.findByEmail(email)) { showAlert('error', 'Email already registered. Please sign in.'); return; }
+      if (await FarmifyDB.findByEmail(email)) { showAlert('error', 'Email already registered. Please sign in.'); return; }
 
       const btn = document.getElementById('submitBtn');
       btn.innerHTML = '<span class="spinner"></span> Sending code...';
@@ -879,7 +879,7 @@
         pendingUserData.division = document.getElementById('adminDivision').value;
       }
 
-      currentOtp = FarmifyDB.generateOTP(email);
+      currentOtp = await FarmifyDB.generateOTP(email);
       await FarmifyDB.sendOTPEmail(email, pendingUserData.full_name, currentOtp);
       showOTPScreen(email);
     });
@@ -946,7 +946,7 @@
       const btn = document.getElementById('verifyBtn');
       btn.innerHTML = '<span class="spinner"></span> Verifying...'; btn.disabled = true;
       await new Promise(r => setTimeout(r, 600));
-      const result = FarmifyDB.verifyOTP(pendingUserData.email, code);
+      const result = await FarmifyDB.verifyOTP(pendingUserData.email, code);
       if (!result.success) {
         showAlert('error', result.message);
         const row = document.getElementById('otpInputRow');
@@ -954,7 +954,7 @@
         btn.innerHTML = 'Verify & Activate Account'; btn.disabled = false;
         return;
       }
-      const createResult = FarmifyDB.createUser(pendingUserData);
+      const createResult = await FarmifyDB.createUser(pendingUserData);
       if (createResult.success) {
         clearInterval(otpTimerInterval);
         showAlert('success', '✅ Email terverifikasi! Account berhasil dibuat dan langsung aktif.');
@@ -970,7 +970,7 @@
       if (!pendingUserData) return;
       const btn = document.getElementById('resendBtn');
       btn.disabled = true; btn.textContent = 'Mengirim...';
-      currentOtp = FarmifyDB.generateOTP(pendingUserData.email);
+      currentOtp = await FarmifyDB.generateOTP(pendingUserData.email);
       await FarmifyDB.sendOTPEmail(pendingUserData.email, pendingUserData.full_name, currentOtp);
       document.getElementById('demoOtpCode').textContent = currentOtp;
       for (let i = 0; i < 6; i++) { document.getElementById(`otp${i}`).value = ''; document.getElementById(`otp${i}`).classList.remove('filled'); }

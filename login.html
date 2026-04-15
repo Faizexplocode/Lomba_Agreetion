@@ -357,7 +357,7 @@
   </div>
 </div>
 
-<script src="js/db.js"></script>
+<script type="module" src="js/db.js"></script>
 <script>
   const existingSession = FarmifyDB.getSession();
   if (existingSession) { window.location.href = getDashboardUrl(existingSession.role); }
@@ -381,10 +381,10 @@
     }, 150);
   }
 
-  function detectRole(email) {
+  async function detectRole(email) {
     const detect = document.getElementById('roleDetect');
     const detectText = document.getElementById('roleDetectText');
-    const user = FarmifyDB.findByEmail(email);
+    const user = await FarmifyDB.findByEmail(email);
     if (user) {
       const roleLabel = { farmer: '🌾 Farmer/Penjual', buyer: '🏭 Buyer/B2B', admin: '⚙️ Admin' };
       detectText.textContent = `Account detected: ${roleLabel[user.role] || user.role} — ${user.full_name}`;
@@ -420,7 +420,7 @@
 
     await new Promise(r => setTimeout(r, 800));
 
-    const result = FarmifyDB.authenticate(email, password);
+    const result = await FarmifyDB.authenticate(email, password);
 
     if (result.success) {
       FarmifyDB.setSession(result.user);
