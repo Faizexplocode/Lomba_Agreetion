@@ -336,14 +336,24 @@ const FarmifyDB = {
     return this.getActivity({ user_id: userId });
   },
 
-  // ---- EMAIL (OTP via EmailJS) ----
-  async sendOTPEmail(email, name, code) {
+  /// ---- EMAIL (OTP via EmailJS) ----
+  async sendOTPEmail(email, name, otp) {
+    const serviceID = "service_m6luo94"; 
+    const templateID = "template_c0dmscx"; 
+
+    const templateParams = {
+      to_name: name,
+      to_email: email,
+      otp_code: otp
+    };
+
     try {
-      await emailjs.send('service_farmify', 'template_otp', {
-        to_email: email, to_name: name, otp_code: code
-      });
-    } catch (e) {
-      console.warn('EmailJS not configured — OTP shown in console:', code);
+      const response = await emailjs.send(serviceID, templateID, templateParams);
+      console.log("✅ Email terkirim!", response.status, response.text);
+      return { success: true };
+    } catch (error) {
+      console.error("❌ Gagal mengirim email:", error);
+      return { success: false, message: "Failed to send verification email." };
     }
   }
 };
