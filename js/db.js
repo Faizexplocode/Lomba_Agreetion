@@ -30,13 +30,19 @@
 // 🔥 FIREBASE CONFIG — GANTI DENGAN MILIK KAMU
 // =====================================================
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyD0iaOSRpr89av0fLh8x0ivQtCcd9_fpow",
+  authDomain: "farmify-01.firebaseapp.com",
+  projectId: "farmify-01",
+  storageBucket: "farmify-01.firebasestorage.app",
+  messagingSenderId: "50188311946",
+  appId: "1:50188311946:web:6e53c0c692566fa813bc73",
+  measurementId: "G-80SC6HX3CQ"
 };
+
+// =====================================================
+// FIREBASE INIT
+// =====================================================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 // =====================================================
 // FIREBASE INIT

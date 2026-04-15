@@ -381,10 +381,10 @@
     }, 150);
   }
 
-  async function detectRole(email) {
+  function detectRole(email) {
     const detect = document.getElementById('roleDetect');
     const detectText = document.getElementById('roleDetectText');
-    const user = await FarmifyDB.findByEmail(email);
+    const user = FarmifyDB.findByEmail(email);
     if (user) {
       const roleLabel = { farmer: '🌾 Farmer/Penjual', buyer: '🏭 Buyer/B2B', admin: '⚙️ Admin' };
       detectText.textContent = `Account detected: ${roleLabel[user.role] || user.role} — ${user.full_name}`;
