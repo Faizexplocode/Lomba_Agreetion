@@ -32,7 +32,7 @@ const FarmifyDB = {
         },
         {
           id: 'farmer-001', full_name: 'Pak Sido Makmur', email: 'sido@farmify.id',
-          phone: '08111234567', password: btoa('Farmer@123'), role: 'farmer',
+          phone: '08111234567', password: btoa('Petani@123'), role: 'farmer',
           status: 'active', email_verified: true, setup_complete: true,
           farm_name: 'Sido Makmur Farm', city: 'Malang', province: 'East Java',
           farm_size: '2.5', exp_years: '15', commodities: ['vegetable', 'spice'],
