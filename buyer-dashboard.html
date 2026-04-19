@@ -147,7 +147,7 @@
 
     <ul class="sidebar-nav">
       <li><a href="#" id="nav-dashboard" class="active" onclick="navigateTo('dashboard'); return false;"><span class="nav-icon">🏠</span> Dashboard</a></li>
-      <li><a href="#" onclick="navAlert('Find Supplierss'); return false;"><span class="nav-icon">🔍</span> Find Supplierss</a></li>
+      <li><a href="#" onclick="navAlert('Find Suppliers'); return false;"><span class="nav-icon">🔍</span> Find Suppliers</a></li>
       <li><a href="#" onclick="navAlert('Cart'); return false;"><span class="nav-icon">🛒</span> Cart</a></li>
       <li><a href="#" onclick="navAlert('My Pre-Orders'); return false;"><span class="nav-icon">📋</span> My Pre-Orders</a></li>
       <li><a href="#" onclick="navAlert('Order History'); return false;"><span class="nav-icon">📦</span> Order History</a></li>
@@ -165,7 +165,7 @@
         <div class="user-avatar-sm" id="sidebarAvatar">PJ</div>
         <div style="min-width:0">
           <div class="user-meta-name" id="sidebarName">PT Jaya</div>
-          <div class="user-meta-role">🏭 Buyer Terverifikasi</div>
+          <div class="user-meta-role">🏭 Verified Buyer</div>
         </div>
       </div>
       <button onclick="logout()" style="margin-top:8px;width:100%;padding:9px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;transition:all 0.2s;font-family:var(--font-body);"
@@ -182,19 +182,19 @@
     <div id="view-dashboard" class="page-view active">
 
       <div class="search-hero page-enter">
-        <div class="search-hero-title" id="buyerGreeting">Halo, PT Jaya! 🏭</div>
+        <div class="search-hero-title" id="buyerGreeting">Hello, PT Jaya! 🏭</div>
         <div class="search-hero-sub">Directly connected with trusted farmers across East Java</div>
         <div class="search-bar-hero">
-          <input type="text" id="searchInput" placeholder="🔍  Cari komoditas, nama farm, lokasi..." oninput="performSearch()" />
-          <button class="btn btn-harvest" style="padding:12px 24px;" onclick="performSearch()">Cari</button>
+          <input type="text" id="searchInput" placeholder="🔍  Search commodities, farm name, location..." oninput="performSearch()" />
+          <button class="btn btn-harvest" style="padding:12px 24px;" onclick="performSearch()">Search</button>
         </div>
         <div class="filter-chips" id="filterChips">
           <button class="chip active" onclick="filterCategory(this, '')">All</button>
           <button class="chip" onclick="filterCategory(this, 'Vegetables')">🥬 Vegetables</button>
-          <button class="chip" onclick="filterCategory(this, 'Buah')">🍉 Buah</button>
+          <button class="chip" onclick="filterCategory(this, 'Buah')">🍉 Fruit</button>
           <button class="chip" onclick="filterCategory(this, 'Padi')">🌾 Rice / Grains</button>
-          <button class="chip" onclick="filterCategory(this, 'Rempah')">🧅 Rempah</button>
-          <button class="chip" onclick="filterCategory(this, 'Umbi')">🥔 Umbi</button>
+          <button class="chip" onclick="filterCategory(this, 'Rempah')">🧅 Spices</button>
+          <button class="chip" onclick="filterCategory(this, 'Umbi')">🥔 Root Crops</button>
         </div>
       </div>
 
@@ -214,7 +214,7 @@
             <div class="stat-card">
               <div class="stat-icon gold">📦</div>
               <div class="stat-value" id="activeOrderCount">—</div>
-              <div class="stat-label">Order Aktif</div>
+              <div class="stat-label">Active Orders</div>
             </div>
             <div class="stat-card">
               <div class="stat-icon green">🌾</div>
@@ -224,14 +224,14 @@
             <div class="stat-card">
               <div class="stat-icon earth">💸</div>
               <div class="stat-value">IDR 142 Jt</div>
-              <div class="stat-label">Total Buyeran</div>
+              <div class="stat-label">Total Purchases</div>
             </div>
           </div>
 
-          <!-- Suppliers list dari data real -->
+          <!-- Suppliers list from data real -->
           <div class="page-enter">
             <div class="section-header-row" style="margin-bottom:16px;">
-              <div style="font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--forest);">Suppliers Aktif di Platform</div>
+              <div style="font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--forest);">Active Suppliers on Platform</div>
               <span id="supplierCountLabel" style="font-size:12px;color:var(--mid-gray);"></span>
             </div>
             <div class="supplier-grid" id="supplierGrid">
@@ -239,10 +239,10 @@
             </div>
           </div>
 
-          <!-- Commodity Tersedia -->
+          <!-- Commodity Available -->
           <div class="table-container page-enter" style="margin-top:24px;">
             <div class="table-header">
-              <div class="table-title">Commodity Tersedia Sekarang</div>
+              <div class="table-title">Available Commodities Now</div>
               <span class="badge badge-farmer" id="commodityCount">Loading...</span>
             </div>
             <div class="table-scroll">
@@ -261,7 +261,7 @@
         <!-- RIGHT COL -->
         <div>
           <div class="wallet-card page-enter" style="margin-bottom:20px;">
-            <div class="wallet-label">Saldo Wallet</div>
+            <div class="wallet-label">Wallet Balance</div>
             <div class="wallet-amount">IDR 50.000.000</div>
             <div style="font-size:13px;color:rgba(255,255,255,0.5);">Available for transaction</div>
             <div class="loyalty-badge">🏆 123 Loyalty Points</div>
@@ -279,7 +279,7 @@
               <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span style="color:var(--moss);">✓</span> Priority access to latest harvests</li>
               <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span style="color:var(--moss);">✓</span> Dedicated account manager</li>
             </ul>
-            <button class="btn btn-primary" style="width:100%;font-size:13px;">Upgrade — IDR 500.000/thn</button>
+            <button class="btn btn-primary" style="width:100%;font-size:13px;">Upgrade — IDR 500.000/yr</button>
           </div>
 
           <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);" class="page-enter">
@@ -291,7 +291,7 @@
               </div>
             </div>
             <div style="background:var(--cream);border-radius:var(--radius-md);padding:12px;font-size:13px;color:var(--charcoal);line-height:1.5;margin-bottom:14px;">
-              👋 Price cabai merah minggu ini naik 8%. Saya rekomendasikan pre-order sekarang sebelum harga naik lagi.
+              👋 Red chili prices are up 8% this week. I recommend pre-ordering now before prices rise further.
             </div>
             <button class="btn btn-secondary" style="width:100%;font-size:13px;">Chat with AI Assistant →</button>
           </div>
@@ -309,7 +309,7 @@
           <div class="page-subtitle">Manage your company information and account data</div>
         </div>
         <div id="profileActions">
-          <button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profile</button>
+          <button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profilee</button>
         </div>
       </div>
 
@@ -320,7 +320,7 @@
           <div class="profile-hero-name" id="profileHeroName">PT Jaya Foods</div>
           <div class="profile-hero-email" id="profileHeroEmail">ptjaya@farmify.id</div>
           <div class="profile-hero-badges">
-            <span class="profile-badge gold">✓ Terverifikasi</span>
+            <span class="profile-badge gold">✓ Verified</span>
             <span class="profile-badge">🏭 Buyer B2B</span>
             <span class="profile-badge" id="profileHeroCompany">PT Jaya Foods Indonesia</span>
           </div>
@@ -331,7 +331,7 @@
       <div class="profile-stats-row page-enter">
         <div class="profile-stat">
           <div class="profile-stat-value">12</div>
-          <div class="profile-stat-label">Order Aktif</div>
+          <div class="profile-stat-label">Active Orders</div>
         </div>
         <div class="profile-stat">
           <div class="profile-stat-value">8</div>
@@ -339,7 +339,7 @@
         </div>
         <div class="profile-stat">
           <div class="profile-stat-value">IDR 142 Jt</div>
-          <div class="profile-stat-label">Total Buyeran</div>
+          <div class="profile-stat-label">Total Purchases</div>
         </div>
       </div>
 
@@ -365,14 +365,14 @@
           <div class="profile-card-title">🏢 Informasi Perusahaan</div>
           <div class="view-only">
             <div class="profile-field"><div class="profile-field-label">Nama Perusahaan</div><div class="profile-field-value" id="vCompanyName">—</div></div>
-            <div class="profile-field"><div class="profile-field-label">Jenis Bisnis</div><div class="profile-field-value" id="vBusinessType">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">Business Type</div><div class="profile-field-value" id="vBusinessType">—</div></div>
             <div class="profile-field"><div class="profile-field-label">Alamat</div><div class="profile-field-value" id="vAddress">—</div></div>
             <div class="profile-field"><div class="profile-field-label">NPWP</div><div class="profile-field-value" id="vNpwp">—</div></div>
           </div>
           <div class="edit-only">
             <div class="profile-field"><div class="profile-field-label">Nama Perusahaan</div><input type="text" class="profile-field-input" id="eCompanyName" /></div>
             <div class="profile-field">
-              <div class="profile-field-label">Jenis Bisnis</div>
+              <div class="profile-field-label">Business Type</div>
               <select class="profile-field-input" id="eBusinessType">
                 <option value="manufacturer">Manufaktur / Pabrik</option>
                 <option value="restaurant">Restoran / Hotel</option>
@@ -382,7 +382,7 @@
                 <option value="other">Other</option>
               </select>
             </div>
-            <div class="profile-field"><div class="profile-field-label">Alamat Perusahaan</div><input type="text" class="profile-field-input" id="eAddress" /></div>
+            <div class="profile-field"><div class="profile-field-label">Company Address</div><input type="text" class="profile-field-input" id="eAddress" /></div>
             <div class="profile-field"><div class="profile-field-label">NPWP</div><input type="text" class="profile-field-input" id="eNpwp" placeholder="XX.XXX.XXX.X-XXX.XXX" /></div>
           </div>
         </div>
@@ -431,10 +431,10 @@
 <nav class="bottom-nav">
   <div class="bottom-nav-inner">
     <button class="bottom-nav-item active" id="bnav-dashboard" onclick="navigateTo('dashboard')">
-      <span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Beranda</span>
+      <span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Home</span>
     </button>
-    <button class="bottom-nav-item" onclick="navAlert('Cari')">
-      <span class="bottom-nav-icon">🔍</span><span class="bottom-nav-label">Cari</span>
+    <button class="bottom-nav-item" onclick="navAlert('Search')">
+      <span class="bottom-nav-icon">🔍</span><span class="bottom-nav-label">Search</span>
     </button>
     <button class="bottom-nav-item" onclick="navAlert('Cart')">
       <span class="bottom-nav-icon">🛒</span><span class="bottom-nav-label">Cart</span>
@@ -443,7 +443,7 @@
       <span class="bottom-nav-icon">📦</span><span class="bottom-nav-label">Order</span>
     </button>
     <button class="bottom-nav-item" id="bnav-profile" onclick="navigateTo('profile')">
-      <span class="bottom-nav-icon">👤</span><span class="bottom-nav-label">Profil</span>
+      <span class="bottom-nav-icon">👤</span><span class="bottom-nav-label">Profile</span>
     </button>
   </div>
 </nav>
@@ -506,7 +506,7 @@
 
     // Suppliers grid
     const grid = document.getElementById('supplierGrid');
-    document.getElementById('supplierCountLabel').textContent = `${farmers.length} farmer aktif`;
+    document.getElementById('supplierCountLabel').textContent = `${farmers.length} active farmer`;
     if (!farmers.length) {
       grid.innerHTML = `<div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;"><div style="font-size:36px;margin-bottom:12px;">🌱</div><div>No suppliers registered yet</div></div>`;
     } else {
@@ -524,8 +524,8 @@
             ${f.items.length > 3 ? `<span class="commodity-tag">+${f.items.length-3} lagi</span>` : ''}
           </div>
           <div class="supplier-footer">
-            <div class="supplier-rating">⭐ 4.8 <span style="color:var(--mid-gray);font-weight:400;">(42 ulasan)</span></div>
-            <button class="btn btn-primary" style="padding:7px 16px;font-size:12px;" onclick="event.stopPropagation();openSuppliersModal('${f.id}')">Pesan</button>
+            <div class="supplier-rating">⭐ 4.8 <span style="color:var(--mid-gray);font-weight:400;">(42 reviews)</span></div>
+            <button class="btn btn-primary" style="padding:7px 16px;font-size:12px;" onclick="event.stopPropagation();openSuppliersModal('${f.id}')">Order</button>
           </div>
         </div>
       `).join('');
@@ -536,10 +536,10 @@
   }
 
   function renderCommodityTable(commodities) {
-    document.getElementById('commodityCount').textContent = `${commodities.length} komoditas`;
+    document.getElementById('commodityCount').textContent = `${commodities.length} commodities`;
     const tbody = document.getElementById('commodityTable');
     if (!commodities.length) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--mid-gray);">Belum ada komoditas tersedia</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--mid-gray);">Belum ada commodities tersedia</td></tr>';
       return;
     }
     tbody.innerHTML = commodities.map(c => `
@@ -551,7 +551,7 @@
         </td>
         <td style="font-weight:700;color:var(--moss);">${formatIDR(c.price)}/${c.unit}</td>
         <td>${c.is_preorder ? '<span style="color:var(--earth);font-weight:600;">Pre-Order</span>' : `${Number(c.stock).toLocaleString('id-ID')} ${c.unit}`}</td>
-        <td>${c.is_preorder ? '<span class="badge badge-warning">Pre-Order</span>' : '<span class="badge badge-success">Tersedia</span>'}</td>
+        <td>${c.is_preorder ? '<span class="badge badge-warning">Pre-Order</span>' : '<span class="badge badge-success">Available</span>'}</td>
         <td><button class="btn btn-primary" style="padding:5px 14px;font-size:12px;" onclick="quickOrder('${c.id}')">+ Order</button></td>
       </tr>
     `).join('');
@@ -567,8 +567,8 @@
     const allFarmers = await FarmifyDB.getCommoditiesByFarmer();
     const filtered = allFarmers.filter(f => !q || farmerIds.includes(f.id) || f.full_name.toLowerCase().includes(q));
     document.getElementById('supplierGrid').innerHTML = filtered.length
-      ? filtered.map(f => `<div class="supplier-card" onclick="openSuppliersModal('${f.id}')"><div class="supplier-header"><div class="supplier-avatar">${f.items[0]?.emoji||'🌾'}</div><div><div class="supplier-name">${f.farm_name||f.full_name}</div><div class="supplier-location">📍 ${f.city||'East Java'}</div></div></div><div class="supplier-commodities">${f.items.slice(0,3).map(c=>`<span class="commodity-tag">${c.emoji||''} ${c.name}</span>`).join('')}</div><div class="supplier-footer"><div class="supplier-rating">⭐ 4.8</div><button class="btn btn-primary" style="padding:7px 16px;font-size:12px;">Pesan</button></div></div>`).join('')
-      : `<div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;">Tidak ada hasil untuk "${q}"</div>`;
+      ? filtered.map(f => `<div class="supplier-card" onclick="openSuppliersModal('${f.id}')"><div class="supplier-header"><div class="supplier-avatar">${f.items[0]?.emoji||'🌾'}</div><div><div class="supplier-name">${f.farm_name||f.full_name}</div><div class="supplier-location">📍 ${f.city||'East Java'}</div></div></div><div class="supplier-commodities">${f.items.slice(0,3).map(c=>`<span class="commodity-tag">${c.emoji||''} ${c.name}</span>`).join('')}</div><div class="supplier-footer"><div class="supplier-rating">⭐ 4.8</div><button class="btn btn-primary" style="padding:7px 16px;font-size:12px;">Order</button></div></div>`).join('')
+      : `<div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;">No hasil untuk "${q}"</div>`;
   }
 
   function filterCategory(el, cat) {
@@ -591,8 +591,8 @@
           <div style="font-weight:700;font-size:17px;color:var(--forest);">${farmer.farm_name || farmer.full_name}</div>
           <div style="font-size:13px;color:var(--mid-gray);">📍 ${farmer.city || '—'}, ${farmer.province?.replace('_',' ') || 'East Java'}</div>
           <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;">
-            <span class="badge badge-success">✓ Terverifikasi</span>
-            <span style="font-size:13px;color:var(--harvest);">⭐ 4.8 (42 ulasan)</span>
+            <span class="badge badge-success">✓ Verified</span>
+            <span style="font-size:13px;color:var(--harvest);">⭐ 4.8 (42 reviews)</span>
           </div>
         </div>
       </div>
@@ -600,7 +600,7 @@
         <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Luas Lahan</div><div style="font-weight:700;color:var(--forest);">${farmer.farm_size || '—'} Ha</div></div>
         <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Pengalaman</div><div style="font-weight:700;color:var(--forest);">${farmer.exp_years || '—'} Tahun</div></div>
       </div>
-      <div style="font-weight:700;font-size:13px;color:var(--forest);margin-bottom:10px;">Commodity Tersedia (${items.length})</div>
+      <div style="font-weight:700;font-size:13px;color:var(--forest);margin-bottom:10px;">Commodity Available (${items.length})</div>
       ${items.length ? items.map(c => `
         <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:white;border-radius:var(--radius-md);border:1px solid var(--light-gray);margin-bottom:8px;">
           <div style="display:flex;align-items:center;gap:10px;">
@@ -615,7 +615,7 @@
             <div style="font-size:11px;color:var(--mid-gray);">${c.is_preorder ? '📅 Pre-Order' : `Stock: ${Number(c.stock).toLocaleString('id-ID')} ${c.unit}`}</div>
           </div>
         </div>
-      `).join('') : '<div style="text-align:center;padding:20px;color:var(--mid-gray);">Belum ada komoditas</div>'}
+      `).join('') : '<div style="text-align:center;padding:20px;color:var(--mid-gray);">Belum ada commodities</div>'}
     `;
     document.getElementById('supplierModal').style.display = 'flex';
   }
@@ -623,21 +623,21 @@
   async function quickOrder(commodityId) {
     const c = (await FarmifyDB.getCommodities()).find(x => x.id === commodityId);
     if (!c) return;
-    if (confirm(`Buat order untuk ${c.name} dari farm ini?\n\nPrice: ${formatIDR(c.price)}/${c.unit}`)) {
+    if (confirm(`Buat order untuk ${c.name} from farm ini?\n\nPrice: ${formatIDR(c.price)}/${c.unit}`)) {
       const result = await FarmifyDB.createOrder({
         buyer_id: session.id, farmer_id: c.farmer_id,
         commodity_id: commodityId, commodity_name: c.name,
         quantity: 100, unit: c.unit,
         total_price: c.price * 100
       });
-      if (result.success) showToast(`✅ Order ${result.order.order_code} berhasil dibuat!`);
+      if (result.success) showToast(`✅ Order ${result.order.order_code} created successfully!`);
     }
   }
 
   async function createOrderFromModal() {
     if (!currentFarmerModal) return;
     const items = (await FarmifyDB.getCommodities(currentFarmerModal)).filter(c => c.is_available);
-    if (!items.length) { showToast('Tidak ada komoditas tersedia', 'error'); return; }
+    if (!items.length) { showToast('No commodities tersedia', 'error'); return; }
     const c = items[0];
     const result = await FarmifyDB.createOrder({
       buyer_id: session.id, farmer_id: currentFarmerModal,
@@ -646,7 +646,7 @@
     });
     if (result.success) {
       closeModal('supplierModal');
-      showToast(`✅ Order ${result.order.order_code} berhasil dibuat!`);
+      showToast(`✅ Order ${result.order.order_code} created successfully!`);
       await loadDashboardData();
     }
   }
@@ -690,7 +690,7 @@
       document.getElementById(id).classList.replace('profile-view-mode','profile-edit-mode');
     });
     document.getElementById('profileActions').innerHTML = `
-      <button class="btn-cancel-profile" onclick="disableEditMode()" style="margin-right:8px;">Batal</button>
+      <button class="btn-cancel-profile" onclick="disableEditMode()" style="margin-right:8px;">Cancel</button>
       <button class="btn-save-profile" onclick="saveProfileInline()">💾 Save</button>
     `;
   }
@@ -701,7 +701,7 @@
       el.classList.remove('profile-edit-mode');
       el.classList.add('profile-view-mode');
     });
-    document.getElementById('profileActions').innerHTML = `<button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profile</button>`;
+    document.getElementById('profileActions').innerHTML = `<button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profilee</button>`;
   }
 
   async function saveProfileInline() {

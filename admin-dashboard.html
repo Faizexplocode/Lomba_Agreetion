@@ -306,11 +306,11 @@
         <!-- filled by JS -->
       </div>
 
-      <!-- User Details Side Panel -->
-      <div id="userDetailsPanel" style="display:none;margin-top:24px;">
+      <!-- User Detailss Side Panel -->
+      <div id="userDetailssPanel" style="display:none;margin-top:24px;">
         <div class="page-title-row" style="margin-bottom:16px;">
-          <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--forest);" id="detailPanelTitle">Details Account</div>
-          <button class="btn btn-secondary" style="font-size:13px;" onclick="document.getElementById('userDetailsPanel').style.display='none'">✕ Tutup</button>
+          <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--forest);" id="detailPanelTitle">Detailss Account</div>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="document.getElementById('userDetailssPanel').style.display='none'">✕ Close</button>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" id="detailPanelContent"><!-- filled by JS --></div>
       </div>
@@ -360,7 +360,7 @@
           <div class="profile-hero-email" id="profileHeroEmail">admin@farmify.id</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
             <span class="profile-badge gold">⚙️ Super Admin</span>
-            <span class="profile-badge">✓ Terverifikasi</span>
+            <span class="profile-badge">✓ Verified</span>
           </div>
         </div>
       </div>
@@ -369,13 +369,13 @@
         <div class="profile-card profile-view-mode" id="cardPersonal">
           <div class="profile-card-title">👤 Account Information</div>
           <div class="view-only">
-            <div class="profile-field"><div class="profile-field-label">Nama Lengkap</div><div class="profile-field-value" id="vFullName">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">Name Lengkap</div><div class="profile-field-value" id="vFullName">—</div></div>
             <div class="profile-field"><div class="profile-field-label">Email</div><div class="profile-field-value" id="vEmail">—</div></div>
             <div class="profile-field"><div class="profile-field-label">Nomor Telepon</div><div class="profile-field-value" id="vPhone">—</div></div>
-            <div class="profile-field"><div class="profile-field-label">Bergabung Sejak</div><div class="profile-field-value" id="vMemberSince">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">Joined Sejak</div><div class="profile-field-value" id="vMemberSince">—</div></div>
           </div>
           <div class="edit-only">
-            <div class="profile-field"><div class="profile-field-label">Nama Lengkap</div><input type="text" class="profile-field-input" id="eFullName" /></div>
+            <div class="profile-field"><div class="profile-field-label">Name Lengkap</div><input type="text" class="profile-field-input" id="eFullName" /></div>
             <div class="profile-field"><div class="profile-field-label">Email</div><input type="email" class="profile-field-input" id="eEmail" disabled style="opacity:0.5;" /></div>
             <div class="profile-field"><div class="profile-field-label">Nomor Telepon</div><input type="tel" class="profile-field-input" id="ePhone" /></div>
           </div>
@@ -394,12 +394,12 @@
   </main>
 </div>
 
-<!-- MODAL: User Details -->
-<div class="modal-overlay" id="userDetailsModal" style="display:none;" onclick="if(event.target===this)closeModal('userDetailsModal')">
+<!-- MODAL: User Detailss -->
+<div class="modal-overlay" id="userDetailssModal" style="display:none;" onclick="if(event.target===this)closeModal('userDetailssModal')">
   <div class="modal" style="max-width:520px;">
-    <div class="modal-header"><div class="modal-title">Details User</div><button class="modal-close" onclick="closeModal('userDetailsModal')">✕</button></div>
-    <div class="modal-body" id="userDetailsContent"><!-- filled by JS --></div>
-    <div class="modal-footer" id="userDetailsFooter"><button class="btn btn-secondary" onclick="closeModal('userDetailsModal')">Tutup</button></div>
+    <div class="modal-header"><div class="modal-title">Detailss User</div><button class="modal-close" onclick="closeModal('userDetailssModal')">✕</button></div>
+    <div class="modal-body" id="userDetailssContent"><!-- filled by JS --></div>
+    <div class="modal-footer" id="userDetailssFooter"><button class="btn btn-secondary" onclick="closeModal('userDetailssModal')">Close</button></div>
   </div>
 </div>
 
@@ -419,7 +419,7 @@
       <span class="bottom-nav-icon">✅</span><span class="bottom-nav-label">Verification</span>
     </button>
     <button class="bottom-nav-item" id="bnav-profile" onclick="navigateTo('profile')">
-      <span class="bottom-nav-icon">👤</span><span class="bottom-nav-label">Profil</span>
+      <span class="bottom-nav-icon">👤</span><span class="bottom-nav-label">Profile</span>
     </button>
   </div>
 </nav>
@@ -503,7 +503,7 @@
     const roleLabel = { farmer: '🌾 Farmer', buyer: '🏭 Buyer', admin: '⚙️ Admin' };
     const statusBadge = { active: '<span class="badge badge-success">Active</span>', pending: '<span class="badge badge-warning">Pending</span>', suspended: '<span class="badge badge-danger">Suspended</span>' };
     document.getElementById('usersTableBody').innerHTML = !users.length
-      ? '<tr><td colspan="6" style="text-align:center;padding:28px;color:var(--mid-gray);">Tidak ada data</td></tr>'
+      ? '<tr><td colspan="6" style="text-align:center;padding:28px;color:var(--mid-gray);">No data available</td></tr>'
       : users.map(u => `
         <tr>
           <td><div style="display:flex;align-items:center;gap:10px;">
@@ -515,8 +515,8 @@
           <td>${statusBadge[u.status]||u.status}</td>
           <td style="font-size:12px;color:var(--mid-gray);">${new Date(u.created_at).toLocaleDateString('id-ID')}</td>
           <td><div style="display:flex;gap:6px;">
-            <button class="btn btn-secondary" style="padding:5px 11px;font-size:11px;" onclick="viewUser('${u.id}')">Details</button>
-            ${u.status==='active' ? `<button class="btn btn-danger" style="padding:5px 11px;font-size:11px;" onclick="suspendUser('${u.id}')">Suspend</button>` : `<button class="btn btn-primary" style="padding:5px 11px;font-size:11px;" onclick="activateUser('${u.id}')">Aktifkan</button>`}
+            <button class="btn btn-secondary" style="padding:5px 11px;font-size:11px;" onclick="viewUser('${u.id}')">Detailss</button>
+            ${u.status==='active' ? `<button class="btn btn-danger" style="padding:5px 11px;font-size:11px;" onclick="suspendUser('${u.id}')">Suspend</button>` : `<button class="btn btn-primary" style="padding:5px 11px;font-size:11px;" onclick="activateUser('${u.id}')">Activate</button>`}
           </div></td>
         </tr>`).join('');
   }
@@ -549,7 +549,7 @@
           ${u.company_name?`<div class="user-detail" style="color:var(--earth);margin-top:2px;">🏭 ${u.company_name}</div>`:''}
         </div>
         <div class="user-actions">
-          <button class="btn btn-secondary" style="padding:7px 14px;font-size:12px;" onclick="viewUser('${u.id}')">Details</button>
+          <button class="btn btn-secondary" style="padding:7px 14px;font-size:12px;" onclick="viewUser('${u.id}')">Detailss</button>
           <button class="btn btn-danger" style="padding:7px 14px;font-size:12px;" onclick="rejectUser('${u.id}')">Tolak</button>
           <button class="btn btn-primary" style="padding:7px 14px;font-size:12px;" onclick="approveUser('${u.id}')">✓ Setujui</button>
         </div>
@@ -561,7 +561,7 @@
     const orders = await FarmifyDB.getOrders();
     document.getElementById('txCountBadge').textContent = `${orders.length} transaksi`;
     const users = await FarmifyDB.getUsers();
-    const statusBadge = { pending:'<span class="badge badge-warning">Pending</span>', confirmed:'<span class="badge badge-success">Konfirmasi</span>', completed:'<span class="badge badge-success">Done</span>', cancelled:'<span class="badge badge-danger">Batal</span>' };
+    const statusBadge = { pending:'<span class="badge badge-warning">Pending</span>', confirmed:'<span class="badge badge-success">Konfirmasi</span>', completed:'<span class="badge badge-success">Done</span>', cancelled:'<span class="badge badge-danger">Cancel</span>' };
     document.getElementById('transactionTableBody').innerHTML = !orders.length
       ? '<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--mid-gray);">No transactions yet</td></tr>'
       : orders.map(o => {
@@ -622,7 +622,7 @@
     const commodities = user.role === 'farmer' ? await FarmifyDB.getCommodities(id) : [];
     const orders = await FarmifyDB.getOrders(user.role === 'farmer' ? { farmer_id: id } : { buyer_id: id });
 
-    document.getElementById('userDetailsContent').innerHTML = `
+    document.getElementById('userDetailssContent').innerHTML = `
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
         <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:white;">${user.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}</div>
         <div>
@@ -649,11 +649,11 @@
       ` : ''}
     `;
 
-    document.getElementById('userDetailsFooter').innerHTML = `
-      <button class="btn btn-secondary" onclick="closeModal('userDetailsModal')">Tutup</button>
-      ${user.status!=='active' ? `<button class="btn btn-primary" onclick="activateUser('${user.id}');closeModal('userDetailsModal')">✓ Aktifkan</button>` : user.id !== session.id ? `<button class="btn btn-danger" onclick="suspendUser('${user.id}');closeModal('userDetailsModal')">Suspend</button>` : ''}
+    document.getElementById('userDetailssFooter').innerHTML = `
+      <button class="btn btn-secondary" onclick="closeModal('userDetailssModal')">Close</button>
+      ${user.status!=='active' ? `<button class="btn btn-primary" onclick="activateUser('${user.id}');closeModal('userDetailssModal')">✓ Activate</button>` : user.id !== session.id ? `<button class="btn btn-danger" onclick="suspendUser('${user.id}');closeModal('userDetailssModal')">Suspend</button>` : ''}
     `;
-    openModal('userDetailsModal');
+    openModal('userDetailssModal');
   }
 
   // ---- MONITOR VIEW ----
@@ -702,7 +702,7 @@
   async function loadActivity(roleFilter) {
     let activities = await FarmifyDB.getActivity(roleFilter && roleFilter !== 'all' ? { role: roleFilter } : null);
     document.getElementById('activityCountBadge').textContent = `${activities.length} entri`;
-    const actionIcon = { login:'🔐', logout:'🚪', register:'🆕', setup_complete:'✅', status_change:'🔄', commodity_added:'🌿', order_created:'📦', profile_updated:'✏️' };
+    const actionIcon = { logged in:'🔐', logout:'🚪', register:'🆕', setup_complete:'✅', status_change:'🔄', commodity_added:'🌿', order_created:'📦', profile_updated:'✏️' };
     const roleColor = { farmer:'var(--moss)', buyer:'var(--earth)', admin:'var(--forest)' };
 
     document.getElementById('activityLog').innerHTML = !activities.length
@@ -747,7 +747,7 @@
     document.getElementById('ePhone').value = fullUser.phone || '';
     document.getElementById('cardPersonal').classList.replace('profile-view-mode','profile-edit-mode');
     document.getElementById('profileActions').innerHTML = `
-      <button class="btn-cancel-profile" onclick="disableEditMode()" style="margin-right:8px;">Batal</button>
+      <button class="btn-cancel-profile" onclick="disableEditMode()" style="margin-right:8px;">Cancel</button>
       <button class="btn-save-profile" onclick="saveProfileInline()">💾 Save</button>
     `;
   }
@@ -760,7 +760,7 @@
 
   async function saveProfileInline() {
     const newName = document.getElementById('eFullName').value.trim();
-    if (!newName) { showToast('Nama tidak boleh kosong!','error'); return; }
+    if (!newName) { showToast('Name tidak boleh kosong!','error'); return; }
     await FarmifyDB.updateUser(session.id, { full_name: newName, phone: document.getElementById('ePhone').value.trim() });
     await FarmifyDB.addActivity(session.id, newName, 'admin', 'profile_updated', 'Memperbarui profil akun');
     session.full_name = newName;
