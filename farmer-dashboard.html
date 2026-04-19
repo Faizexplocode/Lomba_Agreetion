@@ -846,7 +846,7 @@
       if (session) {
         const name = session.full_name.split(' ')[0];
         const hour = new Date().getHours();
-        const greet = hour < 12 ? 'Pagi' : hour < 17 ? 'Siang' : 'Malam';
+        const greet = hour < 12 ? 'Morning' : hour < 17 ? 'Afternoon' : 'Night';
         document.getElementById('greetingTitle').textContent = `Good ${greet}, ${name}! 🌱`;
         document.getElementById('sidebarName').textContent = session.full_name;
         document.getElementById('sidebarAvatar').textContent =

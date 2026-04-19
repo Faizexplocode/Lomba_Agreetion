@@ -470,7 +470,7 @@
       session = await requireAuth(['buyer']);
       if (session) {
         const name = session.full_name.split(' ').slice(0,2).join(' ');
-        document.getElementById('buyerGreeting').textContent = `Halo, ${name}! Cari bahan baku hari ini? 🏭`;
+        document.getElementById('buyerGreeting').textContent = `Hello, ${name}! Find raw materials today? 🏭`;
         document.getElementById('sidebarName').textContent = session.full_name;
         document.getElementById('sidebarAvatar').textContent =
           session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
