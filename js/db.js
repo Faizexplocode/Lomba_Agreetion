@@ -440,7 +440,7 @@ const FarmifyDB = {
   // ---- EMAIL OTP via EmailJS ----
   async sendOTPEmail(email, name, code) {
     try {
-      await emailjs.send('service_farmify', 'template_otp', {
+      await emailjs.send('service_m6luo94', 'template_c0dmscx', {
         to_email: email, to_name: name, otp_code: code
       });
     } catch (e) {
