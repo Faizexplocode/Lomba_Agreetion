@@ -194,7 +194,7 @@ const FarmifyDB = {
   },
 
   async completeSetup(userId, data) {
-    await this.updateUser(userId, { ...data, setup_complete: true, status: 'pending' });
+    await this.updateUser(userId, { ...data, setup_complete: true, status: 'active' });
     const user = await this.findById(userId);
     if (user) await this.addActivity(userId, user.full_name, user.role, 'setup_complete', 'Initial profile setup complete, awaiting admin verification');
     return true;

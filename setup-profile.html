@@ -376,18 +376,25 @@
   </div>
 </div>
 
-<script src="js/db.js"></script>
+<script type="module" src="js/db.js"></script>
 <script>
-  // Get session — if already setup_complete, redirect to dashboard
-  const rawSession = FarmifyDB.getSession();
-  if (!rawSession) { window.location.href = 'login.html'; }
-  if (rawSession && rawSession.setup_complete) { window.location.href = getDashboardUrl(rawSession.role); }
+  function waitForDB(cb) {
+    if (window.FarmifyDB) { cb(); return; }
+    const t = setInterval(() => { if (window.FarmifyDB) { clearInterval(t); cb(); } }, 50);
+  }
 
-  let currentStep = 1;
-  const role = rawSession ? rawSession.role : (new URLSearchParams(window.location.search).get('role') || 'farmer');
+  let rawSession, currentStep, role;
 
-  // Show role-specific fields on load
-  window.addEventListener('DOMContentLoaded', () => {
+  waitForDB(() => {
+    // Get session — if already setup_complete, redirect to dashboard
+    rawSession = FarmifyDB.getSession();
+    if (!rawSession) { window.location.href = 'login.html'; return; }
+    if (rawSession.setup_complete) { window.location.href = getDashboardUrl(rawSession.role); return; }
+
+    currentStep = 1;
+    role = rawSession.role || (new URLSearchParams(window.location.search).get('role') || 'farmer');
+
+    // Show role-specific fields on load
     if (role === 'farmer') {
       document.getElementById('farmerFields1').style.display = 'block';
       document.getElementById('step1Sub').textContent = 'Fill in your basic farm info to start selling';
@@ -484,15 +491,19 @@
 
     FarmifyDB.completeSetup(rawSession.id, data);
 
-    // Update session name
+    // Update session
     rawSession.full_name = data.full_name;
     rawSession.setup_complete = true;
+    rawSession.status = 'active';
     sessionStorage.setItem('farmify_session', JSON.stringify(rawSession));
 
-    // Show success
+    // Langsung ke dashboard setelah 2 detik
     nextStep(4);
     document.getElementById('dot4').textContent = '✓';
     document.getElementById('dot4').classList.add('done');
+    setTimeout(() => {
+      window.location.href = getDashboardUrl(rawSession.role);
+    }, 2000);
   }
 </script>
 </body>
