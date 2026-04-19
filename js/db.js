@@ -228,10 +228,13 @@ const FarmifyDB = {
     const snap = await getDoc(doc(_db, 'otps', id));
     if (!snap.exists()) return { success: false, message: 'OTP code not found.' };
     const otp = snap.data();
-    if (otp.used)                        return { success: false, message: 'OTP already used.' };
+    if (otp.used) return { success: false, message: 'OTP already used.' };
     if (new Date() > new Date(otp.expires)) return { success: false, message: 'OTP code has expired.' };
-    if (otp.code !== code)               return { success: false, message: 'Incorrect OTP code.' };
+    if (otp.code !== code) return { success: false, message: 'Incorrect OTP code.' };
     await updateDoc(doc(_db, 'otps', id), { used: true });
+    // Otomatis update user: email verified + status active
+    const user = await this.findByEmail(email);
+    if (user) await this.updateUser(user.id, { email_verified: true, status: 'active' });
     return { success: true };
   },
 
