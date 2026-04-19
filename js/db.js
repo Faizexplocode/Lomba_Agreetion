@@ -43,11 +43,6 @@ const firebaseConfig = {
 // FIREBASE INIT
 // =====================================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-// =====================================================
-// FIREBASE INIT
-// =====================================================
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getFirestore, collection, doc, getDoc, getDocs,
   setDoc, addDoc, updateDoc, deleteDoc, query,
@@ -546,3 +541,19 @@ async function renderNotifications() {
 document.addEventListener('DOMContentLoaded', async () => {
   if (FarmifyDB.isLoggedIn()) await renderNotifications();
 });
+
+// =====================================================
+// EXPOSE TO GLOBAL WINDOW — WAJIB agar script non-module
+// di HTML bisa akses FarmifyDB, getDashboardUrl, dll.
+// =====================================================
+window.FarmifyDB      = FarmifyDB;
+window.getDashboardUrl = getDashboardUrl;
+window.requireAuth    = requireAuth;
+window.logout         = logout;
+window.formatIDR      = formatIDR;
+window.formatRp       = formatRp;
+window.timeAgo        = timeAgo;
+window.closeModal     = closeModal;
+window.toggleSidebar  = toggleSidebar;
+window.showToast      = showToast;
+window.renderNotifications = renderNotifications;

@@ -105,10 +105,16 @@
 
 <script type="module" src="js/db.js"></script>
 <script>
-  (async () => {
+  function waitForDB(cb) {
+    if (window.FarmifyDB) { cb(); return; }
+    const t = setInterval(() => {
+      if (window.FarmifyDB) { clearInterval(t); cb(); }
+    }, 50);
+  }
+  waitForDB(() => {
     const session = FarmifyDB.getSession();
     if (session) window.location.href = getDashboardUrl(session.role);
-  })();
+  });
 </script>
 </body>
 </html>

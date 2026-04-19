@@ -359,8 +359,19 @@
 
 <script type="module" src="js/db.js"></script>
 <script>
-  const existingSession = FarmifyDB.getSession();
-  if (existingSession) { window.location.href = getDashboardUrl(existingSession.role); }
+  // Tunggu db.js module selesai load sebelum akses FarmifyDB
+  // ES Module load async, jadi kita poll window.FarmifyDB
+  function waitForDB(cb) {
+    if (window.FarmifyDB) { cb(); return; }
+    const t = setInterval(() => {
+      if (window.FarmifyDB) { clearInterval(t); cb(); }
+    }, 50);
+  }
+
+  waitForDB(() => {
+    const existingSession = FarmifyDB.getSession();
+    if (existingSession) { window.location.href = getDashboardUrl(existingSession.role); }
+  });
 
   const demoAccounts = {
     farmer: { email: 'sido@farmify.id',  password: 'Petani@123' },
@@ -368,23 +379,24 @@
     admin:  { email: 'admin@farmify.id', password: 'Admin@Farmify2024' }
   };
 
-  // PERBAIKAN: Fungsi scroll otomatis setelah klik akun demo
   function fillDemo(role) {
     const acc = demoAccounts[role];
     document.getElementById('loginEmail').value = acc.email;
     document.getElementById('loginPassword').value = acc.password;
     detectRole(acc.email);
-    
-    // Auto-scroll to sign-in button for better mobile visibility
     setTimeout(() => {
       document.getElementById('loginBtn').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 150);
   }
 
-  function detectRole(email) {
+  // PERBAIKAN UTAMA: detectRole sekarang async karena findByEmail ke Firestore
+  async function detectRole(email) {
+    if (!window.FarmifyDB) return;
     const detect = document.getElementById('roleDetect');
     const detectText = document.getElementById('roleDetectText');
-    const user = FarmifyDB.findByEmail(email);
+    detectText.textContent = 'Detecting role...';
+    detect.style.display = 'flex';
+    const user = await FarmifyDB.findByEmail(email);
     if (user) {
       const roleLabel = { farmer: '🌾 Farmer/Penjual', buyer: '🏭 Buyer/B2B', admin: '⚙️ Admin' };
       detectText.textContent = `Account detected: ${roleLabel[user.role] || user.role} — ${user.full_name}`;
