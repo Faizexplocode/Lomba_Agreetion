@@ -835,6 +835,11 @@
     const t = setInterval(() => { if (window.FarmifyDB && window.requireAuth) { clearInterval(t); cb(); } }, 50);
   }
 
+  function waitForDB(cb) {
+    if (window.FarmifyDB && window.requireAuth) { cb(); return; }
+    const t = setInterval(() => { if (window.FarmifyDB && window.requireAuth) { clearInterval(t); cb(); } }, 50);
+  }
+
   waitForDB(() => {
     (async () => {
       session = await requireAuth(['farmer']);

@@ -460,19 +460,24 @@
     const t = setInterval(() => { if (window.FarmifyDB && window.requireAuth) { clearInterval(t); cb(); } }, 50);
   }
 
+  function waitForDB(cb) {
+    if (window.FarmifyDB && window.requireAuth) { cb(); return; }
+    const t = setInterval(() => { if (window.FarmifyDB && window.requireAuth) { clearInterval(t); cb(); } }, 50);
+  }
+
   waitForDB(() => {
-  (async () => {
-    session = await requireAuth(['buyer']);
-    if (session) {
-      const name = session.full_name.split(' ').slice(0,2).join(' ');
-      document.getElementById('buyerGreeting').textContent = `Halo, ${name}! Cari bahan baku hari ini? 🏭`;
-      document.getElementById('sidebarName').textContent = session.full_name;
-      document.getElementById('sidebarAvatar').textContent =
-        session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
-      await loadDashboardData();
-    }
-  })();
-  }); // waitForDB
+    (async () => {
+      session = await requireAuth(['buyer']);
+      if (session) {
+        const name = session.full_name.split(' ').slice(0,2).join(' ');
+        document.getElementById('buyerGreeting').textContent = `Halo, ${name}! Cari bahan baku hari ini? 🏭`;
+        document.getElementById('sidebarName').textContent = session.full_name;
+        document.getElementById('sidebarAvatar').textContent =
+          session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
+        await loadDashboardData();
+      }
+    })();
+  });// waitForDB
 
   // ---- SPA NAVIGATION ----
   async function navigateTo(view) {
