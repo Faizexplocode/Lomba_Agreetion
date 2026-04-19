@@ -228,13 +228,10 @@ const FarmifyDB = {
     const snap = await getDoc(doc(_db, 'otps', id));
     if (!snap.exists()) return { success: false, message: 'OTP code not found.' };
     const otp = snap.data();
-    if (otp.used) return { success: false, message: 'OTP already used.' };
+    if (otp.used)                        return { success: false, message: 'OTP already used.' };
     if (new Date() > new Date(otp.expires)) return { success: false, message: 'OTP code has expired.' };
-    if (otp.code !== code) return { success: false, message: 'Incorrect OTP code.' };
+    if (otp.code !== code)               return { success: false, message: 'Incorrect OTP code.' };
     await updateDoc(doc(_db, 'otps', id), { used: true });
-    // Otomatis update user: email verified + status active
-    const user = await this.findByEmail(email);
-    if (user) await this.updateUser(user.id, { email_verified: true, status: 'active' });
     return { success: true };
   },
 
@@ -358,9 +355,10 @@ const FarmifyDB = {
 
   // ---- NOTIFICATIONS ----
   async getNotifications(userId) {
-    const q    = query(collection(_db, 'notifications'), where('user_id', '==', userId), orderBy('created_at', 'desc'));
+    const q    = query(collection(_db, 'notifications'), where('user_id', '==', userId));
     const snap = await getDocs(q);
-    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   },
 
   async addNotification(userId, text, type = 'info') {
@@ -405,9 +403,11 @@ const FarmifyDB = {
   },
 
   listenNotifications(userId, callback) {
-    const q = query(collection(_db, 'notifications'), where('user_id', '==', userId), orderBy('created_at', 'desc'));
+    const q = query(collection(_db, 'notifications'), where('user_id', '==', userId));
     return onSnapshot(q, snap => {
-      callback(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+      const sorted = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      callback(sorted);
     });
   },
 

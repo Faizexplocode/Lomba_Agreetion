@@ -830,18 +830,25 @@
   let currentView = 'dashboard';
   let isEditMode = false;
 
-  (async () => {
-    session = await requireAuth(['farmer']);
-    if (session) {
-      const name = session.full_name.split(' ')[0];
-      const hour = new Date().getHours();
-      const greet = hour < 12 ? 'Pagi' : hour < 17 ? 'Siang' : 'Malam';
-      document.getElementById('greetingTitle').textContent = `Good ${greet}, ${name}! 🌱`;
-      document.getElementById('sidebarName').textContent = session.full_name;
-      document.getElementById('sidebarAvatar').textContent =
-        session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
-    }
-  })();
+  function waitForDB(cb) {
+    if (window.FarmifyDB && window.requireAuth) { cb(); return; }
+    const t = setInterval(() => { if (window.FarmifyDB && window.requireAuth) { clearInterval(t); cb(); } }, 50);
+  }
+
+  waitForDB(() => {
+    (async () => {
+      session = await requireAuth(['farmer']);
+      if (session) {
+        const name = session.full_name.split(' ')[0];
+        const hour = new Date().getHours();
+        const greet = hour < 12 ? 'Pagi' : hour < 17 ? 'Siang' : 'Malam';
+        document.getElementById('greetingTitle').textContent = `Good ${greet}, ${name}! 🌱`;
+        document.getElementById('sidebarName').textContent = session.full_name;
+        document.getElementById('sidebarAvatar').textContent =
+          session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
+      }
+    })();
+  });
 
   // ---- SPA NAVIGATION ----
   async function navigateTo(view) {

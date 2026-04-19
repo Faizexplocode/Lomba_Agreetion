@@ -430,15 +430,22 @@
   let allUsers = [];
   let currentView = 'dashboard';
 
-  (async () => {
-    session = await requireAuth(['admin']);
-    if (session) {
-      document.getElementById('adminGreeting').textContent = `Admin Panel — ${session.full_name}`;
-      document.getElementById('sidebarName').textContent = session.full_name;
-      document.getElementById('sidebarAvatar').textContent = session.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
-      await initDashboard();
-    }
-  })();
+  function waitForDB(cb) {
+    if (window.FarmifyDB && window.requireAuth) { cb(); return; }
+    const t = setInterval(() => { if (window.FarmifyDB && window.requireAuth) { clearInterval(t); cb(); } }, 50);
+  }
+
+  waitForDB(() => {
+    (async () => {
+      session = await requireAuth(['admin']);
+      if (session) {
+        document.getElementById('adminGreeting').textContent = `Admin Panel — ${session.full_name}`;
+        document.getElementById('sidebarName').textContent = session.full_name;
+        document.getElementById('sidebarAvatar').textContent = session.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
+        await initDashboard();
+      }
+    })();
+  });
 
   // ---- SPA NAVIGATION ----
   async function navigateTo(view) {
