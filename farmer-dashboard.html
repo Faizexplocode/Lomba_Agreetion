@@ -1237,7 +1237,7 @@
             <div id="aiMessages"
               style="display:flex;flex-direction:column;gap:14px;min-height:180px;max-height:380px;overflow-y:auto;margin-bottom:16px;padding-right:4px;">
               <div style="background:rgba(74,124,89,0.06);border-radius:12px 12px 12px 0;padding:14px 16px;font-size:14px;color:var(--charcoal);max-width:85%;">
-                <strong>🤖 AI Consultant:</strong> Halo, Petani! 👋 Saya siap membantu kamu dalam strategi penjualan, harga pasar terkini, dan tips budidaya. Pilih topik di bawah atau ketik pertanyaanmu langsung!
+                <strong>🤖 AI Consultant:</strong> Hello Farmers! 👋 I'm ready to help you with sales strategies, current market prices, and cultivation tips. Select a topic below or type your question directly!
               </div>
             </div>
             <div style="display:flex;gap:10px;">
@@ -1253,55 +1253,55 @@
           <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);" id="aiQuickPanel">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
               <div style="font-size:12px;font-weight:700;color:var(--moss);letter-spacing:0.8px;text-transform:uppercase;">💡 Pertanyaan Cepat</div>
-              <div style="font-size:11px;color:var(--mid-gray);" id="aiCommodityHint">Berdasarkan komoditasmu</div>
+              <div style="font-size:11px;color:var(--mid-gray);" id="aiCommodityHint">Based on your commodities</div>
             </div>
 
             <!-- My Commodities Category (dynamic) -->
             <div style="margin-bottom:14px;" id="aiMyCommoditySection">
-              <div style="font-size:11px;font-weight:600;color:var(--mid-gray);margin-bottom:8px;">🌾 Komoditas Saya</div>
+              <div style="font-size:11px;font-weight:600;color:var(--mid-gray);margin-bottom:8px;">🌾 My Commodities</div>
               <div style="display:flex;flex-wrap:wrap;gap:8px;" id="aiMyCommodityButtons">
-                <div style="font-size:12px;color:var(--sage);font-style:italic;">Menambahkan komoditas akan memunculkan saran pertanyaan di sini...</div>
+                <div style="font-size:12px;color:var(--sage);font-style:italic;">Adding commodities will display relevant questions here...</div>
               </div>
             </div>
 
             <!-- Category: Harga Pasar -->
             <div style="margin-bottom:14px;">
-              <div style="font-size:11px;font-weight:600;color:var(--mid-gray);margin-bottom:8px;">📈 Harga &amp; Pasar</div>
+              <div style="font-size:11px;font-weight:600;color:var(--mid-gray);margin-bottom:8px;">📈 Price &amp; Market</div>
               <div style="display:flex;flex-wrap:wrap;gap:8px;">
                 <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;"
-                  onclick="askAI('Berapa harga cabai merah saat ini di pasar Jawa Timur?')">🌶️ Harga cabai sekarang?</button>
+                  onclick="askAI('What is the current price of red chili in East Java market?')">🌶️ Current Red Chili Price?</button>
                 <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;"
-                  onclick="askAI('Berapa harga bawang merah saat ini dan apakah sedang naik atau turun?')">🧅 Harga bawang merah?</button>
+                  onclick="askAI('What is the current price of red onion and is it rising or falling?')">🧅 Current Red Onion Price?</button>
                 <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;"
-                  onclick="askAI('Komoditas pertanian apa yang paling banyak diminati pembeli bulan ini?')">🔥 Komoditas paling laris?</button>
+                  onclick="askAI('Which agricultural commodities are most popular with buyers this month?')">🔥 Most Popular Commodities?</button>
                 <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;"
-                  onclick="askAI('Kapan waktu terbaik untuk menjual hasil panen agar mendapat harga tertinggi?')">⏰ Waktu jual terbaik?</button>
+                  onclick="askAI('What is the best time to sell your harvest to get the highest price?')">⏰ Best Time to Sell?</button>
               </div>
             </div>
 
             <!-- Category: Strategi Jual -->
             <div style="margin-bottom:14px;">
-              <div style="font-size:11px;font-weight:600;color:var(--mid-gray);margin-bottom:8px;">💰 Strategi Penjualan</div>
+              <div style="font-size:11px;font-weight:600;color:var(--mid-gray);margin-bottom:8px;">💰 Sales Strategy</div>
               <div style="display:flex;flex-wrap:wrap;gap:8px;">
                 <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;"
-                  onclick="askAI('Bagaimana cara menentukan harga jual komoditas yang kompetitif namun tetap menguntungkan?')">💡 Cara menentukan harga jual?</button>
+                  onclick="askAI('How to determine the selling price of commodities that is competitive yet profitable?')">💡 How to Set Selling Price?</button>
                 <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;"
-                  onclick="askAI('Apa keuntungan sistem pre-order bagi petani dan bagaimana cara mengelolanya dengan baik?')">📋 Manfaat pre-order?</button>
+                  onclick="askAI('What are the benefits of the pre-order system for farmers and how to manage it effectively?')">📋 Benefits of Pre-order?</button>
                 <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;"
-                  onclick="askAI('Bagaimana cara meningkatkan kepercayaan pembeli B2B terhadap produk pertanian saya?')">🤝 Tingkatkan kepercayaan buyer?</button>
+                  onclick="askAI('How to build trust with B2B buyers towards my agricultural products?')">🤝 Build Buyer Trust?</button>
               </div>
             </div>
 
             <!-- Category: Budidaya -->
             <div>
-              <div style="font-size:11px;font-weight:600;color:var(--mid-gray);margin-bottom:8px;">🌱 Tips Budidaya</div>
+              <div style="font-size:11px;font-weight:600;color:var(--mid-gray);margin-bottom:8px;">🌱 Cultivation Tips</div>
               <div style="display:flex;flex-wrap:wrap;gap:8px;">
                 <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;"
-                  onclick="askAI('Apa saja tips meningkatkan kualitas dan produktivitas panen cabai merah?')">🌶️ Tips panen cabai?</button>
+                  onclick="askAI('What are some tips for improving the quality and productivity of red chili harvests?')">🌶️ Tips for harvesting chilies?</button>
                 <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;"
-                  onclick="askAI('Bagaimana cara menjaga kualitas sayuran agar tetap segar saat pengiriman ke pembeli?')">📦 Jaga kualitas saat kirim?</button>
+                  onclick="askAI('How to maintain the quality of vegetables during transportation to buyers?')">📦 Jaga kualitas saat kirim?</button>
                 <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;"
-                  onclick="askAI('Apa komoditas yang cocok ditanam di musim hujan dan permintaannya tinggi?')">🌧️ Komoditas musim hujan?</button>
+                  onclick="askAI('What commodities are suitable for planting during the rainy season and have high demand?')">🌧️ Komoditas musim hujan?</button>
               </div>
             </div>
           </div>
