@@ -95,7 +95,7 @@
     .profile-field:last-child { margin-bottom: 0; }
     .profile-field-label { font-size: 11px; font-weight: 600; color: var(--mid-gray); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
     .profile-field-value { font-size: 14px; color: var(--charcoal); font-weight: 500; }
-    .profile-field-input { width: 100%; padding: 9px 13px; border: 1.5px solid var(--light-gray); border-radius: var(--radius-md); font-size: 14px; font-family: var(--font-body); color: var(--charcoal); background: var(--warm-white); outline: none; transition: border-color 0.2s; }
+    .profile-field-input { width: 100%; padding: 9px 13px; border: 1.5px solid var(--light-gray); border-radius: var(--radius-md); font-size: 14px; font-family: var(--font-body); color: var(--charcoal); background: var(--warm-white); outline: none; transition: border-color 0.2s; box-sizing: border-box; }
     .profile-field-input:focus { border-color: var(--leaf); background: white; }
     .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
     @media (max-width: 640px) { .profile-grid { grid-template-columns: 1fr; } }
@@ -109,10 +109,66 @@
     .page-title { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--forest); }
     .page-subtitle { font-size: 14px; color: var(--mid-gray); margin-top: 4px; }
     .page-title-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; gap: 12px; flex-wrap: wrap; }
-
-    /* Search filter row */
     .search-filter-row { display: flex; gap: 10px; margin-bottom: 14px; align-items: center; flex-wrap: wrap; }
     .search-filter-row input { flex: 1; min-width: 180px; }
+
+    /* ========== PLATFORM GRID ========== */
+    .platform-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+    /* ========== ORDER DETAIL CARD ========== */
+    .order-detail-card { background: white; border-radius: var(--radius-lg); border: 1px solid rgba(74,124,89,0.08); box-shadow: var(--shadow-soft); padding: 18px 20px; margin-bottom: 10px; transition: transform 0.2s; }
+    .order-detail-card:hover { transform: translateX(3px); }
+
+    /* ========== DELIVERY TRACKING ========== */
+    .delivery-timeline { position: relative; padding-left: 24px; }
+    .delivery-timeline::before { content: ''; position: absolute; left: 7px; top: 4px; bottom: 4px; width: 2px; background: var(--light-gray); }
+    .delivery-step { position: relative; padding: 0 0 16px 20px; }
+    .delivery-step:last-child { padding-bottom: 0; }
+    .delivery-step-dot { position: absolute; left: -17px; top: 2px; width: 14px; height: 14px; border-radius: 50%; background: var(--light-gray); border: 2px solid white; box-shadow: 0 0 0 2px var(--light-gray); }
+    .delivery-step.done .delivery-step-dot { background: var(--moss); box-shadow: 0 0 0 2px rgba(74,124,89,0.2); }
+    .delivery-step.active .delivery-step-dot { background: var(--harvest); box-shadow: 0 0 0 2px rgba(200,151,42,0.2); animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{ box-shadow: 0 0 0 2px rgba(200,151,42,0.2); } 50%{ box-shadow: 0 0 0 6px rgba(200,151,42,0.1); } }
+    .delivery-step-label { font-size: 13px; font-weight: 600; color: var(--charcoal); }
+    .delivery-step-sub { font-size: 11px; color: var(--mid-gray); margin-top: 2px; }
+
+    /* ========== FINANCIAL REPORT ========== */
+    .finance-summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 20px; }
+    .finance-stat { background: white; border-radius: var(--radius-lg); padding: 18px 20px; box-shadow: var(--shadow-soft); border: 1px solid rgba(74,124,89,0.08); }
+    .finance-stat-label { font-size: 11px; font-weight: 600; color: var(--mid-gray); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 6px; }
+    .finance-stat-val { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--forest); }
+    .finance-stat-sub { font-size: 11px; color: var(--mid-gray); margin-top: 4px; }
+
+    /* ========== PRE-ORDER ADMIN VIEW ========== */
+    .preorder-admin-card { background: white; border-radius: var(--radius-lg); padding: 18px 20px; border: 1px solid rgba(74,124,89,0.08); box-shadow: var(--shadow-soft); margin-bottom: 10px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+    .preorder-badge { padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; }
+    .preorder-badge.pending { background: rgba(200,151,42,0.12); color: var(--earth); }
+    .preorder-badge.confirmed { background: rgba(74,124,89,0.12); color: var(--moss); }
+    .preorder-badge.rejected { background: rgba(196,98,45,0.12); color: var(--terracotta); }
+
+    /* ========== NOTIFICATION PANEL ========== */
+    .notif-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--light-gray); transition: background 0.15s; cursor: pointer; }
+    .notif-item:hover { background: var(--cream); }
+    .notif-item.unread { background: rgba(74,124,89,0.04); }
+    .notif-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--moss); margin-top: 5px; flex-shrink: 0; }
+    .notif-dot.read { background: transparent; border: 1.5px solid var(--light-gray); }
+
+    /* ========== STATUS BADGE ========== */
+    .status-badge { padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; }
+    .status-badge.pending   { background: rgba(200,151,42,0.12); color: var(--earth); }
+    .status-badge.confirmed { background: rgba(74,124,89,0.12);  color: var(--moss); }
+    .status-badge.processing{ background: rgba(74,124,89,0.2);   color: var(--forest); }
+    .status-badge.shipped   { background: rgba(62,130,162,0.12); color: #3E82A2; }
+    .status-badge.delivered { background: rgba(74,124,89,0.25);  color: var(--forest); }
+    .status-badge.completed { background: rgba(74,124,89,0.25);  color: var(--forest); }
+    .status-badge.cancelled { background: rgba(196,98,45,0.12);  color: var(--terracotta); }
+    .status-badge.active    { background: rgba(74,124,89,0.12);  color: var(--moss); }
+    .status-badge.suspended { background: rgba(196,98,45,0.12);  color: var(--terracotta); }
+
+    /* ========== NOTIFICATION DROPDOWN ========== */
+    .notif-dropdown { position: absolute; top: 44px; right: 0; width: 320px; background: white; border-radius: var(--radius-lg); box-shadow: 0 8px 40px rgba(28,58,42,0.15); border: 1px solid rgba(74,124,89,0.1); z-index: 500; max-height: 400px; overflow-y: auto; display: none; }
+    .notif-dropdown.open { display: block; }
+    .notif-dd-header { padding: 14px 16px 10px; border-bottom: 1px solid var(--light-gray); display: flex; justify-content: space-between; align-items: center; }
+    .notif-dd-title { font-size: 14px; font-weight: 700; color: var(--forest); }
   </style>
 </head>
 <body>
@@ -132,15 +188,18 @@
     </a>
 
     <ul class="sidebar-nav">
+      <div style="padding:0 8px;margin-bottom:8px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">Main</div>
       <li><a href="#" id="nav-dashboard" class="active" onclick="navigateTo('dashboard'); return false;"><span class="nav-icon">🏠</span> Dashboard</a></li>
-      <li><a href="#" onclick="navigateTo('dashboard'); switchTab('verification'); return false;"><span class="nav-icon">✅</span> User Verification <span data-notif-badge style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;display:none;">0</span></a></li>
-      <li><a href="#" onclick="navigateTo('monitor'); return false;" id="nav-monitor"><span class="nav-icon">👥</span> Account Monitor</a></li>
-      <li><a href="#" onclick="navigateTo('dashboard'); switchTab('transactions'); return false;"><span class="nav-icon">📦</span> Transaction Monitor</a></li>
-      <li><a href="#" onclick="navigateTo('dashboard'); switchTab('platform'); return false;"><span class="nav-icon">📊</span> Platform Analytics</a></li>
+      <li><a href="#" id="nav-verification" onclick="navigateTo('dashboard'); switchTab('verification'); return false;"><span class="nav-icon">✅</span> User Verification <span data-notif-badge style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;display:none;">0</span></a></li>
+      <li><a href="#" id="nav-monitor" onclick="navigateTo('monitor'); return false;"><span class="nav-icon">👥</span> Account Monitor</a></li>
+      <li><a href="#" id="nav-transactions" onclick="navigateTo('transactions'); return false;"><span class="nav-icon">📦</span> Transactions</a></li>
+      <li><a href="#" id="nav-preorders" onclick="navigateTo('preorders'); return false;"><span class="nav-icon">📋</span> Pre-Orders</a></li>
+      <li><a href="#" id="nav-delivery" onclick="navigateTo('delivery'); return false;"><span class="nav-icon">🚚</span> Delivery Tracking</a></li>
 
-      <div style="padding:0 8px;margin-top:20px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">System</div>
-      <li><a href="#" onclick="navAlert('Financial Reports'); return false;"><span class="nav-icon">💰</span> Financial Reports</a></li>
-      <li><a href="#" onclick="navigateTo('activity'); return false;" id="nav-activity"><span class="nav-icon">📋</span> Activity Log</a></li>
+      <div style="padding:0 8px;margin-top:20px;margin-bottom:8px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">System</div>
+      <li><a href="#" id="nav-finance" onclick="navigateTo('finance'); return false;"><span class="nav-icon">💰</span> Financial Reports</a></li>
+      <li><a href="#" id="nav-platform" onclick="navigateTo('platform'); return false;"><span class="nav-icon">📊</span> Platform Analytics</a></li>
+      <li><a href="#" id="nav-activity" onclick="navigateTo('activity'); return false;"><span class="nav-icon">📋</span> Activity Log</a></li>
       <li><a href="#" id="nav-profile" onclick="navigateTo('profile'); return false;"><span class="nav-icon">👤</span> Admin Profile</a></li>
     </ul>
 
@@ -172,19 +231,22 @@
         </div>
         <div style="display:flex;gap:10px;z-index:1;flex-wrap:wrap;">
           <button class="btn btn-outline-white" style="font-size:13px;" onclick="exportReport()">📊 Export CSV</button>
-          <button class="btn btn-harvest" style="font-size:13px;" onclick="navAlert('Add Admin')">+ Add Admin</button>
         </div>
       </div>
 
       <div class="stats-grid page-enter">
-        <div class="stat-card"><div class="stat-icon green">👥</div><div class="stat-value" id="totalUsersVal">—</div><div class="stat-label">Total Users</div><div class="stat-change up">↑ +2 this week</div></div>
-        <div class="stat-card"><div class="stat-icon gold">💸</div><div class="stat-value">IDR 142 Jt</div><div class="stat-label">Transaction Volume</div><div class="stat-change up">↑ +18% this month</div></div>
+        <div class="stat-card"><div class="stat-icon green">👥</div><div class="stat-value" id="totalUsersVal">—</div><div class="stat-label">Total Users</div><div class="stat-change up" id="statPendingVerif">— pending</div></div>
+        <div class="stat-card"><div class="stat-icon gold">💸</div><div class="stat-value" id="statTotalRevenue">—</div><div class="stat-label">Total Revenue</div><div class="stat-change up" id="statTotalFee">fee: —</div></div>
         <div class="stat-card"><div class="stat-icon earth">🌾</div><div class="stat-value" id="farmerCount">—</div><div class="stat-label">Active Farmers</div></div>
         <div class="stat-card"><div class="stat-icon red">⚠️</div><div class="stat-value" id="pendingVal">—</div><div class="stat-label">Pending Verification</div><div class="stat-change down">Needs attention</div></div>
       </div>
 
       <div class="quick-actions-grid page-enter">
-        <div class="quick-action" onclick="switchTab('verification')"><div class="qa-icon">✅</div><div class="qa-label">User Verification</div></div>
+        <div class="quick-action" onclick="navigateTo('dashboard'); switchTab('verification')"><div class="qa-icon">✅</div><div class="qa-label">User Verification</div></div>
+        <div class="quick-action" onclick="navigateTo('transactions')"><div class="qa-icon">📦</div><div class="qa-label">Transactions</div></div>
+        <div class="quick-action" onclick="navigateTo('preorders')"><div class="qa-icon">📋</div><div class="qa-label">Pre-Orders</div></div>
+        <div class="quick-action" onclick="navigateTo('delivery')"><div class="qa-icon">🚚</div><div class="qa-label">Delivery Tracking</div></div>
+        <div class="quick-action" onclick="navigateTo('finance')"><div class="qa-icon">💰</div><div class="qa-label">Financial Reports</div></div>
         <div class="quick-action" onclick="navigateTo('monitor')"><div class="qa-icon">👁️</div><div class="qa-label">Account Monitor</div></div>
         <div class="quick-action" onclick="navigateTo('activity')"><div class="qa-icon">📋</div><div class="qa-label">Activity Log</div></div>
         <div class="quick-action" onclick="exportReport()"><div class="qa-icon">📊</div><div class="qa-label">Export Report</div></div>
@@ -194,11 +256,11 @@
       <div class="tab-bar page-enter">
         <button class="tab-btn active" onclick="switchTab('users')" id="tab-users">👥 All Users</button>
         <button class="tab-btn" onclick="switchTab('verification')" id="tab-verification">✅ Verification <span id="pendingBadge" style="background:var(--terracotta);color:white;font-size:10px;padding:2px 8px;border-radius:100px;margin-left:4px;">0</span></button>
-        <button class="tab-btn" onclick="switchTab('transactions')" id="tab-transactions">📦 Transactions</button>
-        <button class="tab-btn" onclick="switchTab('platform')" id="tab-platform">📊 Platform</button>
+        <button class="tab-btn" onclick="switchTab('recent-orders')" id="tab-recent-orders">📦 Recent Orders</button>
+        <button class="tab-btn" onclick="switchTab('recent-preorders')" id="tab-recent-preorders">📋 Recent Pre-Orders</button>
       </div>
 
-      <!-- TAB: SEMUA USER -->
+      <!-- TAB: ALL USERS -->
       <div class="tab-content active" id="content-users">
         <div class="search-filter-row">
           <div class="input-with-icon" style="flex:1;">
@@ -227,68 +289,26 @@
         <div id="pendingUsersList"><div style="text-align:center;padding:32px;color:var(--mid-gray);">Loading...</div></div>
       </div>
 
-      <!-- TAB: TRANSAKSI -->
-      <div class="tab-content" id="content-transactions">
+      <!-- TAB: RECENT ORDERS -->
+      <div class="tab-content" id="content-recent-orders">
         <div class="table-container">
-          <div class="table-header"><div class="table-title">Transaction Monitor</div><span class="badge badge-farmer" id="txCountBadge">—</span></div>
+          <div class="table-header"><div class="table-title">Recent Transactions</div><span class="badge badge-farmer" id="txCountBadge">—</span></div>
           <div class="table-scroll"><table>
-            <thead><tr><th>Order Code</th><th>Farmer</th><th>Buyer</th><th>Commodity</th><th>Total</th><th>Platform Fee</th><th>Status</th></tr></thead>
-            <tbody id="transactionTableBody"><tr><td colspan="7" style="text-align:center;padding:28px;color:var(--mid-gray);">Loading...</td></tr></tbody>
+            <thead><tr><th>Order Code</th><th>Farmer</th><th>Buyer</th><th>Commodity</th><th>Total</th><th>Platform Fee</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="transactionTableBody"><tr><td colspan="8" style="text-align:center;padding:28px;color:var(--mid-gray);">Loading...</td></tr></tbody>
           </table></div>
         </div>
       </div>
 
-      <!-- TAB: PLATFORM -->
-      <div class="tab-content" id="content-platform">
-        <div class="platform-grid">
-          <div class="metric-card">
-            <div class="metric-title">Revenue Breakdown</div>
-            <div>
-              <div class="rev-bar-label"><span>Transaction Fee (7%)</span><span style="font-weight:700;color:var(--forest);">IDR 9.940.000</span></div>
-              <div class="rev-bar"><div class="rev-fill" style="width:75%"></div></div>
-              <div class="rev-bar-label"><span>Premium Subscription</span><span style="font-weight:700;color:var(--forest);">IDR 2.450.000</span></div>
-              <div class="rev-bar"><div class="rev-fill" style="width:25%;background:linear-gradient(90deg,var(--earth),var(--harvest));"></div></div>
-              <div class="rev-bar-label"><span>Advertisement Fee</span><span style="font-weight:700;color:var(--forest);">IDR 800.000</span></div>
-              <div class="rev-bar"><div class="rev-fill" style="width:10%;background:linear-gradient(90deg,#7ea,#4a7);"></div></div>
-            </div>
-            <div style="border-top:1px solid var(--light-gray);padding-top:12px;margin-top:4px;display:flex;justify-content:space-between;">
-              <span style="font-size:13px;color:var(--mid-gray);">Total Revenue</span>
-              <span style="font-weight:700;color:var(--forest);font-size:16px;">IDR 13.190.000</span>
-            </div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-title">Platform Statistics</div>
-            <ul class="metric-list">
-              <li><span>Total Farmers</span><span class="val" id="statFarmer">—</span></li>
-              <li><span>Total Buyer B2B</span><span class="val" id="statBuyer">—</span></li>
-              <li><span>Commodity Aktif</span><span class="val" id="statCommodity">—</span></li>
-              <li><span>Total Orders</span><span class="val" id="statOrder">—</span></li>
-            </ul>
-          </div>
-          <div class="metric-card">
-            <div class="metric-title">Top Commodity</div>
-            <ul class="metric-list" id="topCommodities">
-              <li><span>🌶️ Red Chili</span><span class="val">38 order</span></li>
-              <li><span>🧅 Red Onion</span><span class="val">27 order</span></li>
-              <li><span>🥬 Vegetables Hijau</span><span class="val">22 order</span></li>
-            </ul>
-          </div>
-          <div class="metric-card">
-            <div class="metric-title">Regional Distribution</div>
-            <ul class="metric-list">
-              <li><span>🏙️ Malang</span><span class="val">32%</span></li>
-              <li><span>🏙️ Surabaya</span><span class="val">24%</span></li>
-              <li><span>🏙️ Pasuruan</span><span class="val">18%</span></li>
-              <li><span>🏙️ Lumajang</span><span class="val">14%</span></li>
-            </ul>
-          </div>
-        </div>
+      <!-- TAB: RECENT PRE-ORDERS -->
+      <div class="tab-content" id="content-recent-preorders">
+        <div id="dashPreordersList"><div style="text-align:center;padding:32px;color:var(--mid-gray);">Loading...</div></div>
       </div>
 
     </div><!-- end view-dashboard -->
 
 
-    <!-- ===== VIEW: MONITOR AKUN ===== -->
+    <!-- ===== VIEW: ACCOUNT MONITOR ===== -->
     <div id="view-monitor" class="page-view">
       <div class="page-title-row page-enter">
         <div>
@@ -302,19 +322,185 @@
         </div>
       </div>
 
-      <div id="monitorGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
-        <!-- filled by JS -->
+      <div id="monitorGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;"></div>
+
+      <div id="userDetailsPanel" style="display:none;margin-top:24px;">
+        <div class="page-title-row" style="margin-bottom:16px;">
+          <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--forest);" id="detailPanelTitle">Account Details</div>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="document.getElementById('userDetailsPanel').style.display='none'">✕ Close</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" id="detailPanelContent"></div>
+      </div>
+    </div>
+
+
+    <!-- ===== VIEW: TRANSACTIONS ===== -->
+    <div id="view-transactions" class="page-view">
+      <div class="page-title-row page-enter">
+        <div>
+          <div class="page-title">Transaction Monitor 📦</div>
+          <div class="page-subtitle">Semua transaksi & kontrol status order</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <select class="form-select" style="font-size:13px;" id="txStatusFilter" onchange="loadTransactions()">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <button class="btn btn-secondary" style="font-size:13px;" onclick="exportReport()">📊 Export CSV</button>
+        </div>
+      </div>
+      <div class="table-container page-enter">
+        <div class="table-header"><div class="table-title">All Transactions</div><span class="badge badge-farmer" id="txAllCountBadge">—</span></div>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Order Code</th><th>Farmer</th><th>Buyer</th><th>Commodity</th><th>Total</th><th>Platform Fee</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+          <tbody id="txAllTableBody"><tr><td colspan="9" style="text-align:center;padding:28px;color:var(--mid-gray);">Loading...</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+
+    <!-- ===== VIEW: PRE-ORDERS ===== -->
+    <div id="view-preorders" class="page-view">
+      <div class="page-title-row page-enter">
+        <div>
+          <div class="page-title">Pre-Order Management 📋</div>
+          <div class="page-subtitle">Monitor & approve/reject pre-order dari buyer ke farmer</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <select class="form-select" style="font-size:13px;" id="poStatusFilter" onchange="loadPreOrders()">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+      </div>
+      <div id="preOrdersList" class="page-enter">
+        <div style="text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
+      </div>
+    </div>
+
+
+    <!-- ===== VIEW: DELIVERY TRACKING ===== -->
+    <div id="view-delivery" class="page-view">
+      <div class="page-title-row page-enter">
+        <div>
+          <div class="page-title">Delivery Tracking 🚚</div>
+          <div class="page-subtitle">Monitor semua pengiriman aktif di platform</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <select class="form-select" style="font-size:13px;" id="deliveryFilter" onchange="loadDeliveries()">
+            <option value="">All Shipments</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+          </select>
+        </div>
+      </div>
+      <div id="deliveryList" class="page-enter">
+        <div style="text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
+      </div>
+    </div>
+
+
+    <!-- ===== VIEW: FINANCIAL REPORTS ===== -->
+    <div id="view-finance" class="page-view">
+      <div class="page-title-row page-enter">
+        <div>
+          <div class="page-title">Financial Reports 💰</div>
+          <div class="page-subtitle">Ringkasan keuangan & pendapatan platform</div>
+        </div>
+        <button class="btn btn-primary" style="font-size:13px;" onclick="exportReport()">📊 Export CSV</button>
       </div>
 
-      <!-- User Detailss Side Panel -->
-      <div id="userDetailssPanel" style="display:none;margin-top:24px;">
-        <div class="page-title-row" style="margin-bottom:16px;">
-          <div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--forest);" id="detailPanelTitle">Detailss Account</div>
-          <button class="btn btn-secondary" style="font-size:13px;" onclick="document.getElementById('userDetailssPanel').style.display='none'">✕ Close</button>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" id="detailPanelContent"><!-- filled by JS --></div>
+      <div class="finance-summary-grid page-enter" id="financeSummaryGrid">
+        <div class="finance-stat"><div class="finance-stat-label">Total Transaction Volume</div><div class="finance-stat-val" id="finTotalVol">—</div><div class="finance-stat-sub" id="finTotalOrders">— orders</div></div>
+        <div class="finance-stat"><div class="finance-stat-label">Platform Fee (7%)</div><div class="finance-stat-val" id="finTotalFee">—</div><div class="finance-stat-sub">from completed orders</div></div>
+        <div class="finance-stat"><div class="finance-stat-label">Completed Orders</div><div class="finance-stat-val" id="finCompleted">—</div><div class="finance-stat-sub" id="finCompletedVol">—</div></div>
+        <div class="finance-stat"><div class="finance-stat-label">Pending Settlement</div><div class="finance-stat-val" id="finPending">—</div><div class="finance-stat-sub" id="finPendingVol">—</div></div>
       </div>
-    </div><!-- end view-monitor -->
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" class="page-enter">
+        <div class="metric-card">
+          <div class="metric-title">Revenue Breakdown</div>
+          <div id="revenueBreakdown">
+            <div class="rev-bar-label"><span>Transaction Fee (7%)</span><span style="font-weight:700;color:var(--forest);" id="revFee">—</span></div>
+            <div class="rev-bar"><div class="rev-fill" id="revFeeBar" style="width:0%"></div></div>
+            <div class="rev-bar-label"><span>Pre-Order Fee (3%)</span><span style="font-weight:700;color:var(--forest);" id="revPOFee">—</span></div>
+            <div class="rev-bar"><div class="rev-fill" id="revPOFeeBar" style="width:0%;background:linear-gradient(90deg,var(--earth),var(--harvest));"></div></div>
+          </div>
+          <div style="border-top:1px solid var(--light-gray);padding-top:12px;margin-top:4px;display:flex;justify-content:space-between;">
+            <span style="font-size:13px;color:var(--mid-gray);">Total Platform Revenue</span>
+            <span style="font-weight:700;color:var(--forest);font-size:16px;" id="finTotalRevenue">—</span>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Transaction by Status</div>
+          <ul class="metric-list" id="txByStatusList">
+            <li><span>Loading...</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="table-container page-enter" style="margin-top:16px;">
+        <div class="table-header"><div class="table-title">Transaction Detail</div><span class="badge badge-farmer" id="finTxCount">—</span></div>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Order Code</th><th>Farmer</th><th>Buyer</th><th>Total</th><th>Platform Fee</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody id="finTxTableBody"><tr><td colspan="7" style="text-align:center;padding:28px;color:var(--mid-gray);">Loading...</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+
+    <!-- ===== VIEW: PLATFORM ANALYTICS ===== -->
+    <div id="view-platform" class="page-view">
+      <div class="page-title-row page-enter">
+        <div>
+          <div class="page-title">Platform Analytics 📊</div>
+          <div class="page-subtitle">Statistik & performa platform Farmify</div>
+        </div>
+      </div>
+      <div class="platform-grid page-enter">
+        <div class="metric-card">
+          <div class="metric-title">Platform Statistics</div>
+          <ul class="metric-list">
+            <li><span>Total Farmers</span><span class="val" id="statFarmer">—</span></li>
+            <li><span>Total Buyer B2B</span><span class="val" id="statBuyer">—</span></li>
+            <li><span>Active Commodities</span><span class="val" id="statCommodity">—</span></li>
+            <li><span>Total Orders</span><span class="val" id="statOrder">—</span></li>
+            <li><span>Total Pre-Orders</span><span class="val" id="statPreorder">—</span></li>
+          </ul>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Top Commodities</div>
+          <ul class="metric-list" id="topCommodities">
+            <li><span style="color:var(--mid-gray);">Loading...</span></li>
+          </ul>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Regional Distribution</div>
+          <ul class="metric-list">
+            <li><span>🏙️ Malang</span><span class="val">32%</span></li>
+            <li><span>🏙️ Surabaya</span><span class="val">24%</span></li>
+            <li><span>🏙️ Pasuruan</span><span class="val">18%</span></li>
+            <li><span>🏙️ Lumajang</span><span class="val">14%</span></li>
+          </ul>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Order Status Distribution</div>
+          <ul class="metric-list" id="orderStatusDist">
+            <li><span style="color:var(--mid-gray);">Loading...</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
 
     <!-- ===== VIEW: ACTIVITY LOG ===== -->
@@ -330,7 +516,6 @@
           <button class="btn btn-secondary" style="font-size:13px;" onclick="loadActivity('buyer')">🏭 Buyer</button>
         </div>
       </div>
-
       <div class="table-container page-enter">
         <div class="table-header">
           <div class="table-title">Activity History</div>
@@ -340,10 +525,10 @@
           <div style="text-align:center;padding:32px;color:var(--mid-gray);">Memuat aktivitas...</div>
         </div>
       </div>
-    </div><!-- end view-activity -->
+    </div>
 
 
-    <!-- ===== VIEW: PROFIL ADMIN ===== -->
+    <!-- ===== VIEW: ADMIN PROFILE ===== -->
     <div id="view-profile" class="page-view">
 
       <div class="page-title-row page-enter">
@@ -369,13 +554,13 @@
         <div class="profile-card profile-view-mode" id="cardPersonal">
           <div class="profile-card-title">👤 Account Information</div>
           <div class="view-only">
-            <div class="profile-field"><div class="profile-field-label">Name Lengkap</div><div class="profile-field-value" id="vFullName">—</div></div>
+            <div class="profile-field"><div class="profile-field-label">Nama Lengkap</div><div class="profile-field-value" id="vFullName">—</div></div>
             <div class="profile-field"><div class="profile-field-label">Email</div><div class="profile-field-value" id="vEmail">—</div></div>
             <div class="profile-field"><div class="profile-field-label">Nomor Telepon</div><div class="profile-field-value" id="vPhone">—</div></div>
             <div class="profile-field"><div class="profile-field-label">Joined Sejak</div><div class="profile-field-value" id="vMemberSince">—</div></div>
           </div>
           <div class="edit-only">
-            <div class="profile-field"><div class="profile-field-label">Name Lengkap</div><input type="text" class="profile-field-input" id="eFullName" /></div>
+            <div class="profile-field"><div class="profile-field-label">Nama Lengkap</div><input type="text" class="profile-field-input" id="eFullName" /></div>
             <div class="profile-field"><div class="profile-field-label">Email</div><input type="email" class="profile-field-input" id="eEmail" disabled style="opacity:0.5;" /></div>
             <div class="profile-field"><div class="profile-field-label">Nomor Telepon</div><input type="tel" class="profile-field-input" id="ePhone" /></div>
           </div>
@@ -386,6 +571,7 @@
           <div class="profile-field"><div class="profile-field-label">Farmer Registered</div><div class="profile-field-value" id="adminStatFarmers">—</div></div>
           <div class="profile-field"><div class="profile-field-label">Buyer Registered</div><div class="profile-field-value" id="adminStatBuyers">—</div></div>
           <div class="profile-field"><div class="profile-field-label">Total Transactions</div><div class="profile-field-value" id="adminStatOrders">—</div></div>
+          <div class="profile-field"><div class="profile-field-label">Platform Revenue</div><div class="profile-field-value" id="adminStatRevenue">—</div></div>
         </div>
       </div>
 
@@ -394,315 +580,712 @@
   </main>
 </div>
 
-<!-- MODAL: User Detailss -->
-<div class="modal-overlay" id="userDetailssModal" style="display:none;" onclick="if(event.target===this)closeModal('userDetailssModal')">
+<!-- MODAL: User Details -->
+<div class="modal-overlay" id="userDetailsModal" style="display:none;" onclick="if(event.target===this)closeModal('userDetailsModal')">
   <div class="modal" style="max-width:520px;">
-    <div class="modal-header"><div class="modal-title">Detailss User</div><button class="modal-close" onclick="closeModal('userDetailssModal')">✕</button></div>
-    <div class="modal-body" id="userDetailssContent"><!-- filled by JS --></div>
-    <div class="modal-footer" id="userDetailssFooter"><button class="btn btn-secondary" onclick="closeModal('userDetailssModal')">Close</button></div>
+    <div class="modal-header"><div class="modal-title">User Details</div><button class="modal-close" onclick="closeModal('userDetailsModal')">✕</button></div>
+    <div class="modal-body" id="userDetailsModalBody" style="padding:0;">
+      <div style="text-align:center;padding:32px;color:var(--mid-gray);">Loading...</div>
+    </div>
   </div>
 </div>
 
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-  <div class="bottom-nav-inner">
-    <button class="bottom-nav-item active" id="bnav-dashboard" onclick="navigateTo('dashboard')">
-      <span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Dashboard</span>
-    </button>
-    <button class="bottom-nav-item" id="bnav-monitor" onclick="navigateTo('monitor')">
-      <span class="bottom-nav-icon">👁️</span><span class="bottom-nav-label">Monitor</span>
-    </button>
-    <button class="bottom-nav-item" id="bnav-activity" onclick="navigateTo('activity')">
-      <span class="bottom-nav-icon">📋</span><span class="bottom-nav-label">Aktivitas</span>
-    </button>
-    <button class="bottom-nav-item" onclick="switchTab('verification'); navigateTo('dashboard')">
-      <span class="bottom-nav-icon">✅</span><span class="bottom-nav-label">Verification</span>
-    </button>
-    <button class="bottom-nav-item" id="bnav-profile" onclick="navigateTo('profile')">
-      <span class="bottom-nav-icon">👤</span><span class="bottom-nav-label">Profile</span>
-    </button>
+<!-- MODAL: Update Order Status -->
+<div class="modal-overlay" id="orderStatusModal" style="display:none;" onclick="if(event.target===this)closeModal('orderStatusModal')">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header"><div class="modal-title">Update Order Status</div><button class="modal-close" onclick="closeModal('orderStatusModal')">✕</button></div>
+    <div class="modal-body">
+      <p style="font-size:14px;color:var(--mid-gray);margin-bottom:16px;">Update status untuk order <strong id="modalOrderCode">—</strong></p>
+      <input type="hidden" id="modalOrderId" />
+      <div class="form-group">
+        <label class="form-label">New Status</label>
+        <select class="form-select" id="modalOrderStatus">
+          <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:16px;">
+        <button class="btn btn-secondary" style="flex:1;" onclick="closeModal('orderStatusModal')">Cancel</button>
+        <button class="btn btn-primary" style="flex:1;" onclick="saveOrderStatus()">✅ Update</button>
+      </div>
+    </div>
   </div>
-</nav>
+</div>
 
-<script type="module" src="js/db.js"></script>
+<!-- MODAL: Update Delivery Status -->
+<div class="modal-overlay" id="deliveryStatusModal" style="display:none;" onclick="if(event.target===this)closeModal('deliveryStatusModal')">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header"><div class="modal-title">Update Delivery Status 🚚</div><button class="modal-close" onclick="closeModal('deliveryStatusModal')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="deliveryOrderId" />
+      <div class="form-group">
+        <label class="form-label">Order</label>
+        <div style="font-weight:600;color:var(--forest);font-size:14px;" id="deliveryOrderCode">—</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Delivery Status</label>
+        <select class="form-select" id="deliveryStatusSelect">
+          <option value="preparing">🏭 Preparing</option>
+          <option value="pickup">📦 Pickup</option>
+          <option value="in_transit">🚚 In Transit</option>
+          <option value="out_for_delivery">🏠 Out for Delivery</option>
+          <option value="delivered">✅ Delivered</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nomor Resi (Tracking Number)</label>
+        <input type="text" class="form-input" id="deliveryTrackingNo" placeholder="e.g. JNE-123456789" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Kurir</label>
+        <select class="form-select" id="deliveryCourier">
+          <option value="JNE">JNE</option>
+          <option value="J&T">J&T Express</option>
+          <option value="SiCepat">SiCepat</option>
+          <option value="Wahana">Wahana</option>
+          <option value="Pos Indonesia">Pos Indonesia</option>
+          <option value="Self Delivery">Self Delivery</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Catatan</label>
+        <input type="text" class="form-input" id="deliveryNote" placeholder="Catatan pengiriman..." />
+      </div>
+      <div style="display:flex;gap:8px;margin-top:16px;">
+        <button class="btn btn-secondary" style="flex:1;" onclick="closeModal('deliveryStatusModal')">Cancel</button>
+        <button class="btn btn-primary" style="flex:1;" onclick="saveDeliveryStatus()">🚚 Update Delivery</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import '../db.js';
+</script>
+
 <script>
+  // ======== STATE ========
   let session = null;
   let allUsers = [];
-  let currentView = 'dashboard';
+  let filteredUsers = [];
+  let allOrders = [];
 
-  function waitForDB(cb) {
-    if (window.FarmifyDB && window.requireAuth) { cb(); return; }
-    const t = setInterval(() => { if (window.FarmifyDB && window.requireAuth) { clearInterval(t); cb(); } }, 50);
+  // ======== HELPERS ========
+  function statusBadge(s) {
+    return `<span class="status-badge ${s}">${s}</span>`;
   }
 
-  waitForDB(() => {
-    (async () => {
-      session = await requireAuth(['admin']);
-      if (session) {
-        document.getElementById('adminGreeting').textContent = `Admin Panel — ${session.full_name}`;
-        document.getElementById('sidebarName').textContent = session.full_name;
-        document.getElementById('sidebarAvatar').textContent = session.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
-        await initDashboard();
-      }
-    })();
-  });
-
-  // ---- SPA NAVIGATION ----
-  async function navigateTo(view) {
-    document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
-    document.getElementById('view-' + view).classList.add('active');
-    currentView = view;
-    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
-    const navEl = document.getElementById('nav-' + view);
-    if (navEl) navEl.classList.add('active');
-    document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
-    const bnavEl = document.getElementById('bnav-' + view);
-    if (bnavEl) bnavEl.classList.add('active');
-
-    if (view === 'dashboard') await initDashboard();
-    if (view === 'monitor') await loadMonitor('all');
-    if (view === 'activity') await loadActivity('all');
-    if (view === 'profile') await populateProfile();
-    if (window.innerWidth <= 768) toggleSidebar();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  function roleBadge(r) {
+    const map = { farmer:'badge-farmer', buyer:'badge-buyer', admin:'badge-admin' };
+    const icon = { farmer:'🌾', buyer:'🏭', admin:'⚙️' };
+    return `<span class="badge ${map[r]||''}">${icon[r]||''}${r}</span>`;
   }
 
-  // ---- TAB ----
-  async function switchTab(tab) {
+  function userInitials(name) {
+    return name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
+  }
+
+  // ======== NAV ========
+  const views = ['dashboard','monitor','transactions','preorders','delivery','finance','platform','activity','profile'];
+
+  window.navigateTo = function(view) {
+    views.forEach(v => {
+      const el = document.getElementById(`view-${v}`);
+      const nav = document.getElementById(`nav-${v}`);
+      if (el) el.classList.toggle('active', v === view);
+      if (nav) nav.classList.toggle('active', v === view);
+    });
+    // Handle special sidebar nav entries
+    document.getElementById('nav-dashboard').classList.toggle('active', view === 'dashboard');
+
+    if (view === 'monitor')       loadMonitor('all');
+    if (view === 'transactions')  loadTransactions();
+    if (view === 'preorders')     loadPreOrders();
+    if (view === 'delivery')      loadDeliveries();
+    if (view === 'finance')       loadFinance();
+    if (view === 'platform')      loadPlatformAnalytics();
+    if (view === 'activity')      loadActivity('all');
+    if (view === 'profile')       populateProfile();
+    if (window.innerWidth < 768)  toggleSidebar();
+  };
+
+  window.switchTab = function(tab) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    document.getElementById(`tab-${tab}`).classList.add('active');
-    document.getElementById(`content-${tab}`).classList.add('active');
-    if (tab === 'transactions') await loadTransactions();
+    const btn = document.getElementById(`tab-${tab}`);
+    const content = document.getElementById(`content-${tab}`);
+    if (btn) btn.classList.add('active');
+    if (content) content.classList.add('active');
+
+    if (tab === 'verification')      loadPendingUsers();
+    if (tab === 'recent-orders')     loadRecentOrders();
+    if (tab === 'recent-preorders')  loadDashPreorders();
+  };
+
+  // ======== INIT ========
+  async function initDashboard() {
+    session = await requireAuth(['admin']);
+    if (!session) return;
+
+    const initials = session.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
+    document.getElementById('sidebarAvatar').textContent = initials;
+    document.getElementById('sidebarName').textContent = session.full_name;
+    document.getElementById('adminGreeting').textContent = `Admin Panel — ${session.full_name}`;
+
+    await Promise.all([loadStats(), loadUsers()]);
   }
 
-  // ---- DASHBOARD INIT ----
-  async function initDashboard() {
-    allUsers = await FarmifyDB.getUsers();
-    const pending = allUsers.filter(u => u.status === 'pending');
-    const farmers = allUsers.filter(u => u.role === 'farmer' && u.status === 'active');
-    document.getElementById('totalUsersVal').textContent = allUsers.length;
+  // ======== STATS ========
+  async function loadStats() {
+    const [users, orders, preorders] = await Promise.all([
+      FarmifyDB.getUsers(),
+      FarmifyDB.getOrders(),
+      FarmifyDB.getPreOrders()
+    ]);
+
+    const pending = users.filter(u => u.status === 'pending');
+    const farmers = users.filter(u => u.role === 'farmer' && u.status === 'active');
+    const completed = orders.filter(o => ['completed','delivered'].includes(o.status));
+    const totalVol = completed.reduce((s, o) => s + (o.total_price || 0), 0);
+    const totalFee = completed.reduce((s, o) => s + (o.platform_fee || 0), 0);
+
+    document.getElementById('totalUsersVal').textContent = users.length;
     document.getElementById('farmerCount').textContent = farmers.length;
     document.getElementById('pendingVal').textContent = pending.length;
+    document.getElementById('statPendingVerif').textContent = `${pending.length} pending verification`;
+    document.getElementById('statTotalRevenue').textContent = formatIDR(totalVol);
+    document.getElementById('statTotalFee').textContent = `fee: ${formatIDR(totalFee)}`;
+
+    const badge = document.getElementById('pendingBadge');
+    if (badge) { badge.textContent = pending.length; badge.style.display = pending.length > 0 ? 'inline-block' : 'none'; }
+    document.querySelectorAll('[data-notif-badge]').forEach(b => {
+      b.textContent = pending.length;
+      b.style.display = pending.length > 0 ? 'inline-block' : 'none';
+    });
+  }
+
+  // ======== USERS ========
+  async function loadUsers() {
+    allUsers = await FarmifyDB.getUsers();
+    filteredUsers = [...allUsers];
+    renderUsersTable(filteredUsers);
+  }
+
+  function renderUsersTable(users) {
+    document.getElementById('userCountBadge').textContent = `${users.length} user`;
+    const tbody = document.getElementById('usersTableBody');
+    if (!users.length) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:28px;color:var(--mid-gray);">Tidak ada user ditemukan</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = users.map(u => `
+      <tr>
+        <td><div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;background:${u.role==='farmer'?'linear-gradient(135deg,var(--moss),var(--leaf))':u.role==='buyer'?'linear-gradient(135deg,var(--earth),var(--harvest))':'linear-gradient(135deg,var(--forest),var(--moss))'};">${userInitials(u.full_name)}</div>
+          <div style="font-weight:600;font-size:13px;color:var(--forest);">${u.full_name}</div>
+        </div></td>
+        <td style="font-size:13px;color:var(--mid-gray);">${u.email}</td>
+        <td>${roleBadge(u.role)}</td>
+        <td>${statusBadge(u.status)}</td>
+        <td style="font-size:12px;color:var(--mid-gray);">${u.created_at ? new Date(u.created_at).toLocaleDateString('id-ID') : '—'}</td>
+        <td>
+          <div style="display:flex;gap:4px;flex-wrap:wrap;">
+            <button class="btn btn-secondary" style="font-size:11px;padding:4px 10px;" onclick="viewUserDetails('${u.id}')">Detail</button>
+            ${u.status !== 'active' ? `<button class="btn btn-primary" style="font-size:11px;padding:4px 10px;" onclick="changeStatus('${u.id}','active')">✅ Approve</button>` : ''}
+            ${u.status !== 'suspended' ? `<button class="btn" style="font-size:11px;padding:4px 10px;background:rgba(196,98,45,0.1);color:var(--terracotta);border:1px solid rgba(196,98,45,0.2);" onclick="changeStatus('${u.id}','suspended')">🚫 Suspend</button>` : ''}
+          </div>
+        </td>
+      </tr>`).join('');
+  }
+
+  window.filterUsers = function(val) {
+    const q = val.toLowerCase();
+    filteredUsers = allUsers.filter(u =>
+      u.full_name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q)
+    );
+    renderUsersTable(filteredUsers);
+  };
+
+  window.filterByRole = function(role) {
+    filteredUsers = role ? allUsers.filter(u => u.role === role) : [...allUsers];
+    renderUsersTable(filteredUsers);
+  };
+
+  // ======== PENDING USERS ========
+  async function loadPendingUsers() {
+    const users = await FarmifyDB.getUsers();
+    const pending = users.filter(u => u.status === 'pending');
     document.getElementById('pendingBadge').textContent = pending.length;
 
-    const commodities = await FarmifyDB.getCommodities();
-    const orders = await FarmifyDB.getOrders();
-    document.getElementById('statFarmer').textContent = farmers.length;
-    document.getElementById('statBuyer').textContent = allUsers.filter(u => u.role === 'buyer' && u.status === 'active').length;
-    document.getElementById('statCommodity').textContent = commodities.length;
-    document.getElementById('statOrder').textContent = orders.length;
-
-    loadUsersTable(allUsers);
-    loadPendingUsers();
-  }
-
-  // ---- USERS TABLE ----
-  function loadUsersTable(users) {
-    document.getElementById('userCountBadge').textContent = `${users.length} pengguna`;
-    const roleLabel = { farmer: '🌾 Farmer', buyer: '🏭 Buyer', admin: '⚙️ Admin' };
-    const statusBadge = { active: '<span class="badge badge-success">Active</span>', pending: '<span class="badge badge-warning">Pending</span>', suspended: '<span class="badge badge-danger">Suspended</span>' };
-    document.getElementById('usersTableBody').innerHTML = !users.length
-      ? '<tr><td colspan="6" style="text-align:center;padding:28px;color:var(--mid-gray);">No data available</td></tr>'
-      : users.map(u => `
-        <tr>
-          <td><div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">${u.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}</div>
-            <span style="font-weight:600;font-size:13px;">${u.full_name}</span>
-          </div></td>
-          <td style="font-size:12px;color:var(--mid-gray);">${u.email}</td>
-          <td>${roleLabel[u.role]||u.role}</td>
-          <td>${statusBadge[u.status]||u.status}</td>
-          <td style="font-size:12px;color:var(--mid-gray);">${new Date(u.created_at).toLocaleDateString('id-ID')}</td>
-          <td><div style="display:flex;gap:6px;">
-            <button class="btn btn-secondary" style="padding:5px 11px;font-size:11px;" onclick="viewUser('${u.id}')">Detailss</button>
-            ${u.status==='active' ? `<button class="btn btn-danger" style="padding:5px 11px;font-size:11px;" onclick="suspendUser('${u.id}')">Suspend</button>` : `<button class="btn btn-primary" style="padding:5px 11px;font-size:11px;" onclick="activateUser('${u.id}')">Activate</button>`}
-          </div></td>
-        </tr>`).join('');
-  }
-
-  function filterUsers(q) {
-    const filtered = allUsers.filter(u => u.full_name.toLowerCase().includes(q.toLowerCase()) || u.email.toLowerCase().includes(q.toLowerCase()));
-    loadUsersTable(filtered);
-  }
-
-  function filterByRole(role) {
-    loadUsersTable(role ? allUsers.filter(u => u.role === role) : allUsers);
-  }
-
-  // ---- PENDING USERS ----
-  function loadPendingUsers() {
-    const pending = allUsers.filter(u => u.status === 'pending');
-    const roleLabel = { farmer:'🌾 Farmer', buyer:'🏭 Buyer', admin:'⚙️ Admin' };
     const container = document.getElementById('pendingUsersList');
     if (!pending.length) {
-      container.innerHTML = `<div style="text-align:center;padding:48px;color:var(--mid-gray);"><div style="font-size:42px;margin-bottom:14px;">✅</div><div style="font-weight:600;font-size:15px;color:var(--forest);">Tidak ada pengguna menunggu verifikasi</div></div>`;
+      container.innerHTML = `<div class="alert alert-success"><span>✅</span> Tidak ada user yang menunggu verifikasi.</div>`;
       return;
     }
     container.innerHTML = pending.map(u => `
-      <div class="pending-user-card" id="pending-${u.id}">
-        <div class="user-ava ${u.role}">${u.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}</div>
+      <div class="pending-user-card">
+        <div class="user-ava ${u.role}">${userInitials(u.full_name)}</div>
         <div class="user-info">
           <div class="user-name">${u.full_name}</div>
-          <div class="user-detail">${u.email} · ${roleLabel[u.role]} · Joined ${new Date(u.created_at).toLocaleDateString('en-US')}</div>
-          ${u.farm_name?`<div class="user-detail" style="color:var(--moss);margin-top:2px;">🌾 ${u.farm_name} · ${u.city||'—'}</div>`:''}
-          ${u.company_name?`<div class="user-detail" style="color:var(--earth);margin-top:2px;">🏭 ${u.company_name}</div>`:''}
+          <div class="user-detail">${u.email} · ${roleBadge(u.role)} · Daftar ${timeAgo(u.created_at)}</div>
+          ${u.farm_name ? `<div class="user-detail" style="margin-top:2px;">🌾 ${u.farm_name} — ${u.city||''}</div>` : ''}
+          ${u.company_name ? `<div class="user-detail" style="margin-top:2px;">🏭 ${u.company_name}</div>` : ''}
         </div>
         <div class="user-actions">
-          <button class="btn btn-secondary" style="padding:7px 14px;font-size:12px;" onclick="viewUser('${u.id}')">Detailss</button>
-          <button class="btn btn-danger" style="padding:7px 14px;font-size:12px;" onclick="rejectUser('${u.id}')">Tolak</button>
-          <button class="btn btn-primary" style="padding:7px 14px;font-size:12px;" onclick="approveUser('${u.id}')">✓ Setujui</button>
+          <button class="btn btn-secondary" style="font-size:12px;" onclick="viewUserDetails('${u.id}')">Detail</button>
+          <button class="btn btn-primary" style="font-size:12px;" onclick="changeStatus('${u.id}','active')">✅ Approve</button>
+          <button class="btn" style="font-size:12px;background:rgba(196,98,45,0.1);color:var(--terracotta);border:1px solid rgba(196,98,45,0.2);" onclick="changeStatus('${u.id}','suspended')">🚫 Reject</button>
         </div>
       </div>`).join('');
   }
 
-  // ---- TRANSACTIONS ----
-  async function loadTransactions() {
-    const orders = await FarmifyDB.getOrders();
-    document.getElementById('txCountBadge').textContent = `${orders.length} transaksi`;
-    const users = await FarmifyDB.getUsers();
-    const statusBadge = { pending:'<span class="badge badge-warning">Pending</span>', confirmed:'<span class="badge badge-success">Konfirmasi</span>', completed:'<span class="badge badge-success">Done</span>', cancelled:'<span class="badge badge-danger">Cancel</span>' };
-    document.getElementById('transactionTableBody').innerHTML = !orders.length
-      ? '<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--mid-gray);">No transactions yet</td></tr>'
-      : orders.map(o => {
-          const farmer = users.find(u => u.id === o.farmer_id);
-          const buyer = users.find(u => u.id === o.buyer_id);
-          return `<tr>
-            <td><span style="font-family:var(--font-mono);font-size:12px;color:var(--moss);">${o.order_code}</span></td>
-            <td style="font-size:13px;">${farmer ? farmer.full_name : '—'}</td>
-            <td style="font-size:13px;">${buyer ? buyer.full_name : '—'}</td>
-            <td style="font-size:13px;">${o.commodity_name || '—'}</td>
-            <td style="font-weight:700;color:var(--forest);">${formatIDR(o.total_price)}</td>
-            <td style="font-weight:600;color:var(--moss);">${formatIDR(o.platform_fee || 0)}</td>
-            <td>${statusBadge[o.status]||`<span class="badge badge-warning">${o.status}</span>`}</td>
-          </tr>`;
-        }).join('');
-  }
+  // ======== CHANGE STATUS ========
+  window.changeStatus = async function(userId, status) {
+    const msg = status === 'active' ? 'approve' : status === 'suspended' ? 'suspend' : status;
+    if (!confirm(`Yakin ingin ${msg} user ini?`)) return;
+    await FarmifyDB.updateUserStatus(userId, status);
+    const label = status === 'active' ? 'diapprove' : 'disuspend';
+    showToast(`✅ User berhasil ${label}!`);
+    await Promise.all([loadUsers(), loadStats(), loadPendingUsers()]);
+  };
 
-  // ---- USER ACTIONS ----
-  async function approveUser(id) {
-    if (!confirm('Setujui dan aktifkan akun ini?')) return;
-    await FarmifyDB.updateUserStatus(id, 'active');
-    await FarmifyDB.addNotification(id, '✅ Your account has been verified! Welcome to Farmify.', 'info');
-    allUsers = await FarmifyDB.getUsers();
-    loadUsersTable(allUsers); loadPendingUsers(); await initDashboard();
-    showToast('✅ User berhasil diaktifkan!');
-  }
+  // ======== USER DETAILS MODAL ========
+  window.viewUserDetails = async function(userId) {
+    document.getElementById('userDetailsModal').style.display = 'flex';
+    document.getElementById('userDetailsModalBody').innerHTML = '<div style="text-align:center;padding:32px;color:var(--mid-gray);">Loading...</div>';
 
-  async function rejectUser(id) {
-    if (!confirm('Tolak pendaftaran pengguna ini?')) return;
-    await FarmifyDB.updateUserStatus(id, 'suspended');
-    allUsers = await FarmifyDB.getUsers();
-    loadUsersTable(allUsers); loadPendingUsers(); await initDashboard();
-    showToast('User ditolak.', 'error');
-  }
+    const u = await FarmifyDB.findById(userId);
+    if (!u) return;
 
-  async function activateUser(id) {
-    await FarmifyDB.updateUserStatus(id, 'active');
-    await FarmifyDB.addNotification(id, '✅ Account Anda telah diaktifkan kembali.', 'info');
-    allUsers = await FarmifyDB.getUsers();
-    loadUsersTable(allUsers); loadPendingUsers(); await initDashboard();
-    showToast('✅ Account diaktifkan!');
-  }
+    const orders = await FarmifyDB.getOrders(u.role === 'farmer' ? { farmer_id: u.id } : { buyer_id: u.id });
+    const finance = await FarmifyDB.getFinanceSummary(u.id, u.role);
 
-  async function suspendUser(id) {
-    if (id === session.id) { showToast('Tidak bisa suspend akun sendiri!', 'error'); return; }
-    if (!confirm('Suspend akun pengguna ini?')) return;
-    await FarmifyDB.updateUserStatus(id, 'suspended');
-    allUsers = await FarmifyDB.getUsers();
-    loadUsersTable(allUsers); await initDashboard();
-    showToast('Account disuspend.', 'info');
-  }
+    const avatarBg = u.role === 'farmer' ? 'linear-gradient(135deg,var(--moss),var(--leaf))' : u.role === 'buyer' ? 'linear-gradient(135deg,var(--earth),var(--harvest))' : 'linear-gradient(135deg,var(--forest),var(--moss))';
 
-  async function viewUser(id) {
-    const user = allUsers.find(u => u.id === id);
-    if (!user) return;
-    const roleLabel = { farmer:'🌾 Farmer', buyer:'🏭 Buyer', admin:'⚙️ Admin' };
-    const activities = (await FarmifyDB.getUserActivity(id)).slice(0, 5);
-    const commodities = user.role === 'farmer' ? await FarmifyDB.getCommodities(id) : [];
-    const orders = await FarmifyDB.getOrders(user.role === 'farmer' ? { farmer_id: id } : { buyer_id: id });
-
-    document.getElementById('userDetailssContent').innerHTML = `
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
-        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:white;">${user.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}</div>
+    document.getElementById('userDetailsModalBody').innerHTML = `
+      <div style="background:linear-gradient(135deg,var(--forest),#0D2017);padding:20px;display:flex;align-items:center;gap:14px;">
+        <div style="width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:white;background:${avatarBg};">${userInitials(u.full_name)}</div>
         <div>
-          <div style="font-weight:700;font-size:17px;color:var(--forest);">${user.full_name}</div>
-          <div style="font-size:12px;color:var(--mid-gray);">${user.email} · ${roleLabel[user.role]}</div>
+          <div style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;">${u.full_name}</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);">${u.email}</div>
+          <div style="margin-top:6px;display:flex;gap:6px;">${roleBadge(u.role)}${statusBadge(u.status)}</div>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
-        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Status</div><div style="font-weight:700;color:var(--forest);">${user.status}</div></div>
-        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Telepon</div><div style="font-weight:700;color:var(--forest);">${user.phone||'—'}</div></div>
-        ${user.farm_name?`<div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);grid-column:1/-1;"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Farm</div><div style="font-weight:700;color:var(--forest);">${user.farm_name} · ${user.city||'—'} · ${user.farm_size||'?'} Ha</div></div>`:''}
-        ${user.company_name?`<div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);grid-column:1/-1;"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Perusahaan</div><div style="font-weight:700;color:var(--forest);">${user.company_name}</div></div>`:''}
-        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">${user.role==='farmer'?'Commodity':'Order'}</div><div style="font-weight:700;color:var(--moss);">${user.role==='farmer'?commodities.length:orders.length} item</div></div>
-        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:10px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Registered</div><div style="font-weight:700;color:var(--forest);">${new Date(user.created_at).toLocaleDateString('id-ID')}</div></div>
-      </div>
-      ${activities.length ? `
-        <div style="font-weight:700;font-size:13px;color:var(--forest);margin-bottom:8px;">Aktivitas Terakhir</div>
-        ${activities.map(a=>`
-          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--light-gray);">
-            <div style="width:7px;height:7px;border-radius:50%;background:var(--moss);margin-top:5px;flex-shrink:0;"></div>
-            <div style="flex:1;font-size:12px;color:var(--charcoal);">${a.detail}</div>
-            <div style="font-size:11px;color:var(--mid-gray);white-space:nowrap;">${timeAgo(a.created_at)}</div>
-          </div>`).join('')}
-      ` : ''}
-    `;
+      <div style="padding:20px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+          <div style="background:var(--cream);border-radius:10px;padding:12px;"><div style="font-size:10px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;">Total Orders</div><div style="font-size:18px;font-weight:700;color:var(--forest);">${orders.length}</div></div>
+          <div style="background:var(--cream);border-radius:10px;padding:12px;"><div style="font-size:10px;font-weight:600;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;">${u.role === 'farmer' ? 'Revenue' : 'Spent'}</div><div style="font-size:18px;font-weight:700;color:var(--forest);">${formatIDR(finance.totalRevenue)}</div></div>
+        </div>
+        ${u.phone ? `<div style="padding:8px 0;border-bottom:1px solid var(--light-gray);display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--mid-gray);">Phone</span><span style="font-weight:500;">${u.phone}</span></div>` : ''}
+        ${u.farm_name ? `<div style="padding:8px 0;border-bottom:1px solid var(--light-gray);display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--mid-gray);">Farm</span><span style="font-weight:500;">${u.farm_name}</span></div>` : ''}
+        ${u.city ? `<div style="padding:8px 0;border-bottom:1px solid var(--light-gray);display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--mid-gray);">City</span><span style="font-weight:500;">${u.city}</span></div>` : ''}
+        ${u.company_name ? `<div style="padding:8px 0;border-bottom:1px solid var(--light-gray);display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--mid-gray);">Company</span><span style="font-weight:500;">${u.company_name}</span></div>` : ''}
+        <div style="padding:8px 0;border-bottom:1px solid var(--light-gray);display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--mid-gray);">Joined</span><span style="font-weight:500;">${u.created_at ? new Date(u.created_at).toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'}) : '—'}</span></div>
+        <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+          ${u.status !== 'active' ? `<button class="btn btn-primary" style="font-size:12px;flex:1;" onclick="changeStatus('${u.id}','active');closeModal('userDetailsModal')">✅ Approve</button>` : ''}
+          ${u.status !== 'suspended' ? `<button class="btn" style="font-size:12px;flex:1;background:rgba(196,98,45,0.1);color:var(--terracotta);border:1px solid rgba(196,98,45,0.2);" onclick="changeStatus('${u.id}','suspended');closeModal('userDetailsModal')">🚫 Suspend</button>` : ''}
+          ${u.status === 'suspended' ? `<button class="btn btn-secondary" style="font-size:12px;flex:1;" onclick="changeStatus('${u.id}','active');closeModal('userDetailsModal')">🔓 Unsuspend</button>` : ''}
+        </div>
+      </div>`;
+  };
 
-    document.getElementById('userDetailssFooter').innerHTML = `
-      <button class="btn btn-secondary" onclick="closeModal('userDetailssModal')">Close</button>
-      ${user.status!=='active' ? `<button class="btn btn-primary" onclick="activateUser('${user.id}');closeModal('userDetailssModal')">✓ Activate</button>` : user.id !== session.id ? `<button class="btn btn-danger" onclick="suspendUser('${user.id}');closeModal('userDetailssModal')">Suspend</button>` : ''}
-    `;
-    openModal('userDetailssModal');
-  }
+  // ======== ACCOUNT MONITOR ========
+  window.loadMonitor = async function(roleFilter) {
+    const users = await FarmifyDB.getUsers();
+    const filtered = roleFilter && roleFilter !== 'all' ? users.filter(u => u.role === roleFilter) : users.filter(u => u.role !== 'admin');
 
-  // ---- MONITOR VIEW ----
-  async function loadMonitor(roleFilter) {
-    const allMonitorUsers = await FarmifyDB.getUsers();
-    const users = roleFilter === 'all' ? allMonitorUsers : allMonitorUsers.filter(u => u.role === roleFilter);
     const grid = document.getElementById('monitorGrid');
-    const roleColor = { farmer:'linear-gradient(135deg,var(--moss),var(--leaf))', buyer:'linear-gradient(135deg,var(--earth),var(--harvest))', admin:'linear-gradient(135deg,var(--forest),var(--moss))' };
-    const roleIcon = { farmer:'🌾', buyer:'🏭', admin:'⚙️' };
-    const statusColor = { active:'var(--moss)', pending:'var(--earth)', suspended:'var(--terracotta)' };
+    grid.innerHTML = '';
 
-    let cards = '';
-    for (const u of users) {
-      const activities = await FarmifyDB.getUserActivity(u.id);
-      const lastAct = activities[0];
-      const commodities = u.role === 'farmer' ? await FarmifyDB.getCommodities(u.id) : [];
-      const orders = (await FarmifyDB.getOrders(u.role === 'farmer' ? { farmer_id: u.id } : u.role === 'buyer' ? { buyer_id: u.id } : null)) || [];
-      cards += `
-        <div style="background:white;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);cursor:pointer;transition:transform 0.2s;" onclick="viewUser('${u.id}')" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
-          <div style="background:${roleColor[u.role]||'var(--moss)'};padding:16px 18px;display:flex;align-items:center;gap:12px;">
-            <div style="width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:white;">${u.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}</div>
-            <div style="flex:1;min-width:0;">
-              <div style="font-weight:700;font-size:14px;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${u.full_name}</div>
-              <div style="font-size:11px;color:rgba(255,255,255,0.7);">${roleIcon[u.role]} ${u.role} · <span style="color:rgba(255,255,255,0.9);font-weight:600;">${u.status}</span></div>
-            </div>
-          </div>
-          <div style="padding:14px 18px;">
-            ${u.farm_name?`<div style="font-size:12px;color:var(--mid-gray);margin-bottom:8px;">🌿 ${u.farm_name}</div>`:''}
-            ${u.company_name?`<div style="font-size:12px;color:var(--mid-gray);margin-bottom:8px;">🏢 ${u.company_name}</div>`:''}
-            <div style="display:flex;gap:10px;margin-bottom:10px;">
-              ${u.role==='farmer'?`<div style="text-align:center;flex:1;padding:8px;background:rgba(74,124,89,0.06);border-radius:var(--radius-md);"><div style="font-weight:700;font-size:16px;color:var(--forest);">${commodities.length}</div><div style="font-size:10px;color:var(--mid-gray);">Commodity</div></div>`:''}
-              <div style="text-align:center;flex:1;padding:8px;background:rgba(74,124,89,0.06);border-radius:var(--radius-md);"><div style="font-weight:700;font-size:16px;color:var(--forest);">${orders.length}</div><div style="font-size:10px;color:var(--mid-gray);">Order</div></div>
-              <div style="text-align:center;flex:1;padding:8px;background:rgba(74,124,89,0.06);border-radius:var(--radius-md);"><div style="font-weight:700;font-size:16px;color:var(--forest);">${activities.length}</div><div style="font-size:10px;color:var(--mid-gray);">Aktivitas</div></div>
-            </div>
-            <div style="font-size:11px;color:var(--mid-gray);">
-              ${lastAct ? `⏱ Terakhir aktif: <strong style="color:var(--charcoal);">${timeAgo(lastAct.created_at)}</strong>` : 'Belum ada aktivitas'}
-            </div>
-          </div>
-        </div>
-      `;
+    if (!filtered.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">Tidak ada akun ditemukan</div>';
+      return;
     }
-    grid.innerHTML = cards || '<div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;">Tidak ada akun ditemukan</div>';
+
+    for (const u of filtered) {
+      const orders = await FarmifyDB.getOrders(u.role === 'farmer' ? { farmer_id: u.id } : { buyer_id: u.id });
+      const avatarBg = u.role === 'farmer' ? 'linear-gradient(135deg,var(--moss),var(--leaf))' : 'linear-gradient(135deg,var(--earth),var(--harvest))';
+      const card = document.createElement('div');
+      card.className = 'metric-card';
+      card.style.cursor = 'pointer';
+      card.innerHTML = `
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <div style="width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:white;background:${avatarBg};flex-shrink:0;">${userInitials(u.full_name)}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:700;font-size:14px;color:var(--forest);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${u.full_name}</div>
+            <div style="font-size:11px;color:var(--mid-gray);margin-top:2px;">${u.email}</div>
+          </div>
+          <div>${statusBadge(u.status)}</div>
+        </div>
+        <ul class="metric-list">
+          <li><span>Role</span><span class="val">${roleBadge(u.role)}</span></li>
+          <li><span>Total Orders</span><span class="val">${orders.length}</span></li>
+          ${u.farm_name ? `<li><span>Farm</span><span class="val" style="font-size:12px;">${u.farm_name}</span></li>` : ''}
+          ${u.company_name ? `<li><span>Company</span><span class="val" style="font-size:12px;">${u.company_name}</span></li>` : ''}
+          <li><span>Joined</span><span class="val" style="font-size:11px;">${u.created_at ? new Date(u.created_at).toLocaleDateString('id-ID') : '—'}</span></li>
+        </ul>
+        <div style="display:flex;gap:6px;margin-top:12px;">
+          <button class="btn btn-secondary" style="font-size:12px;flex:1;" onclick="event.stopPropagation();viewUserDetails('${u.id}')">Detail</button>
+          ${u.status === 'active' ? `<button class="btn" style="font-size:12px;flex:1;background:rgba(196,98,45,0.08);color:var(--terracotta);border:1px solid rgba(196,98,45,0.15);" onclick="event.stopPropagation();changeStatus('${u.id}','suspended')">Suspend</button>` : `<button class="btn btn-primary" style="font-size:12px;flex:1;" onclick="event.stopPropagation();changeStatus('${u.id}','active')">Approve</button>`}
+        </div>`;
+      grid.appendChild(card);
+    }
+  };
+
+  // ======== TRANSACTIONS ========
+  async function loadTransactions() {
+    const statusFilter = document.getElementById('txStatusFilter')?.value || '';
+    const filter = statusFilter ? { status: statusFilter } : null;
+    const [orders, users] = await Promise.all([FarmifyDB.getOrders(filter), FarmifyDB.getUsers()]);
+
+    orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    document.getElementById('txAllCountBadge').textContent = `${orders.length} transaksi`;
+
+    const tbody = document.getElementById('txAllTableBody');
+    if (!orders.length) {
+      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:28px;color:var(--mid-gray);">Belum ada transaksi</td></tr>';
+      return;
+    }
+    tbody.innerHTML = orders.map(o => {
+      const f = users.find(u => u.id === o.farmer_id);
+      const b = users.find(u => u.id === o.buyer_id);
+      return `<tr>
+        <td style="font-weight:600;font-size:13px;color:var(--forest);">${o.order_code}</td>
+        <td style="font-size:13px;">${f ? f.full_name : '—'}</td>
+        <td style="font-size:13px;">${b ? b.full_name : '—'}</td>
+        <td style="font-size:13px;">${o.commodity_name || '—'}</td>
+        <td style="font-size:13px;font-weight:600;">${formatIDR(o.total_price)}</td>
+        <td style="font-size:12px;color:var(--moss);">${formatIDR(o.platform_fee || 0)}</td>
+        <td>${statusBadge(o.status)}</td>
+        <td style="font-size:11px;color:var(--mid-gray);">${o.created_at ? new Date(o.created_at).toLocaleDateString('id-ID') : '—'}</td>
+        <td>
+          <div style="display:flex;gap:4px;">
+            <button class="btn btn-secondary" style="font-size:11px;padding:4px 8px;" onclick="openOrderStatusModal('${o.id}','${o.order_code}','${o.status}')">✏️ Status</button>
+            <button class="btn btn-secondary" style="font-size:11px;padding:4px 8px;" onclick="openDeliveryModal('${o.id}','${o.order_code}')">🚚 Delivery</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
   }
 
-  // ---- ACTIVITY LOG ----
-  async function loadActivity(roleFilter) {
+  async function loadRecentOrders() {
+    const [orders, users] = await Promise.all([FarmifyDB.getOrders(), FarmifyDB.getUsers()]);
+    const recent = orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 20);
+    document.getElementById('txCountBadge').textContent = `${orders.length} total`;
+
+    const tbody = document.getElementById('transactionTableBody');
+    if (!recent.length) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:28px;color:var(--mid-gray);">Belum ada transaksi</td></tr>';
+      return;
+    }
+    tbody.innerHTML = recent.map(o => {
+      const f = users.find(u => u.id === o.farmer_id);
+      const b = users.find(u => u.id === o.buyer_id);
+      return `<tr>
+        <td style="font-weight:600;font-size:13px;color:var(--forest);">${o.order_code}</td>
+        <td style="font-size:13px;">${f ? f.full_name : '—'}</td>
+        <td style="font-size:13px;">${b ? b.full_name : '—'}</td>
+        <td style="font-size:13px;">${o.commodity_name || '—'}</td>
+        <td style="font-size:13px;font-weight:600;">${formatIDR(o.total_price)}</td>
+        <td style="font-size:12px;color:var(--moss);">${formatIDR(o.platform_fee || 0)}</td>
+        <td>${statusBadge(o.status)}</td>
+        <td><button class="btn btn-secondary" style="font-size:11px;padding:4px 8px;" onclick="openOrderStatusModal('${o.id}','${o.order_code}','${o.status}')">✏️ Status</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ======== ORDER STATUS MODAL ========
+  window.openOrderStatusModal = function(id, code, currentStatus) {
+    document.getElementById('modalOrderId').value = id;
+    document.getElementById('modalOrderCode').textContent = code;
+    document.getElementById('modalOrderStatus').value = currentStatus;
+    document.getElementById('orderStatusModal').style.display = 'flex';
+  };
+
+  window.saveOrderStatus = async function() {
+    const id = document.getElementById('modalOrderId').value;
+    const status = document.getElementById('modalOrderStatus').value;
+    await FarmifyDB.updateOrderStatus(id, status);
+
+    // Notify farmer and buyer
+    const order = allOrders.find(o => o.id === id) || (await FarmifyDB.getOrders()).find(o => o.id === id);
+    if (order) {
+      await FarmifyDB.addNotification(order.farmer_id, `📦 Order ${order.order_code} status updated to: ${status}`, 'info');
+      await FarmifyDB.addNotification(order.buyer_id, `📦 Your order ${order.order_code} is now: ${status}`, 'info');
+    }
+
+    showToast('✅ Order status updated!');
+    closeModal('orderStatusModal');
+    loadTransactions();
+  };
+
+  // ======== PRE-ORDERS ========
+  async function loadPreOrders() {
+    const statusFilter = document.getElementById('poStatusFilter')?.value || '';
+    const [preorders, users] = await Promise.all([FarmifyDB.getPreOrders(), FarmifyDB.getUsers()]);
+
+    const filtered = statusFilter ? preorders.filter(p => p.status === statusFilter) : preorders;
+    filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+    const container = document.getElementById('preOrdersList');
+    if (!filtered.length) {
+      container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--mid-gray);">Belum ada pre-order</div>';
+      return;
+    }
+    container.innerHTML = filtered.map(p => {
+      const farmer = users.find(u => u.id === p.farmer_id);
+      const buyer = users.find(u => u.id === p.buyer_id);
+      return `
+        <div class="preorder-admin-card">
+          <div style="font-size:28px;">📋</div>
+          <div style="flex:1;min-width:200px;">
+            <div style="font-weight:700;font-size:14px;color:var(--forest);">${p.commodity_name}</div>
+            <div style="font-size:12px;color:var(--mid-gray);margin-top:2px;">
+              🌾 ${farmer ? farmer.full_name : '—'} → 🏭 ${buyer ? buyer.full_name : '—'}
+            </div>
+            <div style="font-size:12px;color:var(--mid-gray);margin-top:2px;">
+              Qty: <strong>${p.quantity} ${p.unit || 'kg'}</strong> · Est. Harvest: <strong>${p.harvest_date || '—'}</strong> · ${timeAgo(p.created_at)}
+            </div>
+            ${p.notes ? `<div style="font-size:12px;color:var(--mid-gray);margin-top:4px;">📝 ${p.notes}</div>` : ''}
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+            <span class="preorder-badge ${p.status}">${p.status}</span>
+            <div style="font-weight:700;color:var(--forest);">${formatIDR((p.quantity || 0) * (p.price_per_unit || 0))}</div>
+            ${p.status === 'pending' ? `
+              <div style="display:flex;gap:6px;">
+                <button class="btn btn-primary" style="font-size:11px;padding:4px 10px;" onclick="updatePreOrder('${p.id}','confirmed','${p.farmer_id}','${p.buyer_id}','${p.commodity_name}')">✅ Confirm</button>
+                <button class="btn" style="font-size:11px;padding:4px 10px;background:rgba(196,98,45,0.1);color:var(--terracotta);border:1px solid rgba(196,98,45,0.2);" onclick="updatePreOrder('${p.id}','rejected','${p.farmer_id}','${p.buyer_id}','${p.commodity_name}')">🚫 Reject</button>
+              </div>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  async function loadDashPreorders() {
+    const [preorders, users] = await Promise.all([FarmifyDB.getPreOrders(), FarmifyDB.getUsers()]);
+    const recent = preorders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 10);
+    const container = document.getElementById('dashPreordersList');
+    if (!recent.length) {
+      container.innerHTML = '<div style="text-align:center;padding:32px;color:var(--mid-gray);">Belum ada pre-order</div>';
+      return;
+    }
+    container.innerHTML = recent.map(p => {
+      const farmer = users.find(u => u.id === p.farmer_id);
+      const buyer = users.find(u => u.id === p.buyer_id);
+      return `
+        <div class="preorder-admin-card">
+          <div style="font-size:24px;">📋</div>
+          <div style="flex:1;min-width:180px;">
+            <div style="font-weight:700;font-size:13px;color:var(--forest);">${p.commodity_name} — ${p.quantity} ${p.unit || 'kg'}</div>
+            <div style="font-size:12px;color:var(--mid-gray);">🌾 ${farmer ? farmer.full_name : '—'} → 🏭 ${buyer ? buyer.full_name : '—'} · ${timeAgo(p.created_at)}</div>
+          </div>
+          <span class="preorder-badge ${p.status}">${p.status}</span>
+          ${p.status === 'pending' ? `<button class="btn btn-primary" style="font-size:11px;padding:4px 10px;" onclick="updatePreOrder('${p.id}','confirmed','${p.farmer_id}','${p.buyer_id}','${p.commodity_name}')">✅ Confirm</button>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  window.updatePreOrder = async function(id, status, farmerId, buyerId, commodityName) {
+    await FarmifyDB.updatePreOrderStatus(id, status);
+    const icon = status === 'confirmed' ? '✅' : '❌';
+    await FarmifyDB.addNotification(farmerId, `${icon} Pre-order for ${commodityName} has been ${status} by admin`, 'info');
+    await FarmifyDB.addNotification(buyerId, `${icon} Your pre-order for ${commodityName} has been ${status}`, 'info');
+    showToast(`✅ Pre-order ${status}!`);
+    loadPreOrders();
+    loadDashPreorders();
+  };
+
+  // ======== DELIVERY TRACKING ========
+  async function loadDeliveries() {
+    const delivFilter = document.getElementById('deliveryFilter')?.value || '';
+    const [orders, users] = await Promise.all([FarmifyDB.getOrders(), FarmifyDB.getUsers()]);
+
+    let activeOrders = orders.filter(o => ['confirmed','processing','shipped','delivered'].includes(o.status));
+    if (delivFilter) activeOrders = activeOrders.filter(o => o.status === delivFilter);
+    activeOrders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+    const container = document.getElementById('deliveryList');
+    if (!activeOrders.length) {
+      container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--mid-gray);">Tidak ada pengiriman aktif</div>';
+      return;
+    }
+
+    const deliveryData = await Promise.all(activeOrders.map(async o => ({ order: o, delivery: await FarmifyDB.getDelivery(o.id) })));
+
+    const stepsDef = ['preparing','pickup','in_transit','out_for_delivery','delivered'];
+    const stepLabels = { preparing:'Preparing', pickup:'Picked Up', in_transit:'In Transit', out_for_delivery:'Out for Delivery', delivered:'Delivered' };
+
+    container.innerHTML = deliveryData.map(({ order: o, delivery: d }) => {
+      const farmer = users.find(u => u.id === o.farmer_id);
+      const buyer = users.find(u => u.id === o.buyer_id);
+      const currentStep = d ? d.status : 'preparing';
+      const currentIdx = stepsDef.indexOf(currentStep);
+
+      const timeline = stepsDef.map((step, i) => {
+        const cls = i < currentIdx ? 'done' : i === currentIdx ? 'active' : '';
+        return `<div class="delivery-step ${cls}"><div class="delivery-step-dot"></div><div class="delivery-step-label">${stepLabels[step]}</div>${i === currentIdx && d?.updated_at ? `<div class="delivery-step-sub">${timeAgo(d.updated_at)}</div>` : ''}</div>`;
+      }).join('');
+
+      return `
+        <div class="order-detail-card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+            <div>
+              <div style="font-weight:700;font-size:15px;color:var(--forest);">${o.order_code}</div>
+              <div style="font-size:12px;color:var(--mid-gray);margin-top:2px;">${o.commodity_name || '—'} · ${formatIDR(o.total_price)}</div>
+              <div style="font-size:12px;color:var(--mid-gray);margin-top:2px;">🌾 ${farmer ? farmer.full_name : '—'} → 🏭 ${buyer ? buyer.full_name : '—'}</div>
+              ${d?.tracking_no ? `<div style="font-size:12px;color:var(--mid-gray);margin-top:2px;">📦 ${d.courier||''} · Resi: <strong>${d.tracking_no}</strong></div>` : ''}
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+              ${statusBadge(o.status)}
+              <button class="btn btn-secondary" style="font-size:11px;padding:4px 10px;" onclick="openDeliveryModal('${o.id}','${o.order_code}')">🚚 Update</button>
+            </div>
+          </div>
+          <div class="delivery-timeline">${timeline}</div>
+        </div>`;
+    }).join('');
+  }
+
+  // ======== DELIVERY MODAL ========
+  window.openDeliveryModal = async function(orderId, orderCode) {
+    document.getElementById('deliveryOrderId').value = orderId;
+    document.getElementById('deliveryOrderCode').textContent = orderCode;
+    const d = await FarmifyDB.getDelivery(orderId);
+    if (d) {
+      document.getElementById('deliveryStatusSelect').value = d.status || 'preparing';
+      document.getElementById('deliveryTrackingNo').value = d.tracking_no || '';
+      document.getElementById('deliveryCourier').value = d.courier || 'JNE';
+      document.getElementById('deliveryNote').value = d.note || '';
+    }
+    document.getElementById('deliveryStatusModal').style.display = 'flex';
+  };
+
+  window.saveDeliveryStatus = async function() {
+    const orderId = document.getElementById('deliveryOrderId').value;
+    const status = document.getElementById('deliveryStatusSelect').value;
+    const tracking_no = document.getElementById('deliveryTrackingNo').value.trim();
+    const courier = document.getElementById('deliveryCourier').value;
+    const note = document.getElementById('deliveryNote').value.trim();
+
+    await FarmifyDB.updateDelivery(orderId, { status, tracking_no, courier, note });
+
+    // Also update order status to match
+    const orderStatusMap = { preparing:'processing', pickup:'processing', in_transit:'shipped', out_for_delivery:'shipped', delivered:'delivered' };
+    if (orderStatusMap[status]) {
+      await FarmifyDB.updateOrderStatus(orderId, orderStatusMap[status]);
+      const order = (await FarmifyDB.getOrders()).find(o => o.id === orderId);
+      if (order) {
+        await FarmifyDB.addNotification(order.farmer_id, `🚚 Delivery update for ${order.order_code}: ${status}`, 'info');
+        await FarmifyDB.addNotification(order.buyer_id, `🚚 Your order ${order.order_code} delivery: ${status}${tracking_no ? ` (${courier}: ${tracking_no})` : ''}`, 'info');
+      }
+    }
+
+    showToast('✅ Delivery status updated!');
+    closeModal('deliveryStatusModal');
+    loadDeliveries();
+  };
+
+  // ======== FINANCIAL REPORTS ========
+  async function loadFinance() {
+    const [orders, users] = await Promise.all([FarmifyDB.getOrders(), FarmifyDB.getUsers()]);
+
+    const allOrdersList = orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    const completed = orders.filter(o => ['completed','delivered'].includes(o.status));
+    const pending = orders.filter(o => ['pending','confirmed','processing','shipped'].includes(o.status));
+    const cancelled = orders.filter(o => o.status === 'cancelled');
+
+    const totalVol = orders.reduce((s, o) => s + (o.total_price || 0), 0);
+    const completedVol = completed.reduce((s, o) => s + (o.total_price || 0), 0);
+    const completedFee = completed.reduce((s, o) => s + (o.platform_fee || 0), 0);
+    const pendingVol = pending.reduce((s, o) => s + (o.total_price || 0), 0);
+
+    // Pre-order fees
+    const preorders = await FarmifyDB.getPreOrders();
+    const confirmedPOs = preorders.filter(p => p.status === 'confirmed');
+    const poFee = confirmedPOs.reduce((s, p) => s + ((p.quantity || 0) * (p.price_per_unit || 0) * 0.03), 0);
+
+    const totalRevenue = completedFee + poFee;
+
+    document.getElementById('finTotalVol').textContent = formatIDR(totalVol);
+    document.getElementById('finTotalOrders').textContent = `${orders.length} orders`;
+    document.getElementById('finTotalFee').textContent = formatIDR(completedFee);
+    document.getElementById('finCompleted').textContent = completed.length;
+    document.getElementById('finCompletedVol').textContent = formatIDR(completedVol);
+    document.getElementById('finPending').textContent = pending.length;
+    document.getElementById('finPendingVol').textContent = formatIDR(pendingVol);
+    document.getElementById('finTotalRevenue').textContent = formatIDR(totalRevenue);
+    document.getElementById('revFee').textContent = formatIDR(completedFee);
+    document.getElementById('revPOFee').textContent = formatIDR(poFee);
+
+    const maxFee = Math.max(completedFee, poFee, 1);
+    document.getElementById('revFeeBar').style.width = `${(completedFee / maxFee) * 100}%`;
+    document.getElementById('revPOFeeBar').style.width = `${(poFee / maxFee) * 100}%`;
+
+    // Status distribution
+    const statusGroups = {};
+    orders.forEach(o => { statusGroups[o.status] = (statusGroups[o.status] || 0) + 1; });
+    document.getElementById('txByStatusList').innerHTML = Object.entries(statusGroups).map(([s, c]) =>
+      `<li><span>${statusBadge(s)}</span><span class="val">${c} orders</span></li>`
+    ).join('') || '<li><span style="color:var(--mid-gray)">No data</span></li>';
+
+    document.getElementById('finTxCount').textContent = `${allOrdersList.length} transaksi`;
+    document.getElementById('finTxTableBody').innerHTML = allOrdersList.map(o => {
+      const f = users.find(u => u.id === o.farmer_id);
+      const b = users.find(u => u.id === o.buyer_id);
+      return `<tr>
+        <td style="font-weight:600;font-size:13px;color:var(--forest);">${o.order_code}</td>
+        <td style="font-size:13px;">${f ? f.full_name : '—'}</td>
+        <td style="font-size:13px;">${b ? b.full_name : '—'}</td>
+        <td style="font-weight:600;">${formatIDR(o.total_price)}</td>
+        <td style="color:var(--moss);">${formatIDR(o.platform_fee || 0)}</td>
+        <td>${statusBadge(o.status)}</td>
+        <td style="font-size:11px;color:var(--mid-gray);">${o.created_at ? new Date(o.created_at).toLocaleDateString('id-ID') : '—'}</td>
+      </tr>`;
+    }).join('') || '<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--mid-gray);">Belum ada transaksi</td></tr>';
+  }
+
+  // ======== PLATFORM ANALYTICS ========
+  async function loadPlatformAnalytics() {
+    const [users, orders, commodities, preorders] = await Promise.all([
+      FarmifyDB.getUsers(),
+      FarmifyDB.getOrders(),
+      FarmifyDB.getCommodities(),
+      FarmifyDB.getPreOrders()
+    ]);
+
+    document.getElementById('statFarmer').textContent = users.filter(u => u.role === 'farmer').length;
+    document.getElementById('statBuyer').textContent = users.filter(u => u.role === 'buyer').length;
+    document.getElementById('statCommodity').textContent = commodities.filter(c => c.is_available).length;
+    document.getElementById('statOrder').textContent = orders.length;
+    document.getElementById('statPreorder').textContent = preorders.length;
+
+    // Top commodities by order count
+    const comCounts = {};
+    orders.forEach(o => {
+      if (o.commodity_name) comCounts[o.commodity_name] = (comCounts[o.commodity_name] || 0) + 1;
+    });
+    const sorted = Object.entries(comCounts).sort((a, b) => b[1] - a[1]).slice(0, 6);
+    document.getElementById('topCommodities').innerHTML = sorted.length
+      ? sorted.map(([name, count]) => `<li><span>${name}</span><span class="val">${count} order</span></li>`).join('')
+      : '<li><span style="color:var(--mid-gray)">Belum ada data</span></li>';
+
+    // Order status distribution
+    const statusGroups = {};
+    orders.forEach(o => { statusGroups[o.status] = (statusGroups[o.status] || 0) + 1; });
+    document.getElementById('orderStatusDist').innerHTML = Object.entries(statusGroups).map(([s, c]) =>
+      `<li><span>${statusBadge(s)}</span><span class="val">${c}</span></li>`
+    ).join('') || '<li><span style="color:var(--mid-gray)">Belum ada data</span></li>';
+  }
+
+  // ======== ACTIVITY LOG ========
+  window.loadActivity = async function(roleFilter) {
     let activities = await FarmifyDB.getActivity(roleFilter && roleFilter !== 'all' ? { role: roleFilter } : null);
     document.getElementById('activityCountBadge').textContent = `${activities.length} entri`;
-    const actionIcon = { logged in:'🔐', logout:'🚪', register:'🆕', setup_complete:'✅', status_change:'🔄', commodity_added:'🌿', order_created:'📦', profile_updated:'✏️' };
+    const actionIcon = { 'logged in':'🔐', logout:'🚪', register:'🆕', setup_complete:'✅', status_change:'🔄', commodity_added:'🌿', order_created:'📦', profile_updated:'✏️', login:'🔐' };
     const roleColor = { farmer:'var(--moss)', buyer:'var(--earth)', admin:'var(--forest)' };
 
     document.getElementById('activityLog').innerHTML = !activities.length
@@ -719,9 +1302,9 @@
           </div>
           <div style="font-size:11px;color:var(--mid-gray);white-space:nowrap;padding-left:8px;">${timeAgo(a.created_at)}</div>
         </div>`).join('');
-  }
+  };
 
-  // ---- PROFILE ----
+  // ======== PROFILE ========
   async function populateProfile() {
     const fullUser = (await FarmifyDB.findById(session.id)) || session;
     const initials = session.full_name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
@@ -732,15 +1315,20 @@
     document.getElementById('vEmail').textContent = session.email;
     document.getElementById('vPhone').textContent = fullUser.phone || '—';
     if (fullUser.created_at) document.getElementById('vMemberSince').textContent = new Date(fullUser.created_at).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
-    const users = await FarmifyDB.getUsers();
+
+    const [users, orders] = await Promise.all([FarmifyDB.getUsers(), FarmifyDB.getOrders()]);
+    const completed = orders.filter(o => ['completed','delivered'].includes(o.status));
+    const totalFee = completed.reduce((s, o) => s + (o.platform_fee || 0), 0);
+
     document.getElementById('adminStatUsers').textContent = users.length + ' pengguna';
     document.getElementById('adminStatFarmers').textContent = users.filter(u=>u.role==='farmer').length + ' farmer';
     document.getElementById('adminStatBuyers').textContent = users.filter(u=>u.role==='buyer').length + ' buyer';
-    document.getElementById('adminStatOrders').textContent = (await FarmifyDB.getOrders()).length + ' order';
+    document.getElementById('adminStatOrders').textContent = orders.length + ' order';
+    document.getElementById('adminStatRevenue').textContent = formatIDR(totalFee);
     disableEditMode();
   }
 
-  async function enableEditMode() {
+  window.enableEditMode = async function() {
     const fullUser = (await FarmifyDB.findById(session.id)) || session;
     document.getElementById('eFullName').value = session.full_name;
     document.getElementById('eEmail').value = session.email;
@@ -750,17 +1338,18 @@
       <button class="btn-cancel-profile" onclick="disableEditMode()" style="margin-right:8px;">Cancel</button>
       <button class="btn-save-profile" onclick="saveProfileInline()">💾 Save</button>
     `;
-  }
+  };
 
-  function disableEditMode() {
-    document.getElementById('cardPersonal').classList.remove('profile-edit-mode');
-    document.getElementById('cardPersonal').classList.add('profile-view-mode');
+  window.disableEditMode = function() {
+    const card = document.getElementById('cardPersonal');
+    card.classList.remove('profile-edit-mode');
+    card.classList.add('profile-view-mode');
     document.getElementById('profileActions').innerHTML = `<button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profile</button>`;
-  }
+  };
 
-  async function saveProfileInline() {
+  window.saveProfileInline = async function() {
     const newName = document.getElementById('eFullName').value.trim();
-    if (!newName) { showToast('Name tidak boleh kosong!','error'); return; }
+    if (!newName) { showToast('Nama tidak boleh kosong!','error'); return; }
     await FarmifyDB.updateUser(session.id, { full_name: newName, phone: document.getElementById('ePhone').value.trim() });
     await FarmifyDB.addActivity(session.id, newName, 'admin', 'profile_updated', 'Memperbarui profil akun');
     session.full_name = newName;
@@ -769,28 +1358,26 @@
     document.getElementById('sidebarAvatar').textContent = newName.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
     await populateProfile();
     showToast('✅ Profile saved successfully!');
-  }
+  };
 
-  // ---- EXPORT ----
-  async function exportReport() {
-    const orders = await FarmifyDB.getOrders();
-    const users = await FarmifyDB.getUsers();
-    if (!orders.length) { showToast('No data yet transaksi.', 'info'); return; }
-    let csv = 'Order Code,Farmer,Buyer,Commodity,Total,Fee,Status\n';
+  // ======== EXPORT ========
+  window.exportReport = async function() {
+    const [orders, users] = await Promise.all([FarmifyDB.getOrders(), FarmifyDB.getUsers()]);
+    if (!orders.length) { showToast('No data yet.', 'info'); return; }
+    let csv = 'Order Code,Farmer,Buyer,Commodity,Total,Platform Fee,Status,Date\n';
     orders.forEach(o => {
       const f = users.find(u=>u.id===o.farmer_id);
       const b = users.find(u=>u.id===o.buyer_id);
-      csv += `${o.order_code},"${f?f.full_name:'—'}","${b?b.full_name:'—'}","${o.commodity_name||'—'}",${o.total_price},${o.platform_fee||0},${o.status}\n`;
+      csv += `${o.order_code},"${f?f.full_name:'—'}","${b?b.full_name:'—'}","${o.commodity_name||'—'}",${o.total_price},${o.platform_fee||0},${o.status},"${o.created_at ? new Date(o.created_at).toLocaleDateString('id-ID') : '—'}"\n`;
     });
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
     a.download = `farmify-laporan-${new Date().toISOString().slice(0,10)}.csv`;
     a.click();
     showToast('✅ Laporan berhasil diexport!');
-  }
+  };
 
-  function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-  function navAlert(name) { alert(`Fitur "${name}" sedang dalam pengembangan.`); }
+  window.openModal = function(id) { document.getElementById(id).style.display = 'flex'; };
 
   // Init
   initDashboard();

@@ -147,17 +147,17 @@
 
     <ul class="sidebar-nav">
       <li><a href="#" id="nav-dashboard" class="active" onclick="navigateTo('dashboard'); return false;"><span class="nav-icon">🏠</span> Dashboard</a></li>
-      <li><a href="#" onclick="navAlert('Find Suppliers'); return false;"><span class="nav-icon">🔍</span> Find Suppliers</a></li>
-      <li><a href="#" onclick="navAlert('Cart'); return false;"><span class="nav-icon">🛒</span> Cart</a></li>
-      <li><a href="#" onclick="navAlert('My Pre-Orders'); return false;"><span class="nav-icon">📋</span> My Pre-Orders</a></li>
-      <li><a href="#" onclick="navAlert('Order History'); return false;"><span class="nav-icon">📦</span> Order History</a></li>
-      <li><a href="#" onclick="navAlert('Track Shipment'); return false;"><span class="nav-icon">🚚</span> Track Shipment</a></li>
+      <li><a href="#" id="nav-suppliers" onclick="navigateTo('suppliers'); return false;"><span class="nav-icon">🔍</span> Find Suppliers</a></li>
+      <li><a href="#" id="nav-orders" onclick="navigateTo('orders'); return false;"><span class="nav-icon">🛒</span> My Orders</a></li>
+      <li><a href="#" id="nav-preorders" onclick="navigateTo('preorders'); return false;"><span class="nav-icon">📋</span> My Pre-Orders</a></li>
+      <li><a href="#" id="nav-history" onclick="navigateTo('history'); return false;"><span class="nav-icon">📦</span> Order History</a></li>
+      <li><a href="#" id="nav-tracking" onclick="navigateTo('tracking'); return false;"><span class="nav-icon">🚚</span> Track Shipment</a></li>
 
       <div style="padding:0 8px;margin-top:20px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">Account</div>
       <li><a href="#" id="nav-profile" onclick="navigateTo('profile'); return false;"><span class="nav-icon">👤</span> Company Profile</a></li>
-      <li><a href="#" onclick="navAlert('Wallet'); return false;"><span class="nav-icon">💰</span> Wallet & Payment</a></li>
-      <li><a href="#" onclick="navAlert('Loyalty Points'); return false;"><span class="nav-icon">🏆</span> Loyalty Points</a></li>
-      <li><a href="#" onclick="navAlert('Notifications'); return false;"><span class="nav-icon">🔔</span> Notifications <span data-notif-badge style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;display:none;">0</span></a></li>
+      <li><a href="#" id="nav-wallet" onclick="navigateTo('wallet'); return false;"><span class="nav-icon">💰</span> Wallet & Payment</a></li>
+      <li><a href="#" id="nav-loyalty" onclick="navigateTo('loyalty'); return false;"><span class="nav-icon">🏆</span> Loyalty Points</a></li>
+      <li><a href="#" id="nav-notifications" onclick="navigateTo('notifications'); return false;"><span class="nav-icon">🔔</span> Notifications <span id="buyerNotifBadge" style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;display:none;">0</span></a></li>
     </ul>
 
     <div class="sidebar-footer">
@@ -243,7 +243,7 @@
           <div class="table-container page-enter" style="margin-top:24px;">
             <div class="table-header">
               <div class="table-title">Available Commodities Now</div>
-              <span class="badge badge-farmer" id="commodityCount">Loading...</span>
+              <span class="badge badge-farmer" id="farmerActiveCount">Loading...</span>
             </div>
             <div class="table-scroll">
               <table>
@@ -409,6 +409,161 @@
 
     </div><!-- end view-profile -->
 
+  
+    <!-- ======== VIEW: FIND SUPPLIERS ======== -->
+    <div id="view-suppliers" class="page-view">
+      <div class="page-title-row page-enter">
+        <div><div class="page-title">🔍 Find Suppliers</div><div class="page-subtitle">Browse farmers and available commodities</div></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:20px;" class="page-enter">
+        <input type="text" id="supplierSearch" placeholder="Search commodity, farm name, city..." style="flex:1;padding:10px 14px;border:1px solid var(--light-gray);border-radius:var(--radius-sm);font-size:14px;font-family:var(--font-body);" oninput="filterSuppliers()"/>
+        <select id="supplierCategory" onchange="filterSuppliers()" style="padding:10px 14px;border:1px solid var(--light-gray);border-radius:var(--radius-sm);font-size:13px;">
+          <option value="">All Categories</option>
+          <option value="vegetable">Vegetables</option>
+          <option value="spice">Spices</option>
+          <option value="fruit">Fruit</option>
+          <option value="rice">Rice / Grains</option>
+          <option value="tuber">Root Crops</option>
+        </select>
+      </div>
+      <div id="suppliersGrid" class="page-enter" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+        <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
+      </div>
+    </div>
+
+    <!-- ======== VIEW: MY ORDERS ======== -->
+    <div id="view-orders" class="page-view">
+      <div class="page-title-row page-enter">
+        <div><div class="page-title">🛒 My Orders</div><div class="page-subtitle">Track your active orders</div></div>
+      </div>
+      <div class="table-container page-enter">
+        <div class="table-header"><div class="table-title">Active Orders</div></div>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Order Code</th><th>Farmer</th><th>Commodity</th><th>Total</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="buyerOrdersBody"><tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">Loading...</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ======== VIEW: MY PRE-ORDERS ======== -->
+    <div id="view-preorders" class="page-view">
+      <div class="page-title-row page-enter">
+        <div><div class="page-title">📋 My Pre-Orders</div><div class="page-subtitle">Reserve commodities before harvest</div></div>
+        <button class="btn btn-primary" onclick="openModal('preorderModal')">+ New Pre-Order</button>
+      </div>
+      <div id="buyerPreordersList" class="page-enter" style="display:flex;flex-direction:column;gap:14px;">
+        <div style="text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
+      </div>
+    </div>
+
+    <!-- ======== VIEW: ORDER HISTORY ======== -->
+    <div id="view-history" class="page-view">
+      <div class="page-title-row page-enter">
+        <div><div class="page-title">📦 Order History</div><div class="page-subtitle">All your past transactions</div></div>
+      </div>
+      <div class="table-container page-enter">
+        <div class="table-scroll"><table>
+          <thead><tr><th>Order Code</th><th>Farmer</th><th>Commodity</th><th>Total</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody id="buyerHistoryBody"><tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">Loading...</td></tr></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ======== VIEW: TRACK SHIPMENT ======== -->
+    <div id="view-tracking" class="page-view">
+      <div class="page-title-row page-enter">
+        <div><div class="page-title">🚚 Track Shipment</div><div class="page-subtitle">Real-time delivery tracking</div></div>
+      </div>
+      <div id="trackingContainer" class="page-enter" style="display:flex;flex-direction:column;gap:16px;">
+        <div style="text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
+      </div>
+    </div>
+
+    <!-- ======== VIEW: WALLET ======== -->
+    <div id="view-wallet" class="page-view">
+      <div class="page-title-row page-enter">
+        <div><div class="page-title">💰 Wallet & Payment</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:800px;" class="page-enter">
+        <div style="background:linear-gradient(135deg,var(--forest),#0D2017);border-radius:var(--radius-lg);padding:28px;color:white;">
+          <div style="font-size:11px;letter-spacing:1px;color:rgba(255,255,255,0.5);margin-bottom:8px;">WALLET BALANCE</div>
+          <div style="font-size:32px;font-weight:700;margin-bottom:4px;">IDR 50.000.000</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.6);">Available for transaction</div>
+          <div style="margin-top:20px;display:flex;gap:10px;">
+            <button class="btn btn-harvest" style="flex:1;font-size:13px;" onclick="showToast('Top Up feature coming soon')">Top Up</button>
+            <button class="btn btn-outline-white" style="flex:1;font-size:13px;" onclick="showToast('Withdraw feature coming soon')">Withdraw</button>
+          </div>
+        </div>
+        <div style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-soft);">
+          <div style="font-weight:700;margin-bottom:16px;">🏆 Loyalty Points</div>
+          <div style="font-size:36px;font-weight:700;color:var(--harvest);">123</div>
+          <div style="font-size:13px;color:var(--mid-gray);margin-bottom:12px;">Points earned from purchases</div>
+          <div style="font-size:12px;color:var(--moss);">✓ Every IDR 100.000 = 1 point</div>
+          <div style="font-size:12px;color:var(--moss);">✓ 100 points = IDR 50.000 discount</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======== VIEW: NOTIFICATIONS (BUYER) ======== -->
+    <div id="view-notifications" class="page-view">
+      <div class="page-title-row page-enter">
+        <div><div class="page-title">🔔 Notifications</div></div>
+        <button class="btn btn-secondary" onclick="buyerMarkAllRead()">Mark all as read</button>
+      </div>
+      <div id="buyerNotifList" class="page-enter" style="display:flex;flex-direction:column;gap:10px;">
+        <div style="text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
+      </div>
+    </div>
+
+    <!-- ======== VIEW: LOYALTY ======== -->
+    <div id="view-loyalty" class="page-view">
+      <div class="page-title-row page-enter"><div><div class="page-title">🏆 Loyalty Points</div></div></div>
+      <div style="max-width:600px;" class="page-enter">
+        <div style="background:linear-gradient(135deg,var(--harvest),#B8821A);border-radius:var(--radius-lg);padding:28px;color:white;margin-bottom:20px;text-align:center;">
+          <div style="font-size:48px;font-weight:700;">123</div>
+          <div style="font-size:16px;margin-top:4px;">Total Points</div>
+        </div>
+        <div style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-soft);">
+          <div style="font-weight:700;margin-bottom:14px;">How to earn points</div>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--charcoal);">
+            <div>✓ Every IDR 100.000 purchase = 1 point</div>
+            <div>✓ Complete your first order = 10 bonus points</div>
+            <div>✓ Leave a review = 2 points</div>
+          </div>
+          <div style="font-weight:700;margin:16px 0 10px;">Redeem rewards</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(245,240,232,0.6);border-radius:var(--radius-sm);">
+              <span>IDR 50.000 discount</span><button class="btn btn-secondary" style="font-size:12px;" onclick="showToast('100 points required')">100 pts → Redeem</button>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(245,240,232,0.6);border-radius:var(--radius-sm);">
+              <span>Free shipping voucher</span><button class="btn btn-secondary" style="font-size:12px;" onclick="showToast('50 points required')">50 pts → Redeem</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRE-ORDER MODAL -->
+    <div id="preorderModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;padding:20px;">
+      <div style="background:white;border-radius:var(--radius-lg);padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <h3 style="font-family:var(--font-display);font-size:20px;color:var(--forest);">📋 New Pre-Order</h3>
+          <button onclick="closeModal('preorderModal')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--mid-gray);">×</button>
+        </div>
+        <div class="form-group"><label class="form-label">Commodity Name *</label><input type="text" id="pocommodity" class="form-input" placeholder="e.g. Red Chili, Cabbage" /></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group"><label class="form-label">Quantity (kg) *</label><input type="number" id="poqty" class="form-input" placeholder="500" /></div>
+          <div class="form-group"><label class="form-label">Price/kg *</label><input type="number" id="poprice" class="form-input" placeholder="45000" /></div>
+        </div>
+        <div class="form-group"><label class="form-label">Expected Harvest Date</label><input type="date" id="poharvest" class="form-input" /></div>
+        <div class="form-group"><label class="form-label">Select Farmer</label>
+          <select id="pofarmer" class="form-input"><option value="">Loading farmers...</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Notes (optional)</label><textarea id="ponotes" class="form-input" rows="2" placeholder="Special requirements..."></textarea></div>
+        <button class="btn btn-primary btn-full" onclick="submitPreOrder()" style="margin-top:8px;">Submit Pre-Order</button>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -452,13 +607,7 @@
 <script>
   let session = null;
   let currentView = 'dashboard';
-  let currentFarmerModal = null;
-  let activeCategory = '';
-
-  function waitForDB(cb) {
-    if (window.FarmifyDB && window.requireAuth) { cb(); return; }
-    const t = setInterval(() => { if (window.FarmifyDB && window.requireAuth) { clearInterval(t); cb(); } }, 50);
-  }
+  let allSuppliers = [];
 
   function waitForDB(cb) {
     if (window.FarmifyDB && window.requireAuth) { cb(); return; }
@@ -477,12 +626,14 @@
         await loadDashboardData();
       }
     })();
-  });// waitForDB
+  });
 
-  // ---- SPA NAVIGATION ----
+  // ---- SPA NAV ----
   async function navigateTo(view) {
     document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
-    document.getElementById('view-' + view).classList.add('active');
+    const el = document.getElementById('view-' + view);
+    if (!el) return;
+    el.classList.add('active');
     currentView = view;
     document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
     const navEl = document.getElementById('nav-' + view);
@@ -490,244 +641,331 @@
     document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
     const bnavEl = document.getElementById('bnav-' + view);
     if (bnavEl) bnavEl.classList.add('active');
-    if (view === 'profile') await populateProfile();
-    if (view === 'dashboard') await loadDashboardData();
     if (window.innerWidth <= 768) toggleSidebar();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (view === 'dashboard')     await loadDashboardData();
+    if (view === 'profile')       await populateProfile();
+    if (view === 'suppliers')     await loadSuppliersView();
+    if (view === 'orders')        await loadBuyerOrders();
+    if (view === 'preorders')     await loadBuyerPreorders();
+    if (view === 'history')       await loadOrderHistory();
+    if (view === 'tracking')      await loadTrackingView();
+    if (view === 'notifications') await loadBuyerNotifs();
   }
 
-  // ---- LOAD DASHBOARD DATA (cross-connected with farmer) ----
+  // ---- DASHBOARD ----
   async function loadDashboardData() {
-    const farmers = await FarmifyDB.getCommoditiesByFarmer();
-    const allCommodities = await FarmifyDB.getAvailableCommodities();
+    try {
+      const [orders, farmers, commodities] = await Promise.all([
+        FarmifyDB.getOrders({ buyer_id: session.id }),
+        FarmifyDB.getCommoditiesByFarmer(),
+        FarmifyDB.getAvailableCommodities()
+      ]);
+      const active = orders.filter(o => ['pending','confirmed','processing','shipped'].includes(o.status));
+      document.getElementById('activeOrderCount').textContent = active.length;
+      document.getElementById('farmerCount').textContent = farmers.length;
+      // Render supplier cards
+      const suppList = document.getElementById('suppliersList');
+      if (suppList) {
+        allSuppliers = farmers;
+        suppList.innerHTML = farmers.slice(0,3).map(f => renderFarmerCard(f)).join('') ||
+          '<div style="padding:20px;color:var(--mid-gray);">No active farmers yet</div>';
+        document.getElementById('farmerActiveCount').textContent = farmers.length + ' active farmer' + (farmers.length !== 1 ? 's' : '');
+      }
+      // Commodity table
+      const ctbody = document.getElementById('commodityTableBody');
+      if (ctbody) {
+        ctbody.innerHTML = commodities.slice(0,5).map(c => `<tr>
+          <td>${c.emoji||'🌿'} ${c.name}</td>
+          <td>${c.farm_name}</td>
+          <td>IDR ${Number(c.price).toLocaleString('id-ID')}/${c.unit||'kg'}</td>
+          <td>${c.stock} ${c.unit||'kg'}</td>
+          <td><span class="badge ${c.is_preorder?'badge-warning':'badge-success'}">${c.is_preorder?'Pre-Order':'Available'}</span></td>
+          <td><button class="btn btn-primary" style="padding:5px 12px;font-size:12px;" onclick="quickOrder('${c.id}')">+ Order</button></td>
+        </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--mid-gray);">No commodities available</td></tr>';
+        document.getElementById('commodityTotalBadge').textContent = commodities.length + ' commodities';
+      }
+      // Notif badge
+      const notifs = await FarmifyDB.getNotifications(session.id);
+      const unread = notifs.filter(n => !n.read).length;
+      const badge = document.getElementById('buyerNotifBadge');
+      if (badge) { badge.textContent = unread; badge.style.display = unread ? 'inline' : 'none'; }
+    } catch(e) { console.error(e); }
+  }
 
-    document.getElementById('supplierCount').textContent = farmers.length;
-    document.getElementById('activeOrderCount').textContent = (await FarmifyDB.getOrders({ buyer_id: session.id })).length;
+  function renderFarmerCard(f) {
+    const tags = (f.items||[]).slice(0,3).map(i => `<span style="padding:3px 8px;background:rgba(74,124,89,0.1);border-radius:100px;font-size:11px;color:var(--moss);">${i.emoji||'🌿'} ${i.name}</span>`).join('');
+    return `<div style="background:white;border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--sage),var(--leaf));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:15px;">${f.full_name?.[0]||'F'}</div>
+        <div><div style="font-weight:700;font-size:14px;">${f.farm_name||f.full_name}</div><div style="font-size:11px;color:var(--mid-gray);">📍 ${f.city||'East Java'}</div></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">${tags}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:var(--harvest);">★ 4.8 (42 reviews)</span>
+        <button class="btn btn-primary" style="padding:6px 14px;font-size:12px;" onclick="openSuppliersModal('${f.id}')">View & Order</button>
+      </div>
+    </div>`;
+  }
 
-    // Suppliers grid
-    const grid = document.getElementById('supplierGrid');
-    document.getElementById('supplierCountLabel').textContent = `${farmers.length} active farmer`;
-    if (!farmers.length) {
-      grid.innerHTML = `<div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;"><div style="font-size:36px;margin-bottom:12px;">🌱</div><div>No suppliers registered yet</div></div>`;
-    } else {
-      grid.innerHTML = farmers.map(f => `
-        <div class="supplier-card" onclick="openSuppliersModal('${f.id}')">
-          <div class="supplier-header">
-            <div class="supplier-avatar">${f.items[0]?.emoji || '🌾'}</div>
-            <div>
-              <div class="supplier-name">${f.farm_name || f.full_name}</div>
-              <div class="supplier-location">📍 ${f.city || 'East Java'}</div>
-            </div>
-          </div>
-          <div class="supplier-commodities">
-            ${f.items.slice(0,3).map(c => `<span class="commodity-tag">${c.emoji || ''} ${c.name}</span>`).join('')}
-            ${f.items.length > 3 ? `<span class="commodity-tag">+${f.items.length-3} lagi</span>` : ''}
-          </div>
-          <div class="supplier-footer">
-            <div class="supplier-rating">⭐ 4.8 <span style="color:var(--mid-gray);font-weight:400;">(42 reviews)</span></div>
-            <button class="btn btn-primary" style="padding:7px 16px;font-size:12px;" onclick="event.stopPropagation();openSuppliersModal('${f.id}')">Order</button>
-          </div>
+  // ---- SUPPLIERS VIEW ----
+  async function loadSuppliersView() {
+    const grid = document.getElementById('suppliersGrid');
+    allSuppliers = await FarmifyDB.getCommoditiesByFarmer();
+    if (!allSuppliers.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">No farmers available</div>'; return; }
+    renderSupplierGrid(allSuppliers);
+  }
+
+  function renderSupplierGrid(farmers) {
+    const grid = document.getElementById('suppliersGrid');
+    grid.innerHTML = farmers.map(f => renderFarmerCard(f)).join('') || '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">No results</div>';
+  }
+
+  function filterSuppliers() {
+    const q = document.getElementById('supplierSearch')?.value.toLowerCase() || '';
+    const cat = document.getElementById('supplierCategory')?.value || '';
+    const filtered = allSuppliers.filter(f => {
+      const matchQ = !q || (f.farm_name||'').toLowerCase().includes(q) || (f.city||'').toLowerCase().includes(q) ||
+        (f.items||[]).some(i => i.name.toLowerCase().includes(q));
+      const matchCat = !cat || (f.items||[]).some(i => i.category === cat);
+      return matchQ && matchCat;
+    });
+    renderSupplierGrid(filtered);
+  }
+
+  // ---- BUYER ORDERS ----
+  async function loadBuyerOrders() {
+    const tbody = document.getElementById('buyerOrdersBody');
+    const orders = await FarmifyDB.getOrders({ buyer_id: session.id });
+    const active = orders.filter(o => !['delivered','cancelled','completed'].includes(o.status));
+    active.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+    if (!active.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">No active orders</td></tr>'; return; }
+    const badge = { pending:'badge-warning', confirmed:'badge-success', processing:'badge-success', shipped:'badge-success' };
+    tbody.innerHTML = active.map(o => `<tr>
+      <td><span style="font-family:var(--font-mono);font-size:13px;color:var(--moss);">${o.order_code}</span></td>
+      <td>${o.farmer_name||o.farmer_id}</td>
+      <td>${o.commodity_name} · ${o.qty} ${o.unit||'kg'}</td>
+      <td>IDR ${Number(o.total_price).toLocaleString('id-ID')}</td>
+      <td><span class="badge ${badge[o.status]||''}" style="text-transform:capitalize;">${o.status}</span></td>
+      <td>${o.status==='shipped'?`<button class="btn btn-primary" style="padding:5px 12px;font-size:12px;" onclick="navigateTo('tracking')">Track</button>`:`<span style="font-size:12px;color:var(--mid-gray);">Waiting...</span>`}</td>
+    </tr>`).join('');
+  }
+
+  // ---- ORDER HISTORY ----
+  async function loadOrderHistory() {
+    const tbody = document.getElementById('buyerHistoryBody');
+    const orders = await FarmifyDB.getOrders({ buyer_id: session.id });
+    orders.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+    if (!orders.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">No orders yet</td></tr>'; return; }
+    const badge = { pending:'badge-warning', confirmed:'badge-success', processing:'badge-success', shipped:'badge-success', delivered:'badge-success', cancelled:'badge-error' };
+    tbody.innerHTML = orders.map(o => `<tr>
+      <td><span style="font-family:var(--font-mono);font-size:13px;color:var(--moss);">${o.order_code}</span></td>
+      <td>${o.farmer_name||o.farmer_id}</td>
+      <td>${o.commodity_name} · ${o.qty} ${o.unit||'kg'}</td>
+      <td>IDR ${Number(o.total_price).toLocaleString('id-ID')}</td>
+      <td><span class="badge ${badge[o.status]||''}" style="text-transform:capitalize;">${o.status}</span></td>
+      <td>${new Date(o.created_at).toLocaleDateString('en-GB')}</td>
+    </tr>`).join('');
+  }
+
+  // ---- PRE-ORDERS ----
+  async function loadBuyerPreorders() {
+    const container = document.getElementById('buyerPreordersList');
+    const list = await FarmifyDB.getPreOrders({ buyer_id: session.id });
+    if (!list.length) { container.innerHTML = '<div style="text-align:center;padding:40px;background:white;border-radius:var(--radius-lg);color:var(--mid-gray);">No pre-orders yet. Click "+ New Pre-Order" to start.</div>'; return; }
+    const col = { pending:'var(--harvest)', confirmed:'var(--moss)', rejected:'var(--terracotta)' };
+    container.innerHTML = list.map(po => `
+      <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);">
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+          <div style="font-weight:700;font-size:15px;">${po.commodity_name}</div>
+          <span style="padding:4px 12px;border-radius:100px;font-size:11px;font-weight:600;background:${col[po.status]||'var(--sage)'};color:white;text-transform:capitalize;">${po.status}</span>
         </div>
-      `).join('');
-    }
-
-    // Commodity table
-    renderCommodityTable(allCommodities);
+        <div style="display:flex;gap:20px;font-size:13px;color:var(--charcoal);">
+          <span>📦 ${po.qty} ${po.unit||'kg'}</span>
+          <span>💰 IDR ${Number(po.price_per_unit||0).toLocaleString('id-ID')}/${po.unit||'kg'}</span>
+          <span>📅 Harvest: ${po.harvest_date||'TBD'}</span>
+        </div>
+        ${po.notes ? `<div style="font-size:12px;color:var(--mid-gray);margin-top:6px;">Note: ${po.notes}</div>` : ''}
+      </div>`).join('');
   }
 
-  function renderCommodityTable(commodities) {
-    document.getElementById('commodityCount').textContent = `${commodities.length} commodities`;
-    const tbody = document.getElementById('commodityTable');
-    if (!commodities.length) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--mid-gray);">Belum ada commodities tersedia</td></tr>';
-      return;
-    }
-    tbody.innerHTML = commodities.map(c => `
-      <tr>
-        <td><span style="font-size:18px;">${c.emoji || '🌿'}</span> <strong>${c.name}</strong></td>
-        <td>
-          <div style="font-weight:600;font-size:13px;">${c.farm_name}</div>
-          <div style="font-size:11px;color:var(--mid-gray);">📍 ${c.farmer_city || '—'}</div>
-        </td>
-        <td style="font-weight:700;color:var(--moss);">${formatIDR(c.price)}/${c.unit}</td>
-        <td>${c.is_preorder ? '<span style="color:var(--earth);font-weight:600;">Pre-Order</span>' : `${Number(c.stock).toLocaleString('id-ID')} ${c.unit}`}</td>
-        <td>${c.is_preorder ? '<span class="badge badge-warning">Pre-Order</span>' : '<span class="badge badge-success">Available</span>'}</td>
-        <td><button class="btn btn-primary" style="padding:5px 14px;font-size:12px;" onclick="quickOrder('${c.id}')">+ Order</button></td>
-      </tr>
-    `).join('');
+  async function openPreorderModal() {
+    // Load farmers into select
+    const sel = document.getElementById('pofarmer');
+    const farmers = await FarmifyDB.getUsersByRole('farmer');
+    sel.innerHTML = '<option value="">Select a farmer...</option>' +
+      farmers.filter(f => f.status==='active').map(f => `<option value="${f.id}">${f.farm_name||f.full_name} — ${f.city||''}</option>`).join('');
+    openModal('preorderModal');
   }
 
-  async function performSearch() {
-    const q = document.getElementById('searchInput').value.toLowerCase();
-    let commodities = await FarmifyDB.getAvailableCommodities();
-    if (q) commodities = commodities.filter(c => c.name.toLowerCase().includes(q) || c.farm_name.toLowerCase().includes(q) || (c.farmer_city || '').toLowerCase().includes(q));
-    if (activeCategory) commodities = commodities.filter(c => (c.category || '').includes(activeCategory));
-    renderCommodityTable(commodities);
-    const farmerIds = [...new Set(commodities.map(c => c.farmer_id))];
-    const allFarmers = await FarmifyDB.getCommoditiesByFarmer();
-    const filtered = allFarmers.filter(f => !q || farmerIds.includes(f.id) || f.full_name.toLowerCase().includes(q));
-    document.getElementById('supplierGrid').innerHTML = filtered.length
-      ? filtered.map(f => `<div class="supplier-card" onclick="openSuppliersModal('${f.id}')"><div class="supplier-header"><div class="supplier-avatar">${f.items[0]?.emoji||'🌾'}</div><div><div class="supplier-name">${f.farm_name||f.full_name}</div><div class="supplier-location">📍 ${f.city||'East Java'}</div></div></div><div class="supplier-commodities">${f.items.slice(0,3).map(c=>`<span class="commodity-tag">${c.emoji||''} ${c.name}</span>`).join('')}</div><div class="supplier-footer"><div class="supplier-rating">⭐ 4.8</div><button class="btn btn-primary" style="padding:7px 16px;font-size:12px;">Order</button></div></div>`).join('')
-      : `<div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;">No hasil untuk "${q}"</div>`;
-  }
-
-  function filterCategory(el, cat) {
-    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-    activeCategory = cat;
-    performSearch();
-  }
-
-  async function openSuppliersModal(farmerId) {
+  async function submitPreOrder() {
+    const commodity = document.getElementById('pocommodity').value.trim();
+    const qty = document.getElementById('poqty').value;
+    const price = document.getElementById('poprice').value;
+    const harvest = document.getElementById('poharvest').value;
+    const farmerId = document.getElementById('pofarmer').value;
+    const notes = document.getElementById('ponotes').value.trim();
+    if (!commodity || !qty || !price || !farmerId) { showToast('❌ Please fill in all required fields'); return; }
     const farmer = await FarmifyDB.findById(farmerId);
+    await FarmifyDB.createPreOrder({
+      buyer_id: session.id, buyer_name: session.full_name,
+      farmer_id: farmerId, farmer_name: farmer?.full_name||'',
+      commodity_name: commodity, qty: Number(qty),
+      price_per_unit: Number(price), unit: 'kg',
+      harvest_date: harvest, notes
+    });
+    showToast('✅ Pre-order submitted!');
+    closeModal('preorderModal');
+    loadBuyerPreorders();
+  }
+
+  // ---- TRACKING ----
+  async function loadTrackingView() {
+    const container = document.getElementById('trackingContainer');
+    const orders = await FarmifyDB.getOrders({ buyer_id: session.id });
+    const shipped = orders.filter(o => o.status === 'shipped');
+    if (!shipped.length) { container.innerHTML = '<div style="text-align:center;padding:40px;background:white;border-radius:var(--radius-lg);color:var(--mid-gray);">No active shipments right now</div>'; return; }
+    const cards = await Promise.all(shipped.map(async o => {
+      const d = await FarmifyDB.getDelivery(o.id) || {};
+      const prog = d.progress || 20;
+      return `<div style="background:white;border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+          <span style="font-size:28px;">🚛</span>
+          <div><div style="font-weight:700;">${o.order_code}</div>
+          <div style="font-size:12px;color:var(--mid-gray);">${o.commodity_name} · ${o.qty} ${o.unit||'kg'} from ${o.farmer_name||'Farmer'}</div></div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${prog}%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--mid-gray);margin-top:8px;">
+          <span>${d.origin||'Origin'}</span><span style="color:var(--moss);font-weight:600;">${prog}%</span><span>Your Location</span>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--moss);">Status: <strong style="text-transform:capitalize;">${d.status||'In Transit'}</strong></div>
+      </div>`;
+    }));
+    container.innerHTML = cards.join('');
+  }
+
+  // ---- NOTIFS ----
+  async function loadBuyerNotifs() {
+    const list = document.getElementById('buyerNotifList');
+    const notifs = await FarmifyDB.getNotifications(session.id);
+    if (!notifs.length) { list.innerHTML = '<div style="text-align:center;padding:40px;background:white;border-radius:var(--radius-lg);color:var(--mid-gray);">No notifications</div>'; return; }
+    list.innerHTML = notifs.map(n => `
+      <div style="background:white;border-radius:var(--radius-lg);padding:16px 20px;box-shadow:var(--shadow-soft);display:flex;gap:14px;opacity:${n.read?0.6:1};">
+        <div style="width:8px;height:8px;border-radius:50%;background:${n.read?'var(--light-gray)':'var(--moss)'};margin-top:5px;flex-shrink:0;"></div>
+        <div style="flex:1;"><div style="font-size:14px;">${n.text}</div><div style="font-size:11px;color:var(--mid-gray);margin-top:4px;">${timeAgo(n.created_at)}</div></div>
+        ${!n.read ? `<button onclick="FarmifyDB.markNotifRead('${n.id}').then(loadBuyerNotifs)" style="font-size:11px;color:var(--moss);border:none;background:none;cursor:pointer;">Mark read</button>` : ''}
+      </div>`).join('');
+  }
+
+  async function buyerMarkAllRead() {
+    await FarmifyDB.markAllNotifsRead(session.id);
+    showToast('✅ All notifications marked as read');
+    loadBuyerNotifs();
+  }
+
+  // ---- EXISTING FUNCTIONS (kept from original) ----
+  async function openSuppliersModal(farmerId) {
+    const modal = document.getElementById('supplierModal');
+    if (!modal) return;
+    modal.style.display = 'flex';
+    const farmer = (allSuppliers.find(f => f.id === farmerId)) || await FarmifyDB.findById(farmerId);
     if (!farmer) return;
-    const items = (await FarmifyDB.getCommodities(farmerId)).filter(c => c.is_available);
-    currentFarmerModal = farmerId;
-    document.getElementById('modalSuppliersTitle').textContent = farmer.farm_name || farmer.full_name;
-    document.getElementById('modalSuppliersBody').innerHTML = `
-      <div style="display:flex;gap:14px;margin-bottom:16px;align-items:flex-start;">
-        <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--mint),var(--sage));display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;">🌾</div>
-        <div>
-          <div style="font-weight:700;font-size:17px;color:var(--forest);">${farmer.farm_name || farmer.full_name}</div>
-          <div style="font-size:13px;color:var(--mid-gray);">📍 ${farmer.city || '—'}, ${farmer.province?.replace('_',' ') || 'East Java'}</div>
-          <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;">
-            <span class="badge badge-success">✓ Verified</span>
-            <span style="font-size:13px;color:var(--harvest);">⭐ 4.8 (42 reviews)</span>
-          </div>
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
-        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Luas Lahan</div><div style="font-weight:700;color:var(--forest);">${farmer.farm_size || '—'} Ha</div></div>
-        <div style="padding:12px;background:var(--cream);border-radius:var(--radius-md);"><div style="font-size:11px;font-weight:700;color:var(--mid-gray);text-transform:uppercase;margin-bottom:4px;">Pengalaman</div><div style="font-weight:700;color:var(--forest);">${farmer.exp_years || '—'} Tahun</div></div>
-      </div>
-      <div style="font-weight:700;font-size:13px;color:var(--forest);margin-bottom:10px;">Commodity Available (${items.length})</div>
-      ${items.length ? items.map(c => `
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:white;border-radius:var(--radius-md);border:1px solid var(--light-gray);margin-bottom:8px;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span style="font-size:20px;">${c.emoji||'🌿'}</span>
-            <div>
-              <div style="font-weight:600;font-size:14px;">${c.name}</div>
-              <div style="font-size:11px;color:var(--mid-gray);">${c.category || ''}</div>
-            </div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-weight:700;color:var(--moss);">${formatIDR(c.price)}/${c.unit}</div>
-            <div style="font-size:11px;color:var(--mid-gray);">${c.is_preorder ? '📅 Pre-Order' : `Stock: ${Number(c.stock).toLocaleString('id-ID')} ${c.unit}`}</div>
-          </div>
-        </div>
-      `).join('') : '<div style="text-align:center;padding:20px;color:var(--mid-gray);">Belum ada commodities</div>'}
-    `;
-    document.getElementById('supplierModal').style.display = 'flex';
+    document.getElementById('modalFarmerName').textContent = farmer.farm_name || farmer.full_name;
+    document.getElementById('modalFarmerCity').textContent = '📍 ' + (farmer.city||'East Java');
+    document.getElementById('modalFarmerRating').textContent = '★ 4.8 (42 reviews)';
+    const itemsEl = document.getElementById('modalCommodityList');
+    const items = farmer.items || await FarmifyDB.getCommodities(farmerId);
+    if (itemsEl) itemsEl.innerHTML = items.map(c => `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(245,240,232,0.5);border-radius:var(--radius-sm);margin-bottom:8px;">
+        <div><div style="font-weight:600;">${c.emoji||'🌿'} ${c.name}</div><div style="font-size:12px;color:var(--mid-gray);">IDR ${Number(c.price).toLocaleString('id-ID')}/${c.unit||'kg'} · Stock: ${c.stock}</div></div>
+        <button class="btn btn-primary" style="padding:5px 12px;font-size:12px;" onclick="quickOrder('${c.id}')">Order</button>
+      </div>`).join('') || '<div style="color:var(--mid-gray);text-align:center;">No commodities available</div>';
+    window._modalFarmer = farmer;
   }
 
   async function quickOrder(commodityId) {
-    const c = (await FarmifyDB.getCommodities()).find(x => x.id === commodityId);
-    if (!c) return;
-    if (confirm(`Buat order untuk ${c.name} from farm ini?\n\nPrice: ${formatIDR(c.price)}/${c.unit}`)) {
-      const result = await FarmifyDB.createOrder({
-        buyer_id: session.id, farmer_id: c.farmer_id,
-        commodity_id: commodityId, commodity_name: c.name,
-        quantity: 100, unit: c.unit,
-        total_price: c.price * 100
-      });
-      if (result.success) showToast(`✅ Order ${result.order.order_code} created successfully!`);
-    }
-  }
+    const allComms = await FarmifyDB.getAvailableCommodities();
+    const c = allComms.find(x => x.id === commodityId);
+    if (!c) { showToast('❌ Commodity not found'); return; }
+    const qty = prompt(`Order ${c.name} (IDR ${Number(c.price).toLocaleString('id-ID')}/${c.unit||'kg'})
 
-  async function createOrderFromModal() {
-    if (!currentFarmerModal) return;
-    const items = (await FarmifyDB.getCommodities(currentFarmerModal)).filter(c => c.is_available);
-    if (!items.length) { showToast('No commodities tersedia', 'error'); return; }
-    const c = items[0];
+Enter quantity (${c.unit||'kg'}):`, '100');
+    if (!qty || isNaN(qty)) return;
+    const total = Number(qty) * Number(c.price);
+    if (!confirm(`Confirm order:
+${c.name} · ${qty} ${c.unit||'kg'}
+Total: IDR ${total.toLocaleString('id-ID')}`)) return;
     const result = await FarmifyDB.createOrder({
-      buyer_id: session.id, farmer_id: currentFarmerModal,
+      buyer_id: session.id, buyer_name: session.full_name,
+      farmer_id: c.farmer_id, farmer_name: c.farm_name,
       commodity_id: c.id, commodity_name: c.name,
-      quantity: 100, unit: c.unit, total_price: c.price * 100
+      qty: Number(qty), unit: c.unit||'kg',
+      price_per_unit: Number(c.price),
+      total_price: total
     });
-    if (result.success) {
-      closeModal('supplierModal');
-      showToast(`✅ Order ${result.order.order_code} created successfully!`);
-      await loadDashboardData();
-    }
+    showToast(`✅ Order ${result.order.order_code} created!`);
+    closeModal('supplierModal');
+    await loadDashboardData();
   }
 
   // ---- PROFILE ----
   async function populateProfile() {
-    const fullUser = (await FarmifyDB.findById(session.id)) || session;
+    if (!session) return;
+    const fullUser = (await FarmifyDB.getUsers()).find(u => u.id === session.id) || session;
     const initials = session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
     document.getElementById('profileAvatarLg').textContent = initials;
     document.getElementById('profileHeroName').textContent = session.full_name;
     document.getElementById('profileHeroEmail').textContent = session.email;
-    document.getElementById('profileHeroCompany').textContent = fullUser.company_name || 'Perusahaan';
-    document.getElementById('vFullName').textContent = session.full_name;
-    document.getElementById('vEmail').textContent = session.email;
-    document.getElementById('vPhone').textContent = fullUser.phone || '—';
-    if (fullUser.created_at) {
-      document.getElementById('vMemberSince').textContent = new Date(fullUser.created_at).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
-    }
-    const bizMap = { manufacturer:'Manufaktur / Pabrik', restaurant:'Restoran / Hotel', retailer:'Retail / Distributor', catering:'Catering', export:'Exporter', other:'Other' };
-    document.getElementById('vCompanyName').textContent = fullUser.company_name || '—';
-    document.getElementById('vBusinessType').textContent = bizMap[fullUser.business_type] || fullUser.business_type || '—';
-    document.getElementById('vAddress').textContent = fullUser.company_address || '—';
-    document.getElementById('vNpwp').textContent = fullUser.npwp || '—';
-    document.getElementById('vBankName').textContent = fullUser.bank_name || '—';
-    document.getElementById('vBankAccount').textContent = fullUser.bank_account ? '•••• •••• ' + String(fullUser.bank_account).slice(-4) : '—';
+    document.getElementById('profileHeroCompany').textContent = fullUser.company_name || '—';
+    const fields = { vFullName: session.full_name, vEmail: session.email, vPhone: fullUser.phone||'—', vCompanyName: fullUser.company_name||'—', vBusinessType: fullUser.business_type||'—', vAddress: fullUser.address||'—', vNPWP: fullUser.npwp||'—', vSIUP: fullUser.siup||'—' };
+    Object.entries(fields).forEach(([id, val]) => { const el = document.getElementById(id); if(el) el.textContent = val; });
     disableEditMode();
   }
 
   async function enableEditMode() {
-    const fullUser = (await FarmifyDB.findById(session.id)) || session;
-    document.getElementById('eFullName').value = session.full_name;
-    document.getElementById('eEmail').value = session.email;
-    document.getElementById('ePhone').value = fullUser.phone || '';
-    document.getElementById('eCompanyName').value = fullUser.company_name || '';
-    document.getElementById('eAddress').value = fullUser.company_address || '';
-    document.getElementById('eNpwp').value = fullUser.npwp || '';
-    document.getElementById('eBankAccount').value = fullUser.bank_account || '';
-    const biz = document.getElementById('eBusinessType');
-    for (let o of biz.options) { if (o.value === fullUser.business_type) { o.selected = true; break; } }
-    ['cardPersonal','cardCompany','cardBank'].forEach(id => {
-      document.getElementById(id).classList.replace('profile-view-mode','profile-edit-mode');
-    });
-    document.getElementById('profileActions').innerHTML = `
-      <button class="btn-cancel-profile" onclick="disableEditMode()" style="margin-right:8px;">Cancel</button>
-      <button class="btn-save-profile" onclick="saveProfileInline()">💾 Save</button>
-    `;
+    if (!session) return;
+    const fullUser = (await FarmifyDB.getUsers()).find(u => u.id === session.id) || session;
+    const efMap = { eFullName: session.full_name, ePhone: fullUser.phone||'', eCompanyName: fullUser.company_name||'', eAddress: fullUser.address||'', eNPWP: fullUser.npwp||'', eSIUP: fullUser.siup||'' };
+    Object.entries(efMap).forEach(([id, val]) => { const el = document.getElementById(id); if(el) el.value = val; });
+    ['cardPersonal','cardCompany','cardBank'].forEach(id => { const el = document.getElementById(id); if(el) { el.classList.remove('profile-view-mode'); el.classList.add('profile-edit-mode'); } });
+    document.getElementById('profileActions').innerHTML = `<button class="edit-toggle-btn btn-cancel-profile" onclick="disableEditMode()">Cancel</button><button class="edit-toggle-btn btn-save-profile" onclick="saveProfile()">💾 Save</button>`;
   }
 
   function disableEditMode() {
-    ['cardPersonal','cardCompany','cardBank'].forEach(id => {
-      const el = document.getElementById(id);
-      el.classList.remove('profile-edit-mode');
-      el.classList.add('profile-view-mode');
-    });
-    document.getElementById('profileActions').innerHTML = `<button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profilee</button>`;
+    ['cardPersonal','cardCompany','cardBank'].forEach(id => { const el = document.getElementById(id); if(el) { el.classList.remove('profile-edit-mode'); el.classList.add('profile-view-mode'); } });
+    document.getElementById('profileActions').innerHTML = `<button class="edit-toggle-btn btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profile</button>`;
   }
 
-  async function saveProfileInline() {
-    const newName = document.getElementById('eFullName').value.trim();
-    if (!newName) { showToast('Nama tidak boleh kosong!', 'error'); return; }
+  async function saveProfile() {
+    const newName = document.getElementById('eFullName')?.value.trim();
+    if (!newName) { showToast('❌ Name cannot be empty'); return; }
     await FarmifyDB.updateUser(session.id, {
       full_name: newName,
-      phone: document.getElementById('ePhone').value.trim(),
-      company_name: document.getElementById('eCompanyName').value.trim(),
-      company_address: document.getElementById('eAddress').value.trim(),
-      npwp: document.getElementById('eNpwp').value.trim(),
-      business_type: document.getElementById('eBusinessType').value,
-      bank_name: document.getElementById('eBankName').value,
-      bank_account: document.getElementById('eBankAccount').value.trim()
+      phone: document.getElementById('ePhone')?.value.trim(),
+      company_name: document.getElementById('eCompanyName')?.value.trim(),
+      address: document.getElementById('eAddress')?.value.trim(),
+      npwp: document.getElementById('eNPWP')?.value.trim(),
+      siup: document.getElementById('eSIUP')?.value.trim()
     });
     session.full_name = newName;
     sessionStorage.setItem('farmify_session', JSON.stringify(session));
     document.getElementById('sidebarName').textContent = newName;
     document.getElementById('sidebarAvatar').textContent = newName.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
     await populateProfile();
-    showToast('✅ Profile saved successfully!');
+    showToast('✅ Profile saved!');
   }
 
-  function navAlert(name) { alert(`Fitur "${name}" sedang dalam pengembangan.`); }
-  function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+  function showToast(msg) {
+    const t = document.createElement('div');
+    t.textContent = msg;
+    Object.assign(t.style, { position:'fixed', bottom:'90px', left:'50%', transform:'translateX(-50%)', background:'var(--forest)', color:'white', padding:'12px 24px', borderRadius:'100px', fontSize:'14px', fontWeight:'600', boxShadow:'var(--shadow-lift)', zIndex:'9999', whiteSpace:'nowrap' });
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
+  }
 
+  function openModal(id) { const el = document.getElementById(id); if(el) el.style.display='flex'; if(id==='preorderModal') openPreorderModal(); }
+  function closeModal(id) { const el = document.getElementById(id); if(el) el.style.display='none'; }
+  function navAlert(n) { showToast(`Feature "${n}" coming soon`); }
 </script>
 </body>
 </html>

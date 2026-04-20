@@ -417,6 +417,135 @@ const FarmifyDB = {
     });
   },
 
+
+  // ---- PRE-ORDERS ----
+  async createPreOrder(data) {
+    const id = `preorder-${Date.now()}`;
+    const newPO = {
+      ...data, id,
+      status: 'pending',
+      created_at: new Date().toISOString()
+    };
+    await setDoc(doc(_db, 'preorders', id), newPO);
+    const buyer  = await this.findById(data.buyer_id);
+    const farmer = await this.findById(data.farmer_id);
+    if (farmer) await this.addNotification(data.farmer_id, `📋 New pre-order from ${buyer ? buyer.full_name : 'Buyer'} — ${data.commodity_name}`, 'info');
+    if (buyer)  await this.addNotification(data.buyer_id, `✅ Pre-order for ${data.commodity_name} submitted successfully`, 'info');
+    return { success: true, preorder: newPO };
+  },
+
+  async getPreOrders(filter) {
+    let q = collection(_db, 'preorders');
+    if (filter?.farmer_id) q = query(q, where('farmer_id', '==', filter.farmer_id));
+    if (filter?.buyer_id)  q = query(q, where('buyer_id',  '==', filter.buyer_id));
+    const snap = await getDocs(q);
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }))
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  },
+
+  async updatePreOrderStatus(id, status) {
+    await updateDoc(doc(_db, 'preorders', id), { status, updated_at: new Date().toISOString() });
+    return true;
+  },
+
+  // ---- DELIVERY ----
+  async updateDelivery(orderId, data) {
+    const delivId = `delivery-${orderId}`;
+    await setDoc(doc(_db, 'deliveries', delivId), {
+      ...data, order_id: orderId, updated_at: new Date().toISOString()
+    }, { merge: true });
+    return true;
+  },
+
+  async getDelivery(orderId) {
+    const snap = await getDoc(doc(_db, 'deliveries', `delivery-${orderId}`));
+    return snap.exists() ? snap.data() : null;
+  },
+
+  async getDeliveries(farmerId) {
+    const orders = await this.getOrders({ farmer_id: farmerId });
+    const active = orders.filter(o => ['confirmed','processing','shipped'].includes(o.status));
+    const result = [];
+    for (const o of active) {
+      const d = await this.getDelivery(o.id);
+      result.push({ ...o, delivery: d });
+    }
+    return result;
+  },
+
+  // ---- FINANCE ----
+  async getFinanceSummary(userId, role) {
+    const orders = await this.getOrders(role === 'farmer' ? { farmer_id: userId } : { buyer_id: userId });
+    const completed = orders.filter(o => o.status === 'completed' || o.status === 'delivered');
+    const totalRevenue = completed.reduce((s, o) => s + (o.total_price || 0), 0);
+    const pending = orders.filter(o => ['pending','confirmed','processing','shipped'].includes(o.status));
+    const pendingAmount = pending.reduce((s, o) => s + (o.total_price || 0), 0);
+    return { completed: completed.length, totalRevenue, pending: pending.length, pendingAmount, allOrders: orders };
+  },
+  // ---- FINANCIAL SUMMARY (Admin) ----
+  // Returns platform-wide financial summary for admin financial reports
+  async getFinancialSummary() {
+    const orders = await this.getOrders();
+    const preorders = await this.getPreOrders();
+
+    const completed  = orders.filter(o => ['completed','delivered'].includes(o.status));
+    const pending    = orders.filter(o => ['pending','confirmed','processing','shipped'].includes(o.status));
+    const cancelled  = orders.filter(o => o.status === 'cancelled');
+
+    const totalVolume     = orders.reduce((s, o) => s + (o.total_price || 0), 0);
+    const completedVolume = completed.reduce((s, o) => s + (o.total_price || 0), 0);
+    const pendingVolume   = pending.reduce((s, o) => s + (o.total_price || 0), 0);
+    const platformFee     = completed.reduce((s, o) => s + (o.platform_fee || 0), 0);
+
+    // Pre-order fee (3% of confirmed pre-orders)
+    const confirmedPOs = preorders.filter(p => p.status === 'confirmed');
+    const preorderFee  = confirmedPOs.reduce((s, p) => s + ((p.quantity || 0) * (p.price_per_unit || 0) * 0.03), 0);
+    const totalRevenue = platformFee + preorderFee;
+
+    // Status breakdown
+    const statusBreakdown = {};
+    orders.forEach(o => { statusBreakdown[o.status] = (statusBreakdown[o.status] || 0) + 1; });
+
+    // Commodity breakdown (top commodities by order count)
+    const commodityBreakdown = {};
+    orders.forEach(o => {
+      if (o.commodity_name) commodityBreakdown[o.commodity_name] = (commodityBreakdown[o.commodity_name] || 0) + 1;
+    });
+    const topCommodities = Object.entries(commodityBreakdown)
+      .sort((a, b) => b[1] - a[1]).slice(0, 10)
+      .map(([name, count]) => ({ name, count }));
+
+    return {
+      totalVolume, completedVolume, pendingVolume,
+      platformFee, preorderFee, totalRevenue,
+      completedOrders: completed.length,
+      pendingOrders: pending.length,
+      cancelledOrders: cancelled.length,
+      totalOrders: orders.length,
+      statusBreakdown,
+      topCommodities,
+      confirmedPreOrders: confirmedPOs.length
+    };
+  },
+
+  // ---- UPDATE DELIVERY STATUS (alias for updateDelivery with status field) ----
+  // Convenience wrapper for updating just the delivery status + auto-timestamping
+  async updateDeliveryStatus(orderId, status, extra = {}) {
+    return this.updateDelivery(orderId, { status, ...extra });
+  },
+
+  // ---- REALTIME: listen pre-orders ----
+  listenPreOrders(filter, callback) {
+    let q = collection(_db, 'preorders');
+    if (filter?.farmer_id) q = query(q, where('farmer_id', '==', filter.farmer_id));
+    if (filter?.buyer_id)  q = query(q, where('buyer_id',  '==', filter.buyer_id));
+    return onSnapshot(q, snap => {
+      const sorted = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      callback(sorted);
+    });
+  },
+
   // ---- ACTIVITY LOG ----
   async getActivity(filter) {
     let q = query(collection(_db, 'activity'), orderBy('created_at', 'desc'), limit(200));
@@ -560,3 +689,6 @@ window.closeModal     = closeModal;
 window.toggleSidebar  = toggleSidebar;
 window.showToast      = showToast;
 window.renderNotifications = renderNotifications;
+// New functions exposed for convenience
+window.getFinancialSummary  = (...args) => FarmifyDB.getFinancialSummary(...args);
+window.updateDeliveryStatus = (...args) => FarmifyDB.updateDeliveryStatus(...args);
