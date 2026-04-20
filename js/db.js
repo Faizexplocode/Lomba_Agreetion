@@ -144,8 +144,8 @@ const FarmifyDB = {
       id,
       email: userData.email.toLowerCase(),
       password: btoa(userData.password),
-      status: 'pending',
-      email_verified: false,
+      status: 'pending',           // Awaiting admin approval
+      email_verified: true,        // OTP was verified before calling createUser
       setup_complete: false,
       created_at: new Date().toISOString()
     };

@@ -653,21 +653,21 @@
         <div class="stats-grid page-enter">
           <div class="stat-card">
             <div class="stat-icon green">💰</div>
-            <div class="stat-value">IDR 15,1 Jt</div>
-            <div class="stat-label">Account Balance</div>
-            <div class="stat-change up">↑ +12% This Month</div>
+            <div class="stat-value" id="statRevenue">IDR 0</div>
+            <div class="stat-label">Total Revenue</div>
+            <div class="stat-change up" id="statRevenueChange">↑ From completed orders</div>
           </div>
           <div class="stat-card">
             <div class="stat-icon gold">📦</div>
-            <div class="stat-value">8</div>
+            <div class="stat-value" id="statActiveOrders">—</div>
             <div class="stat-label">Active Orders</div>
-            <div class="stat-change up">↑ 3 new orders today</div>
+            <div class="stat-change up" id="statOrdersChange">Loading...</div>
           </div>
           <div class="stat-card">
             <div class="stat-icon earth">🌾</div>
-            <div class="stat-value">5</div>
+            <div class="stat-value" id="statCommodities">—</div>
             <div class="stat-label">Commodity Registered</div>
-            <div class="stat-change up">2 ready to sell</div>
+            <div class="stat-change up">All commodities</div>
           </div>
           <div class="stat-card">
             <div class="stat-icon green">⭐</div>
@@ -1926,8 +1926,16 @@
       const orders = await FarmifyDB.getOrders({ farmer_id: session.id });
       const active = orders.filter(o => ['pending', 'confirmed', 'processing', 'shipped'].includes(o.status));
       const comms = await FarmifyDB.getCommodities(session.id);
-      document.querySelector('.stats-grid .stat-card:nth-child(2) .stat-value').textContent = active.length;
-      document.querySelector('.stats-grid .stat-card:nth-child(3) .stat-value').textContent = comms.length;
+      const finSummary = await FarmifyDB.getFinanceSummary(session.id, 'farmer');
+      // Update stat cards by ID (safe, no brittle nth-child selectors)
+      const elActiveOrders = document.getElementById('statActiveOrders');
+      const elCommodities = document.getElementById('statCommodities');
+      const elRevenue = document.getElementById('statRevenue');
+      const elOrdersChange = document.getElementById('statOrdersChange');
+      if (elActiveOrders) elActiveOrders.textContent = active.length;
+      if (elCommodities) elCommodities.textContent = comms.length;
+      if (elRevenue) elRevenue.textContent = `IDR ${(finSummary.totalRevenue / 1e6).toFixed(1)} Jt`;
+      if (elOrdersChange) elOrdersChange.textContent = `${active.length} active orders`;
       // Load real orders in dashboard table
       const tbody = document.querySelector('#view-dashboard tbody');
       if (tbody && orders.length) {

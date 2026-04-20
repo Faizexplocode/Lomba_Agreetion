@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Setup Profilee — Farmify</title>
+  <title>Setup Profile — Farmify</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     body { background: var(--warm-white); }
@@ -489,7 +489,7 @@
       data.needs = selectedCommodities;
     }
 
-    FarmifyDB.completeSetup(rawSession.id, data);
+    await FarmifyDB.completeSetup(rawSession.id, data);
 
     // Update session
     rawSession.full_name = data.full_name;

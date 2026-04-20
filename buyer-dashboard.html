@@ -1297,7 +1297,7 @@
           <td><span class="badge ${c.is_preorder ? 'badge-warning' : 'badge-success'}">${c.is_preorder ? 'Pre-Order' : 'Available'}</span></td>
           <td><button class="btn btn-primary" style="padding:5px 12px;font-size:12px;" onclick="quickOrder('${c.id}')">+ Order</button></td>
         </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--mid-gray);">No commodities available</td></tr>';
-          document.getElementById('commodityTotalBadge').textContent = commodities.length + ' commodities';
+          document.getElementById('farmerActiveCount').textContent = commodities.length + ' commodities';
         }
         // Notif badge
         const notifs = await FarmifyDB.getNotifications(session.id);
@@ -1519,7 +1519,7 @@ Total: IDR ${total.toLocaleString('id-ID')}`)) return;
       });
       showToast(`✅ Order ${result.order.order_code} created!`);
       closeModal('supplierModal');
-      await loadDashboardData();
+      await loadDashboardData(); // refresh supplier & commodity tables
     }
 
     // ---- PROFILE ----
@@ -1569,15 +1569,9 @@ Total: IDR ${total.toLocaleString('id-ID')}`)) return;
       showToast('✅ Profile saved!');
     }
 
-    function showToast(msg) {
-      const t = document.createElement('div');
-      t.textContent = msg;
-      Object.assign(t.style, { position: 'fixed', bottom: '90px', left: '50%', transform: 'translateX(-50%)', background: 'var(--forest)', color: 'white', padding: '12px 24px', borderRadius: '100px', fontSize: '14px', fontWeight: '600', boxShadow: 'var(--shadow-lift)', zIndex: '9999', whiteSpace: 'nowrap' });
-      document.body.appendChild(t);
-      setTimeout(() => t.remove(), 3000);
-    }
+    // NOTE: showToast is provided globally by js/db.js — do NOT redefine it here.
 
-    function openModal(id) { const el = document.getElementById(id); if (el) el.style.display = 'flex'; if (id === 'preorderModal') openPreorderModal(); }
+    function openModal(id) { const el = document.getElementById(id); if (el) el.style.display = 'flex'; }
     function closeModal(id) { const el = document.getElementById(id); if (el) el.style.display = 'none'; }
     function navAlert(n) { showToast(`Feature "${n}" coming soon`); }
   </script>

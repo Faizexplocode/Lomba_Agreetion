@@ -497,7 +497,7 @@
       <div class="step-indicator page-enter">
         <div class="step-dot active" id="step1dot"></div>
         <div class="step-dot" id="step2dot"></div>
-        <div style="font-size:12px;color:var(--mid-gray);" id="stepLabel">Step 1: Fill in Detailss</div>
+        <div style="font-size:12px;color:var(--mid-gray);" id="stepLabel">Step 1: Fill in Details</div>
       </div>
       <div id="alertBox"></div>
 
@@ -569,7 +569,7 @@
 
           <!-- FARMER FIELDS -->
           <div class="role-fields visible" id="fields-farmer">
-            <div class="section-divider"><span>Farm Business Detailss</span></div>
+            <div class="section-divider"><span>Farm Business Details</span></div>
             <div class="grid-2">
               <div class="form-group"><label class="form-label">Farm Name *</label><input type="text"
                   class="form-input" id="farmName" placeholder="e.g. Sido Makmur Farm" /></div>
@@ -645,7 +645,7 @@
 
           <!-- BUYER FIELDS -->
           <div class="role-fields" id="fields-buyer">
-            <div class="section-divider"><span>Company Detailss</span></div>
+            <div class="section-divider"><span>Company Details</span></div>
             <div class="form-group"><label class="form-label">Company Name *</label><input type="text"
                 class="form-input" id="companyName" placeholder="e.g. PT Jaya Foods Indonesia" /></div>
             <div class="grid-2">
@@ -840,6 +840,7 @@
     }
 
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      if (!window.FarmifyDB) { showAlert('error', 'System loading, please try again in a moment.'); return; }
       e.preventDefault();
       const err = validateForm();
       if (err) { showAlert('error', err); return; }
@@ -906,7 +907,7 @@
       document.getElementById('otpScreen').style.display = 'none';
       document.getElementById('step1dot').classList.add('active');
       document.getElementById('step2dot').classList.remove('active');
-      document.getElementById('stepLabel').textContent = 'Step 1: Fill in Detailss';
+      document.getElementById('stepLabel').textContent = 'Step 1: Fill in Details';
       document.getElementById('pageTitle').textContent = 'Create New Account';
       document.getElementById('pageSubtitle').textContent = 'Choose the account type that suits you';
       clearInterval(otpTimerInterval);
@@ -961,9 +962,9 @@
       const createResult = await FarmifyDB.createUser(pendingUserData);
       if (createResult.success) {
         clearInterval(otpTimerInterval);
-        showAlert('success', '✅ Email terverifikasi! Account berhasil dibuat dan langsung aktif.');
-        btn.innerHTML = '🎉 Account Aktif!';
-        setTimeout(() => { window.location.href = 'login.html'; }, 1800);
+        showAlert('success', '✅ Email verified! Your account has been created. You can sign in after admin approval.');
+        btn.innerHTML = '🎉 Account Created!';
+        setTimeout(() => { window.location.href = 'login.html'; }, 2000);
       } else {
         showAlert('error', createResult.message);
         btn.innerHTML = 'Verify & Activate Account'; btn.disabled = false;

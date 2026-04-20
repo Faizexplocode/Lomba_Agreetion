@@ -1377,8 +1377,16 @@
 
   window.openModal = function(id) { document.getElementById(id).style.display = 'flex'; };
 
-  // Init
-  initDashboard();
+  // ---- WAIT FOR DB MODULE BEFORE INIT ----
+  function waitForDB(cb) {
+    if (window.FarmifyDB && window.requireAuth) { cb(); return; }
+    const t = setInterval(() => {
+      if (window.FarmifyDB && window.requireAuth) { clearInterval(t); cb(); }
+    }, 50);
+  }
+
+  // Init — wrapped in waitForDB so the async ES module is definitely loaded
+  waitForDB(() => { initDashboard(); });
 </script>
 
 </body>
