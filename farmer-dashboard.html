@@ -682,10 +682,28 @@
             <div class="table-container page-enter" style="padding: 24px; margin-bottom: 24px;">
               <div class="section-header-row">
                 <div class="section-title">My Commodities</div>
-                <a href="#" class="link text-sm" onclick="navigateTo('commodities');return false;">View all →</a>
+                <div style="display:flex;gap:10px;align-items:center;">
+                  <a href="#" class="link text-sm" onclick="navigateTo('commodities');return false;">View all →</a>
+                  <button class="btn btn-primary" style="font-size:12px;padding:6px 14px;" onclick="openModal('addCommodityModal')">+ Add</button>
+                </div>
               </div>
               <div class="commodity-grid" id="dashCommodityGrid">
                 <div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--mid-gray);font-size:13px;">Loading...</div>
+              </div>
+              <!-- Empty State for new farmer -->
+              <div id="dashCommodityEmpty" style="display:none;text-align:center;padding:32px 20px;">
+                <div style="font-size:48px;margin-bottom:12px;">🌱</div>
+                <div style="font-weight:700;font-size:15px;color:var(--forest);margin-bottom:6px;">Belum ada komoditas</div>
+                <div style="font-size:13px;color:var(--mid-gray);margin-bottom:18px;">Tambahkan komoditas pertamamu untuk mulai berjualan di Farmify!</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:18px;">
+                  <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;" onclick="quickAddCommodity('Cabai Merah','🌶️','spice')">🌶️ Cabai Merah</button>
+                  <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;" onclick="quickAddCommodity('Bawang Merah','🧅','spice')">🧅 Bawang Merah</button>
+                  <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;" onclick="quickAddCommodity('Tomat','🍅','vegetable')">🍅 Tomat</button>
+                  <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;" onclick="quickAddCommodity('Bayam','🥬','vegetable')">🥬 Bayam</button>
+                  <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;" onclick="quickAddCommodity('Singkong','🥔','tuber')">🥔 Singkong</button>
+                  <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;" onclick="openModal('addCommodityModal')">➕ Lainnya...</button>
+                </div>
+                <div style="font-size:11px;color:var(--sage);">Pilih komoditas di atas untuk menambah cepat, atau klik "+ Add" untuk konfigurasi lengkap</div>
               </div>
             </div>
 
@@ -1231,9 +1249,20 @@
             </div>
           </div>
 
-          <!-- Quick Suggestions by Category -->
-          <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);">
-            <div style="font-size:12px;font-weight:700;color:var(--moss);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:14px;">💡 Quick Questions</div>
+          <!-- Contextual Quick Questions (dynamic based on user commodities) -->
+          <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);" id="aiQuickPanel">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+              <div style="font-size:12px;font-weight:700;color:var(--moss);letter-spacing:0.8px;text-transform:uppercase;">💡 Pertanyaan Cepat</div>
+              <div style="font-size:11px;color:var(--mid-gray);" id="aiCommodityHint">Berdasarkan komoditasmu</div>
+            </div>
+
+            <!-- My Commodities Category (dynamic) -->
+            <div style="margin-bottom:14px;" id="aiMyCommoditySection">
+              <div style="font-size:11px;font-weight:600;color:var(--mid-gray);margin-bottom:8px;">🌾 Komoditas Saya</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;" id="aiMyCommodityButtons">
+                <div style="font-size:12px;color:var(--sage);font-style:italic;">Menambahkan komoditas akan memunculkan saran pertanyaan di sini...</div>
+              </div>
+            </div>
 
             <!-- Category: Harga Pasar -->
             <div style="margin-bottom:14px;">
@@ -1823,6 +1852,47 @@
 
 
     // ---- AI CONSULTANT ----
+    async function getAISystemPrompt() {
+      // Build a contextual system prompt based on user's actual commodities
+      let commodityContext = '';
+      try {
+        const comms = await FarmifyDB.getCommodities(session.id);
+        if (comms && comms.length) {
+          const names = comms.map(c => c.name).join(', ');
+          commodityContext = `Petani ini menjual komoditas: ${names}. `;
+        } else {
+          commodityContext = 'Petani ini baru bergabung dan belum memiliki komoditas. ';
+        }
+      } catch (e) {}
+      return `Kamu adalah konsultan pertanian AI untuk platform Farmify Indonesia. ${commodityContext}Jawab dalam Bahasa Indonesia, singkat, praktis, dan relevan untuk petani. Sertakan angka harga dalam IDR jika relevan. Berikan saran yang spesifik dan actionable. Maksimal 3-4 paragraf.`;
+    }
+
+    async function loadAIContextualQuestions() {
+      const btnContainer = document.getElementById('aiMyCommodityButtons');
+      const hint = document.getElementById('aiCommodityHint');
+      if (!btnContainer || !session) return;
+      try {
+        const comms = await FarmifyDB.getCommodities(session.id);
+        if (!comms || !comms.length) return;
+        hint.textContent = `Berdasarkan ${comms.length} komoditasmu`;
+        // Generate contextual question buttons per commodity
+        const questions = [];
+        comms.slice(0, 3).forEach(c => {
+          questions.push({ label: `📈 Harga ${c.name}?`, q: `Berapa harga ${c.name} terkini di pasar Jawa Timur dan apakah tren harganya sedang naik atau turun?` });
+          questions.push({ label: `🌱 Tips panen ${c.name}?`, q: `Apa tips meningkatkan kualitas dan hasil panen ${c.name} agar bisa mendapat harga premium di pasar?` });
+          questions.push({ label: `💰 Strategi jual ${c.name}?`, q: `Bagaimana strategi terbaik menjual ${c.name} di platform B2B seperti Farmify, termasuk penetapan harga dan target pembeli yang tepat?` });
+        });
+        // Show max 6 buttons
+        btnContainer.innerHTML = questions.slice(0, 6).map(q =>
+          `<button class="btn btn-secondary" style="font-size:12px;padding:7px 14px;border-radius:100px;" onclick="askAI('${q.q.replace(/'/g, "\\'")}')">
+            ${q.label}
+          </button>`
+        ).join('');
+      } catch (e) {
+        console.warn('Could not load contextual AI questions', e);
+      }
+    }
+
     async function sendAIMessage() {
       const input = document.getElementById('aiInput');
       const q = input.value.trim();
@@ -1830,23 +1900,63 @@
       const msgs = document.getElementById('aiMessages');
       msgs.innerHTML += `<div style="align-self:flex-end;background:var(--moss);color:white;border-radius:12px;padding:12px 16px;font-size:14px;max-width:80%;">${q}</div>`;
       input.value = '';
-      msgs.innerHTML += `<div style="background:rgba(74,124,89,0.06);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--charcoal);max-width:80%;"><em>Thinking...</em></div>`;
+      msgs.innerHTML += `<div style="background:rgba(74,124,89,0.06);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--charcoal);max-width:80%;"><em>Sedang menjawab...</em></div>`;
       msgs.scrollTop = msgs.scrollHeight;
       try {
+        const systemPrompt = await getAISystemPrompt();
         const res = await fetch('https://api.anthropic.com/v1/messages', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            model: 'claude-sonnet-4-20250514', max_tokens: 300,
-            messages: [{ role: 'user', content: `You are an AI consultant for Indonesian farmers. Answer concisely in English. Question: ${q}` }]
+            model: 'claude-sonnet-4-20250514', max_tokens: 400,
+            system: systemPrompt,
+            messages: [{ role: 'user', content: q }]
           })
         });
         const data = await res.json();
-        const answer = data.content?.[0]?.text || 'Sorry, I could not get a response right now.';
-        msgs.lastElementChild.innerHTML = `<strong>🤖 AI Consultant:</strong> ${answer}`;
+        const answer = data.content?.[0]?.text || 'Maaf, saya tidak bisa menjawab saat ini. Coba lagi nanti.';
+        msgs.lastElementChild.innerHTML = `<strong>🤖 AI Consultant:</strong> ${answer.replace(/\n/g, '<br>')}`;
       } catch {
-        msgs.lastElementChild.innerHTML = `<strong>🤖 AI Consultant:</strong> Based on current market data: Red chili is up 15% this week — great time to sell. Red onion demand is stable. Consider pre-ordering for next harvest to lock in buyers.`;
+        // Fallback contextual answer
+        const comms = await FarmifyDB.getCommodities(session.id).catch(() => []);
+        const commName = comms.length ? comms[0].name : 'komoditas Anda';
+        msgs.lastElementChild.innerHTML = `<strong>🤖 AI Consultant:</strong> Berdasarkan data pasar terkini: <strong>${commName}</strong> sedang mengalami kenaikan permintaan. Pertimbangkan untuk menetapkan harga sedikit di atas rata-rata pasar jika kualitas produk Anda premium. Aktifkan fitur pre-order untuk mengunci pembeli sebelum panen.`;
       }
       msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    // ---- QUICK ADD COMMODITY (from dashboard empty state) ----
+    const quickCommodityPresets = {
+      '🌶️': { emoji: '🌶️', price: 40000, unit: 'kg', stock: 100, category: 'spice' },
+      '🧅': { emoji: '🧅', price: 35000, unit: 'kg', stock: 150, category: 'spice' },
+      '🍅': { emoji: '🍅', price: 12000, unit: 'kg', stock: 200, category: 'vegetable' },
+      '🥬': { emoji: '🥬', price: 8000, unit: 'ikat', stock: 100, category: 'vegetable' },
+      '🥔': { emoji: '🥔', price: 5000, unit: 'kg', stock: 300, category: 'tuber' },
+    };
+    async function quickAddCommodity(name, emoji, category) {
+      const preset = quickCommodityPresets[emoji] || { emoji: '🌿', price: 10000, unit: 'kg', stock: 100, category };
+      await FarmifyDB.addCommodity({
+        farmer_id: session.id,
+        name,
+        emoji: preset.emoji,
+        price: preset.price,
+        stock: preset.stock,
+        unit: preset.unit,
+        category: preset.category || category,
+        is_preorder: false
+      });
+      showToast(`✅ ${name} berhasil ditambahkan! Kamu bisa edit harga & stok di My Commodities.`);
+      await initDashboardStats();
+    }
+
+    function askAI(question) {
+      const input = document.getElementById('aiInput');
+      if (input) { input.value = question; sendAIMessage(); }
+    }
+
+    function clearAIChat() {
+      document.getElementById('aiMessages').innerHTML = `<div style="background:rgba(74,124,89,0.06);border-radius:12px 12px 12px 0;padding:14px 16px;font-size:14px;color:var(--charcoal);max-width:85%;">
+        <strong>🤖 AI Consultant:</strong> Halo, Petani! 👋 Saya siap membantu kamu dalam strategi penjualan, harga pasar terkini, dan tips budidaya. Pilih topik di bawah atau ketik pertanyaanmu langsung!
+      </div>`;
     }
 
     // ---- DASHBOARD STATS ----
@@ -1864,6 +1974,36 @@
       if (elCommodities) elCommodities.textContent = comms.length;
       if (elRevenue) elRevenue.textContent = `IDR ${(finSummary.totalRevenue / 1e6).toFixed(1)} Jt`;
       if (elOrdersChange) elOrdersChange.textContent = `${active.length} active orders`;
+
+      // ---- Render Dashboard Commodity Grid ----
+      const dashGrid = document.getElementById('dashCommodityGrid');
+      const dashEmpty = document.getElementById('dashCommodityEmpty');
+      if (dashGrid && dashEmpty) {
+        if (!comms.length) {
+          dashGrid.style.display = 'none';
+          dashEmpty.style.display = 'block';
+        } else {
+          dashEmpty.style.display = 'none';
+          dashGrid.style.display = '';
+          const statusMap = { true: ['Ready', 'status-ready'], false: ['Pre-Order', 'status-preorder'] };
+          dashGrid.innerHTML = comms.slice(0, 4).map(c => {
+            const [label, cls] = statusMap[!c.is_preorder] || ['Pre-Order', 'status-preorder'];
+            return `<div class="commodity-card" onclick="navigateTo('commodities')">
+            <div class="commodity-img">${c.emoji || '🌿'}<span class="commodity-status ${cls}">${label}</span></div>
+            <div class="commodity-info">
+              <div class="commodity-name">${c.name}</div>
+              <div class="commodity-price">IDR ${Number(c.price).toLocaleString('id-ID')} / ${c.unit || 'kg'}</div>
+              <div class="commodity-stock">📦 Stock: ${c.stock} ${c.unit || 'kg'}</div>
+            </div>
+          </div>`;
+          }).join('');
+          if (comms.length > 4) {
+            dashGrid.innerHTML += `<div class="commodity-card" style="border:2px dashed var(--mint);background:rgba(184,212,191,0.1);display:flex;align-items:center;justify-content:center;min-height:160px;cursor:pointer;" onclick="navigateTo('commodities')">
+            <div style="text-align:center;color:var(--sage);"><div style="font-size:22px;margin-bottom:4px;">+${comms.length - 4}</div><div style="font-size:12px;font-weight:600;">More</div></div></div>`;
+          }
+        }
+      }
+
       // Load real orders in dashboard table
       const tbody = document.querySelector('#view-dashboard tbody');
       if (tbody && orders.length) {
@@ -1910,6 +2050,7 @@
       if (view === 'logistics') await loadLogisticsView();
       if (view === 'finance') await loadFinanceView();
       if (view === 'notifications') await loadNotificationsView();
+      if (view === 'ai') await loadAIContextualQuestions();
       if (view === 'dashboard') {
         await initDashboardStats();
         setTimeout(() => { const p = document.getElementById('progressFill'); if (p) p.style.width = '65%'; }, 400);
