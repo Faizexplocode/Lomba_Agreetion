@@ -579,8 +579,6 @@
       <ul class="sidebar-nav">
         <li><a href="#" id="nav-dashboard" class="active" onclick="navigateTo('dashboard'); return false;"><span
               class="nav-icon">🏠</span> Dashboard</a></li>
-        <li><a href="#" id="nav-marketplace" onclick="navigateTo('marketplace'); return false;"><span
-              class="nav-icon">🛒</span> Market Place</a></li>
         <li><a href="#" id="nav-commodities" onclick="navigateTo('commodities'); return false;"><span
               class="nav-icon">📦</span> My Commodities</a></li>
         <li><a href="#" id="nav-preorders" onclick="navigateTo('preorders'); return false;"><span
@@ -645,7 +643,7 @@
           </div>
           <div class="page-action-row">
             <button class="btn btn-secondary" onclick="openModal('addCommodityModal')">+ Add Commodity</button>
-            <button class="btn btn-primary">📊 View Analytics</button>
+            <button class="btn btn-primary" onclick="navigateTo('commodities')">📦 My Commodities</button>
           </div>
         </div>
 
@@ -1420,16 +1418,7 @@
         </div>
       </div>
 
-      <!-- ======== VIEW: MARKETPLACE ======== -->
-      <div id="view-marketplace" class="page-view">
-        <div class="page-title-row page-enter">
-          <div>
-            <div class="page-title">🛒 Market Place</div>
-            <div class="page-subtitle">See how your products appear to buyers</div>
-          </div>
-        </div>
-        <div id="marketplaceContainer" class="page-enter commodity-grid"></div>
-      </div>
+
 
     </main>
   </div>
@@ -1878,21 +1867,7 @@
       loadNotificationsView();
     }
 
-    // ---- MARKETPLACE VIEW ----
-    async function loadMarketplaceView() {
-      const container = document.getElementById('marketplaceContainer');
-      container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--mid-gray);">Loading...</div>';
-      const all = await FarmifyDB.getAvailableCommodities();
-      if (!all.length) { container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">No commodities listed yet</div>'; return; }
-      container.innerHTML = all.map(c => `<div class="commodity-card">
-      <div class="commodity-img">${c.emoji || '🌿'}<span class="commodity-status ${c.is_preorder ? 'status-preorder' : 'status-ready'}">${c.is_preorder ? 'Pre-Order' : 'Available'}</span></div>
-      <div class="commodity-info">
-        <div class="commodity-name">${c.name}</div>
-        <div class="commodity-price">IDR ${Number(c.price).toLocaleString('id-ID')} / ${c.unit || 'kg'}</div>
-        <div class="commodity-stock">📦 ${c.farm_name} · ${c.farmer_city || ''}</div>
-      </div>
-    </div>`).join('');
-    }
+
 
     // ---- AI CONSULTANT ----
     async function sendAIMessage() {
@@ -1982,7 +1957,6 @@
       if (view === 'logistics') await loadLogisticsView();
       if (view === 'finance') await loadFinanceView();
       if (view === 'notifications') await loadNotificationsView();
-      if (view === 'marketplace') await loadMarketplaceView();
       if (view === 'dashboard') {
         await initDashboardStats();
         setTimeout(() => { const p = document.getElementById('progressFill'); if (p) p.style.width = '65%'; }, 400);

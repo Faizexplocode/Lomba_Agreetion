@@ -569,12 +569,12 @@
       <ul class="sidebar-nav">
         <li><a href="#" id="nav-dashboard" class="active" onclick="navigateTo('dashboard'); return false;"><span
               class="nav-icon">🏠</span> Dashboard</a></li>
+        <li><a href="#" id="nav-marketplace" onclick="navigateTo('marketplace'); return false;"><span
+              class="nav-icon">🛒</span> Marketplace</a></li>
         <li><a href="#" id="nav-suppliers" onclick="navigateTo('suppliers'); return false;"><span
               class="nav-icon">🔍</span> Find Suppliers</a></li>
         <li><a href="#" id="nav-orders" onclick="navigateTo('orders'); return false;"><span class="nav-icon">🛒</span>
             My Orders</a></li>
-        <li><a href="#" id="nav-preorders" onclick="navigateTo('preorders'); return false;"><span
-              class="nav-icon">📋</span> My Pre-Orders</a></li>
         <li><a href="#" id="nav-history" onclick="navigateTo('history'); return false;"><span class="nav-icon">📦</span>
             Order History</a></li>
         <li><a href="#" id="nav-tracking" onclick="navigateTo('tracking'); return false;"><span
@@ -645,7 +645,7 @@
             <div style="font-size:13px;color:rgba(255,255,255,0.75);">Order now, pay when harvest arrives. Stable &
               reliable.</div>
           </div>
-          <button class="btn btn-outline-white" style="flex-shrink:0;">View Pre-Orders →</button>
+          <button class="btn btn-outline-white" style="flex-shrink:0;" onclick="navigateTo('marketplace'); setTimeout(()=>setMarketplaceFilter('preorder'),300)">View Pre-Order Products →</button>
         </div>
 
         <div class="dash-grid-main">
@@ -959,6 +959,53 @@
         </div>
       </div>
 
+      <!-- ======== VIEW: MARKETPLACE (BUYER ONLY) ======== -->
+      <div id="view-marketplace" class="page-view">
+        <div class="page-title-row page-enter">
+          <div>
+            <div class="page-title">🛒 Marketplace</div>
+            <div class="page-subtitle">Browse and order commodities directly from verified farmers</div>
+          </div>
+        </div>
+
+        <!-- Search + Filter Bar -->
+        <div style="background:linear-gradient(135deg,var(--forest) 0%,#0D2017 100%);border-radius:var(--radius-xl);padding:24px 28px;margin-bottom:24px;position:relative;overflow:hidden;" class="page-enter">
+          <div style="position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(74,124,89,0.2) 0%,transparent 70%);top:-100px;right:-60px;"></div>
+          <div style="position:relative;z-index:1;">
+            <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+              <input type="text" id="mktSearchInput" placeholder="🔍  Search commodities, farm name, location..."
+                oninput="filterMarketplace()"
+                style="flex:1;min-width:200px;padding:11px 18px;border-radius:var(--radius-md);border:none;font-family:var(--font-body);font-size:14px;outline:none;background:rgba(255,255,255,0.12);color:white;" />
+              <button class="btn btn-harvest" style="padding:11px 24px;" onclick="filterMarketplace()">Search</button>
+            </div>
+            <!-- Category + PreOrder Filter Chips -->
+            <div style="display:flex;gap:8px;flex-wrap:wrap;" id="mktCategoryChips">
+              <button class="chip active" id="mktChip-all" onclick="setMktCategory(this,'')">All</button>
+              <button class="chip" id="mktChip-veg" onclick="setMktCategory(this,'Vegetables')">🥬 Vegetables</button>
+              <button class="chip" id="mktChip-fruit" onclick="setMktCategory(this,'Buah')">🍉 Fruit</button>
+              <button class="chip" id="mktChip-rice" onclick="setMktCategory(this,'Padi')">🌾 Rice / Grains</button>
+              <button class="chip" id="mktChip-spice" onclick="setMktCategory(this,'Rempah')">🧅 Spices</button>
+              <button class="chip" id="mktChip-tuber" onclick="setMktCategory(this,'Umbi')">🥔 Root Crops</button>
+              <button class="chip" id="mktChip-preorder"
+                style="background:rgba(200,151,42,0.15);border-color:rgba(200,151,42,0.4);color:rgba(255,220,120,0.9);"
+                onclick="setMarketplaceFilter('preorder')">📋 Pre-Order Only</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;" class="page-enter">
+          <div style="font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--forest);" id="mktResultTitle">All Products</div>
+          <span id="mktResultCount" style="font-size:12px;color:var(--mid-gray);"></span>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="mktProductGrid" class="page-enter"
+          style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;">
+          <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">Loading products...</div>
+        </div>
+      </div>
+
       <!-- ======== VIEW: MY ORDERS ======== -->
       <div id="view-orders" class="page-view">
         <div class="page-title-row page-enter">
@@ -990,20 +1037,6 @@
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
-
-      <!-- ======== VIEW: MY PRE-ORDERS ======== -->
-      <div id="view-preorders" class="page-view">
-        <div class="page-title-row page-enter">
-          <div>
-            <div class="page-title">📋 My Pre-Orders</div>
-            <div class="page-subtitle">Reserve commodities before harvest</div>
-          </div>
-          <button class="btn btn-primary" onclick="openModal('preorderModal')">+ New Pre-Order</button>
-        </div>
-        <div id="buyerPreordersList" class="page-enter" style="display:flex;flex-direction:column;gap:14px;">
-          <div style="text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
         </div>
       </div>
 
@@ -1261,10 +1294,10 @@
       if (view === 'profile') await populateProfile();
       if (view === 'suppliers') await loadSuppliersView();
       if (view === 'orders') await loadBuyerOrders();
-      if (view === 'preorders') await loadBuyerPreorders();
       if (view === 'history') await loadOrderHistory();
       if (view === 'tracking') await loadTrackingView();
       if (view === 'notifications') await loadBuyerNotifs();
+      if (view === 'marketplace') await loadMarketplace();
     }
 
     // ---- DASHBOARD ----
@@ -1345,6 +1378,84 @@
         return matchQ && matchCat;
       });
       renderSupplierGrid(filtered);
+    }
+
+    // ---- MARKETPLACE ----
+    let allMarketProducts = [];
+    let mktActiveCategory = '';
+    let mktPreorderOnly = false;
+
+    async function loadMarketplace() {
+      const grid = document.getElementById('mktProductGrid');
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">Loading products...</div>';
+      allMarketProducts = await FarmifyDB.getAvailableCommodities();
+      renderMarketplace();
+    }
+
+    function renderMarketplace() {
+      const grid = document.getElementById('mktProductGrid');
+      const q = document.getElementById('mktSearchInput')?.value.toLowerCase() || '';
+      let filtered = allMarketProducts.filter(c => {
+        const matchQ = !q || c.name.toLowerCase().includes(q) || (c.farm_name || '').toLowerCase().includes(q) || (c.farmer_city || '').toLowerCase().includes(q);
+        const matchCat = !mktActiveCategory || (c.category || '').toLowerCase().includes(mktActiveCategory.toLowerCase());
+        const matchPO = !mktPreorderOnly || c.is_preorder;
+        return matchQ && matchCat && matchPO;
+      });
+      const title = mktPreorderOnly ? '📋 Pre-Order Products' : (mktActiveCategory ? mktActiveCategory + ' Products' : 'All Products');
+      document.getElementById('mktResultTitle').textContent = title;
+      document.getElementById('mktResultCount').textContent = filtered.length + ' product' + (filtered.length !== 1 ? 's' : '') + ' found';
+      if (!filtered.length) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px;background:white;border-radius:var(--radius-lg);color:var(--mid-gray);">No products found matching your filter</div>';
+        return;
+      }
+      grid.innerHTML = filtered.map(c => `
+      <div style="background:white;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;"
+           onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-med)'"
+           onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow-soft)'">
+        <div style="height:110px;background:linear-gradient(135deg,var(--cream),var(--mint));display:flex;align-items:center;justify-content:center;font-size:42px;position:relative;">
+          ${c.emoji || '🌿'}
+          <span style="position:absolute;top:8px;right:8px;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;background:${c.is_preorder ? 'rgba(200,151,42,0.15)' : 'rgba(74,124,89,0.15)'};color:${c.is_preorder ? 'var(--earth)' : 'var(--moss)'};">${c.is_preorder ? '📋 Pre-Order' : '✅ Available'}</span>
+        </div>
+        <div style="padding:14px 16px;">
+          <div style="font-weight:700;font-size:15px;color:var(--forest);margin-bottom:4px;">${c.name}</div>
+          <div style="font-family:var(--font-display);font-size:16px;color:var(--moss);font-weight:600;margin-bottom:6px;">IDR ${Number(c.price).toLocaleString('id-ID')} / ${c.unit || 'kg'}</div>
+          <div style="font-size:11px;color:var(--mid-gray);margin-bottom:4px;">📦 Stock: ${c.stock} ${c.unit || 'kg'}</div>
+          <div style="font-size:11px;color:var(--mid-gray);margin-bottom:12px;">🌾 ${c.farm_name || 'Farm'} ${c.farmer_city ? '· ' + c.farmer_city : ''}</div>
+          ${c.is_preorder
+            ? `<div style="display:flex;gap:6px;"><button class="btn btn-harvest" style="flex:1;font-size:12px;padding:7px 10px;" onclick="quickOrder('${c.id}')">📋 Pre-Order</button></div>`
+            : `<div style="display:flex;gap:6px;"><button class="btn btn-primary" style="flex:1;font-size:12px;padding:7px 10px;" onclick="quickOrder('${c.id}')">+ Order</button></div>`
+          }
+        </div>
+      </div>`).join('');
+    }
+
+    function filterMarketplace() { renderMarketplace(); }
+
+    function setMktCategory(btn, cat) {
+      mktActiveCategory = cat;
+      mktPreorderOnly = false;
+      document.querySelectorAll('#mktCategoryChips .chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      // Reset preorder chip style
+      const poChip = document.getElementById('mktChip-preorder');
+      if (poChip) { poChip.style.background = 'rgba(200,151,42,0.15)'; poChip.style.borderColor = 'rgba(200,151,42,0.4)'; poChip.style.color = 'rgba(255,220,120,0.9)'; }
+      renderMarketplace();
+    }
+
+    function setMarketplaceFilter(type) {
+      if (type === 'preorder') {
+        mktPreorderOnly = !mktPreorderOnly;
+        mktActiveCategory = '';
+        document.querySelectorAll('#mktCategoryChips .chip').forEach(c => c.classList.remove('active'));
+        const poChip = document.getElementById('mktChip-preorder');
+        if (mktPreorderOnly) {
+          if (poChip) { poChip.style.background = 'var(--harvest)'; poChip.style.borderColor = 'var(--harvest)'; poChip.style.color = 'white'; }
+        } else {
+          document.getElementById('mktChip-all')?.classList.add('active');
+          if (poChip) { poChip.style.background = 'rgba(200,151,42,0.15)'; poChip.style.borderColor = 'rgba(200,151,42,0.4)'; poChip.style.color = 'rgba(255,220,120,0.9)'; }
+        }
+        renderMarketplace();
+      }
     }
 
     // ---- BUYER ORDERS ----
