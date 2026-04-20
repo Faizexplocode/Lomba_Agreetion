@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,49 +16,233 @@
       position: relative;
       overflow: hidden;
     }
+
     .search-hero::before {
       content: '';
       position: absolute;
-      width: 350px; height: 350px;
+      width: 350px;
+      height: 350px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(74,124,89,0.2) 0%, transparent 70%);
-      top: -100px; right: -80px;
+      background: radial-gradient(circle, rgba(74, 124, 89, 0.2) 0%, transparent 70%);
+      top: -100px;
+      right: -80px;
     }
-    .search-hero-title { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: white; margin-bottom: 6px; position: relative; z-index: 1; }
-    .search-hero-sub { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 20px; position: relative; z-index: 1; }
-    .search-bar-hero { display: flex; gap: 10px; position: relative; z-index: 1; flex-wrap: wrap; }
-    .search-bar-hero input { flex: 1; min-width: 200px; padding: 12px 18px; border-radius: var(--radius-md); border: none; font-family: var(--font-body); font-size: 14px; outline: none; background: rgba(255,255,255,0.12); color: white; }
-    .search-bar-hero input::placeholder { color: rgba(255,255,255,0.4); }
-    .search-bar-hero input:focus { background: rgba(255,255,255,0.18); }
-    .filter-chips { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
-    .chip { padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); background: transparent; }
-    .chip:hover, .chip.active { background: var(--moss); color: white; border-color: var(--moss); }
+
+    .search-hero-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .search-hero-sub {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .search-bar-hero {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+      flex-wrap: wrap;
+    }
+
+    .search-bar-hero input {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px 18px;
+      border-radius: var(--radius-md);
+      border: none;
+      font-family: var(--font-body);
+      font-size: 14px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+    }
+
+    .search-bar-hero input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .search-bar-hero input:focus {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .filter-chips {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .chip {
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.7);
+      background: transparent;
+    }
+
+    .chip:hover,
+    .chip.active {
+      background: var(--moss);
+      color: white;
+      border-color: var(--moss);
+    }
 
     /* ========== SUPPLIER CARDS ========== */
-    .supplier-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
-    .supplier-card { background: white; border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-soft); border: 1px solid rgba(74,124,89,0.08); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
-    .supplier-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-med); }
-    .supplier-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-    .supplier-avatar { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--mint), var(--sage)); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-    .supplier-name { font-weight: 700; font-size: 15px; color: var(--forest); }
-    .supplier-location { font-size: 12px; color: var(--mid-gray); }
-    .supplier-commodities { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-    .commodity-tag { padding: 4px 10px; background: rgba(74,124,89,0.08); border-radius: 100px; font-size: 11px; color: var(--moss); font-weight: 600; }
-    .supplier-footer { display: flex; align-items: center; justify-content: space-between; }
-    .supplier-rating { display: flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; color: var(--harvest); }
+    .supplier-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 16px;
+    }
+
+    .supplier-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(74, 124, 89, 0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .supplier-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-med);
+    }
+
+    .supplier-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .supplier-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--mint), var(--sage));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .supplier-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--forest);
+    }
+
+    .supplier-location {
+      font-size: 12px;
+      color: var(--mid-gray);
+    }
+
+    .supplier-commodities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .commodity-tag {
+      padding: 4px 10px;
+      background: rgba(74, 124, 89, 0.08);
+      border-radius: 100px;
+      font-size: 11px;
+      color: var(--moss);
+      font-weight: 600;
+    }
+
+    .supplier-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .supplier-rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--harvest);
+    }
 
     /* ========== WALLET ========== */
-    .wallet-card { background: linear-gradient(135deg, var(--moss) 0%, var(--forest) 100%); border-radius: var(--radius-lg); padding: 24px; color: white; }
-    .wallet-label { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
-    .wallet-amount { font-family: var(--font-display); font-size: 28px; font-weight: 700; margin-bottom: 4px; }
-    .loyalty-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: rgba(255,255,255,0.12); border-radius: 100px; font-size: 12px; font-weight: 600; margin-top: 12px; }
+    .wallet-card {
+      background: linear-gradient(135deg, var(--moss) 0%, var(--forest) 100%);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      color: white;
+    }
+
+    .wallet-label {
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 6px;
+    }
+
+    .wallet-amount {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .loyalty-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 12px;
+    }
 
     /* ========== PRE-ORDER BANNER ========== */
-    .preorder-banner { background: linear-gradient(135deg, #2D5A3D 0%, #7FAF8A 100%); border-radius: var(--radius-lg); padding: 22px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; color: white; flex-wrap: wrap; }
+    .preorder-banner {
+      background: linear-gradient(135deg, #2D5A3D 0%, #7FAF8A 100%);
+      border-radius: var(--radius-lg);
+      padding: 22px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+      color: white;
+      flex-wrap: wrap;
+    }
 
     /* ========== PAGE VIEW (SPA) ========== */
-    .page-view { display: none; }
-    .page-view.active { display: block; }
+    .page-view {
+      display: none;
+    }
+
+    .page-view.active {
+      display: block;
+    }
 
     /* ========== PROFILE STYLES ========== */
     .profile-hero {
@@ -73,632 +258,1061 @@
       overflow: hidden;
       flex-wrap: wrap;
     }
+
     .profile-hero::before {
       content: '';
-      position: absolute; top: -40px; right: -40px;
-      width: 200px; height: 200px;
-      background: radial-gradient(circle, rgba(200,151,42,0.12) 0%, transparent 70%);
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(200, 151, 42, 0.12) 0%, transparent 70%);
       border-radius: 50%;
     }
-    .profile-hero::after { content: '🏭'; position: absolute; bottom: -10px; right: 24px; font-size: 80px; opacity: 0.07; }
-    .profile-avatar-lg { width: 84px; height: 84px; border-radius: 22px; background: linear-gradient(135deg, var(--earth), var(--harvest)); display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 700; color: white; flex-shrink: 0; border: 3px solid rgba(255,255,255,0.15); position: relative; z-index: 1; }
-    .profile-hero-info { position: relative; z-index: 1; flex: 1; min-width: 200px; }
-    .profile-hero-name { font-family: var(--font-display); font-size: 22px; font-weight: 700; margin-bottom: 4px; }
-    .profile-hero-email { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 10px; }
-    .profile-hero-badges { display: flex; gap: 8px; flex-wrap: wrap; }
-    .profile-badge { padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.12); }
-    .profile-badge.gold { background: rgba(200,151,42,0.25); color: var(--harvest); border-color: rgba(200,151,42,0.3); }
 
-    .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-    @media (max-width: 640px) { .profile-grid { grid-template-columns: 1fr; } }
+    .profile-hero::after {
+      content: '🏭';
+      position: absolute;
+      bottom: -10px;
+      right: 24px;
+      font-size: 80px;
+      opacity: 0.07;
+    }
 
-    .profile-card { background: white; border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-soft); border: 1px solid rgba(74,124,89,0.08); }
-    .profile-card-title { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--forest); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--light-gray); display: flex; align-items: center; gap: 8px; }
-    .profile-field { margin-bottom: 14px; }
-    .profile-field:last-child { margin-bottom: 0; }
-    .profile-field-label { font-size: 11px; font-weight: 600; color: var(--mid-gray); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
-    .profile-field-value { font-size: 14px; color: var(--charcoal); font-weight: 500; }
-    .profile-field-input { width: 100%; padding: 9px 13px; border: 1.5px solid var(--light-gray); border-radius: var(--radius-md); font-size: 14px; font-family: var(--font-body); color: var(--charcoal); background: var(--warm-white); transition: border-color 0.2s; outline: none; }
-    .profile-field-input:focus { border-color: var(--leaf); background: white; }
+    .profile-avatar-lg {
+      width: 84px;
+      height: 84px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--earth), var(--harvest));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      position: relative;
+      z-index: 1;
+    }
 
-    .profile-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
-    @media (max-width: 500px) { .profile-stats-row { grid-template-columns: repeat(2, 1fr); } }
-    .profile-stat { background: white; border-radius: var(--radius-lg); padding: 18px 16px; box-shadow: var(--shadow-soft); border: 1px solid rgba(74,124,89,0.08); text-align: center; }
-    .profile-stat-value { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--forest); }
-    .profile-stat-label { font-size: 11px; color: var(--mid-gray); margin-top: 4px; }
+    .profile-hero-info {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      min-width: 200px;
+    }
 
-    .btn-edit-profile { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer; background: rgba(74,124,89,0.1); color: var(--moss); border: 1.5px solid rgba(74,124,89,0.2); font-family: var(--font-body); transition: all 0.2s; }
-    .btn-edit-profile:hover { background: rgba(74,124,89,0.18); }
-    .btn-save-profile { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer; background: var(--moss); color: white; border: none; font-family: var(--font-body); transition: all 0.2s; }
-    .btn-save-profile:hover { background: var(--forest); }
-    .btn-cancel-profile { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer; background: transparent; color: var(--mid-gray); border: 1.5px solid var(--light-gray); font-family: var(--font-body); transition: all 0.2s; }
+    .profile-hero-name {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
 
-    .profile-view-mode .edit-only { display: none; }
-    .profile-view-mode .view-only { display: block; }
-    .profile-edit-mode .edit-only { display: block; }
-    .profile-edit-mode .view-only { display: none; }
+    .profile-hero-email {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 10px;
+    }
 
-    .page-title { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--forest); }
-    .page-subtitle { font-size: 14px; color: var(--mid-gray); margin-top: 4px; }
-    .page-title-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
+    .profile-hero-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .profile-badge {
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .profile-badge.gold {
+      background: rgba(200, 151, 42, 0.25);
+      color: var(--harvest);
+      border-color: rgba(200, 151, 42, 0.3);
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .profile-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(74, 124, 89, 0.08);
+    }
+
+    .profile-card-title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--light-gray);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .profile-field {
+      margin-bottom: 14px;
+    }
+
+    .profile-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .profile-field-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--mid-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+
+    .profile-field-value {
+      font-size: 14px;
+      color: var(--charcoal);
+      font-weight: 500;
+    }
+
+    .profile-field-input {
+      width: 100%;
+      padding: 9px 13px;
+      border: 1.5px solid var(--light-gray);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-family: var(--font-body);
+      color: var(--charcoal);
+      background: var(--warm-white);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .profile-field-input:focus {
+      border-color: var(--leaf);
+      background: white;
+    }
+
+    .profile-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 500px) {
+      .profile-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .profile-stat {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 18px 16px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(74, 124, 89, 0.08);
+      text-align: center;
+    }
+
+    .profile-stat-value {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--forest);
+    }
+
+    .profile-stat-label {
+      font-size: 11px;
+      color: var(--mid-gray);
+      margin-top: 4px;
+    }
+
+    .btn-edit-profile {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: rgba(74, 124, 89, 0.1);
+      color: var(--moss);
+      border: 1.5px solid rgba(74, 124, 89, 0.2);
+      font-family: var(--font-body);
+      transition: all 0.2s;
+    }
+
+    .btn-edit-profile:hover {
+      background: rgba(74, 124, 89, 0.18);
+    }
+
+    .btn-save-profile {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--moss);
+      color: white;
+      border: none;
+      font-family: var(--font-body);
+      transition: all 0.2s;
+    }
+
+    .btn-save-profile:hover {
+      background: var(--forest);
+    }
+
+    .btn-cancel-profile {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      color: var(--mid-gray);
+      border: 1.5px solid var(--light-gray);
+      font-family: var(--font-body);
+      transition: all 0.2s;
+    }
+
+    .profile-view-mode .edit-only {
+      display: none;
+    }
+
+    .profile-view-mode .view-only {
+      display: block;
+    }
+
+    .profile-edit-mode .edit-only {
+      display: block;
+    }
+
+    .profile-edit-mode .view-only {
+      display: none;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--forest);
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--mid-gray);
+      margin-top: 4px;
+    }
+
+    .page-title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
   </style>
 </head>
+
 <body>
-<div class="app-layout">
+  <div class="app-layout">
 
-  <div class="mobile-topbar">
-    <a href="#" class="mobile-brand">
-      <div class="mobile-brand-icon">🌿</div>
-      <span class="mobile-brand-name">Farmify</span>
-    </a>
-    <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
-  </div>
-  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <a href="#" class="sidebar-brand" onclick="navigateTo('dashboard'); return false;">
-      <div class="brand-icon">🌿</div>
-      <div>
-        <div class="brand-name">Farmify</div>
-        <div class="brand-role">Buyer / B2B</div>
-      </div>
-    </a>
-
-    <ul class="sidebar-nav">
-      <li><a href="#" id="nav-dashboard" class="active" onclick="navigateTo('dashboard'); return false;"><span class="nav-icon">🏠</span> Dashboard</a></li>
-      <li><a href="#" id="nav-suppliers" onclick="navigateTo('suppliers'); return false;"><span class="nav-icon">🔍</span> Find Suppliers</a></li>
-      <li><a href="#" id="nav-orders" onclick="navigateTo('orders'); return false;"><span class="nav-icon">🛒</span> My Orders</a></li>
-      <li><a href="#" id="nav-preorders" onclick="navigateTo('preorders'); return false;"><span class="nav-icon">📋</span> My Pre-Orders</a></li>
-      <li><a href="#" id="nav-history" onclick="navigateTo('history'); return false;"><span class="nav-icon">📦</span> Order History</a></li>
-      <li><a href="#" id="nav-tracking" onclick="navigateTo('tracking'); return false;"><span class="nav-icon">🚚</span> Track Shipment</a></li>
-
-      <div style="padding:0 8px;margin-top:20px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">Account</div>
-      <li><a href="#" id="nav-profile" onclick="navigateTo('profile'); return false;"><span class="nav-icon">👤</span> Company Profile</a></li>
-      <li><a href="#" id="nav-wallet" onclick="navigateTo('wallet'); return false;"><span class="nav-icon">💰</span> Wallet & Payment</a></li>
-      <li><a href="#" id="nav-loyalty" onclick="navigateTo('loyalty'); return false;"><span class="nav-icon">🏆</span> Loyalty Points</a></li>
-      <li><a href="#" id="nav-notifications" onclick="navigateTo('notifications'); return false;"><span class="nav-icon">🔔</span> Notifications <span id="buyerNotifBadge" style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;display:none;">0</span></a></li>
-    </ul>
-
-    <div class="sidebar-footer">
-      <div class="user-info-mini">
-        <div class="user-avatar-sm" id="sidebarAvatar">PJ</div>
-        <div style="min-width:0">
-          <div class="user-meta-name" id="sidebarName">PT Jaya</div>
-          <div class="user-meta-role">🏭 Verified Buyer</div>
-        </div>
-      </div>
-      <button onclick="logout()" style="margin-top:8px;width:100%;padding:9px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;transition:all 0.2s;font-family:var(--font-body);"
-        onmouseover="this.style.background='rgba(196,98,45,0.2)';this.style.color='#f5a98a';"
-        onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.5)';">
-        ↩ Sign Out
-      </button>
+    <div class="mobile-topbar">
+      <a href="#" class="mobile-brand">
+        <div class="mobile-brand-icon">🌿</div>
+        <span class="mobile-brand-name">Farmify</span>
+      </a>
+      <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
     </div>
-  </aside>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-  <main class="main-content">
-
-    <!-- ===== VIEW: DASHBOARD ===== -->
-    <div id="view-dashboard" class="page-view active">
-
-      <div class="search-hero page-enter">
-        <div class="search-hero-title" id="buyerGreeting">Hello, PT Jaya! 🏭</div>
-        <div class="search-hero-sub">Directly connected with trusted farmers across East Java</div>
-        <div class="search-bar-hero">
-          <input type="text" id="searchInput" placeholder="🔍  Search commodities, farm name, location..." oninput="performSearch()" />
-          <button class="btn btn-harvest" style="padding:12px 24px;" onclick="performSearch()">Search</button>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <a href="#" class="sidebar-brand" onclick="navigateTo('dashboard'); return false;">
+        <div class="brand-icon">🌿</div>
+        <div>
+          <div class="brand-name">Farmify</div>
+          <div class="brand-role">Buyer / B2B</div>
         </div>
-        <div class="filter-chips" id="filterChips">
-          <button class="chip active" onclick="filterCategory(this, '')">All</button>
-          <button class="chip" onclick="filterCategory(this, 'Vegetables')">🥬 Vegetables</button>
-          <button class="chip" onclick="filterCategory(this, 'Buah')">🍉 Fruit</button>
-          <button class="chip" onclick="filterCategory(this, 'Padi')">🌾 Rice / Grains</button>
-          <button class="chip" onclick="filterCategory(this, 'Rempah')">🧅 Spices</button>
-          <button class="chip" onclick="filterCategory(this, 'Umbi')">🥔 Root Crops</button>
+      </a>
+
+      <ul class="sidebar-nav">
+        <li><a href="#" id="nav-dashboard" class="active" onclick="navigateTo('dashboard'); return false;"><span
+              class="nav-icon">🏠</span> Dashboard</a></li>
+        <li><a href="#" id="nav-suppliers" onclick="navigateTo('suppliers'); return false;"><span
+              class="nav-icon">🔍</span> Find Suppliers</a></li>
+        <li><a href="#" id="nav-orders" onclick="navigateTo('orders'); return false;"><span class="nav-icon">🛒</span>
+            My Orders</a></li>
+        <li><a href="#" id="nav-preorders" onclick="navigateTo('preorders'); return false;"><span
+              class="nav-icon">📋</span> My Pre-Orders</a></li>
+        <li><a href="#" id="nav-history" onclick="navigateTo('history'); return false;"><span class="nav-icon">📦</span>
+            Order History</a></li>
+        <li><a href="#" id="nav-tracking" onclick="navigateTo('tracking'); return false;"><span
+              class="nav-icon">🚚</span> Track Shipment</a></li>
+
+        <div
+          style="padding:0 8px;margin-top:20px;font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1.5px;text-transform:uppercase;">
+          Account</div>
+        <li><a href="#" id="nav-profile" onclick="navigateTo('profile'); return false;"><span class="nav-icon">👤</span>
+            Company Profile</a></li>
+        <li><a href="#" id="nav-wallet" onclick="navigateTo('wallet'); return false;"><span class="nav-icon">💰</span>
+            Wallet & Payment</a></li>
+        <li><a href="#" id="nav-loyalty" onclick="navigateTo('loyalty'); return false;"><span class="nav-icon">🏆</span>
+            Loyalty Points</a></li>
+        <li><a href="#" id="nav-notifications" onclick="navigateTo('notifications'); return false;"><span
+              class="nav-icon">🔔</span> Notifications <span id="buyerNotifBadge"
+              style="margin-left:auto;background:var(--terracotta);color:white;font-size:10px;padding:2px 7px;border-radius:100px;display:none;">0</span></a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-info-mini">
+          <div class="user-avatar-sm" id="sidebarAvatar">PJ</div>
+          <div style="min-width:0">
+            <div class="user-meta-name" id="sidebarName">PT Jaya</div>
+            <div class="user-meta-role">🏭 Verified Buyer</div>
+          </div>
         </div>
+        <button onclick="logout()"
+          style="margin-top:8px;width:100%;padding:9px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;transition:all 0.2s;font-family:var(--font-body);"
+          onmouseover="this.style.background='rgba(196,98,45,0.2)';this.style.color='#f5a98a';"
+          onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.5)';">
+          ↩ Sign Out
+        </button>
       </div>
+    </aside>
 
-      <div class="preorder-banner page-enter">
-        <div>
-          <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.6);font-weight:600;margin-bottom:6px;">📋 PRE-ORDER SYSTEM</div>
-          <div style="font-family:var(--font-display);font-size:18px;font-weight:700;margin-bottom:4px;">Secure Your Supply Before Harvest</div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.75);">Order now, pay when harvest arrives. Stable & reliable.</div>
-        </div>
-        <button class="btn btn-outline-white" style="flex-shrink:0;">View Pre-Orders →</button>
-      </div>
+    <main class="main-content">
 
-      <div class="dash-grid-main">
-        <div>
-          <!-- Stats -->
-          <div class="stats-grid page-enter" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
-            <div class="stat-card">
-              <div class="stat-icon gold">📦</div>
-              <div class="stat-value" id="activeOrderCount">—</div>
-              <div class="stat-label">Active Orders</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon green">🌾</div>
-              <div class="stat-value" id="supplierCount">—</div>
-              <div class="stat-label">Available Farmers</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon earth">💸</div>
-              <div class="stat-value">IDR 142 Jt</div>
-              <div class="stat-label">Total Purchases</div>
-            </div>
+      <!-- ===== VIEW: DASHBOARD ===== -->
+      <div id="view-dashboard" class="page-view active">
+
+        <div class="search-hero page-enter">
+          <div class="search-hero-title" id="buyerGreeting">Hello, PT Jaya! 🏭</div>
+          <div class="search-hero-sub">Directly connected with trusted farmers across East Java</div>
+          <div class="search-bar-hero">
+            <input type="text" id="searchInput" placeholder="🔍  Search commodities, farm name, location..."
+              oninput="performSearch()" />
+            <button class="btn btn-harvest" style="padding:12px 24px;" onclick="performSearch()">Search</button>
           </div>
-
-          <!-- Suppliers list from data real -->
-          <div class="page-enter">
-            <div class="section-header-row" style="margin-bottom:16px;">
-              <div style="font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--forest);">Active Suppliers on Platform</div>
-              <span id="supplierCountLabel" style="font-size:12px;color:var(--mid-gray);"></span>
-            </div>
-            <div class="supplier-grid" id="supplierGrid">
-              <div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;">Loading supplier data...</div>
-            </div>
-          </div>
-
-          <!-- Commodity Available -->
-          <div class="table-container page-enter" style="margin-top:24px;">
-            <div class="table-header">
-              <div class="table-title">Available Commodities Now</div>
-              <span class="badge badge-farmer" id="farmerActiveCount">Loading...</span>
-            </div>
-            <div class="table-scroll">
-              <table>
-                <thead>
-                  <tr><th>Commodity</th><th>Farmer / Farm</th><th>Price</th><th>Stock</th><th>Status</th><th>Action</th></tr>
-                </thead>
-                <tbody id="commodityTable">
-                  <tr><td colspan="6" style="text-align:center;padding:24px;color:var(--mid-gray);">Loading...</td></tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="filter-chips" id="filterChips">
+            <button class="chip active" onclick="filterCategory(this, '')">All</button>
+            <button class="chip" onclick="filterCategory(this, 'Vegetables')">🥬 Vegetables</button>
+            <button class="chip" onclick="filterCategory(this, 'Buah')">🍉 Fruit</button>
+            <button class="chip" onclick="filterCategory(this, 'Padi')">🌾 Rice / Grains</button>
+            <button class="chip" onclick="filterCategory(this, 'Rempah')">🧅 Spices</button>
+            <button class="chip" onclick="filterCategory(this, 'Umbi')">🥔 Root Crops</button>
           </div>
         </div>
 
-        <!-- RIGHT COL -->
-        <div>
-          <div class="wallet-card page-enter" style="margin-bottom:20px;">
-            <div class="wallet-label">Wallet Balance</div>
-            <div class="wallet-amount">IDR 50.000.000</div>
-            <div style="font-size:13px;color:rgba(255,255,255,0.5);">Available for transaction</div>
-            <div class="loyalty-badge">🏆 123 Loyalty Points</div>
-            <div style="display:flex;gap:8px;margin-top:16px;">
-              <button class="btn btn-outline-white" style="flex:1;padding:10px;">Top Up</button>
-              <button class="btn btn-harvest" style="flex:1;padding:10px;">Withdraw Funds</button>
-            </div>
+        <div class="preorder-banner page-enter">
+          <div>
+            <div
+              style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.6);font-weight:600;margin-bottom:6px;">
+              📋 PRE-ORDER SYSTEM</div>
+            <div style="font-family:var(--font-display);font-size:18px;font-weight:700;margin-bottom:4px;">Secure Your
+              Supply Before Harvest</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.75);">Order now, pay when harvest arrives. Stable &
+              reliable.</div>
           </div>
+          <button class="btn btn-outline-white" style="flex-shrink:0;">View Pre-Orders →</button>
+        </div>
 
-          <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);margin-bottom:20px;" class="page-enter">
-            <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--moss);font-weight:600;margin-bottom:8px;">⭐ PREMIUM BUYER</div>
-            <div style="font-weight:700;font-size:15px;color:var(--forest);margin-bottom:8px;">Priority Suppliers Access</div>
-            <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
-              <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span style="color:var(--moss);">✓</span> Long-term B2B contracts</li>
-              <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span style="color:var(--moss);">✓</span> Priority access to latest harvests</li>
-              <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span style="color:var(--moss);">✓</span> Dedicated account manager</li>
-            </ul>
-            <button class="btn btn-primary" style="width:100%;font-size:13px;">Upgrade — IDR 500.000/yr</button>
-          </div>
-
-          <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);" class="page-enter">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-              <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-size:18px;">🤖</div>
-              <div>
-                <div style="font-weight:700;font-size:14px;color:var(--forest);">AI Assistant</div>
-                <div style="font-size:11px;color:var(--moss);">● Online</div>
+        <div class="dash-grid-main">
+          <div>
+            <!-- Stats -->
+            <div class="stats-grid page-enter" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
+              <div class="stat-card">
+                <div class="stat-icon gold">📦</div>
+                <div class="stat-value" id="activeOrderCount">—</div>
+                <div class="stat-label">Active Orders</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon green">🌾</div>
+                <div class="stat-value" id="supplierCount">—</div>
+                <div class="stat-label">Available Farmers</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon earth">💸</div>
+                <div class="stat-value">IDR 142 Jt</div>
+                <div class="stat-label">Total Purchases</div>
               </div>
             </div>
-            <div style="background:var(--cream);border-radius:var(--radius-md);padding:12px;font-size:13px;color:var(--charcoal);line-height:1.5;margin-bottom:14px;">
-              👋 Red chili prices are up 8% this week. I recommend pre-ordering now before prices rise further.
+
+            <!-- Suppliers list from data real -->
+            <div class="page-enter">
+              <div class="section-header-row" style="margin-bottom:16px;">
+                <div style="font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--forest);">Active
+                  Suppliers on Platform</div>
+                <span id="supplierCountLabel" style="font-size:12px;color:var(--mid-gray);"></span>
+              </div>
+              <div class="supplier-grid" id="supplierGrid">
+                <div style="text-align:center;padding:40px;color:var(--mid-gray);grid-column:1/-1;">Loading supplier
+                  data...</div>
+              </div>
             </div>
-            <button class="btn btn-secondary" style="width:100%;font-size:13px;">Chat with AI Assistant →</button>
+
+            <!-- Commodity Available -->
+            <div class="table-container page-enter" style="margin-top:24px;">
+              <div class="table-header">
+                <div class="table-title">Available Commodities Now</div>
+                <span class="badge badge-farmer" id="farmerActiveCount">Loading...</span>
+              </div>
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Commodity</th>
+                      <th>Farmer / Farm</th>
+                      <th>Price</th>
+                      <th>Stock</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="commodityTable">
+                    <tr>
+                      <td colspan="6" style="text-align:center;padding:24px;color:var(--mid-gray);">Loading...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COL -->
+          <div>
+            <div class="wallet-card page-enter" style="margin-bottom:20px;">
+              <div class="wallet-label">Wallet Balance</div>
+              <div class="wallet-amount">IDR 50.000.000</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.5);">Available for transaction</div>
+              <div class="loyalty-badge">🏆 123 Loyalty Points</div>
+              <div style="display:flex;gap:8px;margin-top:16px;">
+                <button class="btn btn-outline-white" style="flex:1;padding:10px;">Top Up</button>
+                <button class="btn btn-harvest" style="flex:1;padding:10px;">Withdraw Funds</button>
+              </div>
+            </div>
+
+            <div
+              style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);margin-bottom:20px;"
+              class="page-enter">
+              <div
+                style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--moss);font-weight:600;margin-bottom:8px;">
+                ⭐ PREMIUM BUYER</div>
+              <div style="font-weight:700;font-size:15px;color:var(--forest);margin-bottom:8px;">Priority Suppliers
+                Access</div>
+              <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+                <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span
+                    style="color:var(--moss);">✓</span> Long-term B2B contracts</li>
+                <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span
+                    style="color:var(--moss);">✓</span> Priority access to latest harvests</li>
+                <li style="font-size:12.5px;color:var(--mid-gray);display:flex;gap:8px;"><span
+                    style="color:var(--moss);">✓</span> Dedicated account manager</li>
+              </ul>
+              <button class="btn btn-primary" style="width:100%;font-size:13px;">Upgrade — IDR 500.000/yr</button>
+            </div>
+
+            <div
+              style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);"
+              class="page-enter">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+                <div
+                  style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--moss),var(--leaf));display:flex;align-items:center;justify-content:center;font-size:18px;">
+                  🤖</div>
+                <div>
+                  <div style="font-weight:700;font-size:14px;color:var(--forest);">AI Assistant</div>
+                  <div style="font-size:11px;color:var(--moss);">● Online</div>
+                </div>
+              </div>
+              <div
+                style="background:var(--cream);border-radius:var(--radius-md);padding:12px;font-size:13px;color:var(--charcoal);line-height:1.5;margin-bottom:14px;">
+                👋 Red chili prices are up 8% this week. I recommend pre-ordering now before prices rise further.
+              </div>
+              <button class="btn btn-secondary" style="width:100%;font-size:13px;">Chat with AI Assistant →</button>
+            </div>
           </div>
         </div>
-      </div>
-    </div><!-- end view-dashboard -->
+      </div><!-- end view-dashboard -->
 
 
-    <!-- ===== VIEW: PROFIL PERUSAHAAN ===== -->
-    <div id="view-profile" class="page-view">
+      <!-- ===== VIEW: PROFIL PERUSAHAAN ===== -->
+      <div id="view-profile" class="page-view">
 
-      <div class="page-title-row page-enter">
-        <div>
-          <div class="page-title">Company Profile 🏭</div>
-          <div class="page-subtitle">Manage your company information and account data</div>
-        </div>
-        <div id="profileActions">
-          <button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profilee</button>
-        </div>
-      </div>
-
-      <!-- Hero -->
-      <div class="profile-hero page-enter">
-        <div class="profile-avatar-lg" id="profileAvatarLg">PJ</div>
-        <div class="profile-hero-info">
-          <div class="profile-hero-name" id="profileHeroName">PT Jaya Foods</div>
-          <div class="profile-hero-email" id="profileHeroEmail">ptjaya@farmify.id</div>
-          <div class="profile-hero-badges">
-            <span class="profile-badge gold">✓ Verified</span>
-            <span class="profile-badge">🏭 Buyer B2B</span>
-            <span class="profile-badge" id="profileHeroCompany">PT Jaya Foods Indonesia</span>
+        <div class="page-title-row page-enter">
+          <div>
+            <div class="page-title">Company Profile 🏭</div>
+            <div class="page-subtitle">Manage your company information and account data</div>
+          </div>
+          <div id="profileActions">
+            <button class="btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profilee</button>
           </div>
         </div>
-      </div>
 
-      <!-- Stats -->
-      <div class="profile-stats-row page-enter">
-        <div class="profile-stat">
-          <div class="profile-stat-value">12</div>
-          <div class="profile-stat-label">Active Orders</div>
+        <!-- Hero -->
+        <div class="profile-hero page-enter">
+          <div class="profile-avatar-lg" id="profileAvatarLg">PJ</div>
+          <div class="profile-hero-info">
+            <div class="profile-hero-name" id="profileHeroName">PT Jaya Foods</div>
+            <div class="profile-hero-email" id="profileHeroEmail">ptjaya@farmify.id</div>
+            <div class="profile-hero-badges">
+              <span class="profile-badge gold">✓ Verified</span>
+              <span class="profile-badge">🏭 Buyer B2B</span>
+              <span class="profile-badge" id="profileHeroCompany">PT Jaya Foods Indonesia</span>
+            </div>
+          </div>
         </div>
-        <div class="profile-stat">
-          <div class="profile-stat-value">8</div>
-          <div class="profile-stat-label">Suppliers</div>
-        </div>
-        <div class="profile-stat">
-          <div class="profile-stat-value">IDR 142 Jt</div>
-          <div class="profile-stat-label">Total Purchases</div>
-        </div>
-      </div>
 
-      <div class="profile-grid page-enter">
-        <!-- Info Account -->
-        <div class="profile-card profile-view-mode" id="cardPersonal">
-          <div class="profile-card-title">👤 Account Information</div>
+        <!-- Stats -->
+        <div class="profile-stats-row page-enter">
+          <div class="profile-stat">
+            <div class="profile-stat-value">12</div>
+            <div class="profile-stat-label">Active Orders</div>
+          </div>
+          <div class="profile-stat">
+            <div class="profile-stat-value">8</div>
+            <div class="profile-stat-label">Suppliers</div>
+          </div>
+          <div class="profile-stat">
+            <div class="profile-stat-value">IDR 142 Jt</div>
+            <div class="profile-stat-label">Total Purchases</div>
+          </div>
+        </div>
+
+        <div class="profile-grid page-enter">
+          <!-- Info Account -->
+          <div class="profile-card profile-view-mode" id="cardPersonal">
+            <div class="profile-card-title">👤 Account Information</div>
+            <div class="view-only">
+              <div class="profile-field">
+                <div class="profile-field-label">Full Name / PIC</div>
+                <div class="profile-field-value" id="vFullName">—</div>
+              </div>
+              <div class="profile-field">
+                <div class="profile-field-label">Email</div>
+                <div class="profile-field-value" id="vEmail">—</div>
+              </div>
+              <div class="profile-field">
+                <div class="profile-field-label">Nomor Telepon</div>
+                <div class="profile-field-value" id="vPhone">—</div>
+              </div>
+              <div class="profile-field">
+                <div class="profile-field-label">Member Sejak</div>
+                <div class="profile-field-value" id="vMemberSince">—</div>
+              </div>
+            </div>
+            <div class="edit-only">
+              <div class="profile-field">
+                <div class="profile-field-label">Nama PIC</div><input type="text" class="profile-field-input"
+                  id="eFullName" />
+              </div>
+              <div class="profile-field">
+                <div class="profile-field-label">Email</div><input type="email" class="profile-field-input" id="eEmail"
+                  disabled style="opacity:0.5;cursor:not-allowed;" />
+                <div style="font-size:11px;color:var(--mid-gray);margin-top:4px;">Email tidak dapat diubah</div>
+              </div>
+              <div class="profile-field">
+                <div class="profile-field-label">Nomor Telepon</div><input type="tel" class="profile-field-input"
+                  id="ePhone" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Info Perusahaan -->
+          <div class="profile-card profile-view-mode" id="cardCompany">
+            <div class="profile-card-title">🏢 Informasi Perusahaan</div>
+            <div class="view-only">
+              <div class="profile-field">
+                <div class="profile-field-label">Nama Perusahaan</div>
+                <div class="profile-field-value" id="vCompanyName">—</div>
+              </div>
+              <div class="profile-field">
+                <div class="profile-field-label">Business Type</div>
+                <div class="profile-field-value" id="vBusinessType">—</div>
+              </div>
+              <div class="profile-field">
+                <div class="profile-field-label">Alamat</div>
+                <div class="profile-field-value" id="vAddress">—</div>
+              </div>
+              <div class="profile-field">
+                <div class="profile-field-label">NPWP</div>
+                <div class="profile-field-value" id="vNpwp">—</div>
+              </div>
+            </div>
+            <div class="edit-only">
+              <div class="profile-field">
+                <div class="profile-field-label">Nama Perusahaan</div><input type="text" class="profile-field-input"
+                  id="eCompanyName" />
+              </div>
+              <div class="profile-field">
+                <div class="profile-field-label">Business Type</div>
+                <select class="profile-field-input" id="eBusinessType">
+                  <option value="manufacturer">Manufaktur / Pabrik</option>
+                  <option value="restaurant">Restoran / Hotel</option>
+                  <option value="retailer">Retail / Distributor</option>
+                  <option value="catering">Catering</option>
+                  <option value="export">Exporter</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="profile-field">
+                <div class="profile-field-label">Company Address</div><input type="text" class="profile-field-input"
+                  id="eAddress" />
+              </div>
+              <div class="profile-field">
+                <div class="profile-field-label">NPWP</div><input type="text" class="profile-field-input" id="eNpwp"
+                  placeholder="XX.XXX.XXX.X-XXX.XXX" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rekening -->
+        <div class="profile-card page-enter profile-view-mode" id="cardBank" style="margin-bottom:20px;">
+          <div class="profile-card-title">🏦 Rekening Payment</div>
           <div class="view-only">
-            <div class="profile-field"><div class="profile-field-label">Full Name / PIC</div><div class="profile-field-value" id="vFullName">—</div></div>
-            <div class="profile-field"><div class="profile-field-label">Email</div><div class="profile-field-value" id="vEmail">—</div></div>
-            <div class="profile-field"><div class="profile-field-label">Nomor Telepon</div><div class="profile-field-value" id="vPhone">—</div></div>
-            <div class="profile-field"><div class="profile-field-label">Member Sejak</div><div class="profile-field-value" id="vMemberSince">—</div></div>
+            <div
+              style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--cream);border-radius:var(--radius-md);">
+              <div style="font-size:28px;">🏦</div>
+              <div>
+                <div style="font-weight:700;font-size:15px;color:var(--forest);" id="vBankName">—</div>
+                <div style="font-size:13px;color:var(--mid-gray);" id="vBankAccount">—</div>
+              </div>
+              <span
+                style="margin-left:auto;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;background:rgba(74,124,89,0.1);color:var(--moss);">Terverifikasi</span>
+            </div>
           </div>
           <div class="edit-only">
-            <div class="profile-field"><div class="profile-field-label">Nama PIC</div><input type="text" class="profile-field-input" id="eFullName" /></div>
-            <div class="profile-field"><div class="profile-field-label">Email</div><input type="email" class="profile-field-input" id="eEmail" disabled style="opacity:0.5;cursor:not-allowed;" /><div style="font-size:11px;color:var(--mid-gray);margin-top:4px;">Email tidak dapat diubah</div></div>
-            <div class="profile-field"><div class="profile-field-label">Nomor Telepon</div><input type="tel" class="profile-field-input" id="ePhone" /></div>
-          </div>
-        </div>
-
-        <!-- Info Perusahaan -->
-        <div class="profile-card profile-view-mode" id="cardCompany">
-          <div class="profile-card-title">🏢 Informasi Perusahaan</div>
-          <div class="view-only">
-            <div class="profile-field"><div class="profile-field-label">Nama Perusahaan</div><div class="profile-field-value" id="vCompanyName">—</div></div>
-            <div class="profile-field"><div class="profile-field-label">Business Type</div><div class="profile-field-value" id="vBusinessType">—</div></div>
-            <div class="profile-field"><div class="profile-field-label">Alamat</div><div class="profile-field-value" id="vAddress">—</div></div>
-            <div class="profile-field"><div class="profile-field-label">NPWP</div><div class="profile-field-value" id="vNpwp">—</div></div>
-          </div>
-          <div class="edit-only">
-            <div class="profile-field"><div class="profile-field-label">Nama Perusahaan</div><input type="text" class="profile-field-input" id="eCompanyName" /></div>
             <div class="profile-field">
-              <div class="profile-field-label">Business Type</div>
-              <select class="profile-field-input" id="eBusinessType">
-                <option value="manufacturer">Manufaktur / Pabrik</option>
-                <option value="restaurant">Restoran / Hotel</option>
-                <option value="retailer">Retail / Distributor</option>
-                <option value="catering">Catering</option>
-                <option value="export">Exporter</option>
-                <option value="other">Other</option>
+              <div class="profile-field-label">Bank Name</div><select class="profile-field-input" id="eBankName">
+                <option>BCA</option>
+                <option>BRI</option>
+                <option>Mandiri</option>
+                <option>BNI</option>
+                <option>BSI</option>
               </select>
             </div>
-            <div class="profile-field"><div class="profile-field-label">Company Address</div><input type="text" class="profile-field-input" id="eAddress" /></div>
-            <div class="profile-field"><div class="profile-field-label">NPWP</div><input type="text" class="profile-field-input" id="eNpwp" placeholder="XX.XXX.XXX.X-XXX.XXX" /></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Rekening -->
-      <div class="profile-card page-enter profile-view-mode" id="cardBank" style="margin-bottom:20px;">
-        <div class="profile-card-title">🏦 Rekening Payment</div>
-        <div class="view-only">
-          <div style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--cream);border-radius:var(--radius-md);">
-            <div style="font-size:28px;">🏦</div>
-            <div>
-              <div style="font-weight:700;font-size:15px;color:var(--forest);" id="vBankName">—</div>
-              <div style="font-size:13px;color:var(--mid-gray);" id="vBankAccount">—</div>
-            </div>
-            <span style="margin-left:auto;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;background:rgba(74,124,89,0.1);color:var(--moss);">Terverifikasi</span>
-          </div>
-        </div>
-        <div class="edit-only">
-          <div class="profile-field"><div class="profile-field-label">Bank Name</div><select class="profile-field-input" id="eBankName"><option>BCA</option><option>BRI</option><option>Mandiri</option><option>BNI</option><option>BSI</option></select></div>
-          <div class="profile-field"><div class="profile-field-label">Account Number</div><input type="text" class="profile-field-input" id="eBankAccount" /></div>
-        </div>
-      </div>
-
-    </div><!-- end view-profile -->
-
-  
-    <!-- ======== VIEW: FIND SUPPLIERS ======== -->
-    <div id="view-suppliers" class="page-view">
-      <div class="page-title-row page-enter">
-        <div><div class="page-title">🔍 Find Suppliers</div><div class="page-subtitle">Browse farmers and available commodities</div></div>
-      </div>
-      <div style="display:flex;gap:10px;margin-bottom:20px;" class="page-enter">
-        <input type="text" id="supplierSearch" placeholder="Search commodity, farm name, city..." style="flex:1;padding:10px 14px;border:1px solid var(--light-gray);border-radius:var(--radius-sm);font-size:14px;font-family:var(--font-body);" oninput="filterSuppliers()"/>
-        <select id="supplierCategory" onchange="filterSuppliers()" style="padding:10px 14px;border:1px solid var(--light-gray);border-radius:var(--radius-sm);font-size:13px;">
-          <option value="">All Categories</option>
-          <option value="vegetable">Vegetables</option>
-          <option value="spice">Spices</option>
-          <option value="fruit">Fruit</option>
-          <option value="rice">Rice / Grains</option>
-          <option value="tuber">Root Crops</option>
-        </select>
-      </div>
-      <div id="suppliersGrid" class="page-enter" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
-        <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
-      </div>
-    </div>
-
-    <!-- ======== VIEW: MY ORDERS ======== -->
-    <div id="view-orders" class="page-view">
-      <div class="page-title-row page-enter">
-        <div><div class="page-title">🛒 My Orders</div><div class="page-subtitle">Track your active orders</div></div>
-      </div>
-      <div class="table-container page-enter">
-        <div class="table-header"><div class="table-title">Active Orders</div></div>
-        <div class="table-scroll"><table>
-          <thead><tr><th>Order Code</th><th>Farmer</th><th>Commodity</th><th>Total</th><th>Status</th><th>Action</th></tr></thead>
-          <tbody id="buyerOrdersBody"><tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">Loading...</td></tr></tbody>
-        </table></div>
-      </div>
-    </div>
-
-    <!-- ======== VIEW: MY PRE-ORDERS ======== -->
-    <div id="view-preorders" class="page-view">
-      <div class="page-title-row page-enter">
-        <div><div class="page-title">📋 My Pre-Orders</div><div class="page-subtitle">Reserve commodities before harvest</div></div>
-        <button class="btn btn-primary" onclick="openModal('preorderModal')">+ New Pre-Order</button>
-      </div>
-      <div id="buyerPreordersList" class="page-enter" style="display:flex;flex-direction:column;gap:14px;">
-        <div style="text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
-      </div>
-    </div>
-
-    <!-- ======== VIEW: ORDER HISTORY ======== -->
-    <div id="view-history" class="page-view">
-      <div class="page-title-row page-enter">
-        <div><div class="page-title">📦 Order History</div><div class="page-subtitle">All your past transactions</div></div>
-      </div>
-      <div class="table-container page-enter">
-        <div class="table-scroll"><table>
-          <thead><tr><th>Order Code</th><th>Farmer</th><th>Commodity</th><th>Total</th><th>Status</th><th>Date</th></tr></thead>
-          <tbody id="buyerHistoryBody"><tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">Loading...</td></tr></tbody>
-        </table></div>
-      </div>
-    </div>
-
-    <!-- ======== VIEW: TRACK SHIPMENT ======== -->
-    <div id="view-tracking" class="page-view">
-      <div class="page-title-row page-enter">
-        <div><div class="page-title">🚚 Track Shipment</div><div class="page-subtitle">Real-time delivery tracking</div></div>
-      </div>
-      <div id="trackingContainer" class="page-enter" style="display:flex;flex-direction:column;gap:16px;">
-        <div style="text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
-      </div>
-    </div>
-
-    <!-- ======== VIEW: WALLET ======== -->
-    <div id="view-wallet" class="page-view">
-      <div class="page-title-row page-enter">
-        <div><div class="page-title">💰 Wallet & Payment</div></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:800px;" class="page-enter">
-        <div style="background:linear-gradient(135deg,var(--forest),#0D2017);border-radius:var(--radius-lg);padding:28px;color:white;">
-          <div style="font-size:11px;letter-spacing:1px;color:rgba(255,255,255,0.5);margin-bottom:8px;">WALLET BALANCE</div>
-          <div style="font-size:32px;font-weight:700;margin-bottom:4px;">IDR 50.000.000</div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.6);">Available for transaction</div>
-          <div style="margin-top:20px;display:flex;gap:10px;">
-            <button class="btn btn-harvest" style="flex:1;font-size:13px;" onclick="showToast('Top Up feature coming soon')">Top Up</button>
-            <button class="btn btn-outline-white" style="flex:1;font-size:13px;" onclick="showToast('Withdraw feature coming soon')">Withdraw</button>
-          </div>
-        </div>
-        <div style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-soft);">
-          <div style="font-weight:700;margin-bottom:16px;">🏆 Loyalty Points</div>
-          <div style="font-size:36px;font-weight:700;color:var(--harvest);">123</div>
-          <div style="font-size:13px;color:var(--mid-gray);margin-bottom:12px;">Points earned from purchases</div>
-          <div style="font-size:12px;color:var(--moss);">✓ Every IDR 100.000 = 1 point</div>
-          <div style="font-size:12px;color:var(--moss);">✓ 100 points = IDR 50.000 discount</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ======== VIEW: NOTIFICATIONS (BUYER) ======== -->
-    <div id="view-notifications" class="page-view">
-      <div class="page-title-row page-enter">
-        <div><div class="page-title">🔔 Notifications</div></div>
-        <button class="btn btn-secondary" onclick="buyerMarkAllRead()">Mark all as read</button>
-      </div>
-      <div id="buyerNotifList" class="page-enter" style="display:flex;flex-direction:column;gap:10px;">
-        <div style="text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
-      </div>
-    </div>
-
-    <!-- ======== VIEW: LOYALTY ======== -->
-    <div id="view-loyalty" class="page-view">
-      <div class="page-title-row page-enter"><div><div class="page-title">🏆 Loyalty Points</div></div></div>
-      <div style="max-width:600px;" class="page-enter">
-        <div style="background:linear-gradient(135deg,var(--harvest),#B8821A);border-radius:var(--radius-lg);padding:28px;color:white;margin-bottom:20px;text-align:center;">
-          <div style="font-size:48px;font-weight:700;">123</div>
-          <div style="font-size:16px;margin-top:4px;">Total Points</div>
-        </div>
-        <div style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-soft);">
-          <div style="font-weight:700;margin-bottom:14px;">How to earn points</div>
-          <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--charcoal);">
-            <div>✓ Every IDR 100.000 purchase = 1 point</div>
-            <div>✓ Complete your first order = 10 bonus points</div>
-            <div>✓ Leave a review = 2 points</div>
-          </div>
-          <div style="font-weight:700;margin:16px 0 10px;">Redeem rewards</div>
-          <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(245,240,232,0.6);border-radius:var(--radius-sm);">
-              <span>IDR 50.000 discount</span><button class="btn btn-secondary" style="font-size:12px;" onclick="showToast('100 points required')">100 pts → Redeem</button>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(245,240,232,0.6);border-radius:var(--radius-sm);">
-              <span>Free shipping voucher</span><button class="btn btn-secondary" style="font-size:12px;" onclick="showToast('50 points required')">50 pts → Redeem</button>
+            <div class="profile-field">
+              <div class="profile-field-label">Account Number</div><input type="text" class="profile-field-input"
+                id="eBankAccount" />
             </div>
           </div>
         </div>
+
+      </div><!-- end view-profile -->
+
+
+      <!-- ======== VIEW: FIND SUPPLIERS ======== -->
+      <div id="view-suppliers" class="page-view">
+        <div class="page-title-row page-enter">
+          <div>
+            <div class="page-title">🔍 Find Suppliers</div>
+            <div class="page-subtitle">Browse farmers and available commodities</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:20px;" class="page-enter">
+          <input type="text" id="supplierSearch" placeholder="Search commodity, farm name, city..."
+            style="flex:1;padding:10px 14px;border:1px solid var(--light-gray);border-radius:var(--radius-sm);font-size:14px;font-family:var(--font-body);"
+            oninput="filterSuppliers()" />
+          <select id="supplierCategory" onchange="filterSuppliers()"
+            style="padding:10px 14px;border:1px solid var(--light-gray);border-radius:var(--radius-sm);font-size:13px;">
+            <option value="">All Categories</option>
+            <option value="vegetable">Vegetables</option>
+            <option value="spice">Spices</option>
+            <option value="fruit">Fruit</option>
+            <option value="rice">Rice / Grains</option>
+            <option value="tuber">Root Crops</option>
+          </select>
+        </div>
+        <div id="suppliersGrid" class="page-enter"
+          style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+          <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
+        </div>
       </div>
-    </div>
 
-    <!-- PRE-ORDER MODAL -->
-    <div id="preorderModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;padding:20px;">
-      <div style="background:white;border-radius:var(--radius-lg);padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-          <h3 style="font-family:var(--font-display);font-size:20px;color:var(--forest);">📋 New Pre-Order</h3>
-          <button onclick="closeModal('preorderModal')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--mid-gray);">×</button>
+      <!-- ======== VIEW: MY ORDERS ======== -->
+      <div id="view-orders" class="page-view">
+        <div class="page-title-row page-enter">
+          <div>
+            <div class="page-title">🛒 My Orders</div>
+            <div class="page-subtitle">Track your active orders</div>
+          </div>
         </div>
-        <div class="form-group"><label class="form-label">Commodity Name *</label><input type="text" id="pocommodity" class="form-input" placeholder="e.g. Red Chili, Cabbage" /></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <div class="form-group"><label class="form-label">Quantity (kg) *</label><input type="number" id="poqty" class="form-input" placeholder="500" /></div>
-          <div class="form-group"><label class="form-label">Price/kg *</label><input type="number" id="poprice" class="form-input" placeholder="45000" /></div>
+        <div class="table-container page-enter">
+          <div class="table-header">
+            <div class="table-title">Active Orders</div>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order Code</th>
+                  <th>Farmer</th>
+                  <th>Commodity</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="buyerOrdersBody">
+                <tr>
+                  <td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="form-group"><label class="form-label">Expected Harvest Date</label><input type="date" id="poharvest" class="form-input" /></div>
-        <div class="form-group"><label class="form-label">Select Farmer</label>
-          <select id="pofarmer" class="form-input"><option value="">Loading farmers...</option></select>
-        </div>
-        <div class="form-group"><label class="form-label">Notes (optional)</label><textarea id="ponotes" class="form-input" rows="2" placeholder="Special requirements..."></textarea></div>
-        <button class="btn btn-primary btn-full" onclick="submitPreOrder()" style="margin-top:8px;">Submit Pre-Order</button>
       </div>
-    </div>
 
-  </main>
-</div>
+      <!-- ======== VIEW: MY PRE-ORDERS ======== -->
+      <div id="view-preorders" class="page-view">
+        <div class="page-title-row page-enter">
+          <div>
+            <div class="page-title">📋 My Pre-Orders</div>
+            <div class="page-subtitle">Reserve commodities before harvest</div>
+          </div>
+          <button class="btn btn-primary" onclick="openModal('preorderModal')">+ New Pre-Order</button>
+        </div>
+        <div id="buyerPreordersList" class="page-enter" style="display:flex;flex-direction:column;gap:14px;">
+          <div style="text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
+        </div>
+      </div>
 
-<!-- MODAL: Suppliers Details -->
-<div class="modal-overlay" id="supplierModal" style="display:none;" onclick="if(event.target===this)closeModal('supplierModal')">
-  <div class="modal" style="max-width:560px;">
-    <div class="modal-header">
-      <div class="modal-title" id="modalSuppliersTitle">Details Suppliers</div>
-      <button class="modal-close" onclick="closeModal('supplierModal')">✕</button>
-    </div>
-    <div class="modal-body" id="modalSuppliersBody"><!-- filled by JS --></div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeModal('supplierModal')">Tutup</button>
-      <button class="btn btn-primary" onclick="createOrderFromModal()">🛒 Buat Order</button>
+      <!-- ======== VIEW: ORDER HISTORY ======== -->
+      <div id="view-history" class="page-view">
+        <div class="page-title-row page-enter">
+          <div>
+            <div class="page-title">📦 Order History</div>
+            <div class="page-subtitle">All your past transactions</div>
+          </div>
+        </div>
+        <div class="table-container page-enter">
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order Code</th>
+                  <th>Farmer</th>
+                  <th>Commodity</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="buyerHistoryBody">
+                <tr>
+                  <td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== VIEW: TRACK SHIPMENT ======== -->
+      <div id="view-tracking" class="page-view">
+        <div class="page-title-row page-enter">
+          <div>
+            <div class="page-title">🚚 Track Shipment</div>
+            <div class="page-subtitle">Real-time delivery tracking</div>
+          </div>
+        </div>
+        <div id="trackingContainer" class="page-enter" style="display:flex;flex-direction:column;gap:16px;">
+          <div style="text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
+        </div>
+      </div>
+
+      <!-- ======== VIEW: WALLET ======== -->
+      <div id="view-wallet" class="page-view">
+        <div class="page-title-row page-enter">
+          <div>
+            <div class="page-title">💰 Wallet & Payment</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:800px;" class="page-enter">
+          <div
+            style="background:linear-gradient(135deg,var(--forest),#0D2017);border-radius:var(--radius-lg);padding:28px;color:white;">
+            <div style="font-size:11px;letter-spacing:1px;color:rgba(255,255,255,0.5);margin-bottom:8px;">WALLET BALANCE
+            </div>
+            <div style="font-size:32px;font-weight:700;margin-bottom:4px;">IDR 50.000.000</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.6);">Available for transaction</div>
+            <div style="margin-top:20px;display:flex;gap:10px;">
+              <button class="btn btn-harvest" style="flex:1;font-size:13px;"
+                onclick="showToast('Top Up feature coming soon')">Top Up</button>
+              <button class="btn btn-outline-white" style="flex:1;font-size:13px;"
+                onclick="showToast('Withdraw feature coming soon')">Withdraw</button>
+            </div>
+          </div>
+          <div style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-soft);">
+            <div style="font-weight:700;margin-bottom:16px;">🏆 Loyalty Points</div>
+            <div style="font-size:36px;font-weight:700;color:var(--harvest);">123</div>
+            <div style="font-size:13px;color:var(--mid-gray);margin-bottom:12px;">Points earned from purchases</div>
+            <div style="font-size:12px;color:var(--moss);">✓ Every IDR 100.000 = 1 point</div>
+            <div style="font-size:12px;color:var(--moss);">✓ 100 points = IDR 50.000 discount</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== VIEW: NOTIFICATIONS (BUYER) ======== -->
+      <div id="view-notifications" class="page-view">
+        <div class="page-title-row page-enter">
+          <div>
+            <div class="page-title">🔔 Notifications</div>
+          </div>
+          <button class="btn btn-secondary" onclick="buyerMarkAllRead()">Mark all as read</button>
+        </div>
+        <div id="buyerNotifList" class="page-enter" style="display:flex;flex-direction:column;gap:10px;">
+          <div style="text-align:center;padding:40px;color:var(--mid-gray);">Loading...</div>
+        </div>
+      </div>
+
+      <!-- ======== VIEW: LOYALTY ======== -->
+      <div id="view-loyalty" class="page-view">
+        <div class="page-title-row page-enter">
+          <div>
+            <div class="page-title">🏆 Loyalty Points</div>
+          </div>
+        </div>
+        <div style="max-width:600px;" class="page-enter">
+          <div
+            style="background:linear-gradient(135deg,var(--harvest),#B8821A);border-radius:var(--radius-lg);padding:28px;color:white;margin-bottom:20px;text-align:center;">
+            <div style="font-size:48px;font-weight:700;">123</div>
+            <div style="font-size:16px;margin-top:4px;">Total Points</div>
+          </div>
+          <div style="background:white;border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-soft);">
+            <div style="font-weight:700;margin-bottom:14px;">How to earn points</div>
+            <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--charcoal);">
+              <div>✓ Every IDR 100.000 purchase = 1 point</div>
+              <div>✓ Complete your first order = 10 bonus points</div>
+              <div>✓ Leave a review = 2 points</div>
+            </div>
+            <div style="font-weight:700;margin:16px 0 10px;">Redeem rewards</div>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;">
+              <div
+                style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(245,240,232,0.6);border-radius:var(--radius-sm);">
+                <span>IDR 50.000 discount</span><button class="btn btn-secondary" style="font-size:12px;"
+                  onclick="showToast('100 points required')">100 pts → Redeem</button>
+              </div>
+              <div
+                style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(245,240,232,0.6);border-radius:var(--radius-sm);">
+                <span>Free shipping voucher</span><button class="btn btn-secondary" style="font-size:12px;"
+                  onclick="showToast('50 points required')">50 pts → Redeem</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRE-ORDER MODAL -->
+      <div id="preorderModal"
+        style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;padding:20px;">
+        <div
+          style="background:white;border-radius:var(--radius-lg);padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--forest);">📋 New Pre-Order</h3>
+            <button onclick="closeModal('preorderModal')"
+              style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--mid-gray);">×</button>
+          </div>
+          <div class="form-group"><label class="form-label">Commodity Name *</label><input type="text" id="pocommodity"
+              class="form-input" placeholder="e.g. Red Chili, Cabbage" /></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group"><label class="form-label">Quantity (kg) *</label><input type="number" id="poqty"
+                class="form-input" placeholder="500" /></div>
+            <div class="form-group"><label class="form-label">Price/kg *</label><input type="number" id="poprice"
+                class="form-input" placeholder="45000" /></div>
+          </div>
+          <div class="form-group"><label class="form-label">Expected Harvest Date</label><input type="date"
+              id="poharvest" class="form-input" /></div>
+          <div class="form-group"><label class="form-label">Select Farmer</label>
+            <select id="pofarmer" class="form-input">
+              <option value="">Loading farmers...</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Notes (optional)</label><textarea id="ponotes"
+              class="form-input" rows="2" placeholder="Special requirements..."></textarea></div>
+          <button class="btn btn-primary btn-full" onclick="submitPreOrder()" style="margin-top:8px;">Submit
+            Pre-Order</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODAL: Suppliers Details -->
+  <div class="modal-overlay" id="supplierModal" style="display:none;"
+    onclick="if(event.target===this)closeModal('supplierModal')">
+    <div class="modal" style="max-width:560px;">
+      <div class="modal-header">
+        <div class="modal-title" id="modalSuppliersTitle">Details Suppliers</div>
+        <button class="modal-close" onclick="closeModal('supplierModal')">✕</button>
+      </div>
+      <div class="modal-body" id="modalSuppliersBody">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+          <div
+            style="width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,var(--mint),var(--sage));display:flex;align-items:center;justify-content:center;font-size:24px;">
+            👨‍🌾</div>
+          <div>
+            <div style="font-weight:700;font-size:16px;color:var(--forest);" id="modalFarmerName">—</div>
+            <div style="font-size:12px;color:var(--mid-gray);" id="modalFarmerCity">—</div>
+            <div style="font-size:12px;color:var(--harvest);margin-top:2px;" id="modalFarmerRating">—</div>
+          </div>
+        </div>
+        <div style="font-weight:600;margin-bottom:10px;">Available Commodities</div>
+        <div id="modalCommodityList" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('supplierModal')">Tutup</button>
+        <button class="btn btn-primary" onclick="createOrderFromModal()">🛒 Buat Order</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-  <div class="bottom-nav-inner">
-    <button class="bottom-nav-item active" id="bnav-dashboard" onclick="navigateTo('dashboard')">
-      <span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Home</span>
-    </button>
-    <button class="bottom-nav-item" onclick="navAlert('Search')">
-      <span class="bottom-nav-icon">🔍</span><span class="bottom-nav-label">Search</span>
-    </button>
-    <button class="bottom-nav-item" onclick="navAlert('Cart')">
-      <span class="bottom-nav-icon">🛒</span><span class="bottom-nav-label">Cart</span>
-    </button>
-    <button class="bottom-nav-item" onclick="navAlert('Order')">
-      <span class="bottom-nav-icon">📦</span><span class="bottom-nav-label">Order</span>
-    </button>
-    <button class="bottom-nav-item" id="bnav-profile" onclick="navigateTo('profile')">
-      <span class="bottom-nav-icon">👤</span><span class="bottom-nav-label">Profile</span>
-    </button>
-  </div>
-</nav>
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <button class="bottom-nav-item active" id="bnav-dashboard" onclick="navigateTo('dashboard')">
+        <span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Home</span>
+      </button>
+      <button class="bottom-nav-item" onclick="navAlert('Search')">
+        <span class="bottom-nav-icon">🔍</span><span class="bottom-nav-label">Search</span>
+      </button>
+      <button class="bottom-nav-item" onclick="navAlert('Cart')">
+        <span class="bottom-nav-icon">🛒</span><span class="bottom-nav-label">Cart</span>
+      </button>
+      <button class="bottom-nav-item" onclick="navAlert('Order')">
+        <span class="bottom-nav-icon">📦</span><span class="bottom-nav-label">Order</span>
+      </button>
+      <button class="bottom-nav-item" id="bnav-profile" onclick="navigateTo('profile')">
+        <span class="bottom-nav-icon">👤</span><span class="bottom-nav-label">Profile</span>
+      </button>
+    </div>
+  </nav>
 
-<script type="module" src="js/db.js"></script>
-<script>
-  let session = null;
-  let currentView = 'dashboard';
-  let allSuppliers = [];
+  <script type="module" src="js/db.js"></script>
+  <script>
+    let session = null;
+    let currentView = 'dashboard';
+    let allSuppliers = [];
 
-  function waitForDB(cb) {
-    if (window.FarmifyDB && window.requireAuth) { cb(); return; }
-    const t = setInterval(() => { if (window.FarmifyDB && window.requireAuth) { clearInterval(t); cb(); } }, 50);
-  }
+    function waitForDB(cb) {
+      if (window.FarmifyDB && window.requireAuth) { cb(); return; }
+      const t = setInterval(() => { if (window.FarmifyDB && window.requireAuth) { clearInterval(t); cb(); } }, 50);
+    }
 
-  waitForDB(() => {
-    (async () => {
-      session = await requireAuth(['buyer']);
-      if (session) {
-        const name = session.full_name.split(' ').slice(0,2).join(' ');
-        document.getElementById('buyerGreeting').textContent = `Hello, ${name}! Find raw materials today? 🏭`;
-        document.getElementById('sidebarName').textContent = session.full_name;
-        document.getElementById('sidebarAvatar').textContent =
-          session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
-        await loadDashboardData();
-      }
-    })();
-  });
+    waitForDB(() => {
+      (async () => {
+        session = await requireAuth(['buyer']);
+        if (session) {
+          const name = session.full_name.split(' ').slice(0, 2).join(' ');
+          document.getElementById('buyerGreeting').textContent = `Hello, ${name}! Find raw materials today? 🏭`;
+          document.getElementById('sidebarName').textContent = session.full_name;
+          document.getElementById('sidebarAvatar').textContent =
+            session.full_name.split(' ').slice(0, 2).map(n => n[0]).join('').toUpperCase();
+          await loadDashboardData();
+        }
+      })();
+    });
 
-  // ---- SPA NAV ----
-  async function navigateTo(view) {
-    document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
-    const el = document.getElementById('view-' + view);
-    if (!el) return;
-    el.classList.add('active');
-    currentView = view;
-    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
-    const navEl = document.getElementById('nav-' + view);
-    if (navEl) navEl.classList.add('active');
-    document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
-    const bnavEl = document.getElementById('bnav-' + view);
-    if (bnavEl) bnavEl.classList.add('active');
-    if (window.innerWidth <= 768) toggleSidebar();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (view === 'dashboard')     await loadDashboardData();
-    if (view === 'profile')       await populateProfile();
-    if (view === 'suppliers')     await loadSuppliersView();
-    if (view === 'orders')        await loadBuyerOrders();
-    if (view === 'preorders')     await loadBuyerPreorders();
-    if (view === 'history')       await loadOrderHistory();
-    if (view === 'tracking')      await loadTrackingView();
-    if (view === 'notifications') await loadBuyerNotifs();
-  }
+    // ---- SPA NAV ----
+    async function navigateTo(view) {
+      document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+      const el = document.getElementById('view-' + view);
+      if (!el) return;
+      el.classList.add('active');
+      currentView = view;
+      document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+      const navEl = document.getElementById('nav-' + view);
+      if (navEl) navEl.classList.add('active');
+      document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
+      const bnavEl = document.getElementById('bnav-' + view);
+      if (bnavEl) bnavEl.classList.add('active');
+      if (window.innerWidth <= 768) toggleSidebar();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (view === 'dashboard') await loadDashboardData();
+      if (view === 'profile') await populateProfile();
+      if (view === 'suppliers') await loadSuppliersView();
+      if (view === 'orders') await loadBuyerOrders();
+      if (view === 'preorders') await loadBuyerPreorders();
+      if (view === 'history') await loadOrderHistory();
+      if (view === 'tracking') await loadTrackingView();
+      if (view === 'notifications') await loadBuyerNotifs();
+    }
 
-  // ---- DASHBOARD ----
-  async function loadDashboardData() {
-    try {
-      const [orders, farmers, commodities] = await Promise.all([
-        FarmifyDB.getOrders({ buyer_id: session.id }),
-        FarmifyDB.getCommoditiesByFarmer(),
-        FarmifyDB.getAvailableCommodities()
-      ]);
-      const active = orders.filter(o => ['pending','confirmed','processing','shipped'].includes(o.status));
-      document.getElementById('activeOrderCount').textContent = active.length;
-      document.getElementById('farmerCount').textContent = farmers.length;
-      // Render supplier cards
-      const suppList = document.getElementById('suppliersList');
-      if (suppList) {
-        allSuppliers = farmers;
-        suppList.innerHTML = farmers.slice(0,3).map(f => renderFarmerCard(f)).join('') ||
-          '<div style="padding:20px;color:var(--mid-gray);">No active farmers yet</div>';
-        document.getElementById('farmerActiveCount').textContent = farmers.length + ' active farmer' + (farmers.length !== 1 ? 's' : '');
-      }
-      // Commodity table
-      const ctbody = document.getElementById('commodityTableBody');
-      if (ctbody) {
-        ctbody.innerHTML = commodities.slice(0,5).map(c => `<tr>
-          <td>${c.emoji||'🌿'} ${c.name}</td>
+    // ---- DASHBOARD ----
+    async function loadDashboardData() {
+      try {
+        const [orders, farmers, commodities] = await Promise.all([
+          FarmifyDB.getOrders({ buyer_id: session.id }),
+          FarmifyDB.getCommoditiesByFarmer(),
+          FarmifyDB.getAvailableCommodities()
+        ]);
+        const active = orders.filter(o => ['pending', 'confirmed', 'processing', 'shipped'].includes(o.status));
+        document.getElementById('activeOrderCount').textContent = active.length;
+        document.getElementById('supplierCount').textContent = farmers.length;
+        // Render supplier cards
+        const suppList = document.getElementById('supplierGrid');
+        if (suppList) {
+          allSuppliers = farmers;
+          suppList.innerHTML = farmers.slice(0, 3).map(f => renderFarmerCard(f)).join('') ||
+            '<div style="grid-column:1/-1;padding:20px;color:var(--mid-gray);text-align:center;">No active farmers yet</div>';
+          document.getElementById('supplierCountLabel').textContent = farmers.length + ' active farmer' + (farmers.length !== 1 ? 's' : '');
+        }
+        // Commodity table
+        const ctbody = document.getElementById('commodityTable');
+        if (ctbody) {
+          ctbody.innerHTML = commodities.slice(0, 5).map(c => `<tr>
+          <td>${c.emoji || '🌿'} ${c.name}</td>
           <td>${c.farm_name}</td>
-          <td>IDR ${Number(c.price).toLocaleString('id-ID')}/${c.unit||'kg'}</td>
-          <td>${c.stock} ${c.unit||'kg'}</td>
-          <td><span class="badge ${c.is_preorder?'badge-warning':'badge-success'}">${c.is_preorder?'Pre-Order':'Available'}</span></td>
+          <td>IDR ${Number(c.price).toLocaleString('id-ID')}/${c.unit || 'kg'}</td>
+          <td>${c.stock} ${c.unit || 'kg'}</td>
+          <td><span class="badge ${c.is_preorder ? 'badge-warning' : 'badge-success'}">${c.is_preorder ? 'Pre-Order' : 'Available'}</span></td>
           <td><button class="btn btn-primary" style="padding:5px 12px;font-size:12px;" onclick="quickOrder('${c.id}')">+ Order</button></td>
         </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--mid-gray);">No commodities available</td></tr>';
-        document.getElementById('commodityTotalBadge').textContent = commodities.length + ' commodities';
-      }
-      // Notif badge
-      const notifs = await FarmifyDB.getNotifications(session.id);
-      const unread = notifs.filter(n => !n.read).length;
-      const badge = document.getElementById('buyerNotifBadge');
-      if (badge) { badge.textContent = unread; badge.style.display = unread ? 'inline' : 'none'; }
-    } catch(e) { console.error(e); }
-  }
+          document.getElementById('commodityTotalBadge').textContent = commodities.length + ' commodities';
+        }
+        // Notif badge
+        const notifs = await FarmifyDB.getNotifications(session.id);
+        const unread = notifs.filter(n => !n.read).length;
+        const badge = document.getElementById('buyerNotifBadge');
+        if (badge) { badge.textContent = unread; badge.style.display = unread ? 'inline' : 'none'; }
+      } catch (e) { console.error(e); }
+    }
 
-  function renderFarmerCard(f) {
-    const tags = (f.items||[]).slice(0,3).map(i => `<span style="padding:3px 8px;background:rgba(74,124,89,0.1);border-radius:100px;font-size:11px;color:var(--moss);">${i.emoji||'🌿'} ${i.name}</span>`).join('');
-    return `<div style="background:white;border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);">
+    function renderFarmerCard(f) {
+      const tags = (f.items || []).slice(0, 3).map(i => `<span style="padding:3px 8px;background:rgba(74,124,89,0.1);border-radius:100px;font-size:11px;color:var(--moss);">${i.emoji || '🌿'} ${i.name}</span>`).join('');
+      return `<div style="background:white;border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
-        <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--sage),var(--leaf));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:15px;">${f.full_name?.[0]||'F'}</div>
-        <div><div style="font-weight:700;font-size:14px;">${f.farm_name||f.full_name}</div><div style="font-size:11px;color:var(--mid-gray);">📍 ${f.city||'East Java'}</div></div>
+        <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--sage),var(--leaf));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:15px;">${f.full_name?.[0] || 'F'}</div>
+        <div><div style="font-weight:700;font-size:14px;">${f.farm_name || f.full_name}</div><div style="font-size:11px;color:var(--mid-gray);">📍 ${f.city || 'East Java'}</div></div>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">${tags}</div>
       <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -706,266 +1320,267 @@
         <button class="btn btn-primary" style="padding:6px 14px;font-size:12px;" onclick="openSuppliersModal('${f.id}')">View & Order</button>
       </div>
     </div>`;
-  }
+    }
 
-  // ---- SUPPLIERS VIEW ----
-  async function loadSuppliersView() {
-    const grid = document.getElementById('suppliersGrid');
-    allSuppliers = await FarmifyDB.getCommoditiesByFarmer();
-    if (!allSuppliers.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">No farmers available</div>'; return; }
-    renderSupplierGrid(allSuppliers);
-  }
+    // ---- SUPPLIERS VIEW ----
+    async function loadSuppliersView() {
+      const grid = document.getElementById('suppliersGrid');
+      allSuppliers = await FarmifyDB.getCommoditiesByFarmer();
+      if (!allSuppliers.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">No farmers available</div>'; return; }
+      renderSupplierGrid(allSuppliers);
+    }
 
-  function renderSupplierGrid(farmers) {
-    const grid = document.getElementById('suppliersGrid');
-    grid.innerHTML = farmers.map(f => renderFarmerCard(f)).join('') || '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">No results</div>';
-  }
+    function renderSupplierGrid(farmers) {
+      const grid = document.getElementById('suppliersGrid');
+      grid.innerHTML = farmers.map(f => renderFarmerCard(f)).join('') || '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mid-gray);">No results</div>';
+    }
 
-  function filterSuppliers() {
-    const q = document.getElementById('supplierSearch')?.value.toLowerCase() || '';
-    const cat = document.getElementById('supplierCategory')?.value || '';
-    const filtered = allSuppliers.filter(f => {
-      const matchQ = !q || (f.farm_name||'').toLowerCase().includes(q) || (f.city||'').toLowerCase().includes(q) ||
-        (f.items||[]).some(i => i.name.toLowerCase().includes(q));
-      const matchCat = !cat || (f.items||[]).some(i => i.category === cat);
-      return matchQ && matchCat;
-    });
-    renderSupplierGrid(filtered);
-  }
+    function filterSuppliers() {
+      const q = document.getElementById('supplierSearch')?.value.toLowerCase() || '';
+      const cat = document.getElementById('supplierCategory')?.value || '';
+      const filtered = allSuppliers.filter(f => {
+        const matchQ = !q || (f.farm_name || '').toLowerCase().includes(q) || (f.city || '').toLowerCase().includes(q) ||
+          (f.items || []).some(i => i.name.toLowerCase().includes(q));
+        const matchCat = !cat || (f.items || []).some(i => i.category === cat);
+        return matchQ && matchCat;
+      });
+      renderSupplierGrid(filtered);
+    }
 
-  // ---- BUYER ORDERS ----
-  async function loadBuyerOrders() {
-    const tbody = document.getElementById('buyerOrdersBody');
-    const orders = await FarmifyDB.getOrders({ buyer_id: session.id });
-    const active = orders.filter(o => !['delivered','cancelled','completed'].includes(o.status));
-    active.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
-    if (!active.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">No active orders</td></tr>'; return; }
-    const badge = { pending:'badge-warning', confirmed:'badge-success', processing:'badge-success', shipped:'badge-success' };
-    tbody.innerHTML = active.map(o => `<tr>
+    // ---- BUYER ORDERS ----
+    async function loadBuyerOrders() {
+      const tbody = document.getElementById('buyerOrdersBody');
+      const orders = await FarmifyDB.getOrders({ buyer_id: session.id });
+      const active = orders.filter(o => !['delivered', 'cancelled', 'completed'].includes(o.status));
+      active.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      if (!active.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">No active orders</td></tr>'; return; }
+      const badge = { pending: 'badge-warning', confirmed: 'badge-success', processing: 'badge-success', shipped: 'badge-success' };
+      tbody.innerHTML = active.map(o => `<tr>
       <td><span style="font-family:var(--font-mono);font-size:13px;color:var(--moss);">${o.order_code}</span></td>
-      <td>${o.farmer_name||o.farmer_id}</td>
-      <td>${o.commodity_name} · ${o.qty} ${o.unit||'kg'}</td>
+      <td>${o.farmer_name || o.farmer_id}</td>
+      <td>${o.commodity_name} · ${o.qty} ${o.unit || 'kg'}</td>
       <td>IDR ${Number(o.total_price).toLocaleString('id-ID')}</td>
-      <td><span class="badge ${badge[o.status]||''}" style="text-transform:capitalize;">${o.status}</span></td>
-      <td>${o.status==='shipped'?`<button class="btn btn-primary" style="padding:5px 12px;font-size:12px;" onclick="navigateTo('tracking')">Track</button>`:`<span style="font-size:12px;color:var(--mid-gray);">Waiting...</span>`}</td>
+      <td><span class="badge ${badge[o.status] || ''}" style="text-transform:capitalize;">${o.status}</span></td>
+      <td>${o.status === 'shipped' ? `<button class="btn btn-primary" style="padding:5px 12px;font-size:12px;" onclick="navigateTo('tracking')">Track</button>` : `<span style="font-size:12px;color:var(--mid-gray);">Waiting...</span>`}</td>
     </tr>`).join('');
-  }
+    }
 
-  // ---- ORDER HISTORY ----
-  async function loadOrderHistory() {
-    const tbody = document.getElementById('buyerHistoryBody');
-    const orders = await FarmifyDB.getOrders({ buyer_id: session.id });
-    orders.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
-    if (!orders.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">No orders yet</td></tr>'; return; }
-    const badge = { pending:'badge-warning', confirmed:'badge-success', processing:'badge-success', shipped:'badge-success', delivered:'badge-success', cancelled:'badge-error' };
-    tbody.innerHTML = orders.map(o => `<tr>
+    // ---- ORDER HISTORY ----
+    async function loadOrderHistory() {
+      const tbody = document.getElementById('buyerHistoryBody');
+      const orders = await FarmifyDB.getOrders({ buyer_id: session.id });
+      orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      if (!orders.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--mid-gray);">No orders yet</td></tr>'; return; }
+      const badge = { pending: 'badge-warning', confirmed: 'badge-success', processing: 'badge-success', shipped: 'badge-success', delivered: 'badge-success', cancelled: 'badge-error' };
+      tbody.innerHTML = orders.map(o => `<tr>
       <td><span style="font-family:var(--font-mono);font-size:13px;color:var(--moss);">${o.order_code}</span></td>
-      <td>${o.farmer_name||o.farmer_id}</td>
-      <td>${o.commodity_name} · ${o.qty} ${o.unit||'kg'}</td>
+      <td>${o.farmer_name || o.farmer_id}</td>
+      <td>${o.commodity_name} · ${o.qty} ${o.unit || 'kg'}</td>
       <td>IDR ${Number(o.total_price).toLocaleString('id-ID')}</td>
-      <td><span class="badge ${badge[o.status]||''}" style="text-transform:capitalize;">${o.status}</span></td>
+      <td><span class="badge ${badge[o.status] || ''}" style="text-transform:capitalize;">${o.status}</span></td>
       <td>${new Date(o.created_at).toLocaleDateString('en-GB')}</td>
     </tr>`).join('');
-  }
+    }
 
-  // ---- PRE-ORDERS ----
-  async function loadBuyerPreorders() {
-    const container = document.getElementById('buyerPreordersList');
-    const list = await FarmifyDB.getPreOrders({ buyer_id: session.id });
-    if (!list.length) { container.innerHTML = '<div style="text-align:center;padding:40px;background:white;border-radius:var(--radius-lg);color:var(--mid-gray);">No pre-orders yet. Click "+ New Pre-Order" to start.</div>'; return; }
-    const col = { pending:'var(--harvest)', confirmed:'var(--moss)', rejected:'var(--terracotta)' };
-    container.innerHTML = list.map(po => `
+    // ---- PRE-ORDERS ----
+    async function loadBuyerPreorders() {
+      const container = document.getElementById('buyerPreordersList');
+      const list = await FarmifyDB.getPreOrders({ buyer_id: session.id });
+      if (!list.length) { container.innerHTML = '<div style="text-align:center;padding:40px;background:white;border-radius:var(--radius-lg);color:var(--mid-gray);">No pre-orders yet. Click "+ New Pre-Order" to start.</div>'; return; }
+      const col = { pending: 'var(--harvest)', confirmed: 'var(--moss)', rejected: 'var(--terracotta)' };
+      container.innerHTML = list.map(po => `
       <div style="background:white;border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);">
         <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
           <div style="font-weight:700;font-size:15px;">${po.commodity_name}</div>
-          <span style="padding:4px 12px;border-radius:100px;font-size:11px;font-weight:600;background:${col[po.status]||'var(--sage)'};color:white;text-transform:capitalize;">${po.status}</span>
+          <span style="padding:4px 12px;border-radius:100px;font-size:11px;font-weight:600;background:${col[po.status] || 'var(--sage)'};color:white;text-transform:capitalize;">${po.status}</span>
         </div>
         <div style="display:flex;gap:20px;font-size:13px;color:var(--charcoal);">
-          <span>📦 ${po.qty} ${po.unit||'kg'}</span>
-          <span>💰 IDR ${Number(po.price_per_unit||0).toLocaleString('id-ID')}/${po.unit||'kg'}</span>
-          <span>📅 Harvest: ${po.harvest_date||'TBD'}</span>
+          <span>📦 ${po.qty} ${po.unit || 'kg'}</span>
+          <span>💰 IDR ${Number(po.price_per_unit || 0).toLocaleString('id-ID')}/${po.unit || 'kg'}</span>
+          <span>📅 Harvest: ${po.harvest_date || 'TBD'}</span>
         </div>
         ${po.notes ? `<div style="font-size:12px;color:var(--mid-gray);margin-top:6px;">Note: ${po.notes}</div>` : ''}
       </div>`).join('');
-  }
+    }
 
-  async function openPreorderModal() {
-    // Load farmers into select
-    const sel = document.getElementById('pofarmer');
-    const farmers = await FarmifyDB.getUsersByRole('farmer');
-    sel.innerHTML = '<option value="">Select a farmer...</option>' +
-      farmers.filter(f => f.status==='active').map(f => `<option value="${f.id}">${f.farm_name||f.full_name} — ${f.city||''}</option>`).join('');
-    openModal('preorderModal');
-  }
+    async function openPreorderModal() {
+      // Load farmers into select
+      const sel = document.getElementById('pofarmer');
+      const farmers = await FarmifyDB.getUsersByRole('farmer');
+      sel.innerHTML = '<option value="">Select a farmer...</option>' +
+        farmers.filter(f => f.status === 'active').map(f => `<option value="${f.id}">${f.farm_name || f.full_name} — ${f.city || ''}</option>`).join('');
+      openModal('preorderModal');
+    }
 
-  async function submitPreOrder() {
-    const commodity = document.getElementById('pocommodity').value.trim();
-    const qty = document.getElementById('poqty').value;
-    const price = document.getElementById('poprice').value;
-    const harvest = document.getElementById('poharvest').value;
-    const farmerId = document.getElementById('pofarmer').value;
-    const notes = document.getElementById('ponotes').value.trim();
-    if (!commodity || !qty || !price || !farmerId) { showToast('❌ Please fill in all required fields'); return; }
-    const farmer = await FarmifyDB.findById(farmerId);
-    await FarmifyDB.createPreOrder({
-      buyer_id: session.id, buyer_name: session.full_name,
-      farmer_id: farmerId, farmer_name: farmer?.full_name||'',
-      commodity_name: commodity, qty: Number(qty),
-      price_per_unit: Number(price), unit: 'kg',
-      harvest_date: harvest, notes
-    });
-    showToast('✅ Pre-order submitted!');
-    closeModal('preorderModal');
-    loadBuyerPreorders();
-  }
+    async function submitPreOrder() {
+      const commodity = document.getElementById('pocommodity').value.trim();
+      const qty = document.getElementById('poqty').value;
+      const price = document.getElementById('poprice').value;
+      const harvest = document.getElementById('poharvest').value;
+      const farmerId = document.getElementById('pofarmer').value;
+      const notes = document.getElementById('ponotes').value.trim();
+      if (!commodity || !qty || !price || !farmerId) { showToast('❌ Please fill in all required fields'); return; }
+      const farmer = await FarmifyDB.findById(farmerId);
+      await FarmifyDB.createPreOrder({
+        buyer_id: session.id, buyer_name: session.full_name,
+        farmer_id: farmerId, farmer_name: farmer?.full_name || '',
+        commodity_name: commodity, qty: Number(qty),
+        price_per_unit: Number(price), unit: 'kg',
+        harvest_date: harvest, notes
+      });
+      showToast('✅ Pre-order submitted!');
+      closeModal('preorderModal');
+      loadBuyerPreorders();
+    }
 
-  // ---- TRACKING ----
-  async function loadTrackingView() {
-    const container = document.getElementById('trackingContainer');
-    const orders = await FarmifyDB.getOrders({ buyer_id: session.id });
-    const shipped = orders.filter(o => o.status === 'shipped');
-    if (!shipped.length) { container.innerHTML = '<div style="text-align:center;padding:40px;background:white;border-radius:var(--radius-lg);color:var(--mid-gray);">No active shipments right now</div>'; return; }
-    const cards = await Promise.all(shipped.map(async o => {
-      const d = await FarmifyDB.getDelivery(o.id) || {};
-      const prog = d.progress || 20;
-      return `<div style="background:white;border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);">
+    // ---- TRACKING ----
+    async function loadTrackingView() {
+      const container = document.getElementById('trackingContainer');
+      const orders = await FarmifyDB.getOrders({ buyer_id: session.id });
+      const shipped = orders.filter(o => o.status === 'shipped');
+      if (!shipped.length) { container.innerHTML = '<div style="text-align:center;padding:40px;background:white;border-radius:var(--radius-lg);color:var(--mid-gray);">No active shipments right now</div>'; return; }
+      const cards = await Promise.all(shipped.map(async o => {
+        const d = await FarmifyDB.getDelivery(o.id) || {};
+        const prog = d.progress || 20;
+        return `<div style="background:white;border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow-soft);border:1px solid rgba(74,124,89,0.08);">
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
           <span style="font-size:28px;">🚛</span>
           <div><div style="font-weight:700;">${o.order_code}</div>
-          <div style="font-size:12px;color:var(--mid-gray);">${o.commodity_name} · ${o.qty} ${o.unit||'kg'} from ${o.farmer_name||'Farmer'}</div></div>
+          <div style="font-size:12px;color:var(--mid-gray);">${o.commodity_name} · ${o.qty} ${o.unit || 'kg'} from ${o.farmer_name || 'Farmer'}</div></div>
         </div>
         <div class="progress-bar"><div class="progress-fill" style="width:${prog}%"></div></div>
         <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--mid-gray);margin-top:8px;">
-          <span>${d.origin||'Origin'}</span><span style="color:var(--moss);font-weight:600;">${prog}%</span><span>Your Location</span>
+          <span>${d.origin || 'Origin'}</span><span style="color:var(--moss);font-weight:600;">${prog}%</span><span>Your Location</span>
         </div>
-        <div style="margin-top:10px;font-size:12px;color:var(--moss);">Status: <strong style="text-transform:capitalize;">${d.status||'In Transit'}</strong></div>
+        <div style="margin-top:10px;font-size:12px;color:var(--moss);">Status: <strong style="text-transform:capitalize;">${d.status || 'In Transit'}</strong></div>
       </div>`;
-    }));
-    container.innerHTML = cards.join('');
-  }
+      }));
+      container.innerHTML = cards.join('');
+    }
 
-  // ---- NOTIFS ----
-  async function loadBuyerNotifs() {
-    const list = document.getElementById('buyerNotifList');
-    const notifs = await FarmifyDB.getNotifications(session.id);
-    if (!notifs.length) { list.innerHTML = '<div style="text-align:center;padding:40px;background:white;border-radius:var(--radius-lg);color:var(--mid-gray);">No notifications</div>'; return; }
-    list.innerHTML = notifs.map(n => `
-      <div style="background:white;border-radius:var(--radius-lg);padding:16px 20px;box-shadow:var(--shadow-soft);display:flex;gap:14px;opacity:${n.read?0.6:1};">
-        <div style="width:8px;height:8px;border-radius:50%;background:${n.read?'var(--light-gray)':'var(--moss)'};margin-top:5px;flex-shrink:0;"></div>
+    // ---- NOTIFS ----
+    async function loadBuyerNotifs() {
+      const list = document.getElementById('buyerNotifList');
+      const notifs = await FarmifyDB.getNotifications(session.id);
+      if (!notifs.length) { list.innerHTML = '<div style="text-align:center;padding:40px;background:white;border-radius:var(--radius-lg);color:var(--mid-gray);">No notifications</div>'; return; }
+      list.innerHTML = notifs.map(n => `
+      <div style="background:white;border-radius:var(--radius-lg);padding:16px 20px;box-shadow:var(--shadow-soft);display:flex;gap:14px;opacity:${n.read ? 0.6 : 1};">
+        <div style="width:8px;height:8px;border-radius:50%;background:${n.read ? 'var(--light-gray)' : 'var(--moss)'};margin-top:5px;flex-shrink:0;"></div>
         <div style="flex:1;"><div style="font-size:14px;">${n.text}</div><div style="font-size:11px;color:var(--mid-gray);margin-top:4px;">${timeAgo(n.created_at)}</div></div>
         ${!n.read ? `<button onclick="FarmifyDB.markNotifRead('${n.id}').then(loadBuyerNotifs)" style="font-size:11px;color:var(--moss);border:none;background:none;cursor:pointer;">Mark read</button>` : ''}
       </div>`).join('');
-  }
+    }
 
-  async function buyerMarkAllRead() {
-    await FarmifyDB.markAllNotifsRead(session.id);
-    showToast('✅ All notifications marked as read');
-    loadBuyerNotifs();
-  }
+    async function buyerMarkAllRead() {
+      await FarmifyDB.markAllNotifsRead(session.id);
+      showToast('✅ All notifications marked as read');
+      loadBuyerNotifs();
+    }
 
-  // ---- EXISTING FUNCTIONS (kept from original) ----
-  async function openSuppliersModal(farmerId) {
-    const modal = document.getElementById('supplierModal');
-    if (!modal) return;
-    modal.style.display = 'flex';
-    const farmer = (allSuppliers.find(f => f.id === farmerId)) || await FarmifyDB.findById(farmerId);
-    if (!farmer) return;
-    document.getElementById('modalFarmerName').textContent = farmer.farm_name || farmer.full_name;
-    document.getElementById('modalFarmerCity').textContent = '📍 ' + (farmer.city||'East Java');
-    document.getElementById('modalFarmerRating').textContent = '★ 4.8 (42 reviews)';
-    const itemsEl = document.getElementById('modalCommodityList');
-    const items = farmer.items || await FarmifyDB.getCommodities(farmerId);
-    if (itemsEl) itemsEl.innerHTML = items.map(c => `
+    // ---- EXISTING FUNCTIONS (kept from original) ----
+    async function openSuppliersModal(farmerId) {
+      const modal = document.getElementById('supplierModal');
+      if (!modal) return;
+      modal.style.display = 'flex';
+      const farmer = (allSuppliers.find(f => f.id === farmerId)) || await FarmifyDB.findById(farmerId);
+      if (!farmer) return;
+      document.getElementById('modalFarmerName').textContent = farmer.farm_name || farmer.full_name;
+      document.getElementById('modalFarmerCity').textContent = '📍 ' + (farmer.city || 'East Java');
+      document.getElementById('modalFarmerRating').textContent = '★ 4.8 (42 reviews)';
+      const itemsEl = document.getElementById('modalCommodityList');
+      const items = farmer.items || await FarmifyDB.getCommodities(farmerId);
+      if (itemsEl) itemsEl.innerHTML = items.map(c => `
       <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(245,240,232,0.5);border-radius:var(--radius-sm);margin-bottom:8px;">
-        <div><div style="font-weight:600;">${c.emoji||'🌿'} ${c.name}</div><div style="font-size:12px;color:var(--mid-gray);">IDR ${Number(c.price).toLocaleString('id-ID')}/${c.unit||'kg'} · Stock: ${c.stock}</div></div>
+        <div><div style="font-weight:600;">${c.emoji || '🌿'} ${c.name}</div><div style="font-size:12px;color:var(--mid-gray);">IDR ${Number(c.price).toLocaleString('id-ID')}/${c.unit || 'kg'} · Stock: ${c.stock}</div></div>
         <button class="btn btn-primary" style="padding:5px 12px;font-size:12px;" onclick="quickOrder('${c.id}')">Order</button>
       </div>`).join('') || '<div style="color:var(--mid-gray);text-align:center;">No commodities available</div>';
-    window._modalFarmer = farmer;
-  }
+      window._modalFarmer = farmer;
+    }
 
-  async function quickOrder(commodityId) {
-    const allComms = await FarmifyDB.getAvailableCommodities();
-    const c = allComms.find(x => x.id === commodityId);
-    if (!c) { showToast('❌ Commodity not found'); return; }
-    const qty = prompt(`Order ${c.name} (IDR ${Number(c.price).toLocaleString('id-ID')}/${c.unit||'kg'})
+    async function quickOrder(commodityId) {
+      const allComms = await FarmifyDB.getAvailableCommodities();
+      const c = allComms.find(x => x.id === commodityId);
+      if (!c) { showToast('❌ Commodity not found'); return; }
+      const qty = prompt(`Order ${c.name} (IDR ${Number(c.price).toLocaleString('id-ID')}/${c.unit || 'kg'})
 
-Enter quantity (${c.unit||'kg'}):`, '100');
-    if (!qty || isNaN(qty)) return;
-    const total = Number(qty) * Number(c.price);
-    if (!confirm(`Confirm order:
-${c.name} · ${qty} ${c.unit||'kg'}
+Enter quantity (${c.unit || 'kg'}):`, '100');
+      if (!qty || isNaN(qty)) return;
+      const total = Number(qty) * Number(c.price);
+      if (!confirm(`Confirm order:
+${c.name} · ${qty} ${c.unit || 'kg'}
 Total: IDR ${total.toLocaleString('id-ID')}`)) return;
-    const result = await FarmifyDB.createOrder({
-      buyer_id: session.id, buyer_name: session.full_name,
-      farmer_id: c.farmer_id, farmer_name: c.farm_name,
-      commodity_id: c.id, commodity_name: c.name,
-      qty: Number(qty), unit: c.unit||'kg',
-      price_per_unit: Number(c.price),
-      total_price: total
-    });
-    showToast(`✅ Order ${result.order.order_code} created!`);
-    closeModal('supplierModal');
-    await loadDashboardData();
-  }
+      const result = await FarmifyDB.createOrder({
+        buyer_id: session.id, buyer_name: session.full_name,
+        farmer_id: c.farmer_id, farmer_name: c.farm_name,
+        commodity_id: c.id, commodity_name: c.name,
+        qty: Number(qty), unit: c.unit || 'kg',
+        price_per_unit: Number(c.price),
+        total_price: total
+      });
+      showToast(`✅ Order ${result.order.order_code} created!`);
+      closeModal('supplierModal');
+      await loadDashboardData();
+    }
 
-  // ---- PROFILE ----
-  async function populateProfile() {
-    if (!session) return;
-    const fullUser = (await FarmifyDB.getUsers()).find(u => u.id === session.id) || session;
-    const initials = session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
-    document.getElementById('profileAvatarLg').textContent = initials;
-    document.getElementById('profileHeroName').textContent = session.full_name;
-    document.getElementById('profileHeroEmail').textContent = session.email;
-    document.getElementById('profileHeroCompany').textContent = fullUser.company_name || '—';
-    const fields = { vFullName: session.full_name, vEmail: session.email, vPhone: fullUser.phone||'—', vCompanyName: fullUser.company_name||'—', vBusinessType: fullUser.business_type||'—', vAddress: fullUser.address||'—', vNPWP: fullUser.npwp||'—', vSIUP: fullUser.siup||'—' };
-    Object.entries(fields).forEach(([id, val]) => { const el = document.getElementById(id); if(el) el.textContent = val; });
-    disableEditMode();
-  }
+    // ---- PROFILE ----
+    async function populateProfile() {
+      if (!session) return;
+      const fullUser = (await FarmifyDB.getUsers()).find(u => u.id === session.id) || session;
+      const initials = session.full_name.split(' ').slice(0, 2).map(n => n[0]).join('').toUpperCase();
+      document.getElementById('profileAvatarLg').textContent = initials;
+      document.getElementById('profileHeroName').textContent = session.full_name;
+      document.getElementById('profileHeroEmail').textContent = session.email;
+      document.getElementById('profileHeroCompany').textContent = fullUser.company_name || '—';
+      const fields = { vFullName: session.full_name, vEmail: session.email, vPhone: fullUser.phone || '—', vCompanyName: fullUser.company_name || '—', vBusinessType: fullUser.business_type || '—', vAddress: fullUser.address || '—', vNpwp: fullUser.npwp || '—' };
+      Object.entries(fields).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.textContent = val; });
+      disableEditMode();
+    }
 
-  async function enableEditMode() {
-    if (!session) return;
-    const fullUser = (await FarmifyDB.getUsers()).find(u => u.id === session.id) || session;
-    const efMap = { eFullName: session.full_name, ePhone: fullUser.phone||'', eCompanyName: fullUser.company_name||'', eAddress: fullUser.address||'', eNPWP: fullUser.npwp||'', eSIUP: fullUser.siup||'' };
-    Object.entries(efMap).forEach(([id, val]) => { const el = document.getElementById(id); if(el) el.value = val; });
-    ['cardPersonal','cardCompany','cardBank'].forEach(id => { const el = document.getElementById(id); if(el) { el.classList.remove('profile-view-mode'); el.classList.add('profile-edit-mode'); } });
-    document.getElementById('profileActions').innerHTML = `<button class="edit-toggle-btn btn-cancel-profile" onclick="disableEditMode()">Cancel</button><button class="edit-toggle-btn btn-save-profile" onclick="saveProfile()">💾 Save</button>`;
-  }
+    async function enableEditMode() {
+      if (!session) return;
+      const fullUser = (await FarmifyDB.getUsers()).find(u => u.id === session.id) || session;
+      const efMap = { eFullName: session.full_name, ePhone: fullUser.phone || '', eCompanyName: fullUser.company_name || '', eAddress: fullUser.address || '', eNpwp: fullUser.npwp || '' };
+      Object.entries(efMap).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.value = val; });
+      ['cardPersonal', 'cardCompany', 'cardBank'].forEach(id => { const el = document.getElementById(id); if (el) { el.classList.remove('profile-view-mode'); el.classList.add('profile-edit-mode'); } });
+      document.getElementById('profileActions').innerHTML = `<button class="edit-toggle-btn btn-cancel-profile" onclick="disableEditMode()">Cancel</button><button class="edit-toggle-btn btn-save-profile" onclick="saveProfile()">💾 Save</button>`;
+    }
 
-  function disableEditMode() {
-    ['cardPersonal','cardCompany','cardBank'].forEach(id => { const el = document.getElementById(id); if(el) { el.classList.remove('profile-edit-mode'); el.classList.add('profile-view-mode'); } });
-    document.getElementById('profileActions').innerHTML = `<button class="edit-toggle-btn btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profile</button>`;
-  }
+    function disableEditMode() {
+      ['cardPersonal', 'cardCompany', 'cardBank'].forEach(id => { const el = document.getElementById(id); if (el) { el.classList.remove('profile-edit-mode'); el.classList.add('profile-view-mode'); } });
+      document.getElementById('profileActions').innerHTML = `<button class="edit-toggle-btn btn-edit-profile" onclick="enableEditMode()">✏️ Edit Profile</button>`;
+    }
 
-  async function saveProfile() {
-    const newName = document.getElementById('eFullName')?.value.trim();
-    if (!newName) { showToast('❌ Name cannot be empty'); return; }
-    await FarmifyDB.updateUser(session.id, {
-      full_name: newName,
-      phone: document.getElementById('ePhone')?.value.trim(),
-      company_name: document.getElementById('eCompanyName')?.value.trim(),
-      address: document.getElementById('eAddress')?.value.trim(),
-      npwp: document.getElementById('eNPWP')?.value.trim(),
-      siup: document.getElementById('eSIUP')?.value.trim()
-    });
-    session.full_name = newName;
-    sessionStorage.setItem('farmify_session', JSON.stringify(session));
-    document.getElementById('sidebarName').textContent = newName;
-    document.getElementById('sidebarAvatar').textContent = newName.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
-    await populateProfile();
-    showToast('✅ Profile saved!');
-  }
+    async function saveProfile() {
+      const newName = document.getElementById('eFullName')?.value.trim();
+      if (!newName) { showToast('❌ Name cannot be empty'); return; }
+      await FarmifyDB.updateUser(session.id, {
+        full_name: newName,
+        phone: document.getElementById('ePhone')?.value.trim(),
+        company_name: document.getElementById('eCompanyName')?.value.trim(),
+        address: document.getElementById('eAddress')?.value.trim(),
+        npwp: document.getElementById('eNPWP')?.value.trim(),
+        siup: document.getElementById('eSIUP')?.value.trim()
+      });
+      session.full_name = newName;
+      sessionStorage.setItem('farmify_session', JSON.stringify(session));
+      document.getElementById('sidebarName').textContent = newName;
+      document.getElementById('sidebarAvatar').textContent = newName.split(' ').slice(0, 2).map(n => n[0]).join('').toUpperCase();
+      await populateProfile();
+      showToast('✅ Profile saved!');
+    }
 
-  function showToast(msg) {
-    const t = document.createElement('div');
-    t.textContent = msg;
-    Object.assign(t.style, { position:'fixed', bottom:'90px', left:'50%', transform:'translateX(-50%)', background:'var(--forest)', color:'white', padding:'12px 24px', borderRadius:'100px', fontSize:'14px', fontWeight:'600', boxShadow:'var(--shadow-lift)', zIndex:'9999', whiteSpace:'nowrap' });
-    document.body.appendChild(t);
-    setTimeout(() => t.remove(), 3000);
-  }
+    function showToast(msg) {
+      const t = document.createElement('div');
+      t.textContent = msg;
+      Object.assign(t.style, { position: 'fixed', bottom: '90px', left: '50%', transform: 'translateX(-50%)', background: 'var(--forest)', color: 'white', padding: '12px 24px', borderRadius: '100px', fontSize: '14px', fontWeight: '600', boxShadow: 'var(--shadow-lift)', zIndex: '9999', whiteSpace: 'nowrap' });
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 3000);
+    }
 
-  function openModal(id) { const el = document.getElementById(id); if(el) el.style.display='flex'; if(id==='preorderModal') openPreorderModal(); }
-  function closeModal(id) { const el = document.getElementById(id); if(el) el.style.display='none'; }
-  function navAlert(n) { showToast(`Feature "${n}" coming soon`); }
-</script>
+    function openModal(id) { const el = document.getElementById(id); if (el) el.style.display = 'flex'; if (id === 'preorderModal') openPreorderModal(); }
+    function closeModal(id) { const el = document.getElementById(id); if (el) el.style.display = 'none'; }
+    function navAlert(n) { showToast(`Feature "${n}" coming soon`); }
+  </script>
 </body>
+
 </html>

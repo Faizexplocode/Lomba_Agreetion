@@ -1031,21 +1031,6 @@
     const t = setInterval(() => { if (window.FarmifyDB && window.requireAuth) { clearInterval(t); cb(); } }, 50);
   }
 
-  waitForDB(() => {
-    (async () => {
-      session = await requireAuth(['farmer']);
-      if (session) {
-        const name = session.full_name.split(' ')[0];
-        const hour = new Date().getHours();
-        const greet = hour < 12 ? 'Morning' : hour < 17 ? 'Afternoon' : 'Night';
-        document.getElementById('greetingTitle').textContent = `Good ${greet}, ${name}! 🌱`;
-        document.getElementById('sidebarName').textContent = session.full_name;
-        document.getElementById('sidebarAvatar').textContent =
-          session.full_name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
-      }
-    })();
-  });
-
   // ---- PROFILE POPULATE ----
   async function populateProfile() {
     if (!session) return;
@@ -1497,7 +1482,7 @@
       farmer_id: session.id,
       name, price: Number(price), stock: Number(stock),
       category: modal.querySelector('select').value,
-      unit: modal.querySelectorAll('input[type=text]')[1]?.value || 'kg',
+      unit: modal.querySelectorAll('select')[1]?.value || 'kg',
       is_preorder: document.getElementById('isPreOrder').checked,
       emoji: '🌿'
     });

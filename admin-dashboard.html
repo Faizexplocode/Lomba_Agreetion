@@ -664,9 +664,7 @@
   </div>
 </div>
 
-<script type="module">
-  import '../db.js';
-</script>
+<script type="module" src="js/db.js"></script>
 
 <script>
   // ======== STATE ========
@@ -1049,13 +1047,13 @@
               🌾 ${farmer ? farmer.full_name : '—'} → 🏭 ${buyer ? buyer.full_name : '—'}
             </div>
             <div style="font-size:12px;color:var(--mid-gray);margin-top:2px;">
-              Qty: <strong>${p.quantity} ${p.unit || 'kg'}</strong> · Est. Harvest: <strong>${p.harvest_date || '—'}</strong> · ${timeAgo(p.created_at)}
+              Qty: <strong>${p.qty} ${p.unit || 'kg'}</strong> · Est. Harvest: <strong>${p.harvest_date || '—'}</strong> · ${timeAgo(p.created_at)}
             </div>
             ${p.notes ? `<div style="font-size:12px;color:var(--mid-gray);margin-top:4px;">📝 ${p.notes}</div>` : ''}
           </div>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
             <span class="preorder-badge ${p.status}">${p.status}</span>
-            <div style="font-weight:700;color:var(--forest);">${formatIDR((p.quantity || 0) * (p.price_per_unit || 0))}</div>
+            <div style="font-weight:700;color:var(--forest);">${formatIDR((p.qty || 0) * (p.price_per_unit || 0))}</div>
             ${p.status === 'pending' ? `
               <div style="display:flex;gap:6px;">
                 <button class="btn btn-primary" style="font-size:11px;padding:4px 10px;" onclick="updatePreOrder('${p.id}','confirmed','${p.farmer_id}','${p.buyer_id}','${p.commodity_name}')">✅ Confirm</button>
@@ -1081,7 +1079,7 @@
         <div class="preorder-admin-card">
           <div style="font-size:24px;">📋</div>
           <div style="flex:1;min-width:180px;">
-            <div style="font-weight:700;font-size:13px;color:var(--forest);">${p.commodity_name} — ${p.quantity} ${p.unit || 'kg'}</div>
+            <div style="font-weight:700;font-size:13px;color:var(--forest);">${p.commodity_name} — ${p.qty} ${p.unit || 'kg'}</div>
             <div style="font-size:12px;color:var(--mid-gray);">🌾 ${farmer ? farmer.full_name : '—'} → 🏭 ${buyer ? buyer.full_name : '—'} · ${timeAgo(p.created_at)}</div>
           </div>
           <span class="preorder-badge ${p.status}">${p.status}</span>
